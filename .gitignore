@@ -1,0 +1,13 @@
+# Large files (GitHub 100MB limit)
+CS_SUF_2024.pptx
+demo_revealjs/media/suf/VAGTGEBdPXI.mp4
+
+# Unused SUF media (only VAGTGKjyuwE.mp4 is used in the presentation)
+demo_revealjs/media/suf/VAGTF01jtYI.mp4
+demo_revealjs/media/suf/VAFduMSWARI.mp4
+demo_revealjs/media/suf/image*.png
+demo_revealjs/media/suf/image*.jpeg
+demo_revealjs/media/suf/image*.svg
+
+# LibreOffice lock files
+.~lock.*

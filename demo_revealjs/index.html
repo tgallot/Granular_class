@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1 - Geofísica de Medios Granulares</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        /* ===== Content slide background with sidebar ===== */
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 1 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                ¿QUÉ SON LOS MEDIOS<br>GRANULARES?
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            CAMILA SEDOFEITO,<br>THOMAS GALLOT
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: SOBRE EL CURSO -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Sobre el curso</h2>
+            <ul>
+                <li>Rol de los medios granulares en sistemas naturales.</li>
+                <li>Física de los medios granulares: estática, dinámica (flujo, jamming, etc.) y propagación de ondas.</li>
+                <li>Experimentos de laboratorio.</li>
+                <li>Procesamiento de datos</li>
+            </ul>
+            <p style="text-align:center; margin-top:1em;">4 horas presenciales por semana, durante 15 semanas.</p>
+            <p><strong>-Informes del curso: 50%</strong></p>
+            <p><strong>-Presentación oral individual: 50%</strong></p>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: CRONOGRAMA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cronograma</h2>
+            <table>
+                <thead><tr><th>Semana</th><th>Tema</th><th>Actividad</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>¿Qué son los medios granulares?</td><td>Observación, comportamiento sólido/fluido</td></tr>
+                    <tr><td>2-3</td><td>Descripción estructural</td><td>Ángulo de reposo, compacidad, silos, tapping</td></tr>
+                    <tr><td>4-5</td><td>Cadenas de fuerzas</td><td>Nesterenko, discos fotoelásticos</td></tr>
+                    <tr><td>6-7</td><td>Contactos, Hertz, histéresis</td><td>Curvas esfuerzo-deformación</td></tr>
+                    <tr><td>8-9</td><td>Fricción granular y stick-slip</td><td>Spring-slider, rate-and-state</td></tr>
+                    <tr><td>10-11</td><td>Ondas en medios granulares</td><td>Teoría de medios efectivos, Biot</td></tr>
+                    <tr><td>12-13</td><td>Terremotos a escala de lab</td><td>Análisis de datos experimentales</td></tr>
+                    <tr><td>14-15</td><td>Presentaciones finales</td><td>Análisis original de un experimento</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: DEFINICION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Materiales granulares</h2>
+            <p>Colección de partículas macroscópicas sólidas (granos) que interactúan
+            con sus vecinas principalmente por <strong>fricción</strong> y <strong>colisiones</strong>.</p>
+            <ul style="margin-top:1em; line-height:2;">
+                <li>Tamaño mínimo: $\sim 100\,\mu\text{m}$</li>
+                <li>Tamaño máximo: $\sim \text{km}$</li>
+                <li>Sin efecto de fluctuaciones térmicas: $E_\text{grav} \gg k_B T$</li>
+                <li>Disipación en cada contacto</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: ESCALAS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Materiales granulares</h2>
+            <p>Interacciones dominantes según la escala de tamaño:</p>
+            <div style="display:flex; justify-content:space-around; margin-top:1em; font-size:0.7em;">
+                <div style="text-align:center; border:2px solid var(--color-teal); border-radius:8px; padding:0.8em;">
+                    <strong>$d &lt; 100\,\mu\text{m}$</strong><br>Agitación térmica
+                </div>
+                <div style="font-size:2em; align-self:center;">→</div>
+                <div style="text-align:center; border:2px solid #e67e22; border-radius:8px; padding:0.8em;">
+                    <strong>$100\,\mu\text{m} &lt; d &lt; 1\,\text{mm}$</strong><br>Van der Waals<br>Humedad<br>Arrastre del aire
+                </div>
+                <div style="font-size:2em; align-self:center;">→</div>
+                <div style="text-align:center; border:2px solid #e74c3c; border-radius:8px; padding:0.8em;">
+                    <strong>$d &gt; 1\,\text{mm}$</strong><br>Fricción<br>Colisión
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: INDUSTRIA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Materiales granulares en la industria</h2>
+            <p style="font-size:1.3em; text-align:center; margin-top:1em;">
+                <strong style="color:#c0392b;">2.375.000.000.000 de kg</strong>
+            </p>
+            <p style="text-align:center; margin-top:1em;">
+                Cerca del 40 % de la capacidad de las plantas industriales es desperdiciada
+            </p>
+            <p class="credit" style="text-align:center;">
+                Holdich, R. (2020). Fundamentals of particle technology. MidlandIT.
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: INDUSTRIA APLICACIONES -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Materiales granulares en la industria</h2>
+            <ul style="line-height:2.2;">
+                <li><strong>Agricultura:</strong> procesamiento, almacenamiento, transporte</li>
+                <li><strong>Construcción:</strong> extracción, transporte, trituración, molienda, tamizado, almacenamiento</li>
+                <li><strong>Farmacia:</strong> segregación</li>
+                <li><strong>Alimentos:</strong> empaque, dosificación, transporte</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: POR QUE NOS INTERESA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Por qué nos interesa a nosotres?</h2>
+            <div class="two-col" style="margin-top:1em;">
+                <div style="text-align:center;">
+                    <h3 style="font-size:0.85em; letter-spacing:0.1em; color:var(--color-dark);">GEOFÍSICA</h3>
+                    <p>sismos, avalanchas, fricción</p>
+                </div>
+                <div style="text-align:center;">
+                    <h3 style="font-size:0.85em; letter-spacing:0.1em; color:var(--color-dark);">ASTROFÍSICA</h3>
+                    <p>asteroides, protección terrestre</p>
+                    <img src="media/slide8_Picture_11.gif" alt="asteroid" style="max-width:60%;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: GEOFISICA DETALLE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Por qué nos interesa? (Geofísica)</h2>
+            <ul style="line-height:2;">
+                <li><strong>Fricción tectónica</strong> y sismos</li>
+                <li>Deslizamiento de tierra, caída de acantilados</li>
+                <li>Avalanchas</li>
+                <li>Propagación de ondas sísmicas en medios no consolidados</li>
+            </ul>
+            <br>
+            <ul style="line-height:2;">
+                <li><strong>Astrofísica:</strong> asteroides como medios granulares (conglomerados mantenidos por autogravedad)</li>
+                <li>Leyes de escala de cráteres → formación y evolución del Sistema Solar</li>
+                <li>Exploración espacial, protección terrestre</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: SEGREGACION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Sólidos? ¿Líquidos? ¿Gases?</h2>
+            <p>Segregación: competencia entre densidad (pesado abajo) y tamaño (pequeño abajo)</p>
+            <div style="text-align:center;">
+                <video controls width="50%">
+                    <source src="media/Acier_Verre_Malt.mp4" type="video/mp4">
+                </video>
+                <p class="credit">Acero, vidrio y malta — T. Gallot, Seminario 2021</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: FLUJO -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Flujo?</h2>
+            <div style="text-align:center;">
+                <video controls width="50%">
+                    <source src="media/Harina.mp4" type="video/mp4">
+                </video>
+                <p class="credit">Flujo de harina — T. Gallot, Seminario 2021</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: CICLO SISMICO -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ciclo sísmico: acumulación de estrés</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <p>El manto fluye continuamente y de forma asísmica.</p>
+                    <p>La falla no desliza: está <strong>trancada por la fricción</strong>.</p>
+                    <p>El estrés se acumula hasta que la falla se desliza → <strong style="color:#c0392b;">terremoto</strong>.</p>
+                </div>
+                <div>
+                    <svg viewBox="0 0 400 250" style="width:100%; max-width:380px;">
+                        <line x1="50" y1="220" x2="380" y2="220" stroke="#333" stroke-width="2"/>
+                        <line x1="50" y1="220" x2="50" y2="20" stroke="#333" stroke-width="2"/>
+                        <text x="210" y="248" text-anchor="middle" font-size="14" fill="#333">tiempo</text>
+                        <text x="15" y="120" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90,15,120)">desplazamiento</text>
+                        <line x1="60" y1="200" x2="360" y2="40" stroke="#6b9a9a" stroke-width="2.5" stroke-dasharray="8,4"/>
+                        <text x="280" y="65" font-size="12" fill="#6b9a9a">manto</text>
+                        <polyline points="60,200 140,200 145,160 220,160 225,110 310,110 315,60 360,60"
+                                  stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <text x="320" y="80" font-size="12" fill="#c0392b">corteza</text>
+                        <text x="100" y="195" font-size="11" fill="#888">cargando</text>
+                        <text x="145" y="152" font-size="11" fill="#c0392b" font-weight="bold">sismo</text>
+                        <text x="225" y="102" font-size="11" fill="#c0392b" font-weight="bold">sismo</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="two-col" style="margin-top:0.5em; font-size:0.8em;">
+                <div class="highlight-box" style="text-align:center;">
+                    <strong>Carga:</strong> 10 – 1000 años
+                </div>
+                <div class="highlight-box red" style="text-align:center;">
+                    <strong>Ruptura:</strong> 1 – 60 segundos
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: RICHTER -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Escala de Richter</h2>
+            <table>
+                <thead><tr><th>Magnitud</th><th>Efectos</th><th>Frec. anual</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                    <tr><td>1-2</td><td>Imperceptible</td><td>&gt; 1.000.000</td><td></td></tr>
+                    <tr><td>3</td><td>Suave</td><td>100.000</td><td></td></tr>
+                    <tr><td>4</td><td>Moderado</td><td>10.000</td><td style="color:var(--color-teal);"><strong>Uruguay, Atlántida 2023 (Mw 4.5)</strong></td></tr>
+                    <tr><td>5</td><td>Fuerte</td><td>1.500</td><td></td></tr>
+                    <tr><td>6</td><td>Destructivo</td><td>150</td><td></td></tr>
+                    <tr><td>7</td><td>Desastroso</td><td>18</td><td>Japón, Ishikawa 2024 (7.5)<br>Haití 2010 (7.0) – 316.000 víctimas</td></tr>
+                    <tr><td>8</td><td>Muy desastroso</td><td>1</td><td></td></tr>
+                    <tr><td><strong>9+</strong></td><td><strong>Catastrófico</strong></td><td><strong>&lt; 1</strong></td><td>Sumatra 2004 (9.3) – 280.000 víctimas</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: BANCO DE FRICCION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Banco de fricción: terremotos a escala de laboratorio</h2>
+            <p style="font-size:0.8em;">¿Existe una conexión entre la física de eventos a escala de laboratorio
+            y los procesos a escala terrestre?</p>
+            <div class="two-col" style="font-size:0.75em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Laboratorio</strong><br>
+                        9.214 puntos por cm$^2$<br>
+                        $-11 < M_w < -7$
+                    </div>
+                    <p class="credit">Latour et al., 2011, 2013; Aichele et al., 2019, 2020, 2023</p>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Uruguay, Atlántida</strong><br>
+                        18 estaciones en 176.215 km$^2$<br>
+                        $M_w = 4.5$
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:0.3em;">
+                <video controls width="35%">
+                    <source src="media/suf/VAGTGKjyuwE.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: NUECES DE BRASIL -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Efecto nueces de Brasil</h2>
+            <div style="text-align:center;">
+                <video data-autoplay controls width="55%">
+                    <source src="media/VAFVTea5gPE.mp4" type="video/mp4">
+                </video>
+                <p class="credit">(QuantumFracture, 2022. Los Frutos Secos tienen a los Físicos Locos)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 16: CADENAS DE FUERZA (video) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cadenas de fuerza</h2>
+            <div style="text-align:center;">
+                <video data-autoplay controls width="55%">
+                    <source src="media/VAFU8CrI_zk.mp4" type="video/mp4">
+                </video>
+                <p class="credit">(National Science Foundation, 2012. Granular Media)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 17: CADENAS - TEORIA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cadenas de fuerza</h2>
+            <p>Ley de contacto de Hertz entre dos esferas:</p>
+            <p style="text-align:center; font-size:1.4em; margin:0.5em 0;">
+                $F = k\,\delta^{3/2}$
+            </p>
+            <p>donde $\delta$ es la compresión local y:</p>
+            <p style="text-align:center; font-size:1.1em; margin:0.5em 0;">
+                $k = \frac{4}{3} E^* \sqrt{R^*}$
+            </p>
+            <p style="margin-top:1em;">Velocidad del solitón granular (Nesterenko):</p>
+            <p style="text-align:center; font-size:1.4em; margin:0.5em 0;">
+                $v \sim A^{1/6} \sim h^{1/5}$
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 18: PROXIMA CLASE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Próxima clase</h2>
+            <p>Semanas 2-3: <strong>Descripción estructural</strong></p>
+            <ul style="line-height:2;">
+                <li>Ángulo de reposo y densidad aparente</li>
+                <li>Compacidad y número de coordinación</li>
+                <li>Descarga de silos, jamming</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografía: J. Duran, <em>Sands, Powders, and Grains</em> (Springer, 2000) — Capítulos 1-2
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
