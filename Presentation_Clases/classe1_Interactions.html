@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2 - Interacciones en Medios Granulares</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        /* ===== Content slide background with sidebar ===== */
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .highlight-box.orange { border-left-color: #e67e22; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .eq-box {
+            background: #f8f6f0;
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 2 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:1.8em; color:var(--color-title); line-height:1.1; margin:0;">
+                INTERACCIONES EN<br>MEDIOS GRANULARES
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            CAMILA SEDOFEITO,<br>THOMAS GALLOT
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: PLAN DE LA CLASE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2.2; font-size:0.85em;">
+                <li><strong>Partícula aislada:</strong> arrastre, humedad, clasificación</li>
+                <li><strong>Leyes de fricción:</strong> da Vinci → Amontons → Coulomb</li>
+                <li><strong>Stick-slip:</strong> fricción estática vs dinámica</li>
+                <li><strong>Colisiones:</strong> contacto de Hertz, restitución</li>
+                <li><strong>Partícula sobre medio granular:</strong> ángulo de reposo</li>
+                <li><strong>Muchas partículas:</strong> fricción granular, número de Bagnold</li>
+            </ol>
+            <p class="credit" style="margin-top:1em;">Basado en J. Duran, <em>Sands, Powders, and Grains</em> (Springer, 2000), Capítulo 2</p>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PARTE 1: PARTICULA AISLADA               -->
+    <!-- ========================================== -->
+
+    <!-- SLIDE 3: FUERZAS DE ARRASTRE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Partícula aislada: fuerzas de arrastre</h2>
+            <p>Una partícula esférica de diámetro $d$ cayendo en un fluido de viscosidad $\eta$ y densidad $\rho$:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Régimen laminar</strong> (Stokes)<br>
+                        $R_l = \frac{\rho\, v\, d}{\eta} \ll 1$
+                        <p style="margin:0.3em 0 0;">$F_{\text{drag}} = 3\pi\,\eta\, d\, v$</p>
+                    </div>
+                    <p style="font-size:0.7em; color:#666;">Partículas finas, velocidades bajas</p>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Régimen turbulento</strong> (Newton)<br>
+                        $R_t = \frac{\rho\, v^2\, d}{\eta\, g} \gg 1$
+                        <p style="margin:0.3em 0 0;">$F_{\text{drag}} \approx \rho\, d^2\, v^2$</p>
+                    </div>
+                    <p style="font-size:0.7em; color:#666;">Partículas grandes, velocidades altas</p>
+                </div>
+            </div>
+            <div class="eq-box" style="margin-top:0.8em;">
+                <strong>Velocidad terminal:</strong> &nbsp; $v_t \propto d^2$ (laminar) &nbsp;&nbsp;vs&nbsp;&nbsp; $v_t \propto \sqrt{d}$ (turbulento)
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: OTRAS INTERACCIONES -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Partícula aislada: otras interacciones</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <h3 style="font-size:0.85em; color:var(--color-dark);">Humedad y capilaridad</h3>
+                    <ul style="font-size:0.8em; line-height:1.8;">
+                        <li>Puentes líquidos entre granos</li>
+                        <li>Fuerza capilar $\propto \gamma\, d$ ($\gamma$ = tensión superficial)</li>
+                        <li>Polvos se vuelven cohesivos</li>
+                        <li>Castillos de arena: humedad óptima ~1%</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size:0.85em; color:var(--color-dark);">Interacciones electrostáticas</h3>
+                    <ul style="font-size:0.8em; line-height:1.8;">
+                        <li>Triboelectricidad: carga por contacto</li>
+                        <li>Importante para $d < 100\,\mu$m</li>
+                        <li>Responsable de dendritas granulares</li>
+                        <li>Problema en industria farmacéutica</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top:1em; font-size:0.85em;">
+                <strong>Dendritas granulares:</strong> al dejar caer granos finos sobre un plato, forman estructuras ramificadas
+                similares a los copos de nieve — ¡las cargas electrostáticas crean patrones!
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: CLASIFICACION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Clasificación de los materiales granulares</h2>
+            <table style="font-size:0.75em;">
+                <thead><tr><th>Categoría</th><th>Tamaño</th><th>Fuerzas dominantes</th><th>Ejemplos</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Coloides</strong></td><td>$< 1\,\mu$m</td><td>Browniano, van der Waals</td><td>Humo, niebla</td></tr>
+                    <tr><td><strong>Polvos</strong></td><td>$1–100\,\mu$m</td><td>Electrostática, humedad, arrastre del aire</td><td>Harina, cemento, tóner</td></tr>
+                    <tr><td><strong>Granulares finos</strong></td><td>$0.1–1$ mm</td><td>Fricción, gravedad</td><td>Arena, azúcar</td></tr>
+                    <tr><td><strong>Granulares gruesos</strong></td><td>$1–10$ mm</td><td>Fricción, colisiones</td><td>Arroz, grava</td></tr>
+                    <tr><td><strong>Bloques</strong></td><td>$> 10$ mm</td><td>Gravedad, fricción</td><td>Piedras, rocas</td></tr>
+                </tbody>
+            </table>
+            <div class="eq-box" style="margin-top:1em;">
+                Para $d > 100\,\mu$m: la gravedad domina sobre todas las demás fuerzas
+                → los granos son <strong>atérmicos</strong> ($T_{\text{equiv}} \sim 10^{11}$ K)
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PARTE 2: FRICCION                         -->
+    <!-- ========================================== -->
+
+    <!-- SLIDE 6: TRES LEYES DE FRICCION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Las tres leyes de la fricción sólida</h2>
+            <div style="margin-top:0.5em;">
+                <div class="highlight-box" style="font-size:0.85em;">
+                    <strong>1ª Ley (da Vinci ~1500, Amontons 1699):</strong><br>
+                    La fuerza de fricción $F$ es <strong>proporcional a la carga normal</strong> $P$:
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$F = \mu\, P$</p>
+                </div>
+                <div class="highlight-box" style="font-size:0.85em;">
+                    <strong>2ª Ley (Amontons 1699):</strong><br>
+                    La fuerza de fricción es <strong>independiente del área de contacto aparente</strong>.
+                </div>
+                <div class="highlight-box red" style="font-size:0.85em;">
+                    <strong>3ª Ley (Coulomb 1773, Euler):</strong><br>
+                    La fricción <strong>estática</strong> ($\mu_s$) es mayor que la fricción <strong>dinámica</strong> ($\mu_d$):
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$\mu_s > \mu_d$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: EXPLICACION MICROSCOPICA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Por qué la fricción no depende del área?</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;">Las superficies reales tienen <strong>rugosidades</strong> a escala microscópica.</p>
+                    <p style="font-size:0.85em;">El contacto real ocurre solo en las <strong>cimas de las asperezas</strong>.</p>
+                    <p style="font-size:0.85em;">El área de contacto <em>real</em> $S_r$ es mucho menor que el área <em>aparente</em> $S_a$:</p>
+                    <div class="eq-box">
+                        $S_r \ll S_a$<br>
+                        $S_r \propto P$ &nbsp;(proporcional a la carga)
+                    </div>
+                    <p style="font-size:0.85em;">→ Duplicar el área aparente no cambia nada: el número de contactos se redistribuye.</p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 280" style="width:85%;">
+                        <!-- Upper surface -->
+                        <path d="M20,100 L40,80 L55,95 L70,70 L90,90 L105,75 L120,95 L140,65 L160,90 L175,80 L195,95 L210,70 L230,85 L250,75 L270,95 L280,85" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Lower surface -->
+                        <path d="M20,110 L35,130 L55,105 L75,125 L90,108 L110,130 L130,105 L145,120 L165,108 L185,125 L200,105 L220,130 L240,110 L260,125 L280,115" stroke="#2c3e50" stroke-width="2.5" fill="none"/>
+                        <!-- Contact points -->
+                        <circle cx="55" cy="100" r="5" fill="#e67e22" opacity="0.8"/>
+                        <circle cx="130" cy="105" r="5" fill="#e67e22" opacity="0.8"/>
+                        <circle cx="200" cy="105" r="5" fill="#e67e22" opacity="0.8"/>
+                        <!-- Labels -->
+                        <text x="150" y="45" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">Superficie A</text>
+                        <text x="150" y="170" text-anchor="middle" font-size="14" fill="#2c3e50" font-weight="bold">Superficie B</text>
+                        <text x="55" y="80" text-anchor="middle" font-size="11" fill="#e67e22">contacto</text>
+                        <!-- Arrow P -->
+                        <line x1="150" y1="15" x2="150" y2="55" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="165" y="30" font-size="14" fill="#333" font-weight="bold">P</text>
+                        <!-- Arrow F -->
+                        <line x1="280" y1="100" x2="310" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="300" y="92" font-size="14" fill="#333" font-weight="bold">F</text>
+                        <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Real area -->
+                        <text x="150" y="210" text-anchor="middle" font-size="13" fill="#e67e22">Área real S<tspan baseline-shift="sub" font-size="10">r</tspan> = puntos naranjas</text>
+                        <text x="150" y="235" text-anchor="middle" font-size="13" fill="#888">Área aparente S<tspan baseline-shift="sub" font-size="10">a</tspan> = toda la línea</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: STICK-SLIP -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Stick-slip: el origen de los terremotos</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Un bloque sobre una superficie, arrastrado por un resorte a velocidad constante $V$:</p>
+                    <ol style="font-size:0.75em; line-height:1.8;">
+                        <li><strong>Stick:</strong> el bloque no se mueve, el resorte se estira</li>
+                        <li>La fuerza del resorte alcanza $\mu_s P$ → <strong>el bloque se desliza</strong></li>
+                        <li>La fricción cae a $\mu_d P$ → <strong>el bloque acelera</strong></li>
+                        <li>El resorte se relaja → <strong>el bloque se frena y se detiene</strong></li>
+                        <li>El ciclo se repite</li>
+                    </ol>
+                    <div class="highlight-box red" style="font-size:0.8em; margin-top:0.5em;">
+                        <strong>Analogía sísmica:</strong> el resorte = carga tectónica, el bloque = falla, el deslizamiento = terremoto
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 320 300" style="width:90%;">
+                        <!-- Surface -->
+                        <rect x="10" y="180" width="300" height="15" fill="#ddd" stroke="#999" stroke-width="1"/>
+                        <line x1="10" y1="195" x2="30" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="30" y1="195" x2="50" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="50" y1="195" x2="70" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="70" y1="195" x2="90" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="90" y1="195" x2="110" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="110" y1="195" x2="130" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="130" y1="195" x2="150" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="150" y1="195" x2="170" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="170" y1="195" x2="190" y2="210" stroke="#999" stroke-width="1"/>
+                        <line x1="190" y1="195" x2="210" y2="210" stroke="#999" stroke-width="1"/>
+                        <!-- Block -->
+                        <rect x="60" y="140" width="90" height="40" rx="3" fill="var(--color-teal)" stroke="#333" stroke-width="1.5"/>
+                        <text x="105" y="165" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                        <!-- Spring (zigzag) -->
+                        <polyline points="150,160 165,150 175,170 185,150 195,170 205,150 215,170 225,160" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Wall / motor -->
+                        <rect x="225" y="130" width="30" height="50" rx="3" fill="#666"/>
+                        <text x="240" y="160" text-anchor="middle" font-size="11" fill="white">V</text>
+                        <line x1="260" y1="155" x2="280" y2="155" stroke="#333" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <defs><marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Force graph below -->
+                        <line x1="30" y1="290" x2="300" y2="290" stroke="#333" stroke-width="1.5"/>
+                        <line x1="30" y1="290" x2="30" y2="225" stroke="#333" stroke-width="1.5"/>
+                        <text x="165" y="305" text-anchor="middle" font-size="11" fill="#333">tiempo</text>
+                        <text x="18" y="255" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90,18,255)">F</text>
+                        <!-- Sawtooth -->
+                        <polyline points="35,285 80,240 85,275 130,240 135,275 180,240 185,275 230,240 235,275 270,250" stroke="#c0392b" stroke-width="2" fill="none"/>
+                        <!-- mu_s line -->
+                        <line x1="30" y1="240" x2="280" y2="240" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="288" y="243" font-size="10" fill="#888">μ<tspan baseline-shift="sub" font-size="8">s</tspan>P</text>
+                        <!-- mu_d line -->
+                        <line x1="30" y1="275" x2="280" y2="275" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="288" y="278" font-size="10" fill="#888">μ<tspan baseline-shift="sub" font-size="8">d</tspan>P</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PARTE 3: COLISIONES                       -->
+    <!-- ========================================== -->
+
+    <!-- SLIDE 9: HERTZ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colisión frontal: problema de Hertz</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Dos esferas idénticas de radio $R$ y masa $M$, acercándose a velocidad relativa $v$:</p>
+                    <div class="eq-box">
+                        Energía elástica almacenada:<br>
+                        $E_e = \tfrac{1}{2} k\, h^{5/2}$
+                    </div>
+                    <p style="font-size:0.8em;">con el coeficiente de Hertz:</p>
+                    <div class="eq-box">
+                        $k = \dfrac{4\sqrt{2}}{15}\,\dfrac{E}{1-\sigma^2}\,\sqrt{R}$
+                    </div>
+                    <p style="font-size:0.75em;">donde $E$ = módulo de Young, $\sigma$ = coef. de Poisson.</p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 280 280" style="width:80%;">
+                        <!-- Left sphere -->
+                        <circle cx="100" cy="140" r="80" fill="none" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <!-- Right sphere -->
+                        <circle cx="180" cy="140" r="80" fill="none" stroke="var(--color-mauve)" stroke-width="2.5"/>
+                        <!-- Overlap region (shaded) -->
+                        <path d="M140,80 A80,80 0 0,1 140,200 A80,80 0 0,1 140,80" fill="rgba(107,154,154,0.2)"/>
+                        <!-- R labels -->
+                        <line x1="100" y1="140" x2="40" y2="80" stroke="#333" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="55" y="100" font-size="13" fill="#333" font-weight="bold">R</text>
+                        <line x1="180" y1="140" x2="240" y2="80" stroke="#333" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="215" y="100" font-size="13" fill="#333" font-weight="bold">R</text>
+                        <!-- h label -->
+                        <line x1="120" y1="140" x2="160" y2="140" stroke="#c0392b" stroke-width="2"/>
+                        <text x="140" y="155" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">h</text>
+                        <!-- Arrows for velocity -->
+                        <line x1="15" y1="140" x2="50" y2="140" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+                        <line x1="265" y1="140" x2="230" y2="140" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+                        <text x="10" y="133" font-size="13" fill="#333" font-weight="bold">v</text>
+                        <text x="260" y="133" font-size="13" fill="#333" font-weight="bold">v</text>
+                        <defs><marker id="arr" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: PENETRACION Y DURACION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Penetración y duración de la colisión</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Penetración máxima:</strong></p>
+                    <div class="eq-box">
+                        $h_0 = \left(\frac{M}{k}\right)^{2/5} v^{4/5}$
+                    </div>
+                    <p style="font-size:0.85em; margin-top:0.8em;"><strong>Duración de la colisión:</strong></p>
+                    <div class="eq-box">
+                        $\tau = 2.94 \left(\frac{M^2}{k^2\, v}\right)^{1/5}$
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.8em; font-size:0.8em;">
+                        <strong>Resultado notable:</strong> $\tau \propto v^{-1/5}$<br>
+                        La duración depende <em>muy poco</em> de la velocidad!
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.8em;">
+                        <strong>Ejemplo numérico:</strong><br>
+                        Esferas de aluminio, $d = 1.5$ mm, $v = 5$ cm/s
+                        <p style="margin:0.5em 0 0;">
+                            $E = 6 \times 10^{11}$ dyn/cm²<br>
+                            $\sigma \approx 0.3$<br>
+                            $k = 7 \times 10^{10}$ (cgs)
+                        </p>
+                        <p style="margin-top:0.5em; font-size:1.2em; text-align:center; color:#c0392b;">
+                            <strong>$\tau \approx 5\,\mu$s</strong>
+                        </p>
+                    </div>
+                    <div class="highlight-box orange" style="margin-top:0.5em; font-size:0.8em;">
+                        <strong>¿Límite elástico?</strong><br>
+                        $h_0 \approx 2\,\mu$m → deformación relativa $\sim 10^{-3}$<br>
+                        Muy cerca del régimen plástico!<br>
+                        Las asperezas se deforman plásticamente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: COEFICIENTE DE RESTITUCION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Coeficiente de restitución</h2>
+            <p style="font-size:0.85em;">Relación entre las velocidades relativas antes ($v_c^{(n)}$) y después ($u_c^{(n)}$) de la colisión:</p>
+            <div class="eq-box" style="font-size:1.3em;">
+                $u_c^{(n)} = -\varepsilon\, v_c^{(n)}$
+            </div>
+            <div class="two-col" style="margin-top:0.8em;">
+                <div>
+                    <table style="font-size:0.75em;">
+                        <thead><tr><th>Material</th><th>$\varepsilon$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Acero sobre acero</td><td>~0.65</td></tr>
+                            <tr><td>Vidrio sobre vidrio</td><td>~0.95</td></tr>
+                            <tr><td>Madera sobre madera</td><td>~0.50</td></tr>
+                            <tr><td>Plomo sobre plomo</td><td>~0.20</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>$\varepsilon = 1$:</strong> colisión perfectamente elástica<br>
+                        <strong>$\varepsilon = 0$:</strong> colisión perfectamente inelástica<br><br>
+                        <strong>Energía disipada:</strong> proporción $(1 - \varepsilon^2)$
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box red" style="margin-top:0.5em; font-size:0.8em;">
+                <strong>Colisión no frontal:</strong> también existe un coeficiente de restitución <em>tangencial</em> $\beta$
+                que depende del ángulo de impacto $\gamma$ y de si la partícula rueda o desliza al separarse.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: MODELO DE CORTEZA BLANDA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de corteza blanda (de Gennes)</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.8em;">Las esferas reales tienen una <strong>capa superficial alterada</strong> (oxidación, desgaste) de espesor $e$ y módulo $E_e \ll E$.</p>
+                    <div class="highlight-box" style="font-size:0.85em;">
+                        <strong>Hertz (homogéneo):</strong><br>
+                        $F \approx E\sqrt{R}\, h^{3/2}$<br>
+                        $h \propto F^{2/3}$
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.85em;">
+                        <strong>Corteza blanda ($h \ll e$):</strong><br>
+                        $F \approx E_e \frac{R}{e}\, h^{2}$<br>
+                        $h \propto F^{1/2}$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">→ La deformación aumenta <em>más lentamente</em> con la fuerza: queda localizada cerca del contacto.</p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 300" style="width:85%;">
+                        <!-- Homogeneous sphere -->
+                        <text x="75" y="20" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">(a) Homogénea</text>
+                        <circle cx="75" cy="80" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="75" cy="180" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <!-- Contact zone a -->
+                        <ellipse cx="75" cy="130" rx="20" ry="8" fill="rgba(107,154,154,0.3)" stroke="var(--color-teal)" stroke-width="1"/>
+                        <text x="75" y="133" text-anchor="middle" font-size="11" fill="var(--color-dark)">a</text>
+                        <!-- Deformation zone -->
+                        <ellipse cx="75" cy="130" rx="30" ry="25" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <!-- h arrow -->
+                        <line x1="128" y1="120" x2="128" y2="140" stroke="#c0392b" stroke-width="2"/>
+                        <text x="138" y="133" font-size="11" fill="#c0392b" font-weight="bold">h</text>
+
+                        <!-- Soft crust sphere -->
+                        <text x="225" y="20" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">(b) Corteza blanda</text>
+                        <circle cx="225" cy="80" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="225" cy="80" r="43" fill="none" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <circle cx="225" cy="180" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="225" cy="180" r="43" fill="none" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <!-- Crust label -->
+                        <line x1="260" y1="60" x2="280" y2="45" stroke="#888" stroke-width="1"/>
+                        <text x="282" y="45" font-size="10" fill="#888">e</text>
+                        <!-- Contact zone -->
+                        <ellipse cx="225" cy="130" rx="15" ry="6" fill="rgba(139,94,107,0.3)" stroke="var(--color-mauve)" stroke-width="1"/>
+                        <!-- Deformation zone (smaller) -->
+                        <ellipse cx="225" cy="130" rx="18" ry="12" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <!-- h arrow -->
+                        <line x1="248" y1="122" x2="248" y2="138" stroke="#c0392b" stroke-width="2"/>
+                        <text x="258" y="133" font-size="11" fill="#c0392b" font-weight="bold">h</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PARTE 4: SOBRE MEDIO GRANULAR             -->
+    <!-- ========================================== -->
+
+    <!-- SLIDE 13: ANGULO DE REPOSO -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Partícula sobre un medio granular</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Una esfera rodando sobre una pendiente granular pierde energía por:</p>
+                    <ol style="font-size:0.8em; line-height:1.8;">
+                        <li><strong>Fricción cinética</strong> $F_k = \frac{mv^2}{2\lambda}$ (colisiones, $\lambda \sim$ pocos $d$)</li>
+                        <li><strong>Pérdida de energía potencial</strong> $F_p$ (pozos de profundidad $\sim D$)</li>
+                    </ol>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $F = mg\left[\frac{a}{1 + b\,(v^2/gD)} + c\,\frac{v^2}{gD}\right]$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.3em;">Primer término: dominante a baja velocidad (fricción seca)<br>
+                    Segundo término: dominante a alta velocidad (colisiones)</p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 280" style="width:90%;">
+                        <!-- Axis -->
+                        <line x1="40" y1="240" x2="290" y2="240" stroke="#333" stroke-width="1.5"/>
+                        <line x1="40" y1="240" x2="40" y2="30" stroke="#333" stroke-width="1.5"/>
+                        <text x="165" y="265" text-anchor="middle" font-size="12" fill="#333">Velocidad $v/\sqrt{gD}$</text>
+                        <text x="20" y="130" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,20,130)">F / mg</text>
+                        <!-- Curve -->
+                        <path d="M45,80 C60,200 100,220 140,210 C180,200 220,160 280,60" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Minimum point -->
+                        <circle cx="155" cy="212" r="4" fill="#c0392b"/>
+                        <!-- theta_r label -->
+                        <line x1="155" y1="212" x2="155" y2="240" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="155" y="255" text-anchor="middle" font-size="11" fill="#c0392b">$v_r = \sqrt{gD}$</text>
+                        <!-- theta_m line -->
+                        <line x1="40" y1="80" x2="55" y2="80" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="30" y="78" text-anchor="middle" font-size="10" fill="#888">θ<tspan baseline-shift="sub" font-size="8">m</tspan></text>
+                        <!-- theta_r line -->
+                        <line x1="40" y1="212" x2="155" y2="212" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="30" y="215" text-anchor="middle" font-size="10" fill="var(--color-teal)">θ<tspan baseline-shift="sub" font-size="8">r</tspan></text>
+                        <!-- Labels -->
+                        <text x="90" y="175" font-size="11" fill="#888" transform="rotate(-60,90,175)">fricción seca</text>
+                        <text x="230" y="120" font-size="11" fill="#888" transform="rotate(55,230,120)">colisiones</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: DOS ANGULOS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ángulo de movimiento y ángulo de reposo</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.85em;">
+                        <strong>Ángulo de movimiento $\theta_m$:</strong><br>
+                        La pendiente a partir de la cual una partícula <em>comienza</em> a moverse.
+                        <p style="margin-top:0.3em;">Equilibrio inestable: $F(\theta_m) = mg\cos(\theta_m)$</p>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.85em; margin-top:0.5em;">
+                        <strong>Ángulo de reposo $\theta_r$:</strong><br>
+                        La pendiente a la cual una partícula en movimiento se <em>detiene</em>.
+                        <p style="margin-top:0.3em;">Equilibrio estable: mínimo de la fricción efectiva.</p>
+                    </div>
+                    <div class="eq-box" style="margin-top:0.8em; font-size:1.1em;">
+                        $\theta_m > \theta_r$
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box orange" style="font-size:0.85em;">
+                        <strong>Consecuencias:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li>El sistema oscila entre $\theta_m$ y $\theta_r$</li>
+                            <li>→ <strong>Avalanchas intermitentes</strong></li>
+                            <li>→ Conexión con el <strong>stick-slip</strong></li>
+                            <li>→ <strong>Histéresis</strong>: la respuesta depende de la historia</li>
+                        </ul>
+                    </div>
+                    <p style="font-size:0.8em; margin-top:0.5em; text-align:center;">
+                        Para la mayoría de los materiales granulares:<br>
+                        <strong style="font-size:1.2em; color:var(--color-teal);">$\theta_r \approx 35°$</strong>
+                        &nbsp;&nbsp;($\mu_s \approx 0.7$)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PARTE 5: MUCHAS PARTICULAS                -->
+    <!-- ========================================== -->
+
+    <!-- SLIDE 15: FRICCION GRANULAR -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fricción en medios granulares</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.8em;">Experimento de Dawes: dos cajas llenas de granos, una sobre la otra. Se aplica una carga $P$ y una fuerza lateral $F$.</p>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Resultado sorprendente:</strong></p>
+                    <div class="eq-box" style="font-size:1.3em;">
+                        $F = \mu_s\, P$
+                    </div>
+                    <ul style="font-size:0.8em; line-height:1.8; margin-top:0.5em;">
+                        <li>$F$ proporcional a $P$ ✓</li>
+                        <li>$F$ independiente del área ✓</li>
+                        <li>$\mu_s \approx 0.7$ (similar a sólidos) ✓</li>
+                        <li>Para cohesivos: $F = \mu_s P + C$</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 250" style="width:90%;">
+                        <!-- Lower box -->
+                        <rect x="50" y="140" width="200" height="60" fill="#ddd" stroke="#333" stroke-width="1.5" rx="2"/>
+                        <!-- Grains in lower box -->
+                        <circle cx="80" cy="170" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="100" cy="165" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="120" cy="172" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="140" cy="168" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="160" cy="173" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="180" cy="166" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="200" cy="170" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="220" cy="168" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <!-- Upper box -->
+                        <rect x="50" y="80" width="200" height="60" fill="#eee" stroke="#333" stroke-width="1.5" rx="2"/>
+                        <!-- Grains in upper box -->
+                        <circle cx="80" cy="110" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="100" cy="105" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="120" cy="112" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="140" cy="108" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="160" cy="113" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="180" cy="106" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="200" cy="110" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="220" cy="108" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <!-- P arrow -->
+                        <line x1="150" y1="25" x2="150" y2="75" stroke="#333" stroke-width="2.5" marker-end="url(#arr3)"/>
+                        <text x="160" y="45" font-size="16" fill="#333" font-weight="bold">P</text>
+                        <!-- F arrow -->
+                        <line x1="255" y1="110" x2="295" y2="110" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arr3)"/>
+                        <text x="280" y="102" font-size="16" fill="#c0392b" font-weight="bold">F</text>
+                        <!-- Comb pattern between boxes -->
+                        <line x1="70" y1="140" x2="70" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="90" y1="140" x2="90" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="110" y1="140" x2="110" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="130" y1="140" x2="130" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="150" y1="140" x2="150" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="170" y1="140" x2="170" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="190" y1="140" x2="190" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="210" y1="140" x2="210" y2="135" stroke="#666" stroke-width="1"/>
+                        <line x1="230" y1="140" x2="230" y2="135" stroke="#666" stroke-width="1"/>
+                        <defs><marker id="arr3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Ground -->
+                        <line x1="30" y1="200" x2="270" y2="200" stroke="#333" stroke-width="2"/>
+                        <!-- Label -->
+                        <text x="150" y="230" text-anchor="middle" font-size="12" fill="#888">Dispositivo tipo Dawes (mecánica de suelos)</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="credit">¡Las leyes de fricción de sólidos se aplican también a los medios granulares!</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 16: BAGNOLD -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de Bagnold</h2>
+            <p style="font-size:0.85em;">Para un flujo granular en un fluido viscoso, dos fuerzas compiten:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.85em;">
+                        <strong>Fuerza de fricción/colisión:</strong><br>
+                        $F_c \approx \frac{m D^2}{2\lambda_e}\,\dot\gamma^2$
+                        <p style="font-size:0.85em; margin-top:0.3em;">Contactos entre granos</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.85em;">
+                        <strong>Fuerza viscosa:</strong><br>
+                        $F_v = \frac{\eta\,\dot\gamma}{D^2}$
+                        <p style="font-size:0.85em; margin-top:0.3em;">Interacción con el fluido</p>
+                    </div>
+                </div>
+            </div>
+            <div class="eq-box" style="margin-top:0.8em; font-size:1.4em;">
+                $B = \frac{F_c}{F_v} \approx \frac{m\,\dot\gamma}{2\lambda_e\,\eta}$
+            </div>
+            <div class="two-col" style="margin-top:0.8em; font-size:0.85em;">
+                <div class="highlight-box">
+                    <strong>$B < 40$ — Macro-viscoso</strong><br>
+                    El fluido domina. Los granos rara vez se tocan.<br>
+                    <em>Ej: barro, pastas, suspensiones</em>
+                </div>
+                <div class="highlight-box red">
+                    <strong>$B > 450$ — Granular</strong><br>
+                    Fricción y colisiones dominan.<br>
+                    <em>Ej: arena seca, avalanchas, silos</em>
+                </div>
+            </div>
+            <p class="credit">Bagnold, R. A. (1954). <em>The Physics of Blown Sand and Desert Dunes.</em></p>
+        </div>
+    </section>
+
+    <!-- SLIDE 17: HISTERESIS Y INDETERMINACION -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Histéresis y memoria en medios granulares</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Un bloque sobre un plano inclinado, retenido por un resorte:</p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>Al <strong>inclinar</strong>: el bloque baja en pasos discretos</li>
+                        <li>Al <strong>volver</strong>: los escalones son <em>diferentes</em></li>
+                        <li>→ El camino depende de la <strong>historia</strong></li>
+                    </ul>
+                    <div class="highlight-box red" style="margin-top:0.5em; font-size:0.8em;">
+                        <strong>Indeterminación fundamental:</strong><br>
+                        La fuerza de fricción en un contacto estático no tiene un valor único:
+                        $0 \leq R \leq \mu_s F$.<br>
+                        La fuerza real depende de <em>cómo</em> se estableció el contacto.
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">→ Analogía con los <strong>materiales magnéticos</strong> (formación y desaparición de dominios)</p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 280 280" style="width:85%;">
+                        <!-- Axes -->
+                        <line x1="40" y1="250" x2="270" y2="250" stroke="#333" stroke-width="1.5"/>
+                        <line x1="40" y1="250" x2="40" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="155" y="275" text-anchor="middle" font-size="12" fill="#333">Ángulo θ</text>
+                        <text x="20" y="135" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,20,135)">Elongación kx</text>
+                        <!-- Ticks -->
+                        <text x="55" y="265" font-size="10" fill="#888">0°</text>
+                        <text x="150" y="265" font-size="10" fill="#888">45°</text>
+                        <text x="245" y="265" font-size="10" fill="#888">90°</text>
+                        <!-- Smooth sin curve -->
+                        <path d="M50,250 Q150,30 250,35" stroke="#ccc" stroke-width="1.5" fill="none" stroke-dasharray="5,3"/>
+                        <!-- Staircase going up -->
+                        <polyline points="50,245 70,245 72,220 95,220 97,195 125,195 127,165 155,165 157,130 185,130 187,95 210,95 212,65 240,65 242,42 255,42" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <!-- Staircase going down -->
+                        <polyline points="255,42 250,55 230,55 228,85 205,85 203,115 175,115 173,150 150,150 148,180 120,180 118,210 90,210 88,235 60,235 58,248 50,248" stroke="#c0392b" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+                        <!-- Labels -->
+                        <text x="235" y="55" font-size="11" fill="var(--color-teal)" font-weight="bold">θ↑</text>
+                        <text x="65" y="225" font-size="11" fill="#c0392b" font-weight="bold">θ↓</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 18: CADENAS DE FUERZA (reprise) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Distribución de esfuerzos: cadenas de fuerza</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Experimento de Dantu (1967): cilindros de vidrio entre polarizadores cruzados, comprimidos por un pistón.</p>
+                    <ul style="font-size:0.8em; line-height:1.8;">
+                        <li>La fuerza no se distribuye uniformemente</li>
+                        <li>Se concentra en <strong>cadenas de fuerza</strong></li>
+                        <li>Nuevos contactos → nuevos caminos</li>
+                        <li>La rigidez <strong>aumenta</strong> con la carga</li>
+                        <li>Comportamiento <strong>muy no-lineal</strong></li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.5em;">
+                        <strong>Aplicación:</strong> el ballast de las vías del tren es <em>no-lineal</em>: se endurece bajo compresión, absorbiendo un amplio rango de cargas.
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <iframe width="500" height="500" src="https://www.youtube.com/embed/hV6ljLDOVrc?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                    <p class="credit"><a href="https://www.youtube.com/watch?v=hV6ljLDOVrc" target="_blank">Richters Finger, Force Chains in Granular Matter</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 19: RESUMEN -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen: escalas de interacción</h2>
+            <table style="font-size:0.7em;">
+                <thead><tr><th>Escala</th><th>Física</th><th>Ecuación clave</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1 partícula + fluido</strong></td><td>Arrastre laminar/turbulento</td><td>$F = 3\pi\eta d v$ (Stokes)</td></tr>
+                    <tr><td><strong>2 partículas: fricción</strong></td><td>Leyes de Coulomb</td><td>$F = \mu P$, &nbsp; $\mu_s > \mu_d$</td></tr>
+                    <tr><td><strong>2 partículas: colisión</strong></td><td>Contacto de Hertz</td><td>$F = k\,h^{3/2}$, &nbsp; $\tau \sim 5\,\mu$s</td></tr>
+                    <tr><td><strong>Sobre medio granular</strong></td><td>Ángulos $\theta_m > \theta_r$</td><td>Avalanchas intermitentes, histéresis</td></tr>
+                    <tr><td><strong>Muchas partículas</strong></td><td>Fricción granular</td><td>$F = \mu_s P$ (¡igual que sólidos!)</td></tr>
+                    <tr><td><strong>Flujo granular</strong></td><td>Bagnold</td><td>$B < 40$: viscoso, $B > 450$: granular</td></tr>
+                </tbody>
+            </table>
+            <div class="eq-box" style="margin-top:1em; font-size:0.9em;">
+                <strong>Mensaje central:</strong> de las interacciones simples entre dos granos emerge un comportamiento colectivo
+                complejo — no-lineal, con histéresis, y dependiente de la historia.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 20: PROXIMA CLASE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Próxima clase</h2>
+            <p>Semanas 2-3: <strong>Descripción estructural</strong></p>
+            <ul style="line-height:2;">
+                <li>Pilas de arena: ángulo de reposo en la práctica</li>
+                <li>Compacidad y número de coordinación</li>
+                <li>Descarga de silos, efecto Janssen</li>
+                <li>Compactación por vibración (tapping)</li>
+                <li>Efecto nueces de Brasil</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografía: J. Duran, <em>Sands, Powders, and Grains</em> (Springer, 2000) — Capítulos 2-3
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
