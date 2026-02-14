@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 8 — Materiales Granulares Anisótropos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .three-col { display: flex; gap: 1em; }
+        .reveal .three-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal .red-box {
+            background: rgba(139,94,107,0.08);
+            border: 2px solid var(--color-mauve);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Mecánica de Materiales Granulares<br>
+                <span style="font-size:0.7em;">Materiales granulares anisótropos</span>
+            </h1>
+            <p style="margin:0.5em 0 0.2em; font-size:0.55em; color:#555;">
+                Unidad 8 &bull; Geofísica de Medios Granulares
+            </p>
+            <div class="two-col" style="margin-top:0.8em;">
+                <div>
+                    <ul style="font-size:0.45em; color:#444; list-style:disc;">
+                        <li>Formas de partículas: polígonos regulares</li>
+                        <li>Granos reales y pellets de biomasa</li>
+                        <li>Normas y dispositivos experimentales</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul style="font-size:0.45em; color:#444; list-style:disc;">
+                        <li>Ángulo de fricción y reposo</li>
+                        <li>Correlación espacial de bastones</li>
+                        <li>Fracción de volumen en bastones</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="font-size:0.4em; color:#888; margin-top:1em;">
+                Thomas Gallot &bull; Marcos A. Madrid (CONICET–IFLYSIB, UTN FRLP)
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: Formas                                             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Formas</h2>
+            <p style="font-size:0.55em; color:#555; margin-bottom:1em;">
+                Las partículas granulares pueden tener formas muy variadas:
+                esferas, polígonos, formas irregulares…
+            </p>
+            <div class="three-col" style="text-align:center;">
+                <div>
+                    <img src="media/extracted_u8/img-000.jpg" style="max-height:250px;">
+                    <p style="font-size:0.45em; color:#666;">Esfera</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-002.jpg" style="max-height:250px;">
+                    <p style="font-size:0.45em; color:#666;">Triángulo</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-004.jpg" style="max-height:250px;">
+                    <p style="font-size:0.45em; color:#666;">Cuadrado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: Polígonos regulares — arcos                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Polígonos regulares</h2>
+            <p style="font-size:0.55em; color:#555;">
+                Arcos formados por distintos polígonos regulares: (a) discos, (b) triángulos,
+                (c) cuadrados, (d) pentágonos, (e) hexágonos, (f) heptágonos.
+            </p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-009.jpg" style="max-height:400px;">
+            </div>
+            <p class="credit">Ezequiel Goldberg, C. Manuel Carlevaro y Luis A. Pugnaloni, 2018,
+                <em>Journal of Statistical Mechanics: Theory and Experiment</em></p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: Polígonos regulares — perturbaciones               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Polígonos regulares — Perturbaciones</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u8/img-009.jpg" style="max-height:320px;">
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-014.jpg" style="max-height:350px;">
+                    <p style="font-size:0.45em; color:#555;">
+                        (a) Perturbación local — (b) Perturbación global<br>
+                        Discos, triángulos, cuadrados, pentágonos, hexágonos, heptágonos
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Goldberg, Carlevaro &amp; Pugnaloni, 2018</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: Polígonos — círculo inscrito                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Polígonos regulares — Círculo inscrito</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u8/img-009.jpg" style="max-height:300px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-010.jpg" style="max-height:300px;">
+                    <p style="font-size:0.5em; color:#555;">
+                        El círculo inscrito en un triángulo equilátero
+                        define el radio mínimo de la partícula equivalente.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Goldberg, Carlevaro &amp; Pugnaloni, 2018</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: Polígonos — círculo circunscrito                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Polígonos regulares — Círculo circunscrito</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u8/img-009.jpg" style="max-height:300px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-013.jpg" style="max-height:300px;">
+                    <p style="font-size:0.5em; color:#555;">
+                        El círculo circunscrito define el radio máximo \(R\)
+                        y el lado \(L\) del polígono regular.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Goldberg, Carlevaro &amp; Pugnaloni, 2018</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: Polígonos — inscrito vs circunscrito               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Polígonos regulares — Inscrito vs Circunscrito</h2>
+            <div style="text-align:center; margin-bottom:0.8em;">
+                <img src="media/extracted_u8/img-015.jpg" style="max-height:220px;">
+            </div>
+            <div class="two-col">
+                <div class="eq-box">
+                    <p style="font-size:0.55em; font-weight:700; margin-bottom:0.3em;">Inscrito</p>
+                    <p style="font-size:0.55em;">\( P = 2nr\sin\frac{180°}{n} \)</p>
+                    <p style="font-size:0.55em;">\( A = nr^2\sin\frac{180°}{n}\cos\frac{180°}{n} \)</p>
+                </div>
+                <div class="red-box">
+                    <p style="font-size:0.55em; font-weight:700; margin-bottom:0.3em;">Circunscrito</p>
+                    <p style="font-size:0.55em;">\( P = 2nr\tan\frac{180°}{n} \)</p>
+                    <p style="font-size:0.55em;">\( A = nr^2\tan\frac{180°}{n} \)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: Triángulos — Área o apotema                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Triángulos: Área o apotema</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u8/img-009.jpg" style="max-height:300px;">
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-017.jpg" style="max-height:320px;">
+                    <p style="font-size:0.45em; color:#555;">
+                        Perturbación local: comparación entre <em>area matching</em>
+                        y <em>apothem matching</em> para triángulos.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Goldberg, Carlevaro &amp; Pugnaloni, 2018</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: Granos Reales                                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Granos Reales</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-018.jpg" style="max-height:200px;">
+                <p style="font-size:0.4em; color:#555; margin:0.3em 0;">
+                    Formas típicas de granos de maíz: (a) <em>bone-seed</em>, (b) piramidal truncado,
+                    (c) cono elíptico, (d) esferoidal, (e) irregular.
+                </p>
+            </div>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-019.jpg" style="max-height:230px;">
+                <p style="font-size:0.4em; color:#555;">
+                    Medidas de los ejes principales y vistas laterales de cada forma.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: Simulaciones de Granos Reales                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Simulaciones de Granos Reales</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-022.jpg" style="max-height:400px;">
+                    <p style="font-size:0.4em; color:#555;">
+                        Simulaciones DEM de diferentes formas de granos
+                        usando modelos de multiesferas.
+                    </p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-024.jpg" style="max-height:250px;">
+                    <p style="font-size:0.4em; color:#555;">
+                        (a) Grano real, (b) escaneo 3D, (c) modelo numérico.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: Pellets de biomasa                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Granos Reales: Pellets de biomasa</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-025.jpg" style="max-height:420px;">
+            </div>
+            <p style="font-size:0.5em; color:#555;">
+                Los pellets de biomasa son un ejemplo paradigmático de partículas
+                no esféricas con alta relación de aspecto (cilindros).
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: Norma Real                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Norma Real</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-026.jpg" style="max-height:430px;">
+            </div>
+            <p style="font-size:0.4em; color:#555;">
+                Norma UNE 55-547-81: Agentes de superficie — Polvos y granulados.
+                Medida del ángulo del talud de vertido.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: Norma Real — dispositivo                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Norma Real — Dispositivo</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-028.jpg" style="max-height:430px;">
+            </div>
+            <p style="font-size:0.4em; color:#555;">
+                Esquema del dispositivo normalizado para la medida del ángulo de reposo.
+                Tolva con dimensiones estandarizadas (mm).
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: Granos vs Norma                                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Granos vs Norma</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-028.jpg" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#555;">Dispositivo normalizado</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-027.jpg" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#555;">
+                        Granos reales: maíz, trigo, pellets de biomasa.
+                        ¿Es la norma adecuada para partículas no esféricas?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: Tolva Real                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Tolva Real</h2>
+            <div class="three-col" style="text-align:center;">
+                <div>
+                    <img src="media/extracted_u8/img-033.jpg" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#555;">(a) Diseño CAD</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-035.jpg" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#555;">(b) Prototipo real</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u8/img-037.jpg" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#555;">(c) Pellets en tolva</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: Experimentos + simulaciones                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Experimentos + simulaciones</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-040.jpg" style="max-height:300px;">
+                    <p style="font-size:0.4em; color:#555;">
+                        (a) Experimento real con pellets de biomasa
+                    </p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-041.jpg" style="max-height:300px;">
+                    <p style="font-size:0.4em; color:#555;">
+                        (b) Simulación DEM correspondiente
+                    </p>
+                </div>
+            </div>
+            <p style="font-size:0.45em; color:#555; text-align:center; margin-top:0.5em;">
+                Modelado de pellets con multiesferas de distinta relación de aspecto.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: Ángulo de fricción — foto                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Ángulo de fricción</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-042.jpg" style="max-height:420px;">
+            </div>
+            <p style="font-size:0.5em; color:#555;">
+                Medida experimental del ángulo de reposo para pellets de biomasa
+                en un recipiente cilíndrico.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: Ángulo de fricción — resultados                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Ángulo de fricción — Resultados</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u8/img-043.jpg" style="max-height:380px;">
+            </div>
+            <div class="highlight-box" style="font-size:0.5em;">
+                <p>Ángulo de reposo (AoR) en función de la altura de caída \(H\):</p>
+                <ul>
+                    <li><strong>Base pellet</strong> (exp &amp; sim): AoR ~ 28–32°</li>
+                    <li><strong>Base metálica</strong> (exp &amp; sim): AoR ~ 23–30°</li>
+                    <li>AoR decrece con \(H\) y se estabiliza para \(H \gt 100\) mm</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: Correlación espacial de bastones                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Correlación espacial de bastones</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u8/img-047.jpg" style="max-height:200px;">
+                    <p style="font-size:0.45em; color:#555; margin-top:0.3em;">
+                        Se toma la literatura de <strong>coloides</strong> (líquidos nemáticos):
+                    </p>
+                    <div class="eq-box" style="font-size:0.5em;">
+                        \( g_2(r) = \langle \cos[2\theta(r)] \rangle \)
+                    </div>
+                    <ul style="font-size:0.45em; color:#444;">
+                        <li><strong>Cristal:</strong> \( g_2(r) = \text{cte} \)</li>
+                        <li><strong>Nemático:</strong> \( g_2(r) \propto r^{-\alpha} \)</li>
+                        <li><strong>Isótropo (líquido):</strong> \( g_2(r) \propto \exp(-r/b) \)</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-048.jpg" style="max-height:180px;">
+                    <img src="media/extracted_u8/img-050.jpg" style="max-height:180px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: Fracción de volumen en bastones                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Fracción de volumen en bastones</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-049.jpg" style="max-height:350px;">
+                    <p style="font-size:0.35em; color:#555;">
+                        Fernando X. Villarruel et al., 2000, <em>Physical Review E</em>
+                    </p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u8/img-050.jpg" style="max-height:350px;">
+                    <p style="font-size:0.45em; color:#555;">
+                        Fracción de volumen \(\phi\) vs número de golpes \(t\)
+                        para distintas aceleraciones \(\Gamma\).<br>
+                        Compactación de bastones: fenómeno similar
+                        al de esferas pero con mayor complejidad orientacional.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        transition: 'slide',
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealHighlight, RevealNotes, RevealMath.MathJax3 ]
+    });
+</script>
+</body>
+</html>
