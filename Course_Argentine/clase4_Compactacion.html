@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4 — Compactación de Materiales Granulares</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Compactación<br>de Materiales Granulares
+            </h1>
+        </div>
+        <div style="text-align:center; margin-top:0.5em;">
+            <img src="media/extracted_u4/img-000.png" alt="Soil compaction" style="max-height:380px; border-radius:8px;">
+        </div>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Departamento de Física<br>
+            Facultad de Ciencias Exactas y Naturales<br>
+            Universidad Nacional de La Pampa — CONICET
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: APLICACIONES                                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <div class="two-col">
+                <div style="flex:0.6; text-align:center;">
+                    <img src="media/extracted_u4/img-001.png" alt="Compactación de suelos" style="max-height:180px; border-radius:4px; margin-bottom:0.3em;">
+                    <img src="media/extracted_u4/img-002.png" alt="Industria farmacéutica" style="max-height:180px; border-radius:4px; margin-bottom:0.3em;">
+                    <img src="media/extracted_u4/img-003.png" alt="Gestión de residuos" style="max-height:180px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.72em; line-height:1.8;">
+                    <p><strong style="color:#d35400;">Construcción y geotecnia:</strong> Compactación de suelos.</p>
+                    <p><strong style="color:#8e44ad;">Industria de materiales de construcción:</strong> ladrillos, bloques de hormigón, etc. <em>Compactación de mezclas de cemento y áridos para dar resistencia mecánica.</em></p>
+                    <p><strong style="color:#e74c3c;">Industria farmacéutica: Comprimidos.</strong> Control <strong>porosidad</strong> para asegurar la liberación del principio activo.</p>
+                    <p><strong style="color:#e67e22;">Procesos químicos e industriales:</strong> pellets catalizadores, fertilizantes.</p>
+                    <p><strong style="color:#2980b9;">Industria minera y metalúrgica</strong></p>
+                    <p><strong style="color:#27ae60;">Gestión de residuos:</strong> rellenos sanitarios y reciclaje.</p>
+                    <p><strong style="color:#c0392b;">Agroindustria</strong></p>
+                    <p><strong style="color:#2980b9;">Aeroespacial y defensa:</strong> Compactación de <strong>propelentes sólidos</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: FRACCIÓN DE EMPAQUETAMIENTO                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fracción de empaquetamiento (<em>packing fraction</em>)</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-005.png" alt="Packing loose vs compact" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.85em;">
+                    <div class="eq-box" style="font-size:1.2em; margin-top:1em;">
+                        $\phi = \dfrac{V_{\text{granos}}}{V_{\text{total}}}$
+                    </div>
+                </div>
+            </div>
+            <p style="font-size:0.8em; margin-top:0.5em;">
+                No puede superar el límite 1 $\to$ apilamiento en el que los granos ocuparían todo el espacio (cubos perfectamente apilados).
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: POROSIDAD Y RELACIÓN DE VACÍO                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fracción de empaquetamiento (<em>packing fraction</em>)</h2>
+            <div style="font-size:0.85em;">
+                <p>Porosidad $\varepsilon$ (muy común en la comunidad de medios porosos) representa la relación entre el volumen vacío y el volumen total</p>
+                <div class="eq-box" style="font-size:1.3em; margin:0.8em 0;">
+                    $\varepsilon = \dfrac{V_{\text{vacío}}}{V_{\text{total}}} = 1 - \phi$
+                </div>
+                <p>En <em>mecánica de suelos</em>, la variable de compacidad suele ser la relación de vacío</p>
+                <div class="eq-box" style="font-size:1.3em; margin:0.8em 0;">
+                    $\varepsilon_v = (1 - \phi)/\phi$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: RANGO DE FRACCIONES + VIDEO                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fracción de empaquetamiento (<em>packing fraction</em>)</h2>
+            <p style="font-size:0.85em;">Existe un rango de fracciones que corresponden a empaquetamientos o pilas estables.</p>
+            <p style="font-size:0.85em;">Dependiendo del método de fabricación, $\phi$ se sitúa entonces entre un <span style="color:#2ecc71; font-weight:700;">mínimo</span> (apilamiento más suelto) y un <span style="color:#e74c3c; font-weight:700;">máximo</span> (apilamiento más denso).</p>
+            <div style="text-align:center; margin-top:0.5em;">
+                <iframe width="700" height="394" src="https://www.youtube.com/embed/avvzq_TbwCA" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: ESFERAS MONO-DISPERSO — KEPLER                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamiento de esferas mono-disperso</h2>
+            <p style="font-size:0.85em;">Sistema modelo $\to$ mayor fracción $\phi = 0.74$ (estructuras fcc o hcp).</p>
+            <p style="font-size:0.75em; font-style:italic; text-align:center;">El astrónomo y matemático Johannes Kepler fue el primero en conjeturar en 1611 que estas pilas regulares son las más densas que se pueden conseguir apilando balas de cañón. La prueba matemática fue obtenida por Hales (2005).</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u4/img-008.png" alt="Esferas metálicas fcc/hcp" style="max-height:320px; border-radius:4px;">
+            </div>
+            <p class="credit" style="color:#2980b9;">Hales T. C. A proof of the Kepler conjecture. Annals of Mathematics 162 (2005) 1065-1185.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: ESFERAS MONO-DISPERSO — RCP                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamiento de esferas mono-disperso</h2>
+            <div class="two-col">
+                <div style="font-size:0.78em;">
+                    <p>Si colocamos esferas en un recipiente y "agitamos" para compactar lo más posible, lograremos una fracción de volumen crítica $\phi \approx 0.64$ $\to$ <span style="color:#2980b9;">RCP "<em>random close packing</em>"</span> (empaquetamiento aleatorio más denso).</p>
+                    <p style="font-style:italic; margin-top:0.5em;">Sin embargo, otros métodos de compactación basados en vibraciones horizontales permiten crear pilas más ordenadas (Pouliquen et al., 1997).</p>
+                    <p class="credit" style="color:#2980b9; margin-top:1em;">Pouliquen O., Nicolas M. &amp; Weidman P. D. Crystallization of non-Brownian spheres under horizontal shaking. Phys. Rev. Lett. 19 (1997) 3640-3643.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-009.png" alt="Pouliquen: φ vs Γ y φ vs Q" style="max-height:550px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: ESFERAS MONO-DISPERSO — RLP                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamiento de esferas mono-disperso</h2>
+            <div class="two-col">
+                <div style="font-size:0.78em;">
+                    <p>El empaquetamiento aleatorio más "laxo" $\to$ <span style="color:#2980b9;">RLP "<em>random loose packing</em>"</span> para las esferas es $\phi \approx 0.55$ (Jerkins et al., 2008)</p>
+                    <p style="font-style:italic; margin-top:0.5em;">Fluidizan un lecho de partículas con una contracorriente de líquido suficientemente intensa como para expandir el sistema, y luego interrumpen el flujo para permitir la sedimentación del conjunto.</p>
+                    <p style="color:#27ae60; font-weight:700; margin-top:1em; font-size:0.9em;">Los conceptos de empaquetamiento aleatorio más denso y más suelto carecen aún de una definición rigurosa y su origen y estructura subyacente siguen siendo objeto de debate</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-010.png" alt="Jerkins: φ_RLP vs density difference" style="max-height:420px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: DIFERENTES TAMAÑOS                                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos de esferas de diferentes tamaños</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u4/img-011.png" alt="Bidisperse (a) y (b)" style="max-height:380px; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.85em; line-height:2.0; margin-top:0.5em;">
+                <li>Mezcla de esferas ($d_p$ y $d_g$), misma densidad</li>
+                <li>Límite $d_p \ll d_g$</li>
+                <li>Concentración másica de esferas grandes $\to$ $C = m_g/(m_g + m_p)$</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: DIFERENTES TAMAÑOS — m_p << m_g                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos de esferas de diferentes tamaños</h2>
+            <ul style="font-size:0.8em; margin-bottom:0.3em;">
+                <li>$\phi_0 \to$ <em>packing fraction</em> de un sistema formado por un único tipo de esfera.</li>
+            </ul>
+            <p style="font-size:0.8em; color:#2980b9; font-style:italic; text-align:center;">¿Evolución de $\phi$ en función de la concentración másica $C$?</p>
+            <div class="two-col">
+                <div>
+                    <div class="eq-box" style="font-size:0.9em; margin-bottom:0.5em;">$\boldsymbol{m_p \ll m_g}$</div>
+                    <img src="media/extracted_u4/img-012.png" alt="m_p << m_g" style="max-height:300px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <p>$V_{\text{granos}} = (m_g + m_p)/\rho$</p>
+                    <p style="margin-top:1em;">$V_{\text{total}} = m_g/(\rho\phi_0)$ <span style="font-style:italic; margin-left:1em;">Volumen de esferas grandes</span></p>
+                    <div class="eq-box" style="font-size:1.1em; margin-top:1em;">
+                        $\phi = \dfrac{\phi_0}{C}$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: DIFERENTES TAMAÑOS — m_p >> m_g                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos de esferas de diferentes tamaños</h2>
+            <div class="two-col">
+                <div>
+                    <div class="eq-box" style="font-size:0.9em; margin-bottom:0.5em;">$\boldsymbol{m_p \gg m_g}$</div>
+                    <img src="media/extracted_u4/img-013.png" alt="m_p >> m_g" style="max-height:320px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <p>$V_{\text{granos}} = (m_g + m_p)/\rho$</p>
+                    <p style="margin-top:0.5em;">El volumen total es la suma del volumen de esferas grandes y el volumen de las pequeñas y sus intersticios</p>
+                    <p style="color:#2980b9; margin-top:0.5em;">$V_{total} = m_g/\rho + m_p/(\rho\phi_0)$</p>
+                    <div class="eq-box" style="font-size:1.1em; margin-top:1em;">
+                        $\phi = \dfrac{\phi_0}{1 - C(1 - \phi_0)}$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: φ vs C — CUMBERLAND                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos de esferas de diferentes tamaños</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-014.png" alt="φ vs C(%) para distintos d_p/d_g" style="max-height:500px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.85em;">
+                    <p style="margin-top:2em;">Una mezcla de partículas de diferentes tamaños permite obtener <strong style="color:#c0392b;">mayores valores de fracciones</strong> que en el caso monodisperso.</p>
+                </div>
+            </div>
+            <p class="credit" style="color:#2980b9;">Cumberland D. J. &amp; Crawford R. J. Packing of Particles. Handbook of Powder Technology, Vol. 6. Elsevier, Amsterdam (1987)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: POLYDISPERSE + APOLLONIUS                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos de esferas de diferentes tamaños</h2>
+            <p style="font-size:0.85em;">Mezclas de varios tamaños (Voivret et al., 2007).</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-016.png" alt="Voivret polydisperse" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div>
+                    <p style="color:#c0392b; font-weight:700; font-style:italic; text-align:center;">Caso Extremo</p>
+                    <p style="font-style:italic; text-align:center; font-size:0.85em;">Apilamientos de Apolonio: estructura fractal autosimilar</p>
+                    <div style="text-align:center;">
+                        <img src="media/extracted_u4/img-015.png" alt="Apollonius cube" style="max-height:250px; border-radius:4px;">
+                    </div>
+                </div>
+            </div>
+            <p class="credit" style="color:#2980b9;">Voivret C., Radjai F., Delenne J.-Y. &amp; El Youssoufi M. S. Space-filling properties of polydisperse granular media. Phys. Rev. E 76 (2007) 021301.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: COMPACTACIÓN UNIAXIAL                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación Uniaxial</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-017.png" alt="Prensa uniaxial" style="max-height:400px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:2.0;">
+                        <li>Los granos experimentan inicialmente cierta reorganización.</li>
+                        <li>Los granos comienzan a deformarse, aumentando $\phi$. Las deformaciones son en primer lugar elásticas.</li>
+                        <li>Cuando las fuerzas son mayores, los granos pueden romperse, facetarse y dar lugar a numerosos reordenamientos y compactaciones importantes.</li>
+                    </ul>
+                    <p style="font-style:italic; font-size:0.85em; margin-top:0.5em; color:#666;">La compresión uniaxial se utiliza en procesos de formación de comprimidos, pastillas de detergente o metalurgia. Esta técnica implica grandes niveles de esfuerzos, que no sólo provocan grandes deformaciones sino también la creación de enlaces cohesivos entre las partículas, que confieren a la tableta su consistencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: LEY DE HECKEL                                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación Uniaxial</h2>
+            <div style="font-size:0.85em;">
+                <p><em style="color:#2980b9;">Leyes empíricas</em> que relacionan a $\phi$ con la presión impuesta $P$...</p>
+                <p style="margin-top:0.5em;">Una de las leyes comúnmente utilizadas es la ley de Heckel (Heckel, 1961): modela el proceso como una "<strong>cinética de desaparición de poros</strong>" (cinética de primer orden):</p>
+                <div class="eq-box" style="font-size:1.3em; margin:0.8em 0;">
+                    $\dfrac{d\phi}{dP} = K(1 - \phi)$
+                </div>
+                <p>con $K$ constante relacionada a la ductilidad o plasticidad (límite elástico del sólido, forma y rugosidad de partícula).</p>
+                <div class="eq-box" style="font-size:1.3em; margin:0.8em 0;">
+                    $\ln\!\left(\dfrac{1}{1-\phi}\right) = KP + C$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: HECKEL PLOT                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación Uniaxial</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-018.png" alt="Heckel plot: ln(1/(1-φ)) vs P" style="max-height:450px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <p style="color:#c0392b; font-weight:700;">Fragmentación o fractura de partículas.</p>
+                    <p style="color:#c0392b;">Reorganización estructural inducida por roturas.</p>
+                    <br>
+                    <p style="color:#27ae60; font-weight:700;">Reordenamientos</p>
+                    <br>
+                    <p style="color:#2980b9;">Ley de Heckel</p>
+                </div>
+            </div>
+            <p class="credit" style="color:#2980b9;">Denny P. J. Compaction equations: a comparison of the Heckel and Kawakita equations. Powder Technology 127 (2002) 162-172.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: COMPACTACIÓN POR VIBRACIÓN                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación por vibración</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-019.png" alt="Contenedor vibrante" style="max-height:400px; border-radius:4px;">
+                    <p style="font-size:0.8em; margin-top:0.3em;">$A\cos\omega t$</p>
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:2.0;">
+                        <li>La frecuencia relativa $\Omega = \omega\sqrt{d/g}$, donde $d$ es el tamaño de las partículas.</li>
+                    </ul>
+                    <p style="color:#2980b9; font-style:italic; margin-top:0.5em;">Relación entre el período de vibración y el tiempo característico que tarda la partícula en caer por gravedad en un agujero de su propio tamaño $d$.</p>
+                    <p style="color:#2980b9; font-style:italic; margin-top:0.3em;"><em>La compactación es más efectiva para valores de $\Omega$ inferiores a 1 ("tapping")</em></p>
+                    <ul style="line-height:2.0; margin-top:0.5em;">
+                        <li>La aceleración relativa $\Gamma = A\omega^2/g$</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: CHICAGO EXPERIMENTS                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación por vibración</h2>
+            <p style="font-size:0.85em;"><strong>Experimentos de Chicago</strong> — relajación logarítmica (Knight et al., 1995)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-020.png" alt="Chicago: aparato y datos ρ vs t+1" style="max-height:380px; border-radius:4px;">
+                    <p style="font-size:0.6em; font-style:italic;">Fuertes efectos de contorno (tubo angosto de 1,88 cm diámetro)</p>
+                </div>
+                <div style="font-size:0.72em;">
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\rho(t) = \rho_f - \dfrac{\rho_0 - \rho_f}{1 + B\ln(1 + t/\tau)}$
+                    </div>
+                    <ul style="line-height:2.0; margin-top:0.5em;">
+                        <li>$\rho_f$: fracción de empaquetamiento final</li>
+                        <li>$\rho_0$: fracción de empaquetamiento inicial</li>
+                        <li>$\tau$: tiempo característico</li>
+                        <li>$B$: parámetro de ajuste (dependiente de $\Gamma$)</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="credit" style="color:#2980b9;">Knight, J., Fandrich, C. G., Lau, C. N., Jaeger, H. &amp; Nagel, S. Density relaxation in a vibrated granular material. Phys. Rev. E 51, 3957–3963 (1995).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: RENNES EXPERIMENTS                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación por vibración</h2>
+            <p style="font-size:0.85em;"><strong>Experimentos de Rennes</strong> — difiere de experimentos de Chicago (sobre todo a largos tiempos, alcanzando estado estacionario)</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u4/img-022.png" alt="Rennes: foto aparato y datos ρ vs t+1" style="max-height:340px; border-radius:4px;">
+            </div>
+            <p style="font-size:0.75em; font-style:italic; font-weight:700; text-align:right;">equilibrio entre convección y compactación</p>
+            <p class="credit" style="color:#2980b9;">Philippe, P. &amp; Bideau, D. Compaction dynamics of a granular medium under vertical tapping. Europhys. Lett. 60, 677–683 (2002).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: RENNES — STRETCHED EXPONENTIAL                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compactación por vibración</h2>
+            <p style="font-size:0.85em;"><strong>Experimentos de Rennes</strong></p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4/img-023.png" alt="Rennes: ρ vs t+1 zoomed" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.75em;">
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\rho(t) = \rho_f - (\rho_f - \rho_0)\exp\!\left[-(t/\tau)^\beta\right]$
+                    </div>
+                    <ul style="line-height:1.8; margin-top:0.5em;">
+                        <li>$\rho_f$: fracción de empaquetamiento final</li>
+                        <li>$\rho_0$: fracción de empaquetamiento inicial</li>
+                        <li>$\tau$: tiempo característico</li>
+                        <li>$\beta$: parámetro de ajuste (exponente)</li>
+                    </ul>
+                    <ul style="line-height:2.0; margin-top:0.5em;">
+                        <li>El tiempo de relajación depende de la aceleración con ley tipo <strong>Arrhenius</strong>.</li>
+                        <li>La fracción final disminuye al aumentar la intensidad del tapping $\Gamma$.</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="credit" style="color:#2980b9;">Philippe, P. &amp; Bideau, D. Compaction dynamics of a granular medium under vertical tapping. Europhys. Lett. 60, 677–683 (2002).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 21: FIN                                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:2em; margin:0 -2em; text-align:center;">
+            <h1 style="font-size:2em; color:var(--color-title); margin-top:2em;">FIN.</h1>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

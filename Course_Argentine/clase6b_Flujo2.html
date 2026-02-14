@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 6 (Parte II) — Flujo Granular: Caudal</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .three-col { display: flex; gap: 1em; }
+        .reveal .three-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal .red-box {
+            background: rgba(139,94,107,0.08);
+            border: 2px solid var(--color-mauve);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Flujo Granular<br><span style="font-size:0.7em;">Parte II — Caudal</span>
+            </h1>
+            <p style="margin:0.5em 0 0.2em; font-size:0.55em; color:#555;">
+                Unidad 6 &bull; Geofísica de Medios Granulares
+            </p>
+            <div class="two-col" style="margin-top:0.8em;">
+                <div>
+                    <ul style="font-size:0.45em; color:#444; list-style:disc;">
+                        <li>Caudal en silos y tolvas</li>
+                        <li>Ley de Beverloo-Hagen</li>
+                        <li>Correcciones (Rose-Tanaka, Fowler-Glastonbury)</li>
+                        <li>Influencia del aire</li>
+                        <li>Efecto Janssen dinámico</li>
+                    </ul>
+                </div>
+                <div style="text-align:right;">
+                    <img src="media/extracted_u6b/img-004.jpg" style="max-height:220px;">
+                </div>
+            </div>
+            <p style="font-size:0.4em; color:#888; margin-top:0.8em;">
+                Thomas Gallot &amp; María Alejandra Aguirre — Mayo 2025
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: Flujo continuo — Caudal constante                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Flujo continuo en silos o tolvas — Caudal</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-009.jpg" style="max-height:350px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p>El caudal másico \(W\) es <strong>constante</strong> en el caso del flujo de materiales granulares.</p>
+                    <p>Se ha sostenido durante las últimas décadas que al igual que en los líquidos, \(W\) es controlado por la presión (altura). Se justificó que \(W\) es constante porque la presión en la base lo es debido al <strong>efecto Janssen</strong>.</p>
+                    <p style="color:var(--color-mauve); font-weight:700; font-size:1.2em;">PERO...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: Caudal — Dispositivo experimental                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-010.jpg" style="max-height:200px;">
+                    <img src="media/extracted_u6b/img-012.jpg" style="max-height:250px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <div class="eq-box">
+                        <p>\(\text{Caudal } Q = \dfrac{\Delta N}{\Delta t}\)</p>
+                        <p>\(Q = \dfrac{C\,4}{\pi D^2}\,V\,(A - kD)\)</p>
+                    </div>
+                    <img src="media/extracted_u6b/img-011.jpg" style="max-height:180px;">
+                    <p>A velocidad \(V\) fija el caudal es constante.</p>
+                    <p>La fuerza depende de la fricción dinámica de los discos y la cinta.</p>
+                    <p>\(\Rightarrow\) depende de \(N_\text{discos}\), la masa de los discos y \(\mu\)</p>
+                    <p style="color:var(--color-mauve);"><strong>\(\Rightarrow\) La presión decrece durante la descarga</strong></p>
+                </div>
+            </div>
+            <div class="footnote">
+                Aguirre, Grande, Calvo, Pugnaloni y Géminard, Phys. Rev. Lett. 104, 238002 (2010).<br>
+                Aguirre, Phys. Rev. E 83, 061305 (2011), Perge, Phys. Rev. E 85, 021303 (2012).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: Caudal — Q=dN/dt constante                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-011.jpg" style="max-height:180px;">
+                    <p style="font-size:0.5em; color:var(--color-mauve);">Q = dN/dt constante<br>
+                    Disminuye la presión media en el plano de salida</p>
+                    <div class="eq-box" style="font-size:0.55em;">
+                        \(Q = \dfrac{C\,4}{\pi D^2}\,V\,(A - kD)\)
+                    </div>
+                </div>
+                <div>
+                    <img src="media/extracted_u6b/img-013.jpg" style="max-height:220px;">
+                    <img src="media/extracted_u6b/img-014.jpg" style="max-height:220px;">
+                </div>
+            </div>
+            <div class="footnote">
+                Aguirre, Grande, Calvo, Pugnaloni y Géminard, Phys. Rev. Lett. 104, 238002 (2010).<br>
+                Aguirre, Phys. Rev. E 83, 061305 (2011), Perge, Phys. Rev. E 85, 021303 (2012).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: Caudal — Parámetros importantes                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Parámetros importantes</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.5em;">\(W\): Flujo másico en gramos por segundo.</p>
+                    <img src="media/extracted_u6b/img-015.jpg" style="max-height:300px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <div class="highlight-box">
+                        <p>\(D_0\): Ancho de boca de descarga (diámetro en silos cónicos).</p>
+                        <p>\(D\): Diámetro de la parte cilíndrica del silo.</p>
+                        <p>\(d\): Diámetro de los granos (\(d \ll D_0\)).</p>
+                        <p>\(\mu\): Coeficiente de rozamiento interno del material.</p>
+                        <p>\(g\): Gravedad.</p>
+                        <p>\(\rho_b\): Densidad aparente del medio.</p>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Otros parámetros:</strong></p>
+                        <p>\(H\): Altura de la pila desde su punto más bajo hasta la boca del silo.</p>
+                        <p>\(\beta\): Ángulo de la pared del silo medido desde la vertical.</p>
+                        <p>\(\alpha\): Ángulo de la pared del silo medido desde la horizontal.</p>
+                        <p>\(\emptyset_d\): Ángulo entre la tangente a la zona de estancamiento en el orificio y la horizontal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: Análisis dimensional                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Análisis dimensional</h2>
+            <p style="font-size:0.5em;">Resulta natural suponer que el caudal \(W\) depende de los siguientes parámetros:</p>
+            <div class="eq-box" style="font-size:0.6em;">
+                \(W = f(\rho_b,\, H,\, d,\, D_0,\, g,\, \mu,\, \beta,\, D)\)
+            </div>
+            <p style="font-size:0.5em; color:var(--color-mauve); font-style:italic;">Si se trata de silos cónicos el ángulo de pared también influye sobre el caudal másico.</p>
+            <div class="two-col" style="font-size:0.5em;">
+                <div>
+                    <p>Empíricamente se encuentra que \(W\) <strong>no depende de</strong>:</p>
+                    <ul>
+                        <li>\(H\) si \(H &gt; 2\,D_0\) y \(H &gt; 2{,}5D\)</li>
+                        <li>\(D\) si \(D &gt; 2{,}5\,D_0\) y \(D &gt; D_0 + 30d\) en silos cilíndricos</li>
+                        <li>\(d\) si \(d \ll D_0\)</li>
+                    </ul>
+                    <p style="margin-top:0.5em;">Con estas simplificaciones:</p>
+                    <div class="eq-box">
+                        \(W = f(\rho_b,\, D_0,\, g,\, \mu,\, \beta)\)
+                    </div>
+                    <p>Teniendo en cuenta que \(\mu\) y \(\beta\) son adimensionales:</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u6b/img-017.jpg" style="max-height:250px;">
+                </div>
+            </div>
+            <div class="red-box" style="font-size:0.65em;">
+                \(W \propto A\,\rho_b\,\sqrt{g}\,D_0^{5/2}\)
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: Free fall arch                                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Enfoque: 'free fall arch'</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-018.jpg" style="max-height:280px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <div class="eq-box">
+                        \(W = \rho\, A\, v\)
+                    </div>
+                    <p>\(\rho\): densidad aparente en la salida.<br>
+                    \(\rho_b\): densidad en el interior.<br>
+                    \(\rho = C\,\rho_b\)</p>
+                    <div class="highlight-box" style="font-size:1.1em;">
+                        <strong>'free fall arch':</strong> \(\;v = \sqrt{g\,D_o}\)
+                    </div>
+                </div>
+            </div>
+            <div class="two-col" style="margin-top:0.5em; font-size:0.5em;">
+                <div style="text-align:center;">
+                    <h3 style="font-size:1.1em; color:var(--color-teal);">Caso 3D</h3>
+                    <p>Apertura circular de diámetro \(D_o\)</p>
+                    <p>\(A = \dfrac{\pi}{4}\,D_o^2\)</p>
+                    <div class="eq-box">\(W \propto \sqrt{g}\,D_o^{5/2}\)</div>
+                </div>
+                <div style="text-align:center;">
+                    <h3 style="font-size:1.1em; color:var(--color-mauve);">Caso 2D</h3>
+                    <p>Ranura de ancho \(e\) y largo \(D_o\)</p>
+                    <p>\(A = e\,D_o\)</p>
+                    <div class="red-box">\(W \propto \sqrt{g}\,D_o^{3/2}\)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: Ley de Beverloo-Hagen                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Ley de Beverloo - Hagen</h2>
+            <p style="font-size:0.5em;">Beverloo, Leniger y Van de Velde (1961) expresaron sus resultados experimentales obtenidos en silos cilíndricos graficando \(W^{2/5}\) en función de \(D_0\) obteniendo una recta.</p>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-026.jpg" style="max-height:250px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <p>Dispositivo experimental: recipiente cilíndrico con un agujero en el fondo, para evitar la influencia del ángulo de pared.</p>
+                    <p>Existe una <strong>apertura crítica \(z\)</strong> debajo de la cual no hay flujo. Observan que \(z\) depende fuertemente del tamaño de grano \(d\) y proponen una expresión modificada:</p>
+                </div>
+            </div>
+            <div class="red-box" style="font-size:0.7em; margin-top:0.5em;">
+                \(W \cong A\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\) <span style="color:var(--color-mauve); font-weight:700; margin-left:1em;">Ley de Beverloo</span>
+            </div>
+            <div style="font-size:0.45em; margin-top:0.5em;">
+                <p>\(A\) es independiente de \(\mu\) y toma un valor constante cercano a 0.58 (excepcionalmente supera 0.64 para partículas de baja rugosidad).</p>
+                <p>\(k\) toma valores constantes (\(k \approx 1.4\)), aunque puede llegar a ~3 para partículas facetadas.</p>
+            </div>
+            <div class="footnote">
+                Beverloo, W.A., Leniger, H.A. and Val de Velde, Chem. Eng. Sci. 15, 1961.<br>
+                Hagen G.H.L. Poggendorffs Ann. Phys. Chem. 46, 423 (1839) / Tighe, Sperl, Granular Matter 9, 141–144 (2007).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: Beverloo — Influencia tamaño de grano              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em; color:var(--color-mauve);">Ley de Beverloo – Hagen: Influencia del tamaño de grano</h2>
+            <div class="two-col">
+                <div>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        \(W \cong A\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+                    </div>
+                    <img src="media/extracted_u6b/img-027.jpg" style="max-height:280px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <p>El término \(kd\) se asocia a <strong>efectos de borde</strong> y es compatible con el <span style="color:var(--color-mauve);">efecto de anillo vacío</span> reportado por Brown y Richards (1970): zona anular adyacente al perímetro del orificio donde la densidad de partículas es menor que en la región central.</p>
+                    <p>El origen es poco claro: sugieren que puede deberse a una dilatación del medio causada por el cizallamiento cerca de las paredes de la boca de salida del silo.</p>
+                    <p>La expresión modifica su exponente de <strong>5/2</strong> a <strong>3/2</strong> para celdas bidimensionales.</p>
+                    <p>Esta fórmula es ampliamente aceptada y se conocen diversas modificaciones para casos particulares.</p>
+                </div>
+            </div>
+            <div class="footnote">
+                Brown, R.C and Richards, J.C, <em>Principles of powder mechanics</em>, Pergamon, 1970.<br>
+                Nedderman, R.M, <em>Statics and Kinematics of Granular Materials</em>, Cambridge Univ. Press, 1992.
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: Influencia tamaño de grano — validez              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Influencia del tamaño de grano</h2>
+            <div class="eq-box" style="font-size:0.65em;">
+                \(W \cong A\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+            </div>
+            <div style="font-size:0.5em; margin-top:0.5em;">
+                <p>La correlación es relativamente válida para tamaños de grano \(400\,\mu\text{m} \lt d \lt D_o/6\).</p>
+                <p>Por fuera de ese rango se observa la aparición de fenómenos de creación de <strong>bóvedas intermitentes</strong> (y en el límite, bóvedas estables), asistidas por la influencia del aire intersticial existente en el medio granular.</p>
+                <p>Existen correcciones que aproximan este comportamiento teniendo en cuenta la importancia del <strong>fluido circundante</strong>.</p>
+            </div>
+            <div class="footnote">
+                Le Pennec, T., <em>Ecoulements Granulaires: Etude Expérimentale des Regimes Intermittents et Oscillants</em> (Thèse Doctorat), Université de Rennes, 1997.
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: Corrección Rose y Tanaka                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em; color:var(--color-mauve);">Caudal — Corrección de Rose y Tanaka</h2>
+            <p style="font-size:0.45em;">La expresión de Beverloo puede ser complementada con un trabajo previo de Rose y Tanaka para silos cónicos, que tiene en cuenta la influencia del ángulo de la pared \(\beta\) respecto de la vertical y el ángulo de la zona de estancamiento \(\emptyset_d\). La expresión considerando \((D - kd)^{5/2}\):</p>
+            <div class="two-col">
+                <div style="font-size:0.5em;">
+                    <p style="color:var(--color-mauve);"><strong>Para \(\beta \lt 90° - \emptyset_d\):</strong></p>
+                    <div class="eq-box">
+                        \(W \cong W_\text{Beverloo}\,[\tan(\beta)\,\tan(\phi_d)]^{-0{,}35}\)
+                    </div>
+                    <table style="font-size:0.9em; width:auto; margin-top:0.5em;">
+                        <tr><th>\(\alpha\)</th><th>\(\beta\)</th><th>\([\tan\beta\,\tan\phi_d]^{-0{,}35}\)</th></tr>
+                        <tr><td>30°</td><td>60°</td><td>0.82</td></tr>
+                        <tr><td>45°</td><td>45°</td><td>1</td></tr>
+                        <tr><td>60°</td><td>30°</td><td>1.21</td></tr>
+                        <tr><td>75°</td><td>15°</td><td>1.58</td></tr>
+                    </table>
+                    <p style="color:var(--color-teal); margin-top:0.3em;"><strong>Para \(\beta &gt; 90° - \emptyset_d\):</strong></p>
+                    <div class="eq-box">\(W \cong W_\text{Beverloo}\)</div>
+                </div>
+                <div>
+                    <img src="media/extracted_u6b/img-033.jpg" style="max-height:350px;">
+                </div>
+            </div>
+            <p style="font-size:0.45em;">La determinación de \(\emptyset_d\) debe hacerse experimentalmente, tomándose el valor de 45° para casos de ausencia de información.</p>
+            <div class="footnote">Rose, H.F. y Tanaka, T. <em>The engineer 208</em>, London, Oct. 1956.</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: Corrección Fowler y Glastonbury                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em; color:var(--color-mauve);">Caudal — Orificios no circulares: Fowler y Glastonbury</h2>
+            <p style="font-size:0.45em;">Si el orificio de descarga no es circular, la expresión de Beverloo puede modificarse según Fowler y Glastonbury (1959):</p>
+            <div class="two-col" style="font-size:0.5em;">
+                <div>
+                    <div class="highlight-box">
+                        <p>\(D_H^*\): diámetro hidráulico de la sección no circular:</p>
+                        <p>\(D^* = 4\,A^* / P_A\), con \(A\) el área y \(P_A\) el perímetro</p>
+                        <p>\(A^*\): área calculada con ese diámetro.</p>
+                    </div>
+                    <p>Concepto análogo al de Mecánica de Fluidos para evacuación de conductos no circulares.</p>
+                </div>
+                <div>
+                    <p>Para áreas circulares, con corrección de anillo vacío:</p>
+                    <div class="eq-box">
+                        \(D_H^* = D_0 - kd\)
+                    </div>
+                    <div class="eq-box">
+                        \(A^* = \dfrac{\pi}{4}\,(D_0 - kd)^2\)
+                    </div>
+                </div>
+            </div>
+            <div class="red-box" style="font-size:0.65em; margin-top:0.5em;">
+                \(W = \dfrac{4C}{\pi}\,A^*\,\rho_b\,\sqrt{g\,D_H^*}\)
+            </div>
+            <div class="footnote">Fowler, R.T. and Glastonbury, J.G., <em>Chemical Engineering Sci. 10</em>, 1959.</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: Orificios rectangulares                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Orificios rectangulares</h2>
+            <p style="font-size:0.5em;">Para un orificio rectangular de área \(a \times b\):</p>
+            <div class="eq-box" style="font-size:0.6em;">
+                \(W = \dfrac{4C}{\pi}\,A^*\,\rho_b\,\sqrt{g\,D_H^*}\)
+            </div>
+            <div style="font-size:0.55em; margin-top:0.5em;">
+                <div class="highlight-box">
+                    <p><strong style="color:var(--color-mauve);">Corrección de anillo vacío:</strong></p>
+                    <p>\(A^* = (a - kd)(b - kd)\)</p>
+                </div>
+                <div class="eq-box" style="margin-top:0.3em;">
+                    \(D_H^* = \dfrac{2\,(a - kd)(b - kd)}{(a + b - 2kd)}\)
+                </div>
+            </div>
+            <div class="red-box" style="font-size:0.6em; margin-top:0.5em;">
+                \(W = \dfrac{4C}{\pi}\,\rho_b\,\sqrt{2g}\,\dfrac{[(a - kd)(b - kd)]^{3/2}}{(a + b - 2kd)}\)
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: Corrección para D₀ muy pequeños                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em; color:var(--color-mauve);">Caudal — Corrección para \(D_0\) muy pequeños</h2>
+            <p style="font-size:0.5em;">Se observa que aún para \(D_o \approx d\) el flujo no cesa completamente. Cuando \(D_o\) es chico varía la densidad aparente cerca de la salida:</p>
+            <div class="eq-box" style="font-size:0.65em;">
+                \(\rho_b' = \rho_b\left(1 - \dfrac{1}{2}\,e^{-b\left(\frac{D_o}{2} - 1\right)}\right)\)
+            </div>
+            <div style="font-size:0.5em; margin-top:0.5em;">
+                <div class="red-box" style="font-size:1.1em;">
+                    \(W = W_\text{BEV}\left(1 - \dfrac{1}{2}\,e^{-b\left(\frac{D_o}{2} - 1\right)}\right)\)
+                </div>
+                <p style="margin-top:0.3em;">Si \(k = 1\):</p>
+                <div class="eq-box" style="font-size:1.1em;">
+                    \(W = C'\left(1 - \dfrac{1}{2}\,e^{-b\left(\frac{D_o}{2} - 1\right)}\right)\left(\dfrac{D_o}{d} - 1\right)^{5/2}\)
+                </div>
+                <p>Únicos parámetros de ajuste: \(C' = 65\) y \(b = 0.051\).</p>
+            </div>
+            <div class="footnote">
+                C. Mankoc et al, Gran. Matt. 9, 407-414 (2007).<br>
+                C. Mankoc et al., Phys. Rev. E 80, 011309 (2009).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: Silos cuasi bidimensionales — Choi et al.         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em; color:var(--color-mauve);">Caudal — Silos cuasi bidimensionales: Choi, Kudrolli y Bazant</h2>
+            <div style="font-size:0.5em;">
+                <div class="def-box">
+                    <p><strong>Silo bidimensional:</strong> cuando su espesor solo puede albergar una única capa de granos y el tamaño del orificio de vaciado es mucho menor que las dimensiones laterales del silo.</p>
+                </div>
+                <div class="def-box" style="margin-top:0.3em;">
+                    <p><strong>Silo cuasi-bidimensional:</strong> cuando su espesor alberga más de una capa de material pero éste aún resulta mucho menor que el resto de las dimensiones principales del silo.</p>
+                </div>
+                <p style="margin-top:0.5em;">Choi et al estudiaron el flujo de microesferas de vidrio (\(d = 3\) mm) en este tipo de silo con fondo plano y con fondo inclinado.</p>
+                <p>Midieron el campo de velocidades usando la técnica de seguimiento de partículas determinando el caudal volumétrico.</p>
+                <p>Variaron el ancho de boca \(D_0\) y el ángulo de pared \(\alpha\) para el caso de fondo inclinado.</p>
+                <div class="eq-box" style="margin-top:0.5em;">
+                    \(v^* = \dfrac{\int V_Y\, dX}{L}\) <span style="font-size:0.8em; color:var(--color-mauve); margin-left:0.5em;">velocidad media: \(L\) ancho lateral, \(V_Y\) velocidad vertical</span>
+                </div>
+            </div>
+            <div class="footnote">
+                Choi, J., Kudrolli, A., Bazant, M, <em>Velocity profile of granular flows inside silos and hoppers</em>, MIT, 2005.<br>
+                Choi J., Kudrolli A., Rosales R. and Bazant, M., Phys. Rev. Lett. 92, 174301, 2004.
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: Choi et al. — Resultados                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em; color:var(--color-mauve);">Silos cuasi bidimensionales — Resultados</h2>
+            <p style="font-size:0.45em;">Comprueban que el caudal volumétrico, representado por la velocidad media, resulta proporcional a \(D_0^{3/2}\) y que aumenta con \(\alpha\).</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6b/img-041.jpg" style="max-height:280px;">
+                    <p style="font-size:0.4em;">Dependencia de la velocidad media vertical con el ancho efectivo de boca normalizado con el tamaño de grano.</p>
+                    <p style="font-size:0.5em;">\(v^* = 0.63\,\left(\dfrac{D_o}{d} - 1\right)^{1.48}\)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6b/img-042.jpg" style="max-height:250px;">
+                    <p style="font-size:0.4em;">Dependencia de la velocidad media vertical con el ángulo de pared \(\alpha\).</p>
+                </div>
+            </div>
+            <div class="red-box" style="font-size:0.6em; margin-top:0.3em;">
+                \(W \propto \rho_b\,\sqrt{g}\,(E - d)(D_0 - kd)^{3/2}\)
+                <span style="font-size:0.8em; margin-left:0.5em;">\(E\): espesor entre las placas paralelas</span>
+            </div>
+            <div class="footnote">Choi, J., Kudrolli, A., Bazant, M, <em>Velocity profile of granular flows inside silos and hoppers</em>, MIT, 2005.</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: Influencia del aire                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em; color:var(--color-mauve);">Caudal — Influencia del aire</h2>
+            <p style="font-size:0.5em;">Se agrega un gradiente de presión opuesto a la gravedad.</p>
+            <div class="eq-box" style="font-size:0.65em;">
+                \(W = C\,\rho_b\,\sqrt{g - \dfrac{1}{\rho_b}\,\dfrac{\partial p}{\partial r}}\;(D_o - kd)^{5/2}\)
+            </div>
+            <div style="font-size:0.5em; margin-top:1em;">
+                <h3 style="font-size:1.1em; color:var(--color-teal);">Ecuación Carman-Kozeny</h3>
+                <div class="eq-box">
+                    \(\dfrac{\partial p}{\partial r} = -\dfrac{K\,\eta}{d^2}\left(\dfrac{1 - \varepsilon_b}{\varepsilon_b}\right)^2 u_r\)
+                </div>
+                <p>con \(u_r = u_\text{gas} - v_\text{granos-sal}\), \(K \cong 180\) (constante empírica), \(\varepsilon\): porosidad, \(\eta\): viscosidad.</p>
+            </div>
+            <div class="footnote">
+                Altenkirch R. A. &amp; Eichhorn R. <em>AIChE Journal</em>, <strong>27</strong>, 593 (1981).<br>
+                Hilton J.E &amp; Cleary P.W. Phys Rev E <strong>84</strong>, 011307 (2011).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: Influencia del aire — Reloj de arena              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em; color:var(--color-mauve);">Influencia del aire — El reloj de arena</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-045.jpg" style="max-height:200px;">
+                    <img src="media/extracted_u6b/img-046.jpg" style="max-height:250px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <div class="highlight-box">
+                        <p>Bolitas de vidrio de diámetro \(d = 41\) a \(160\,\mu\)m</p>
+                        <p>Cámaras aisladas (\(V = 200\) ml)</p>
+                        <p>Orificio de radio \(R = 1\) mm</p>
+                        <p>\(\theta = 45° – 56°\)</p>
+                    </div>
+                    <p>En particular:</p>
+                    <ul>
+                        <li>\(d \lt 40\,\mu\)m (&uarr;cohesión), <strong>no hay flujo</strong></li>
+                        <li>\(40\,\mu\text{m} \lt d \lt 300\,\mu\)m, <strong>intermitente</strong> — período constante</li>
+                        <li>\(d &gt; 300\,\mu\)m (&uarr;permeabilidad), <strong>continuo</strong> — caudal constante</li>
+                    </ul>
+                    <p>Un arco se estabiliza a 0,1 o 1 mBar</p>
+                    <div class="def-box">
+                        <p><strong>Fase activa:</strong> caen granos y aumenta P en la cámara inferior &rArr; el gradiente de P detiene el flujo</p>
+                    </div>
+                    <div class="def-box">
+                        <p><strong>Fase inactiva:</strong> el flujo de aire hacia arriba &rArr; aumentar P en la cámara superior &rArr; invierte el gradiente de P &rArr; se activa el flujo</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footnote">
+                Wu X-l. <em>et al</em> PRL 71 1363-1366 (1993); Le Pennec T. <em>et al</em>, PRE 53, 2257–2264 (1996).
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: Efecto Janssen — Dispositivo                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em; color:var(--color-mauve);">Efecto Janssen — Influencia de la movilización de la fricción</h2>
+            <div class="two-col">
+                <div style="font-size:0.5em;">
+                    <p>Diámetro interno \(D_c = 51{,}1\) mm,<br>
+                    Diámetro externo \(D_e = 60\) mm<br>
+                    Altura \(H = 80\) cm.<br>
+                    Orificio centrado de diámetro \(d\)<br>
+                    (\(d = 5\) mm y \(d = 10\) mm).</p>
+                    <p style="margin-top:0.5em;">Material granular:<br>
+                    2 kg de esferas de vidrio polidispersas de diámetro \(d_g\) obtenidas de las siguientes muestras:<br>
+                    (75–150) \(\mu\)m, (150–250) \(\mu\)m, (250–425) \(\mu\)m y (425–600) \(\mu\)m.</p>
+                </div>
+                <div>
+                    <img src="media/extracted_u6b/img-048.jpg" style="max-height:450px;">
+                </div>
+            </div>
+            <div class="footnote">Perge et al, Phys Rev E 85, 021303 (2012).</div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: Efecto Janssen — Resultados                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em; color:var(--color-mauve);">Efecto Janssen — Movilización de la fricción</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6b/img-052.jpg" style="max-height:180px;">
+                    <img src="media/extracted_u6b/img-053.jpg" style="max-height:180px;">
+                    <img src="media/extracted_u6b/img-054.jpg" style="max-height:150px;">
+                </div>
+                <div style="font-size:0.42em;">
+                    <h3 style="font-size:1.3em; color:var(--color-teal);">Estático: llenado</h3>
+                    <p><strong style="color:var(--color-mauve);">Sin movilización (&loz;):</strong> no se observa efecto Janssen.</p>
+                    <p><strong>Con movilización (&block;):</strong> se observa efecto Janssen: al aumentar la cantidad de granos la fuerza sobre la base (\(M_\text{app}\)) satura (~85 g) debido a redireccionamientos de la fuerza a la pared. Se pierde cuando \(h \lt D/2\).</p>
+                    <h3 style="font-size:1.3em; color:var(--color-teal); margin-top:0.5em;">Dinámico: descarga</h3>
+                    <p><strong style="color:var(--color-mauve);">Sin movilización (&mdash;):</strong> al inicio no se observa efecto Janssen, luego el proceso moviliza la fricción por lo que hacia el final la fuerza en la base satura (~200 g). Se pierde cuando \(h \lt D\).</p>
+                    <p><strong>Con movilización (&hellip;):</strong> la fuerza sobre la base satura (~200 g) mientras decrece la cantidad de material dentro del silo. Se pierde cuando \(h \lt D\).</p>
+                </div>
+            </div>
+            <div class="footnote">Perge et al, Phys Rev E 85, 021303 (2012).</div>
+        </div>
+    </section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/zoom/zoom.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealHighlight, RevealNotes, RevealZoom, RevealMath.MathJax3 ]
+    });
+</script>
+</body>
+</html>

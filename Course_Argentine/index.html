@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Argentine — Geofísica de Medios Granulares</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f3f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+        }
+        h1 {
+            font-size: 2.2em;
+            color: var(--color-title);
+            margin-bottom: 0.3em;
+        }
+        .subtitle {
+            font-size: 1em;
+            color: #888;
+            margin-bottom: 2em;
+            letter-spacing: 0.1em;
+        }
+        .cards {
+            display: flex;
+            gap: 2em;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            padding: 2em;
+            width: 340px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid var(--color-teal);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .card:nth-child(4n+2) { border-left-color: var(--color-mauve); }
+        .card:nth-child(4n+3) { border-left-color: var(--color-rose); }
+        .card:nth-child(4n+4) { border-left-color: var(--color-dark); }
+        .card h2 {
+            font-size: 1.2em;
+            color: var(--color-dark);
+            margin-bottom: 0.5em;
+        }
+        .card p {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.6;
+        }
+        .card .tag {
+            display: inline-block;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.3em 0.8em;
+            border-radius: 4px;
+            margin-bottom: 0.8em;
+        }
+        .card:nth-child(4n+1) .tag { background: rgba(107,154,154,0.15); color: var(--color-teal); }
+        .card:nth-child(4n+2) .tag { background: rgba(139,94,107,0.15); color: var(--color-mauve); }
+        .card:nth-child(4n+3) .tag { background: rgba(196,160,160,0.15); color: var(--color-rose); }
+        .card:nth-child(4n+4) .tag { background: rgba(58,85,86,0.15); color: var(--color-dark); }
+        footer {
+            margin-top: 3em;
+            font-size: 0.75em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Geofísica de Medios Granulares</h1>
+    <p class="subtitle">COURSE ARGENTINE — Thomas Gallot</p>
+    <div class="cards">
+        <a href="clase1_Introduction.html" class="card">
+            <span class="tag">CLASE 1</span>
+            <h2>Introducción a los medios granulares</h2>
+            <p>Definiciones, escalas, aplicaciones industriales y geofísicas, segregación, cadenas de fuerza.</p>
+        </a>
+        <a href="clase2_Estructura.html" class="card">
+            <span class="tag">CLASE 2</span>
+            <h2>Descripción estructural de empaquetamientos</h2>
+            <p>Ángulo de reposo, compacidad, número de coordinación, correlación de pares, autocovarianza, orden orientacional, tensor de trama, Voronoi, arcos.</p>
+        </a>
+        <a href="clase3_Tensiones.html" class="card">
+            <span class="tag">CLASE 3</span>
+            <h2>Descripción del estado tensional</h2>
+            <p>Fenomenología, tensor de Cauchy, círculo de Mohr, criterio Mohr–Coulomb, efecto Janssen, modelo OSL, redes de fuerza.</p>
+        </a>
+        <a href="clase4_Compactacion.html" class="card">
+            <span class="tag">CLASE 4</span>
+            <h2>Compactación de materiales granulares</h2>
+            <p>Compactación por vibración, modelos logarítmicos, dinámica lenta, Chicago experiments, memoria reversible.</p>
+        </a>
+        <a href="clase4b_Compactacion2.html" class="card">
+            <span class="tag">CLASE 4b</span>
+            <h2>Compactación — Parte II</h2>
+            <p>Segregación por vibración, nuez de Brasil, convección granular, modelos de segregación, compactación por cizallamiento.</p>
+        </a>
+        <a href="clase5_Estabilidad.html" class="card">
+            <span class="tag">CLASE 5</span>
+            <h2>Estabilidad de medios granulares</h2>
+            <p>Criterio Mohr–Coulomb, envolvente de falla, cohesión, ángulo de fricción interna, celda de Jenike, celda de Schulze, función de flujo, diseño de silos.</p>
+        </a>
+        <a href="clase6_Flujo.html" class="card">
+            <span class="tag">CLASE 6</span>
+            <h2>Flujo granular — Parte I</h2>
+            <p>Flujo en canal 2D, reología inercial local, número de inercia, relaciones constitutivas μ(I) y φ(I), flujo en silos y tolvas, tipos de flujo, ángulo de fricción de pared.</p>
+        </a>
+        <a href="clase6b_Flujo2.html" class="card">
+            <span class="tag">CLASE 6b</span>
+            <h2>Flujo granular — Parte II: Caudal</h2>
+            <p>Caudal en silos, ley de Beverloo-Hagen, correcciones (Rose-Tanaka, Fowler-Glastonbury, orificios rectangulares), influencia del aire, reloj de arena, efecto Janssen dinámico.</p>
+        </a>
+    </div>
+    <footer>Thomas Gallot — Universidad de la República</footer>
+</body>
+</html>

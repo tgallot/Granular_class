@@ -1,0 +1,1583 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 5 — Estabilidad Granular</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+        .reveal .three-col { display: flex; gap: 1em; }
+        .reveal .three-col > div { flex: 1; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Estabilidad Granular
+            </h1>
+        </div>
+        <div style="text-align:center; margin-top:0.5em;">
+            <img src="media/extracted_u5/img-005.jpg" alt="Tilting box" style="max-height:350px; border-radius:8px;">
+        </div>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            María Alejandra Aguirre — Mayo 2025<br>
+            Departamento de Física — FCEN — UBA — CONICET
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: ESTABILIDAD GRANO SOBRE LECHO LISO                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Estabilidad de un grano sobre un lecho liso</h2>
+            <div class="two-col">
+                <div style="flex:1;">
+                    <img src="media/extracted_u5/img-007.png" alt="Force diagram" style="max-height:280px;">
+                    <p style="font-size:0.5em; margin-top:0.5em;">
+                        \(\odot\;\vec{\Omega}\) &nbsp; \(\otimes\;\vec{\gamma}\)
+                    </p>
+                </div>
+                <div style="flex:1.3; font-size:0.55em;">
+                    <p><strong>Ecuaciones de movimiento:</strong></p>
+                    <p>\(x)\; m\,g\,\sin\theta - F_r = m\,a_{CM}\)</p>
+                    <p>\(y)\; N - m\,g\,\cos\theta = 0 \;\Rightarrow\; N = m\,g\,\cos\theta\)</p>
+                    <div class="highlight-box" style="margin-top:1em;">
+                        <p><em>Si el grano está en reposo, se desestabiliza y desliza cuando se alcanza el ángulo de estabilidad \(\theta_S\):</em></p>
+                        <p>\[m\,g\,\sin\theta - \mu_S\,N = 0\]</p>
+                    </div>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        \[\mu_S = \frac{m\,g\,\sin\theta}{N} = \tan\theta_S\]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: GRANO SOBRE SUPERFICIE RUGOSA INCLINADA            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Estabilidad de un grano sobre una superficie rugosa inclinada</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u5/img-009.jpg" alt="Ball on rough surface" style="max-height:200px;">
+                    <p style="font-size:0.5em; margin-top:0.5em;">Movimiento controlado por:<br>
+                    &bull; la pendiente<br>
+                    &bull; la rugosidad aparente</p>
+                </div>
+                <div>
+                    <p style="font-size:0.55em;">Lecho desordenado: esferas colocadas al azar con distancias entre 2r y 4r.</p>
+                    <p style="font-size:0.6em; margin-top:0.3em;">Suavidad: \(\Phi = \dfrac{R}{r}\)</p>
+                    <p style="font-size:0.6em;">Inclinación del plano inclinado: \(\theta\)</p>
+                    <img src="media/extracted_u5/img-010.jpg" alt="Chain of balls" style="max-height:180px;">
+                </div>
+            </div>
+            <p class="footnote">Jaeger et al, Europhys Lett. 11(7) pp 619-624 (1990) &bull; Riguidel et al, J. Phys. J France 4 (1994) 261-272</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: SUPERFICIE RUGOSA - DATOS                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Estabilidad de un grano sobre una superficie rugosa inclinada</h2>
+            <div class="two-col" style="font-size:0.5em;">
+                <div>
+                    <p><em>Configuración RSA (random sequential absortion), L = 180 r.</em></p>
+                    <div style="display:flex; gap:0.5em;">
+                        <img src="media/extracted_u5/img-011.jpg" alt="RSA surface 1" style="max-height:140px;">
+                        <img src="media/extracted_u5/img-012.jpg" alt="RSA surface 2" style="max-height:140px;">
+                    </div>
+                    <p style="margin-top:0.3em;"><em>Esferas de vidrio de radio r = 0.5mm<br>Tamaño: 2m x 0.7m, C ≅ 0.7</em></p>
+                    <p style="font-size:0.9em; color:#c0392b;">Esferas de acero de diámetro R</p>
+                    <img src="media/extracted_u5/img-013.jpg" alt="Cumulative distribution" style="max-height:170px;">
+                    <p>Distribución acumulada \(N(\theta \leq \theta_s)\)</p>
+                </div>
+                <div>
+                    <p style="font-size:1.1em;">Suavidad: \(\Phi = \dfrac{R}{r}\)</p>
+                    <p>\(\theta_s(\phi)\)</p>
+                    <div class="eq-box">
+                        \[\theta_s \propto \Phi^{-0.8}\]
+                    </div>
+                    <img src="media/extracted_u5/img-014.jpg" alt="Theta_s vs Phi" style="max-height:200px;">
+                </div>
+            </div>
+            <p class="footnote">Riguidel et al, J. Phys. J France 4 (1994) 261-272</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: MOVIMIENTO GRANO SOBRE LECHO GRANULAR              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Movimiento de un grano sobre un lecho granular</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.55em;">Suavidad: \(\Phi = \dfrac{R}{r}\) &emsp; Inclinación: \(\theta\)</p>
+                    <img src="media/extracted_u5/img-015.jpg" alt="Phase diagram" style="max-height:350px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p style="color:#c0392b;"><strong>Régimen A:</strong> movimiento desacelerado</p>
+                    <p style="color:#c0392b;"><strong>Régimen B:</strong> movimiento con velocidad constante y camino libre medio menor a la longitud de sistema de 2m (entrampamiento súbito)</p>
+                    <p style="color:#c0392b;"><strong>Régimen C:</strong> movimiento con velocidad constante y camino libre medio mayor a la longitud de sistema</p>
+                    <p style="color:#c0392b;"><strong>Régimen D:</strong> movimiento acelerado</p>
+                    <div class="highlight-box" style="margin-top:1em;">
+                        <p>En el régimen de velocidad constante: la energía potencial gravitatoria que se gana se compensa con las pérdidas debidas a las colisiones y no tanto por fricción.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Riguidel et al, J. Phys. J France 4 (1994) 261-272</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: MOVIMIENTO - DIFERENTES MATERIALES                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Movimiento de un grano sobre un lecho granular</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u5/img-016.jpg" alt="Phase diagrams materials" style="max-height:420px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p>&bull; Sustrato de esferas de radio medio r (vidrio y arena)</p>
+                    <p>&bull; Granos libres de radio medio R (acero, vidrio y plástico)</p>
+                    <p style="margin-top:0.5em;">Suavidad: \(\Phi = \dfrac{R}{r}\) &emsp; \(\theta\)</p>
+                    <p style="color:#c0392b;"><strong>Régimen A:</strong> movimiento desacelerado</p>
+                    <p style="color:#c0392b;"><strong>Régimen B:</strong> movimiento con velocidad constante</p>
+                    <p style="color:#c0392b;"><strong>Régimen C:</strong> movimiento acelerado</p>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        \[\theta_s \propto \Phi^{-0.6}\]
+                    </div>
+                    <p>\(\theta_{A-B}\) <em>ley de potencia</em> &emsp; \(\theta_{B-C}\) <em>exponencial</em></p>
+                </div>
+            </div>
+            <p class="footnote">Aguirre et al. Powder Tech., 92, 75-80 (1997)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: MOVIMIENTO - ESCALEO                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Movimiento de un grano sobre un lecho granular</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.5em;">\(\theta_{AB} \propto \Phi^{-1.3}\)</p>
+                    <img src="media/extracted_u5/img-017.jpg" alt="theta_AB vs Phi" style="max-height:180px;">
+                    <p style="font-size:0.5em;">\(\theta_s \propto \Phi^{-0.6}\)</p>
+                    <img src="media/extracted_u5/img-018.jpg" alt="log theta_s vs log Phi" style="max-height:170px;">
+                </div>
+                <div>
+                    <img src="media/extracted_u5/img-019.jpg" alt="V vs sin theta" style="max-height:250px;">
+                    <div style="font-size:0.55em; margin-top:0.5em;">
+                        <p>\(\Phi = \dfrac{R}{r}\)</p>
+                        <p>\(F_{dis} \propto \langle V \rangle\)</p>
+                        <div class="eq-box">
+                            \[\langle V \rangle \propto C_{sup}\,\Phi^{1.4}\,\sin\theta\]
+                        </div>
+                        <p style="font-size:0.85em;">\(\theta_{AB}\) : es independiente de la energía cinética inicial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: ESTABILIDAD SISTEMA GRANULAR                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Estabilidad de un sistema granular</h2>
+            <p style="font-size:0.6em;">La configuración del sistema granular depende de su "historia"</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-020.jpg" alt="States under perturbation" style="max-height:350px;">
+                    <p style="font-size:0.4em;"><strong>Figura 1:</strong> Comportamiento de los distintos estados de agregación ordinarios (sólido, líquido y gas) y de un material granular bajo perturbación.</p>
+                </div>
+                <div style="font-size:0.55em;">
+                    <p style="color:#c0392b;">Se inyecta energía</p>
+                    <div class="highlight-box" style="margin-top:1em;">
+                        <p>&bull; Todos vuelven a su estado inicial excepto el SG</p>
+                        <p>&bull; La configuración del sistema granular depende de su "historia"</p>
+                        <p>&bull; Al ser perturbado se comporta mas como un líquido no newtoniano que como un sólido</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">J. R. Darias: Acta Científica Venezolana, 65(1): 62-72, 2014</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: DILATANCIA DE REYNOLDS-TAYLOR                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular</h2>
+            <h3 style="font-size:0.7em; color:var(--color-teal);">Principio de dilatancia de Reynolds - Taylor</h3>
+            <p style="font-size:0.5em;">En 1885 Reynolds observa que un sistema de granos con una elevada fracción de compactación envueltos por una cubierta flexible puede aumentar su volumen si este es deformado.</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-021.jpg" alt="De Gennes dilatancy demo" style="max-height:300px; border-radius:6px;">
+                <p style="font-size:0.4em; color:#888;">Video: Pierre-Gilles de Gennes</p>
+            </div>
+            <p style="font-size:0.48em; font-style:italic;">
+                "...un medio granular altamente compactado en el interior de un envoltorio flexible incrementa su volumen cuando el envoltorio es deformado. Si el envoltorio es inextensible pero deformable la configuración del medio granular no se puede deformar a no ser que se rompa el envoltorio o se fracture el medio granular."
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: DILATANCIA - GEOMETRÍA                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Dilatancia</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-022.jpg" alt="Rhombus geometry" style="max-height:280px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <p>\(h_H\): diagonal horizontal del romboide</p>
+                    <p>\(h_V\): diagonal vertical del romboide</p>
+                    <p>\(S\): área del romboide</p>
+                    <div class="eq-box">\[S = \frac{h_V\,h_H}{2}\]</div>
+                    <p>Dentro del romboide: intersticio y material sólido.</p>
+                    <p>Área del material sólido = área de un disco de radio R.</p>
+                </div>
+            </div>
+            <div style="font-size:0.5em;">
+                <p>Área total ocupada:</p>
+                <div class="eq-box">\[S_T = 3\pi R^2 + \frac{h_V\,h_H}{2}\]</div>
+                <p>Usando el teorema de Pitágoras: \(\left(\frac{h_V}{2}\right)^2 + \left(\frac{h_H}{2}\right)^2 = (2R)^2 \Rightarrow h_V^2 + h_H^2 = 16R^2\)</p>
+                <div class="eq-box">\[S_T = 3\pi R^2 + 2R\,h_H\sqrt{1 - \left[\frac{h_H}{4R}\right]^2} = 3\pi R^2 + \Delta S_T\]</div>
+            </div>
+            <p class="footnote">Duran, 'Sands, powders and grains', Springer.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: DILATANCIA - CONFIGURACIONES                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Dilatancia</h2>
+            <div style="font-size:0.5em; text-align:center;">
+                <p>\[\Rightarrow\; S_T = 3\pi R^2 + \frac{h_H\sqrt{16R^2 - h_H^2}}{2} = 3\pi R^2 + 2R\,h_H\sqrt{1 - \left[\frac{h_H}{4R}\right]^2} = 3\pi R^2 + \Delta S_T\]</p>
+            </div>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-024.jpg" alt="Compressed config" style="max-height:250px;">
+                    <p style="font-size:0.45em;">\(2R \leq h_H \leq 2R\sqrt{2}\)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-025.jpg" alt="Expanded config" style="max-height:250px;">
+                    <p style="font-size:0.45em;">\(\cos\alpha = \cos\frac{\pi}{6} = \frac{\sqrt{2}}{2}\)</p>
+                </div>
+            </div>
+            <div style="font-size:0.48em; margin-top:0.5em;">
+                <p>\(S_T\) ocupada tiene dos componentes:</p>
+                <p>&bull; superficie ocupada por los discos externos al romboide (constante)</p>
+                <p>&bull; superficie interna al mismo (variable): disco (constante) + intersticio (variable con \(h_H\))</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: DILATANCIA - GRÁFICO                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Dilatancia</h2>
+            <p style="font-size:0.48em;">Si inicialmente los discos se tocan horizontalmente (\(h_H=2R\)) y se aplica una compresión, se observa una deformación horizontal. El área del empaquetamiento interno al paralelogramo \(\Delta S_T\) aumenta (dilatancia) hasta un máximo cuando sus diagonales tienen igual valor.</p>
+            <div style="text-align:center;">
+                <p style="font-size:0.55em;">\[2h_H^2 = 16R^2 \;\Rightarrow\; h_V = h_H = 2R\sqrt{2}\]</p>
+            </div>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u5/img-026.jpg" alt="Delta S_T graph" style="max-height:280px;">
+                    <p style="font-size:0.4em;">\(2R \leq h_H \leq 2R\sqrt{2}\)</p>
+                </div>
+                <div style="font-size:0.5em;">
+                    <div class="eq-box">\[\Delta S_T = 2R\,h_H\sqrt{1 - \left[\frac{h_H}{4R}\right]^2}\]</div>
+                    <p style="color:#c0392b; margin-top:0.5em;">No se consideró acá el grado de compactación inicial lo que afecta a la evolución de la deformación.<br>Si el sistema está poco compacto: se verá primero una compresión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: DILATANCIA - CIZALLA                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Dilatancia</h2>
+            <div class="two-col">
+                <div>
+                    <div style="display:flex; gap:0.5em;">
+                        <img src="media/extracted_u5/img-029.jpg" alt="Shear box 1" style="max-height:180px;">
+                        <img src="media/extracted_u5/img-030.jpg" alt="Shear box 2" style="max-height:180px;">
+                    </div>
+                    <p style="font-size:0.5em; margin-top:0.5em;">
+                        <em>Esfuerzo tangencial:</em> \(\tau\)<br>
+                        <em>Esfuerzo normal:</em> \(\sigma_n\)<br>
+                        <em>Deformación:</em> \(\gamma\)
+                    </p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-031.jpg" alt="epsilon_v vs gamma" style="max-height:250px;">
+                    <p style="font-size:0.5em; color:#c0392b;">Si el sistema está poco compacto:<br>se verá primero una compresión.</p>
+                </div>
+            </div>
+            <p class="footnote">Houlsby G.T. Report OUEL 1888 (1991)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: DILATANCIA - CIZALLA FOTOS                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Dilatancia</h2>
+            <p style="font-size:0.55em;">La cizalla produce la dilatancia que permite destrabar el sistema</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-032.jpg" alt="Before shearing" style="max-height:180px;">
+                    <img src="media/extracted_u5/img-033.jpg" alt="After shearing" style="max-height:180px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-034.jpg" alt="Reynolds dilatancy diagram" style="max-height:190px;">
+                    <img src="media/extracted_u5/img-035.jpg" alt="Couette cell" style="max-height:150px;">
+                </div>
+            </div>
+            <p class="footnote">Hartley R. &amp; Behringer R., Nature, 421, 928 (2003)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: ÁNGULOS CARACTERÍSTICOS                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <div class="two-col">
+                <div style="font-size:0.5em;">
+                    <p>Al formar un apilamiento granular, la superficie libre forma un ángulo con la horizontal que crece con el agregado de material hasta alcanzar el <em>"ángulo de máxima estabilidad o ángulo de reposo estático \(\theta_M\)"</em>.</p>
+                    <p style="margin-top:0.5em;">Si se continúa agregando material a la pila se produce una avalancha que disminuye el ángulo hasta el llamado <em>"ángulo de reposo \(\theta_R\) o ángulo de reposo dinámico"</em>.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p>Un ulterior agregado de material hace que el proceso se repita y que el ángulo del apilamiento oscile entre \(\theta_M\) y \(\theta_R\).</p>
+                        <p>El sistema granular se comporta mas como un fluido no newtoniano que como un sólido.</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-036.jpg" alt="Sand pile" style="max-height:350px; border-radius:6px;">
+                    <p style="font-size:0.4em;">Video: Pierre-Gilles de Gennes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: ÁNGULOS - FRICCIÓN                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <div class="two-col" style="font-size:0.48em;">
+                <div>
+                    <p>Un apilamiento que alcanza \(\theta_M\), se torna inestable.</p>
+                    <p>\(\mu\): coeficiente de fricción interna del material granular.</p>
+                    <img src="media/extracted_u5/img-037.jpg" alt="Pile diagram" style="max-height:180px;">
+                    <p>\(F_R = P\,\sin\theta_R\) &emsp; \(N = P\,\cos\theta_R\)</p>
+                    <p>\(\Rightarrow \tan\theta_R = \frac{F_R}{N} = \mu\)</p>
+                    <p>Analogamente: \(\tan\theta_M = \mu_S\)</p>
+                    <p style="margin-top:0.3em;">Para fluir: vencer fricción + dilatarse en \(\Delta\theta\):</p>
+                    <p>\(\theta_R + \Delta\theta = \theta_M\)</p>
+                </div>
+                <div>
+                    <p>\(\theta_R = \varphi\) es el ángulo de fricción interna<br>
+                    <span style="color:#c0392b;">Vale para empaquetamientos poco compactos.</span></p>
+                    <p style="margin-top:0.5em;">Experimento de cizalla:</p>
+                    <p>\(F = \mu\,N \;\Rightarrow\; \tau = \mu\,\sigma_n\)</p>
+                    <p style="margin-top:0.3em;">Expresión mas general (con dilatancia y cohesión):</p>
+                    <div class="eq-box">\[\tau = \mu\,\sigma_n + \tau_c\]</div>
+                    <img src="media/extracted_u5/img-039.jpg" alt="Sawtooth model" style="max-height:150px;">
+                    <p style="font-size:0.9em;">\(\frac{\tau}{\sigma'} = \tan\varphi' = \tan(\varphi + \Psi)\)</p>
+                    <p>\(\Psi\): ángulo de dilatancia &emsp; \(\sigma'\): esfuerzo normal efectivo</p>
+                </div>
+            </div>
+            <p class="footnote">Duran, Springer &bull; Metcalf, Int. J. Rock Mech. (1966) &bull; Staron et al, J. Rheology (2023)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: ÁNGULOS - DEFINICIONES                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <div style="font-size:0.55em;">
+                <p><span style="color:#8b0000;">&bull;</span> \(\theta_M\) : ángulo de movimiento o máximo de estabilidad <strong>(avalancha)</strong></p>
+                <p><span style="color:#8b0000;">&bull;</span> \(\theta_R\) : ángulo de reposo, \(\theta_R \lt \theta_M\)</p>
+                <p><span style="color:#8b0000;">&bull;</span> \(\delta = \theta_M - \theta_R\) : ángulo de relajación (2° para granos esféricos)</p>
+                <div class="highlight-box" style="margin-top:1em;">
+                    <p style="color:#c0392b;"><strong>Biestabilidad entre \(\theta_R \lt \theta \lt \theta_M\)</strong></p>
+                </div>
+                <p style="margin-top:0.5em;">&bull; Si \(\theta\) aumenta y \(\theta_R \lt \theta \lt \theta_M\) &rArr; sistema en reposo</p>
+                <p>Cuando \(\theta = \theta_R\) el sistema alcanza una situación inestable pero aún debe dilatarse para poder fluir &rArr; al aumentar \(\theta\) en \(\delta = 2°\), aumenta la fuerza de cizalla (\(mg\,\sin\theta\)) que permite el proceso de dilatación.</p>
+                <p style="margin-top:0.5em;">&bull; Si \(\theta\) disminuye y \(\theta_R \lt \theta \lt \theta_M\) &rArr; sistema fluyendo</p>
+                <p>&rArr; cuando \(\theta = \theta_R\), el sistema puede estar en reposo o fluyendo</p>
+                <p>&rArr; Podría definirse un único ángulo crítico: \(\theta_M\)</p>
+                <p>&rArr; Aunque a veces se indica que hay 2 ángulos críticos: \(\theta_M\) y \(\theta_R\)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: FLUIDEZ                                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <h3 style="font-size:0.7em; color:var(--color-teal);">Fluidez</h3>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-043.jpg" alt="Carr classification table" style="max-height:350px;">
+            </div>
+            <p class="footnote">Al-Hashemi &amp; Al-Amoudi, Powder Technology 330, 397-417 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: IMPORTANCIA Y ÁREAS DE INTERÉS                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Importancia y áreas de interés</h3>
+            <div class="two-col" style="font-size:0.45em;">
+                <div>
+                    <p style="color:#c0392b;"><strong>&bull; En Ingeniería</strong></p>
+                    <p>-Impacta en la seguridad y en los costos de los proyectos<br>
+                    -Estimación de valores máximos de inclinación de masas de suelo<br>
+                    -Diseño de carreteras, obras hidráulicas, rellenos sanitarios<br>
+                    -Cálculos de empujes de tierra<br>
+                    -Manipulación de polvos y granos (ej. fabricación de cemento)</p>
+                    <p style="color:#c0392b;"><strong>&bull; Agricultura</strong></p>
+                    <p>-Diseño de silos, tolvas<br>-Estratificación y segregación</p>
+                    <p style="color:#c0392b;"><strong>&bull; Geofísica y geología</strong></p>
+                    <p>-Aparición de avalanchas<br>-Estratificación de suelos</p>
+                    <p style="color:#c0392b;"><strong>&bull; Farmacia</strong></p>
+                    <p>Caracterización de fluidez de polvos</p>
+                    <p style="color:#c0392b;"><strong>&bull; Entomología &bull; Ciencia de materiales &bull; Hidrodinámica &bull; Simulaciones numéricas</strong></p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-044.jpg" alt="Antlion pit" style="max-height:200px; border-radius:6px;">
+                    <p style="font-size:0.9em; color:#888;">Ángulo de reposo en el pozo de la hormiga león</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: MÉTODOS EXPERIMENTALES                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Métodos experimentales para obtener el ángulo de reposo</h3>
+            <div class="two-col">
+                <div style="font-size:0.48em;">
+                    <p><strong>Importante:</strong><br>Es necesario que la base genere fricción.</p>
+                    <p style="margin-top:0.5em;">Las partículas pueden tener poca fricción dando lugar a ángulos de reposo pequeños.</p>
+                    <p style="margin-top:1em; font-size:0.85em;"><strong>ESTÁNDARES INTERNACIONALES:</strong> no consideran la totalidad de los factores que afectan la medición</p>
+                    <p>&bull; ASTM International (2001). ASTM C 1444-00: retirado en 2005.</p>
+                    <p>&bull; ISO 4324: Geneva, 1977.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-045.jpg" alt="Experimental methods" style="max-height:380px;">
+                </div>
+            </div>
+            <p class="footnote">Al-Hashemi &amp; Al-Amoudi, Powder Technology 330, 397-417 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 21: ÁNGULO DE REPOSO                                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulo de reposo</h2>
+            <div class="two-col">
+                <div style="font-size:0.5em;">
+                    <p>\(\theta_R\) y \(\mu\) varían si se trata de un apilamiento cóncavo o uno convexo.</p>
+                    <p style="color:#c0392b;">Apilamiento cóncavo o interno: \(\theta_R\) se denomina ángulo de cráter \(\theta_C\)</p>
+                    <p style="color:#c0392b;">Apilamiento convexo o externo: \(\theta_R\) se denomina ángulo de talud \(\theta_T\)</p>
+                    <p style="margin-top:0.3em; color:var(--color-dark);"><strong>\(\theta_C > \theta_T\)</strong></p>
+                    <div style="display:flex; gap:0.5em; margin-top:0.3em;">
+                        <img src="media/extracted_u5/img-046.jpg" alt="Cone shapes" style="max-height:130px;">
+                    </div>
+                    <p style="margin-top:0.3em; color:#c0392b;">Ambos ángulos son iguales si:</p>
+                    <p>&bull; el volumen de la pila es muy grande frente al tamaño medio de los granos</p>
+                    <p>&bull; cuando el material es no cohesivo (Jenike, 1964)</p>
+                </div>
+                <div>
+                    <table style="font-size:0.85em;">
+                        <tr><th>Tipo grano</th><th>Material</th><th>Áng. montaña</th><th>Áng. cráter</th></tr>
+                        <tr><td>Esférico</td><td>Tapioca</td><td>30°</td><td>37.5°</td></tr>
+                        <tr><td>Anguloso</td><td>Arena</td><td>37°</td><td>39°</td></tr>
+                        <tr><td>Anguloso</td><td>Carbón</td><td>37.5°</td><td>41°</td></tr>
+                    </table>
+                    <img src="media/extracted_u5/img-047.jpg" alt="Scatter plot" style="max-height:200px; margin-top:0.5em;">
+                </div>
+            </div>
+            <p class="footnote">Duran, Springer &bull; Al-Hashemi &amp; Al-Amoudi, Powder Technology 330 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 22: INFLUENCIA DE PARÁMETROS                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulo de reposo</h2>
+            <h3 style="font-size:0.7em; color:var(--color-teal);">Influencia de diferentes parámetros</h3>
+            <div style="font-size:0.55em;">
+                <p style="color:navy;">No influyen en \(\theta_R\): la extensión ni la altura del apilamiento.</p>
+                <p style="color:#c0392b; margin-top:0.3em;">\(\theta_R\) es una característica intrínseca del material: de su geometría y de la forma.</p>
+                <p>\(\theta_R\) depende de la preparación del apilamiento (de su historia).</p>
+                <div class="highlight-box" style="margin-top:1em;">
+                    <p>En forma generalizada podemos decir que el valor de <span style="color:#c0392b;">\(\theta_R\) disminuye</span> cuando se favorece la fluidez:</p>
+                    <ul style="margin-top:0.5em;">
+                        <li>mayor tamaño de grano</li>
+                        <li>menor rugosidad de superficie de la partícula</li>
+                        <li>mayor esfericidad de la partícula</li>
+                        <li>menor humedad del apilamiento</li>
+                        <li>mayor homogeneidad de tamaños</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 23: INFLUENCIA DEL MATERIAL                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulo de reposo — Influencia del material</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-048.jpg" alt="Table 2 repose angles" style="max-height:450px;">
+            </div>
+            <p class="footnote">Al-Hashemi &amp; Al-Amoudi, Powder Technology 330, 397-417 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 24: INFLUENCIA DE LA COMPOSICIÓN                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Influencia de la composición</h2>
+            <p style="font-size:0.45em;">Se analizan muestras extraídas de 4 minas de una cementera. Se analiza la granulometría y composición química.</p>
+            <div class="three-col" style="margin-top:0.3em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-049.jpg" alt="theta_M plot" style="max-height:200px;">
+                    <p style="font-size:0.4em;">\(\theta_M\)</p>
+                </div>
+                <div style="text-align:center;">
+                    <p style="font-size:0.4em;"><strong>Método 1</strong></p>
+                    <img src="media/extracted_u5/img-050.jpg" alt="theta_R plot" style="max-height:200px;">
+                    <p style="font-size:0.4em;">\(\theta_R\)</p>
+                </div>
+                <div style="text-align:center;">
+                    <p style="font-size:0.4em;"><strong>Método 2</strong></p>
+                    <img src="media/extracted_u5/img-051.jpg" alt="theta_RT plot" style="max-height:200px;">
+                    <p style="font-size:0.4em;">\(\theta_{RT}\)</p>
+                </div>
+            </div>
+            <div style="font-size:0.45em; margin-top:0.3em;">
+                <p style="color:#c0392b;">No observan influencia de:</p>
+                <p>&bull; La composición química</p>
+                <p>&bull; La forma de los granos (elongación y chatura): difiere de Frettes et al, donde \(\theta_R\) es menor para granos mas redondos.</p>
+            </div>
+            <p class="footnote">Vidales et al. Powder Technology 163 (2006) &bull; Frette et al, Nature 379 (1996) &bull; Madrid et al, Agronomy 12 (2022)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 25: TAMBOR ROTANTE - FOTOS                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Tambor rotante</h2>
+            <div style="text-align:center; font-size:0.55em;">
+                <p>\(\Omega = 0.85\,\text{deg/s} = 0.14\,\text{rpm}\)</p>
+            </div>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <p style="font-size:0.5em; color:#c0392b;">2fps</p>
+                    <img src="media/extracted_u5/img-054.jpg" alt="Drum 2fps" style="max-height:350px;">
+                </div>
+                <div style="text-align:center;">
+                    <p style="font-size:0.5em; color:#c0392b;">300fps</p>
+                    <img src="media/extracted_u5/img-055.jpg" alt="Drum 300fps" style="max-height:350px;">
+                </div>
+            </div>
+            <p class="footnote">Piva et al, PRE (98), 062902 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 26: TAMBOR ROTANTE - θ(t)                             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Tambor rotante</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-056.jpg" alt="Drum setup" style="max-height:300px;">
+                    <p style="font-size:0.45em;">N = 300, 40cm<br>Adquisición: 2Hz, 828×828px<br>\(\Omega = 0.85\,\text{deg/s} = 0.14\,\text{rpm}\)<br>Se detectaron ≅ 700-900 eventos</p>
+                </div>
+                <div>
+                    <p style="font-size:0.5em;"><strong>Ángulo de la pila: \(\theta(t)\)</strong></p>
+                    <img src="media/extracted_u5/img-057.jpg" alt="theta(t) sawtooth" style="max-height:300px;">
+                </div>
+            </div>
+            <p class="footnote">Piva et al, PRE (98), 062902 (2018)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 27: TAMBOR ROTANTE - REGÍMENES                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Tambor rotante</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-058.jpg" alt="Regimes" style="max-height:180px;">
+                    <img src="media/extracted_u5/img-059.jpg" alt="Moon shapes" style="max-height:250px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <p>a) <strong>Rolling:</strong> superficie plana y de avalanchas intermitentes</p>
+                    <p>b) <strong>Cascading:</strong> forma S</p>
+                    <p>c) <strong>Catarcting:</strong> parte de proyecta en el aire</p>
+                    <p>d) <strong>Centrifuging:</strong> las partículas se fijan sobre las paredes</p>
+                    <div class="highlight-box" style="margin-top:1em;">
+                        <p>&bull; Al aumentar el largo del tambor, la forma de S desaparece y se desarrolla una superficie plana.</p>
+                        <p>&bull; En tambores cortos, la forma S puede eliminarse suprimiendo la fricción en las paredes laterales.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Sack &amp; Pöschel, Sci Rep 6, 26833 (2016) &bull; Taberlet et al, Phys Rev E 73, 050301R (2006)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 28: TAMBOR ROTANTE - HISTÉRESIS                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Tambor rotante</h2>
+            <div class="two-col" style="font-size:0.48em;">
+                <div>
+                    <p style="color:#c0392b;">\(\Omega \lt 0.1\,\text{rpm}\) &emsp; \(\Omega \approx 5\,\text{rpm}\)</p>
+                    <img src="media/extracted_u5/img-060.jpg" alt="Drum shapes" style="max-height:140px;">
+                    <p style="margin-top:0.3em;"><strong>Flujo intermitente</strong> \(\Omega \lt 0.1\,\text{rpm}\)</p>
+                    <img src="media/extracted_u5/img-062.jpg" alt="Drum angles" style="max-height:140px;">
+                </div>
+                <div>
+                    <p style="color:#c0392b; font-size:1.1em;"><strong>TRANSICIÓN: HISTÉRESIS</strong></p>
+                    <p>Flujo intermitente &harr; Flujo continuo</p>
+                    <p>\(\Omega_- = 0.25\,\text{rpm}\) &emsp; \(\Omega_+ = 0.5\,\text{rpm}\)</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Bajas velocidades de rotación</strong> (\(\Omega \lt 0.1\,\text{rpm}\))</p>
+                        <p>Régimen intermitente: la capa superficial oscila constantemente entre \(\theta_M\) y \(\theta_R\).</p>
+                        <p>La superficie libre es bastante recta y permite definir \(\theta_M\) con precisión.</p>
+                        <p>Se observa un incremento lineal de \(\theta_R\) con \(\Omega\).</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Duran, Springer &bull; Rajchenbach, Phys. Rev. Lett. 65: 2221 (1990) &bull; Taberlet et al, Phys Rev E 73 (2006)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 29: PLANO INCLINADO 3D                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.5em;"><strong>Avalanchas (3D)</strong></p>
+                    <img src="media/extracted_u5/img-065.jpg" alt="Inclined plane setup" style="max-height:280px;">
+                </div>
+                <div style="font-size:0.48em;">
+                    <p style="color:#c0392b;">Esferas de vidrio: d = 2 mm</p>
+                    <p>Caja: L = 32 cm &emsp; W = 25 cm<br>CCD: vista superior<br><em>768 × 512 pixels — 256 gray levels</em></p>
+                    <p>\(\omega = 0.3\,°/\text{min}\)</p>
+                    <p>Masa inicial = Mo = m*N<br>1 capa: m = 230g (\(C_1 = 0.7\))<br>1 capa ~ 16.000 esferas</p>
+                    <img src="media/extracted_u5/img-066.jpg" alt="Tilting box photo" style="max-height:160px;">
+                    <div class="highlight-box" style="margin-top:0.3em;">
+                        <p style="color:navy;">N = 20 sistema desordenado y con superficie rugosa</p>
+                        <p>\(\theta_M = 27.3° \pm 0.2°\)</p>
+                        <p>\(\theta_R = 21.1° \pm 0.5°\)</p>
+                        <p>\(\delta = 1.8° \pm 0.4°\)</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Aguirre et al. Phys. Rev. E 62, 738-743 (2000)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 30: PLANO INCLINADO - TAMAÑO                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del tamaño del sistema</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-067.jpg" alt="theta_M theta_R vs N" style="max-height:320px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-068.jpg" alt="delta vs N" style="max-height:320px;">
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.55em;">
+                <p style="color:#c0392b;">Para N &gt; 13 capas: los ángulos y masa desalojados no dependen de la altura del sistema</p>
+            </div>
+            <p class="footnote">Aguirre et al. Phys. Rev. E 62, 738-743 (2000)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 31: PLANO INCLINADO - MASA                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del tamaño del sistema</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <p style="font-size:0.5em; color:#c0392b;">N = 20 capas</p>
+                    <img src="media/extracted_u5/img-069.jpg" alt="theta_M vs M N=20" style="max-height:300px;">
+                </div>
+                <div style="text-align:center;">
+                    <p style="font-size:0.5em; color:#c0392b;">N = 6 capas</p>
+                    <img src="media/extracted_u5/img-070.jpg" alt="theta_M vs M N=6" style="max-height:300px;">
+                </div>
+            </div>
+            <div style="font-size:0.5em; text-align:center;">
+                <p>M = masa desalojada por la avalancha</p>
+                <p style="color:#c0392b;">\(\theta_R\) es independiente de \(\theta_M\) y de la masa desalojada<br>
+                \(\therefore \theta_R\) es un parámetro intrínseco del medio granular</p>
+            </div>
+            <p class="footnote">Aguirre et al. Phys. Rev. E 62, 738-743 (2000)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 32: PLANO INCLINADO - COMPACTACIÓN                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia de la compactación</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-071.jpg" alt="delta theta_M vs S layers" style="max-height:320px;">
+                    <p style="font-size:0.4em;">S = M/m, capas desalojadas por la avalancha</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-072.jpg" alt="delta theta_M vs M/m compactacion" style="max-height:320px;">
+                    <p style="font-size:0.4em; color:#c0392b;">C= 0.62 (loose) &emsp; C= 0.67 (dense)</p>
+                </div>
+            </div>
+            <p style="font-size:0.5em; text-align:center;">N = 20 capas</p>
+            <p class="footnote">N. Nerone et al. Physica A 283 (2000) 218-222 &bull; Aguirre et al. Granular Matter 3, 75-77 (2001)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 33: PLANO INCLINADO - BASE RUGOSA                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia de la base rugosa</h3>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-073.jpg" alt="Base rugosa influence" style="max-height:350px;">
+            </div>
+            <div style="font-size:0.48em;">
+                <p>Superficie de esferas de vidrio: &#9632; \(\langle\theta_M\rangle\) &emsp; &#9650; \(\langle\theta_R\rangle\)</p>
+                <p>Superficie de granos de cuarzo: &#9633; \(\langle\theta_M\rangle\) &emsp; &#9651; \(\langle\theta_R\rangle\)</p>
+                <p style="color:#c0392b;">Para empaquetamientos de pocas capas no pueden distinguirse \(\theta_M\) de \(\theta_R\).</p>
+            </div>
+            <p class="footnote">Aguirre et al. Granular Matter 3, 75-77 (2001)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 34: PLANO INCLINADO - HUMEDAD                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia de la humedad</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-074.jpg" alt="Setup top view" style="max-height:320px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-076.jpg" alt="theta_M vs N humidity" style="max-height:320px;">
+                    <p style="font-size:0.45em;">RH = 70% &emsp; RH = 50%</p>
+                </div>
+            </div>
+            <p class="footnote">Aguirre et al. Phys. Rev. E 62, 738-743 (2000)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 35: AVALANCHAS Y REACOMODAMIENTOS                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <div style="font-size:0.55em;">
+                <p>Se observan:</p>
+                <p>&bull; Reacomodamientos superficiales: pequeños y grandes (precursores)</p>
+                <p>&bull; Avalanchas</p>
+                <h3 style="font-size:1em; color:var(--color-teal); text-align:center; margin-top:0.5em;">Tamaño de reacomodamientos vs ángulo de inclinación</h3>
+                <p style="text-align:center; margin-top:0.5em; font-style:italic;">El gráfico muestra que los reacomodamientos crecen progresivamente con \(\theta\) hasta la avalancha en \(\theta_M\). Se identifican los ángulos \(\theta_R\) y \(\theta_M\) en el eje de inclinación.</p>
+            </div>
+            <p class="footnote">Nerone et al. Physica A, 283, 218-222 (2000) &bull; Nerone et al. Physical Review E 67, 011302 (2003)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 36: PEQUEÑOS REACOMODAMIENTOS                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <div class="two-col" style="font-size:0.55em;">
+                <div>
+                    <h3 style="font-size:1em;">Pequeños reacomodamientos</h3>
+                    <p>\(s \lt 3\%\) capas</p>
+                    <p>Eventos localizados</p>
+                    <p>Estructura random en espacio y tiempo</p>
+                    <p>Origen: mecanismo local</p>
+                    <p>Frecuencia depende de la rugosidad inicial de la superficie libre</p>
+                    <p style="color:#c0392b; margin-top:0.5em;">N=20 &emsp; C = 0.67 ± 0.01<br>Superficie libre rugosa</p>
+                </div>
+                <div>
+                    <p><strong>Ley de potencia</strong></p>
+                    <div class="eq-box">
+                        \[D(s) \propto s^{-\iota} \quad \iota \approx 2\]
+                    </div>
+                    <p style="margin-top:0.5em; font-size:0.85em;">Small rearrangements, precursors y avalanches siguen la misma distribución.</p>
+                </div>
+            </div>
+            <p class="footnote">Nerone et al. Physica A, 283, 218-222 (2000) &bull; Held et al PRL, 65, 1120 (1990) &bull; Rosendhal et al PRE 47, 1401 (1993)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 37: PRECURSORES                                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <div style="font-size:0.55em;">
+                <h3 style="font-size:1em;">Precursores</h3>
+                <p>\(N > 10\) capas &emsp; \(0.03 \lt s \lt 1\) capa</p>
+                <p>Eventos no localizados &emsp; \(\theta_o \sim 17°\)</p>
+                <p>Reacomodamiento interno de la red de contacto</p>
+                <p style="color:#c0392b; margin-top:0.3em;">N=20 &emsp; C = 0.67 ± 0.01 &emsp; Superficie libre rugosa</p>
+                <div class="two-col" style="margin-top:0.5em;">
+                    <div>
+                        <p>\(\Delta\theta \approx 2° \sim\) constante para N y \(\omega\) fijos</p>
+                        <p>\(\Delta\theta = f(\omega, N, \text{orden-desorden})\)</p>
+                    </div>
+                    <div>
+                        <p><strong>Exponencial:</strong></p>
+                        <div class="eq-box">
+                            \[s \propto \exp(\theta/\alpha) \quad \alpha = 3.2° \pm 0.1°\]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Nerone et al. Physica A, 283, 218-222 (2000) &bull; Nerone et al. Physical Review E 67, 011302 (2003)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 38: AVALANCHAS 2D                                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.55em;"><strong>Avalanchas (2D)</strong></p>
+                    <img src="media/extracted_u5/img-077.jpg" alt="2D setup" style="max-height:300px;">
+                    <p style="font-size:0.45em;">1 capa = 24 discos<br>N = No/24 (capas) &emsp; altura variable h &prop; N</p>
+                </div>
+                <div style="font-size:0.48em;">
+                    <p style="color:purple;">L = 45 cm &emsp; gap = 6.5 mm</p>
+                    <p>CCD: vista lateral, fija al plano<br>25 cuadros/s<br><em>768 × 512 pixels</em></p>
+                    <p>\(\omega = 2.5\,°/\text{min}\)</p>
+                </div>
+            </div>
+            <p class="footnote">Aguirre et al. Physica A 371, 29-32 (2006) &bull; Aguirre et al. Phys Rev E 73, 041307 (2006)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 39: CAMPOS DE VELOCIDAD - SUPERFICIE                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <p style="font-size:0.55em; color:purple;"><strong>Campos de velocidad</strong> <span style="float:right; color:navy;">g sin&theta; &larr;</span></p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-078.jpg" alt="Velocity field 25.6°" style="max-height:300px;">
+                    <p style="font-size:0.45em; color:#c0392b;">&theta; = 25.6°</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-079.jpg" alt="Velocity field 33.9°" style="max-height:300px;">
+                    <p style="font-size:0.45em; color:#c0392b;">&theta; = 33.9° &emsp; 20 capas</p>
+                </div>
+            </div>
+            <div style="font-size:0.5em;">
+                <p>- Flujo tangencial a la superficie libre</p>
+                <p>- Flujo cercano a la superficie libre</p>
+                <p>- Movimiento guiado por fallas (cerca de la superficie libre)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 40: CAMPOS DE VELOCIDAD - INTERNAS                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Avalanchas y reacomodamientos — Plano inclinado</h2>
+            <p style="font-size:0.55em; color:purple;"><strong>Campo de velocidad</strong> <span style="float:right; color:navy;">g sin&theta; &larr;</span></p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-080.jpg" alt="Velocity field 23.4°" style="max-height:300px;">
+                    <p style="font-size:0.45em; color:#c0392b;">&theta; = 23.4°</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-081.jpg" alt="Velocity field 29.6°" style="max-height:300px;">
+                    <p style="font-size:0.45em; color:#c0392b;">&theta; = 29.6° &emsp; 20 capas</p>
+                </div>
+            </div>
+            <div style="font-size:0.5em;">
+                <p><strong>Avalanchas internas</strong></p>
+                <p>- Ruptura de arcos o presencia de zonas de baja densidad: colapso de capas superiores</p>
+                <p>- Zonas de flujo perpendicular a la superficie libre</p>
+                <p>- Movimiento guiados por fallas</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 41: INFLUENCIA DEL ORDEN                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del orden</h3>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u5/img-082.jpg" alt="Order parameter diagram" style="max-height:200px;">
+                    <p style="font-size:0.5em;"><em>Parámetro de orden:</em><br>Fracción de vecinos separados en \(\alpha = 60°\)</p>
+                    <p style="font-size:0.5em;"><strong>Parámetro de Orden: OP</strong></p>
+                </div>
+                <div style="font-size:0.5em;">
+                    <p>&bull; Ensanchamiento de la distribución</p>
+                    <p>&bull; Pico menor en \(\alpha = 60°\) indica el grado de desorden</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p style="color:green;">OP<sup>ordenado</sup> &cong; 0.8</p>
+                        <p style="color:#c0392b;">OP<sup>desordenado</sup> &cong; 0.4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 42: ORDEN - DIFERENCIA                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del orden</h3>
+            <div style="font-size:0.55em;">
+                <p>Diferencia entre la configuración final e inicial</p>
+                <p style="color:purple;">Configuración final: después del último reacomodamiento (antes de la avalancha)</p>
+                <p style="margin-top:0.5em;">&bull; Importante disminución del pico en \(\alpha = 60°\)</p>
+                <p>&bull; Aumento para ángulos entre 70° y 180°</p>
+                <div class="highlight-box red" style="margin-top:1em;">
+                    <p style="color:#c0392b; font-size:1.1em;"><strong>Ambos resultados indican que los reacomodamientos desordenan el sistema</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 43: ORDEN - THETA_M VS OP                             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del orden</h3>
+            <div style="font-size:0.55em;">
+                <p>N = 20</p>
+                <p>33° &lt; \(\theta_M\) &lt; 41°</p>
+                <p>\(\langle\theta_M^{\text{DESORDENADO}}\rangle = 36° \pm 4°\)</p>
+                <p style="color:#c0392b;">\(\langle\theta_M^{\text{ORDENADO}}\rangle = 47.0° \pm 1.5°\)</p>
+                <p style="color:#c0392b;">OP<sup>ORDENADO</sup> = 0.80 ± 0.05</p>
+                <div class="highlight-box" style="margin-top:1em;">
+                    <p><span style="color:green;">desordenado</span> &longrightarrow; <span style="color:#c0392b;">ordenado</span></p>
+                    <p>El sistema pierde su estabilidad a ángulos mayores cuando mayor es OP justo antes de la avalancha.</p>
+                </div>
+            </div>
+            <p class="footnote">Aguirre, et al. Powders &amp; Grains 2005, Vol. 2. 823-826.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 44: ORDEN - RESUMEN                                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Ángulos característicos — Plano inclinado</h2>
+            <h3 style="font-size:0.65em; color:var(--color-teal);">Influencia del orden</h3>
+            <div style="font-size:0.55em;">
+                <h3 style="font-size:1em; text-decoration:underline;">Sistemas Desordenados</h3>
+                <p style="color:#c0392b;">&bull; Reacomodamientos pequeños</p>
+                <p>En la superficie y en el interior (cerca de arcos)</p>
+                <p style="color:#c0392b; margin-top:0.5em;">&bull; Reacomodamientos grandes</p>
+                <p>\(\theta > 17°\)<br>Desplazamiento de cerca del 40% de los discos, incluyendo una gran porción de la superficie libre.</p>
+                <p style="color:#c0392b; margin-top:0.5em;">&bull; Avalanchas</p>
+                <p>Tamaño del orden de los reacomodamientos grandes</p>
+                <h3 style="font-size:1em; text-decoration:underline; margin-top:0.5em;">Sistemas Ordenados</h3>
+                <p>No hay reacomodamientos</p>
+                <p>\(\theta_M > 43°\)</p>
+                <div class="eq-box" style="margin-top:0.5em;">
+                    \[\langle\theta_R^{\text{ORDENADOS}}\rangle \cong \langle\theta_M^{\text{ORDENADOS}}\rangle\]
+                </div>
+            </div>
+            <p class="footnote">Aguirre et al. Powders &amp; Grains 2005, Vol. 2. 823-826.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 45: AVALANCHAS - MÉTODOS EXPERIMENTALES               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Avalanchas</h2>
+            <p style="font-size:0.55em; color:var(--color-teal);">Métodos experimentales para obtener datos estadísticos de las avalanchas<br>Tamaño, duración del evento, lapso entre eventos</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-083.jpg" alt="Experimental methods" style="max-height:300px;">
+                <p style="font-size:0.45em; color:var(--color-teal);">balanza &emsp; condensador &emsp; condensador &emsp; micrófono</p>
+            </div>
+            <div style="font-size:0.5em;">
+                <p>&bull; En sistema de pocas partículas: \(\theta_M\) y \(\theta_R\) se confunden.</p>
+                <p>&bull; En sistema de muchas partículas: \(\theta_M\) y \(\theta_R\) bien definidos.</p>
+            </div>
+            <p class="footnote">S.R. Nagel, Rev. of Modern Physics, 64:321 (1992) &bull; H.M. Jaeger and S.R. Nagel, Science 255, 1523 (1992)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 46: ÁNGULO NEUTRO                                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em; color:var(--color-mauve);">Ángulo neutro</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.5em;">Esferas de vidrio: 2.2mm de diámetro<br>Masa de una capa: m = 230g</p>
+                    <img src="media/extracted_u5/img-084.jpg" alt="Neutral angle setup" style="max-height:280px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p>Para \(\theta \lt \theta_N\) : proceso de acreción de la superficie.</p>
+                    <p>Para \(\theta > \theta_N\) : proceso de erosión de la superficie.</p>
+                    <p>Para \(\theta = \theta_N\) : no hay acreción ni erosión de la superficie.</p>
+                    <div class="eq-box" style="margin-top:1em;">
+                        \[\theta_N = 21°\]
+                        \[\langle\theta_M\rangle = 25.9° \pm 0.2°\]
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">D. Bideau, I. Ippolito, M. A. Aguirre, A. Calvo, N. Nerone. Powders &amp; Grains 2001, Vol. 2. 459-462.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 47: HUMEDAD - INTRO                                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular</h2>
+            <h3 style="font-size:0.7em; color:var(--color-teal);">Influencia de la humedad</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-085.jpg" alt="Dry sand" style="max-height:300px; border-radius:6px;">
+                    <p style="font-size:0.5em;">Arena seca</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-086.jpg" alt="Wet sand castle" style="max-height:300px; border-radius:6px;">
+                    <p style="font-size:0.5em;">Arena húmeda</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 48: PUENTES DE LÍQUIDO                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Influencia de la humedad</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-087.jpg" alt="Adsorption stages" style="max-height:350px;">
+                    <p style="font-size:0.4em; color:#c0392b;">Humedad relativa HR o &phi;</p>
+                </div>
+                <div>
+                    <div style="font-size:0.5em;">
+                        <p>r : radio del cuello del puente de líquido</p>
+                        <div class="eq-box">
+                            \[F_{\text{puente}} = 2\pi r\,\sigma + \pi r^2\,p_c\]
+                        </div>
+                        <img src="media/extracted_u5/img-088.jpg" alt="Bridge force diagram" style="max-height:200px;">
+                        <p style="font-style:italic; font-size:0.9em; margin-top:0.3em;">La tensión superficial entre el líquido y el sólido, junto con la presión capilar, dan lugar a las fuerzas de cohesión en el puente de líquido.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 49: ESTADOS PENDULAR/FUNICULAR/CAPILAR                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Influencia de la humedad</h2>
+            <div class="three-col" style="font-size:0.42em;">
+                <div>
+                    <p><strong>ESTADO PENDULAR:</strong> inicio de la formación de puentes líquidos en los contactos entre granos. Las fuerzas de cohesión son débiles.</p>
+                    <div style="text-align:center;">
+                        <img src="media/extracted_u5/img-089.jpg" alt="Pendular state" style="max-height:170px;">
+                    </div>
+                    <p>Ej: Para granos de 0.5 mm:<br>\(\theta_M = 27°\) (HR=37%)</p>
+                </div>
+                <div>
+                    <p><strong>ESTADO FUNICULAR:</strong> se forman zonas continuas de fase líquida. Las fuerzas de cohesión aumentan progresivamente. Aumenta la presión capilar p<sub>c</sub>.</p>
+                    <div style="text-align:center;">
+                        <img src="media/extracted_u5/img-090.jpg" alt="Funicular state" style="max-height:170px;">
+                    </div>
+                </div>
+                <div>
+                    <p><strong>ESTADO CAPILAR:</strong> se establece una fase líquida que conecta y cohesiona casi todo el sistema granular. Las fuerzas de cohesión aumentan bruscamente.</p>
+                    <div style="text-align:center;">
+                        <img src="media/extracted_u5/img-091.jpg" alt="Capillary state" style="max-height:170px;">
+                    </div>
+                    <p>Ej: Para granos de 0.5 mm:<br>\(\theta_M = 85°\) (HR=90%)</p>
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 50: HUMEDAD Y ENVEJECIMIENTO - TABLA                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad de un sistema granular</h2>
+            <h3 style="font-size:0.6em; color:var(--color-teal);">Influencia de la humedad y el envejecimiento (aging)</h3>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-092.jpg" alt="Humidity states table" style="max-height:380px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <p style="text-decoration:underline;">Descripción discreta</p>
+                    <p>La pérdida de estabilidad se da a nivel de grano: el sistema de desestabiliza en la superficie.<br>La cohesión afecta el balance de fuerza llevando a un aumento de \(\theta_M\)</p>
+                    <p style="text-decoration:underline; margin-top:0.5em;">Descripción continua</p>
+                    <p>esfuerzo normal efectivo: \(\sigma'_n = \sigma_n + \sigma_c\)</p>
+                    <p>\(\frac{\tau}{\sigma'_n} = \mu = \tan\varphi'\)</p>
+                    <p>Si aumenta el volumen: \(\sigma_n\) aumenta y \(\sigma_c\) es constante (independiente del tamaño del sistema).<br>El sistema de desestabiliza en la base.</p>
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015) &bull; Gottfried, Tesis de grado, Fac. Ingeniería-UBA, 2024.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 51: HUMEDAD - FOTOS EXPERIMENTALES                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad — Influencia de la humedad y el envejecimiento</h2>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <p><strong style="color:#c0392b;">ESTADO PENDULAR Y FUNICULAR</strong><br>El sistema de desestabiliza en la superficie</p>
+                    <img src="media/extracted_u5/img-093.jpg" alt="HR=37% and HR=84%" style="max-height:220px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <p style="background:yellow; display:inline-block; padding:0.2em 0.5em;"><strong>HR = 94%</strong></p>
+                    <p><strong style="color:#c0392b;">ESTADO CAPILAR</strong><br>El sistema de desestabiliza en la base.</p>
+                    <img src="media/extracted_u5/img-094.jpg" alt="HR=94%" style="max-height:220px;">
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 52: ÁNGULO VS HUMEDAD (1mm)                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Influencia de la humedad</h2>
+            <div class="two-col">
+                <div style="font-size:0.5em;">
+                    <p style="color:#c0392b;">Estado pendular: \(\theta_M\) y \(\theta_R\) permanecen aproximadamente constantes y similares al estado seco.</p>
+                    <p style="margin-top:0.5em;">Estado funicular: \(\theta_M\) crece exponencialmente con HR</p>
+                    <p style="margin-top:0.5em;">\(\theta_R\) aproximadamente constante</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-096.jpg" alt="Angle vs humidity 1mm" style="max-height:380px;">
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 53: ÁNGULO VS HUMEDAD (MULTI-TAMAÑO)                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em; color:var(--color-mauve);">Estabilidad de un sistema granular — Influencia de la humedad</h2>
+            <div style="font-size:0.5em;">
+                <p>&bull; En el estado pendular, \(\theta_M\) y \(\theta_R\) permanecen aproximadamente constantes y similares al estado seco... <span style="color:#c0392b;">y son casi independientes del tamaño de grano.</span></p>
+                <p>&bull; <span style="color:#c0392b;">La HR de transición entre los diferentes estados:</span> aumenta con el tamaño de grano.</p>
+            </div>
+            <div style="text-align:center;">
+                <img src="media/extracted_u5/img-097.jpg" alt="Angle vs HR multi-size" style="max-height:350px;">
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 54: HUMEDAD - RESUMEN                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad de un sistema granular</h2>
+            <h3 style="font-size:0.6em; color:var(--color-teal);">Influencia de la humedad y el envejecimiento (aging)</h3>
+            <div style="font-size:0.55em;">
+                <div class="highlight-box">
+                    <p><strong style="color:#c0392b;">En el estado pendular:</strong> \(\theta_M\) y \(\theta_R\) permanecen constante con una diferencia de 5° ± 1°.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong style="color:#c0392b;">En el estado funicular:</strong> \(\theta_M\) crece exponencialmente con HR.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong style="color:#c0392b;">En el estado capilar:</strong> \(\theta_M\) alcanza su máximo de forma abrupta.</p>
+                </div>
+                <p style="margin-top:1em; color:#c0392b;"><strong>La HR de transición entre los diferentes estados:</strong> aumenta con el tamaño de grano.</p>
+                <p style="margin-top:0.5em;"><strong>Tiempo de equilibrio higroscópico:</strong> período necesario para que el sistema granular alcance un estado de equilibrio en su contenido de humedad. Depende del tamaño y geometría del grano, de HR, de la superficie libre y compactación.</p>
+                <p style="margin-top:0.5em;">En el equilibrio higroscópico \(\theta_M\) alcanza su máximo valor y permanece constante<br>
+                &rArr; se lo denomina <span style="color:#c0392b;"><strong>ángulo nominal de máxima estabilidad</strong></span>.</p>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 55: AGING - PLOTS                                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad — Influencia de la humedad y el envejecimiento (aging)</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-098.jpg" alt="Aging 5min" style="max-height:340px;">
+                    <p style="font-size:0.4em;">Tiempo entre avalanchas: 5 minutos<br>grano 1 mm</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-099.jpg" alt="Aging 24h" style="max-height:340px;">
+                    <p style="font-size:0.4em;">Tiempo entre avalancha 1ª y 2ª: 24 h</p>
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 56: ÁNGULO DE RELAJACIÓN VS HR                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad — Influencia de la humedad y el envejecimiento (aging)</h2>
+            <p style="font-size:0.5em;">Ángulo de relajación \(\delta = \theta_M - \theta_R = \Delta\theta_{m-r}\)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-102.jpg" alt="Delta angle 1mm" style="max-height:300px;">
+                    <p style="font-size:0.4em;">grano de 1 mm</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-103.jpg" alt="Delta angle 0.5mm" style="max-height:300px;">
+                    <p style="font-size:0.4em;">grano de 0.5 mm</p>
+                </div>
+            </div>
+            <div style="font-size:0.48em;">
+                <p>\(\theta_R\) aproximadamente constante. Si el sistema se desestabiliza a un \(\theta_M\) mayor, &rArr; hay una avalancha que desplaza mas masa &rArr; \(\delta = \theta_M - \theta_R\) es mayor.</p>
+                <p>\(\delta = 2°\) para granos esféricos secos y sin tiempo de espera.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 57: AGING - EQUILIBRIO                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.8em; color:var(--color-mauve);">Estabilidad — Influencia de la humedad y el envejecimiento (aging)</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-100.jpg" alt="Aging 1mm plots" style="max-height:340px;">
+                    <p style="font-size:0.4em;">grano de 1 mm, 5 min entre avalanchas</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u5/img-101.jpg" alt="Aging 0.5mm equilibrium" style="max-height:340px;">
+                    <p style="font-size:0.4em;">grano 0.5 mm<br>En equilibrio higroscópico (1 semana, 94%)<br>Aun no llega al equilibrio (2 días, 94%)</p>
+                </div>
+            </div>
+            <p class="footnote">Gómez-Arriaran et al, Powder Technol. 279, 24-32 (2015)</p>
+        </div>
+    </section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        transition: 'slide',
+        plugins: [ RevealHighlight, RevealNotes ]
+    });
+</script>
+<script>
+    MathJax = {
+        tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+        svg: { fontCache: 'global' }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</body>
+</html>

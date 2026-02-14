@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 2 — Descripción estructural de empaquetamientos granulares</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Introducción a la Física de los<br>Materiales Granulares
+            </h1>
+            <p style="font-size:0.8em; color:#666; margin-top:0.3em;">
+                Descripción estructural de empaquetamientos granulares.
+            </p>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            MANUEL CARLEVARO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Departamento de Ingeniería Mecánica<br>
+            Grupo de Materiales Granulares — UTN FRLP<br>
+            CONICET
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: RESUMEN                                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen</h2>
+            <ul style="line-height:2.0; font-size:0.85em;">
+                <li>Ángulo de reposo</li>
+                <li>Compacidad, $\phi$</li>
+                <li>Número de coordinación, $z$, y número de besuqueros</li>
+                <li>Función de correlación de pares, $g(r)$</li>
+                <li>Función de autocovarianza, $\xi(r)$</li>
+                <li>Parámetro de orden de enlaces, $Q_l$ y $W_l$</li>
+                <li>Tensor de trama, $F$</li>
+                <li>Celdas de Voronoi</li>
+                <li>Polígonos de la red de contactos</li>
+                <li>Arcos</li>
+                <li>Relaciones entre descriptores estructurales</li>
+                <li>Ejemplos</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: ÁNGULO DE REPOSO                                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ángulo de reposo</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u2/img-000.jpg" alt="Pila de granos" style="max-width:100%; border-radius:4px;">
+                    <img src="media/extracted_u2/img-001.jpg" alt="Pila de arena con ángulo α" style="max-width:100%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-002.png" alt="Métodos de medición del ángulo de reposo" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <p style="text-align:center; font-size:0.75em; margin-top:0.5em;">
+                Materiales secos: $17° \leq \alpha \leq 42°$, materiales cohesivos: $45° \leq \alpha \leq 90°$
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: COMPACIDAD                                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad (packing fraction)</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.8em;">Compacidad, fracción de volumen ocupado,<br>
+                    packing fraction, volume(area) fraction: $\phi$, $c$, $\eta$</p>
+                    <div class="eq-box">
+                        $\phi = \dfrac{\text{volumen real de las partículas}}{\text{volumen aparente de la muestra}}$
+                    </div>
+                    <p style="font-size:0.8em;">No confundir con la densidad numérica</p>
+                    <div class="eq-box">
+                        $\rho = \dfrac{N}{V}$
+                    </div>
+                    <p style="font-size:0.8em;">$V$: volumen del contenedor.<br>
+                    Si todas las partículas son iguales:</p>
+                    <div class="eq-box">
+                        $\phi = \dfrac{N v_g}{V} = \rho v_g$
+                    </div>
+                    <p style="font-size:0.8em;">$v_g$: volumen de una partícula.</p>
+                    <p style="font-size:0.8em; margin-top:0.8em;">Porosidad: $\epsilon = 1 - \phi$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-004.png" alt="Ilustraciones de empaquetamiento" style="max-width:70%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: COMPACIDAD — LÍMITES                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad — límites</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-006.jpg" alt="Esferas empaquetadas" style="max-width:80%; border-radius:4px;">
+                </div>
+                <div>
+                    <p style="font-size:0.85em;">3D: $\displaystyle 0 < \phi < \frac{\pi}{3\sqrt{2}} \approx 0.74$ Kepler-Hales (fcc o hcp)</p>
+                    <p style="font-size:0.85em;">2D: $\displaystyle 0 < c < \frac{\pi\sqrt{3}}{6} \approx 0.91$ (hexagonal)</p>
+                </div>
+            </div>
+            <h3 style="font-size:0.85em; margin-top:0.8em;">Empaquetamiento</h3>
+            <ul style="font-size:0.7em; line-height:1.8;">
+                <li>Empaquetamiento aleatorio compacto (RCP) $\approx 0.64$(3D) o $0.82$(2D)
+                    <ul style="font-size:0.85em;">
+                        <li>James G. Berryman, 1983, <em>Phys. Rev. A</em></li>
+                        <li>S. Torquato, T. M. Truskett y P. G. Debenedetti, 2000, <em>Phys. Rev. Lett.</em> $\mapsto$ <span style="color:var(--color-teal);">Maximally jammed packing</span></li>
+                    </ul>
+                </li>
+                <li>Empaquetamiento aleatorio suelto (RLP) $\approx 0.55$(3D) o $0.77$(2D)
+                    <ul style="font-size:0.85em;">
+                        <li>George Y. Onoda y Eric G. Liniger, 1990, <em>Phys. Rev. Lett.</em></li>
+                        <li>Leonardo E. Silbert, 2010, <em>Soft Matter</em></li>
+                    </ul>
+                </li>
+                <li>Empaquetamientos muy sueltos
+                    <ul style="font-size:0.85em;">
+                        <li>Dapeng Bi et al., 2011, <em>Nature</em> $\mapsto$ <span style="color:var(--color-teal);">Shear jammed packing</span></li>
+                        <li>Massimo Pica Ciamarra y Antonio Coniglio, 2008, <em>Phys. Rev. Lett.</em> $\mapsto$ <span style="color:var(--color-teal);">Zero entropy packing</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: COMPACIDAD — LÍMITES (polígonos)                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad — límites</h2>
+            <div style="display:flex; gap:4px; justify-content:center;">
+                <img src="media/extracted_u2/img-007.png" alt="Polígonos packing 1" style="max-width:28%; border-radius:4px;">
+                <img src="media/extracted_u2/img-009.png" alt="Polígonos packing 2" style="max-width:28%; border-radius:4px;">
+                <img src="media/extracted_u2/img-011.png" alt="Polígonos packing 3" style="max-width:28%; border-radius:4px;">
+            </div>
+            <div class="two-col" style="margin-top:0.8em;">
+                <div>
+                    <p style="font-size:0.75em;"><strong>Polígonos (2D):</strong> C.M. Carlevaro y L.A. Pugnaloni, 2011, <em>Journal of Statistical Mechanics: Theory and Experiment</em>.</p>
+                    <p style="font-size:0.8em; text-align:center;">No teselado: $0.75 < c < 0.86$</p>
+                    <p style="font-size:0.8em; text-align:center;">Teselado: $0.77 < c < 1.0$</p>
+                    <p style="font-size:0.8em; margin-top:0.5em;"><strong>Polvos cohesivos (3D):</strong></p>
+                    <p style="font-size:0.8em; text-align:center;">$0.15 < \phi < 0.48$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-013.png" alt="φ vs Γ" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: COMPACIDAD — MEDICIÓN                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad — medición</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8em; font-size:0.7em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-015.png" alt="Geometría básica" style="max-width:90%; border-radius:4px;">
+                    <p>Geometría básica</p>
+                </div>
+                <div style="text-align:center;">
+                    <p>Fotografía<br>$\phi = \dfrac{N_{\text{black pixels}}}{N_{\text{pixels}}}$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-019.png" alt="Foto procesada" style="max-width:90%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-017.png" alt="Geometría probabilística" style="max-width:90%; border-radius:4px;">
+                    <p>Geometría probabilística<br>$\phi = \dfrac{N_{\text{hits}}}{N_{\text{shots}}}$</p>
+                </div>
+                <div style="text-align:center;">
+                    <p>Calibrar con<br>capacidad eléctrica</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-021.png" alt="Capacidad eléctrica" style="max-width:90%; border-radius:4px;">
+                </div>
+            </div>
+            <div style="text-align:center; font-size:0.7em; margin-top:0.5em;">
+                <p>Medir la altura: $\phi = \dfrac{Nv_g}{Ah}$</p>
+                <img src="media/extracted_u2/img-023.png" alt="Medición de altura" style="max-width:18%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: NÚMERO DE COORDINACIÓN                             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.0em;">Número de coordinación — número de contacto (besuqueros)</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.85em; margin-top:1em;">Número de coordinación</p>
+                    <p style="font-size:0.85em; margin-top:3em;">Número de contacto</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-025.png" alt="Número de coordinación" style="max-width:100%; border-radius:4px;">
+                    <img src="media/extracted_u2/img-029.png" alt="Número de contacto" style="max-width:100%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+            <p style="font-size:0.85em; margin-top:0.5em;">
+                Si los granos son convexos: $\langle z \rangle = 2\,\dfrac{\text{número total de contactos}}{\text{Número de partículas}}$
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: NÚMERO DE CONTACTO — LÍMITES                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto — límites</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.8em;"><strong>Máximo</strong> (monodisperso)<br>
+                    Esferas: $z = 12$<br>
+                    Discos: $z = 6$</p>
+                    <p style="font-size:0.8em; margin-top:0.8em;"><strong>Deposición secuencial</strong><br>
+                    (cualquier forma convexa / partículas rígidas)<br>
+                    2D: $\langle z \rangle = 2\frac{(2N)}{N} = 4$ (suma 2 contactos por grano)<br>
+                    3D: $\langle z \rangle = 2\frac{(3N)}{N} = 6$ (suma 3 contactos por grano)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-033.png" alt="Esferas empaquetadas" style="max-width:55%; border-radius:4px;">
+                    <img src="media/extracted_u2/img-035.png" alt="Deposición" style="max-width:55%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+            <div style="font-size:0.75em; margin-top:0.5em;">
+                <p><strong>Isostático</strong> (contactos puntuales) Ligaduras = Fuerzas</p>
+                <p><strong>2D:</strong> $3N$ ligaduras escalares (2 traslación, 1 rotación) y $2N_c$ fuerzas escalares $\to N_c = \frac{3N}{2} \to \langle z \rangle = 2\frac{N_c}{N} = 3$</p>
+                <p><strong>3D:</strong> $6N$ ligaduras escalares (3 traslación, 3 rotación) y $3N_c$ fuerzas escalares $\to N_c = 2N \to \langle z \rangle = 2\frac{N_c}{N} = 4$</p>
+                <p style="margin-top:0.3em;"><strong>Valores</strong> (confocal): $\phi = 0.4 \to \langle z \rangle = 4$; $\phi = 0.65 \to \langle z \rangle = 8$</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: NÚMERO DE CONTACTO — MEDICIÓN                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto — medición</h2>
+            <ul style="font-size:0.8em; line-height:2.0;">
+                <li>El número de contacto es difícil de medir porque es difícil distinguir contactos reales de "casi-contactos".</li>
+                <li>En simulaciones se requiere guardar posiciones con altísima precisión para detectar contactos. Es mejor distinguir por las fuerzas.</li>
+                <li>La regla de T. Pöschel para finalizar un contacto en simulación impide definir contactos sólo por las posiciones.</li>
+                <li>Usar pintura, oxidación, trazadores fluorescentes, partículas fotoelásticas, puentes líquidos, conductividad, etc.</li>
+            </ul>
+            <div style="display:flex; gap:1em; justify-content:center; margin-top:0.5em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-037.jpg" alt="Behringer" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Behringer</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-038.jpg" alt="Kudroli" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Kudroli</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: FUNCIÓN DE CORRELACIÓN DE PARES                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Función de correlación de pares</h2>
+            <p style="font-size:0.8em;">$4\pi r^2 \rho g(r) dr =$ Probabilidad de encontrar el centro de una partícula en un cascarón de radio $r$ y espesor $dr$ centrado en otra partícula.</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-039.jpg" alt="Cascarón esférico" style="max-width:65%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-040.jpg" alt="g(r) para distintos φ" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <p class="footnote">M Palombo et al., 2013, <em>Scientific reports</em>.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: FUNCIÓN DE CORRELACIÓN — MEDICIÓN                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em;">Función de correlación de pares — medición</h2>
+            <div style="font-size:0.75em;">
+                <p>$\displaystyle\int_0^\infty 4\pi r^2 \rho g(r)\,dr = N - 1$</p>
+                <p>$h(r) = g(r) - 1$ puede integrarse si no hay correlaciones de largo alcance</p>
+                <p>$S(k) = \mathcal{F}\{h(r)\} = \hat{h}(r)$ (factor de estructura, experimentos de scatering)</p>
+            </div>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div style="font-size:0.65em;">
+                    <p><strong>Posiciones detalladas:</strong><br>
+                    barrer todos los pares de partículas y poner la distancia entre sus centros en un histograma con bin $dr$.
+                    Normalizar con $4\pi r^2 \rho\,dr$ para obtener $g(r)$. Hay que conocer la densidad numérica $\rho$ de antemano.</p>
+                    <pre style="background:#2d2d2d; color:#f8f8f2; padding:0.5em; border-radius:4px; font-size:0.85em;"><code>maxbin; L; N
+dr = float(L/maxbin)
+hist = [0]*(maxbin+1)
+rdf = {}</code></pre>
+                </div>
+                <div style="font-size:0.65em;">
+                    <pre style="background:#2d2d2d; color:#f8f8f2; padding:0.5em; border-radius:4px; font-size:0.85em;"><code>#### READ COORDINATES IN ATOMS = [] ####
+for i in range(npart):
+  xi = (atoms[i])[0]; ...
+for j in range(i+1, npart):
+  xx = xi - (atoms[j])[0]; ...
+  ri = sqrt(xx*xx + yy*yy + zz*zz)
+  bin = int(ri/dr)
+  if bin <= maxbin:
+    hist[bin] += 1
+
+phi = N/(L*L*L) # NORMALIZATION
+norm = 2.0 * pi * dr * phi * N
+for i in range(1, maxbin+1):
+  r = (i - 0.5) * dr
+  val = hist[i]/norm/(i*r)/(dr+dr)/12.0)
+  rdf.update({r:r:val})</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: AUTOCOVARIANZA                                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Autocovarianza</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <p>$S_2^{\text{I}}(\vec{r}_1, \vec{r}_2) = \langle A^{\text{I}}(\vec{r}_1) A^{\text{I}}(\vec{r}_2)\rangle$ con $A^{\text{I}}(\vec{r}) = \begin{cases} 1 & \text{si } \vec{r} \in \text{I} \\ 0 & \text{si } \vec{r} \notin \text{I} \end{cases}$</p>
+                    <p style="margin-top:1em;">Si el medio es <em>estadísticamente homogéneo e isotrópico</em>: $S_2^{\text{I}}(\vec{r}_1, \vec{r}_2) = S_2^{\text{I}}(r)$</p>
+                    <p style="margin-top:0.5em;">Entonces</p>
+                    <p>$\chi^{\text{I}}(r) = S_2^{\text{I}}(r) - \phi^{(\text{I})2}$ Autocovarianza (integrable)</p>
+                    <p style="margin-top:0.5em;">$\chi^{\text{I}}(r) = \chi^{\text{II}}(r)$ dado que $A^{\text{I}}(\vec{r}_1) = 1 - A^{\text{II}}(\vec{r}_1)$ y $\phi^{\text{I}} = 1 - \phi^{\text{II}}$, entonces $\chi^{\text{I}}(r)$ es único.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-041.png" alt="Regiones I y II" style="max-width:90%; border-radius:4px;">
+                </div>
+            </div>
+            <p style="font-size:0.7em; margin-top:0.5em;">Puede medirse sobre imágenes experimentales o datos de simulación eligiendo puntos en forma aleatoria uniforme en el espacio. No es necesario tener información detallada de puntos de contactos o centros de granos.</p>
+            <p class="footnote">Y. Jiao, F. H. Stillinger y S. Torquato, 2007, <em>Phys. Rev. E</em>.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: PARÁMETRO DE ORDEN ORIENTACIONAL                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Parámetro de orden orientacional</h2>
+            <div class="two-col">
+                <div>
+                    <div class="eq-box">
+                        $Q_l = \left[\dfrac{4\pi}{2l+1}\displaystyle\sum_{m=-l}^{l} |\bar{Q}_{lm}|^2\right]^{1/2}$
+                    </div>
+                    <p style="font-size:0.75em;">$\bar{Q}_{lm}$ es la media sobre todos los contactos de<br>
+                    $Q_{lm}(\vec{r}) = Y_{lm}(\theta(\vec{r}), \phi(\vec{r}))$ son los armónicos esféricos.</p>
+                    <p style="font-size:0.75em;">$Q_l$ (y otros parámetros como $W_l$) pueden calcularse para un grano o para todo el empaquetamiento.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-043.png" alt="Armónicos esféricos" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <div class="two-col" style="margin-top:0.5em; font-size:0.7em;">
+                <div>
+                    <table>
+                        <thead><tr><th>Geometría (3D)</th><th>$Q_6$</th></tr></thead>
+                        <tbody>
+                            <tr><td>fcc</td><td>0.57452</td></tr>
+                            <tr><td>hcp</td><td>0.48476</td></tr>
+                            <tr><td>icosaédrica</td><td>0.66332</td></tr>
+                            <tr><td>líquido</td><td>0</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <table>
+                        <thead><tr><th>Geometría (2D)</th><th>$Q_6$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Amarillo</td><td>0.740829</td></tr>
+                            <tr><td>Verde</td><td>0.759623</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-045.jpg" alt="Red triangular Q6" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <p class="footnote">Paul J. Steinhardt, David R. Nelson y Marco Ronchetti, 1983, <em>Phys. Rev. B</em>.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: TENSOR DE TRAMA                                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Tensor de trama</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <div class="eq-box">
+                        $F = \displaystyle\sum_{\text{contacts}} \hat{n}^c \otimes \hat{n}^c = \sum_{\text{contacts}} \begin{bmatrix} n_x n_x & n_x n_y & n_x n_z \\ n_y n_x & n_y n_y & n_y n_z \\ n_z n_x & n_z n_y & n_z n_z \end{bmatrix}$
+                    </div>
+                    <ul style="font-size:0.85em; margin-top:0.5em;">
+                        <li>$F$ es simétrico y real $\to$ Hermítico $\to$ puede diagonalizarse y los autovalores son reales: $F_1, F_2, F_3$.</li>
+                        <li>$Tr(F) = \sum_{\text{contacts}} |n^c|^2 = N_c$</li>
+                        <li>$F = F_I + F_D$ (isotrópico + deviator) con $F_I = \frac{1}{3}Tr(F)\delta_{ij}$ (3D)</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-046.png" alt="Contactos" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <div style="text-align:center; font-size:0.65em; margin-top:0.5em;">
+                <p>$\begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix}\quad
+                \begin{bmatrix} 2 & 0 \\ 0 & 0 \end{bmatrix}\quad
+                \begin{bmatrix} 0 & 0 \\ 0 & 2 \end{bmatrix}\quad
+                \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix}\quad
+                \begin{bmatrix} \frac{3}{2} & \frac{1}{2} \\ \frac{1}{2} & \frac{3}{2} \end{bmatrix}\quad
+                \begin{bmatrix} 1 & \frac{1}{2} \\ \frac{1}{2} & 2 \end{bmatrix}$</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: CELDAS DE VORONOI                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Celdas de Voronoi</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-048.png" alt="Red de Voronoi y Delaunay" style="max-width:100%; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:2.0;">
+                        <li>Celda de Voronoi: Área o volumen más cercano a cada punto en el conjunto (polígonos blancos). La red recíproca se llama red de Delaunay (red negra).</li>
+                        <li>Para esferas y discos cada grano está contenido en su celda (no sucede en otros sistemas).</li>
+                        <li>Los vecinos pueden o no estar en contacto.</li>
+                        <li>La distribución de volúmenes de Voronoi parece seguir una ley universal (para empaquetamientos y para sistemas de bajísima densidad).
+                        <br><span class="credit">T. Aste et al. (varios artículos).</span></li>
+                        <li>Voro++: http://math.lbl.gov/voro++/</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: POLÍGONOS + QUADRONS                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.95em;">Polígonos de la red de contactos + quadrons</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-049.jpg" alt="Red de contactos" style="max-width:90%; border-radius:4px;">
+                    <img src="media/extracted_u2/img-050.jpg" alt="Quadrons" style="max-width:90%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:1.8;">
+                        <li>La red de contactos no incluye a vecinos cercanos que no están en contacto.</li>
+                        <li>Los polígonos indivisibles de la red pueden estar muy deformados.</li>
+                        <li>Los polígonos teselan el espacio pero no están asignados a ninguna partícula.</li>
+                    </ul>
+                    <p style="font-size:0.85em;"><span class="credit">R. Arevalo et al., (varios artículos).</span></p>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Quadrons:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Los quadron teselan el espacio y se pueden asignar a una partícula.</li>
+                    </ul>
+                    <p style="font-size:0.7em;">R. Blumenfeld (R. Blumenfeld y S.F. Edwards, 2014, <em>The European Physical Journal Special Topics</em> y Takashi Matsushima y Raphael Blumenfeld, 2012, <em>arXiv preprint arXiv:1207.2988</em>).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: ARCOS (imagen sola)                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Arcos</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u2/img-051.jpg" alt="Depósito de esferas" style="max-width:35%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: ARCOS (con texto)                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Arcos</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-052.jpg" alt="Depósito coloreado" style="max-width:80%; border-radius:4px;">
+                </div>
+                <div style="font-size:0.85em;">
+                    <ul style="line-height:2.2;">
+                        <li>Contactos de sostén</li>
+                        <li>Contactos mutuamente estables (MSC)</li>
+                        <li>Agregados de granos usando MSC</li>
+                        <li>Dependiente de la historia de deposición de los granos</li>
+                        <li>$n_i$: número de arcos de $i$ partículas (incluye $i=1$)</li>
+                        <li>$n_i(x)$: ancho de los arcos de tamaño $i$</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: ARCOS — EJEMPLOS                                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Arcos — ejemplos</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-053.jpg" alt="Arcos 3D" style="max-width:100%; border-radius:4px;">
+                    <img src="media/extracted_u2/img-054.jpg" alt="Arcos 2D" style="max-width:70%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="font-size:0.85em;">
+                    <ul style="line-height:2.5;">
+                        <li>La mayoría de los arcos son tipo "cadena" aún en 3D</li>
+                        <li>Es necesario un criterio de terminación</li>
+                    </ul>
+                    <p class="credit" style="margin-top:2em;">L.A. Pugnaloni (varios artículos)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 21: RELACIONES                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Relaciones</h2>
+            <ul style="font-size:0.85em; line-height:2.5;">
+                <li>$\phi \uparrow \to z \uparrow$</li>
+                <li>Arcos$\uparrow \to z\downarrow$: $z_{\text{soporte}} = 2\left[1 + \frac{1}{N}\sum_{s=1}^{N} n_s\right]$ (2D)</li>
+                <li>Arcos$\uparrow \to \phi\downarrow$ en general, pero no siempre</li>
+                <li>$\langle z \rangle = Tr(F)/N$</li>
+                <li>Las celdas de Voronoi se pueden usar para asignar un volumen local a cada grano y así calcular un $\phi$ local</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 22: EJEMPLOS — VIBRADO                                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos — Vibrado de discos y esferas</h2>
+            <p style="font-size:0.7em;">L.A. Pugnaloni et al., PRE (2008)</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
+                <img src="media/extracted_u2/img-055.jpg" alt="φ discos" style="max-width:100%; border-radius:4px;">
+                <img src="media/extracted_u2/img-056.jpg" alt="φ esferas" style="max-width:100%; border-radius:4px;">
+                <img src="media/extracted_u2/img-057.jpg" alt="Mean arch discos" style="max-width:100%; border-radius:4px;">
+                <img src="media/extracted_u2/img-058.jpg" alt="Mean arch esferas" style="max-width:100%; border-radius:4px;">
+            </div>
+            <p style="font-size:0.7em; margin-top:0.3em;">Estados distinguibles por el estado de tensión.</p>
+            <p style="font-size:0.65em;">I. Sanchez et al., PRE (2010); L.A. Pugnaloni et al., Pap. Phys. (2011).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 23: EJEMPLOS — POLÍGONOS                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos — vibrado de polígonos</h2>
+            <p style="font-size:0.7em;">C.M. Carlevaro et al., JSTAT (2011)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-059.jpg" alt="φ vs Γ" style="max-width:100%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-061.jpg" alt="Grid de polígonos" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <div style="display:flex; gap:0.5em; justify-content:center; margin-top:0.3em;">
+                <img src="media/extracted_u2/img-060.jpg" alt="Plots adicionales" style="max-width:45%; border-radius:4px;">
+                <img src="media/extracted_u2/img-062.png" alt="Packing polígonos" style="max-width:20%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 24: CADENAS DE FUERZAS Y ARCOS                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos — Cadenas de fuerzas y arcos</h2>
+            <p style="font-size:0.7em;">C.M. Carlevaro et al., EPJE (2012)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-064.jpg" alt="Cadenas de fuerza (a,b,c,d)" style="max-width:100%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u2/img-065.jpg" alt="Frecuencia vs Fn/<Fn>" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <p style="font-size:0.75em; margin-top:0.3em;">Las ligaduras hacen que la PDF decaiga más rápido que una exponencial.</p>
+            <p class="footnote">B.P. Tighe et al., PRL (2008).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 25: EFECTO DEL ORDEN EN DESCARGA DE SILOS             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">El efecto del orden en la descarga de silos<sup style="font-size:0.6em;">1</sup></h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u2/img-066.png" alt="Q6 mapa y PDF" style="max-width:85%; border-radius:4px;">
+            </div>
+            <div style="text-align:center; margin-top:0.3em;">
+                <img src="media/extracted_u2/img-068.png" alt="Q4 y W'(τ)" style="max-width:85%; border-radius:4px;">
+            </div>
+            <p class="footnote"><sup>1</sup>Carlevaro, Kozlowski y Pugnaloni, «Flow rate in 2D silo discharge of binary granular mixtures: the role of ordering in monosized systems» (2024)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 26: LECTURAS RECOMENDADAS I                           -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:1.2em 2em; margin:0 -2em;">
+            <h2>Lecturas recomendadas I</h2>
+            <ul style="font-size:0.65em; line-height:2.2;">
+                <li>James G. Berryman. «Random close packing of hard spheres and disks». <em>Phys. Rev. A</em> 27 (2 feb. de 1983), págs. 1053-1061.</li>
+                <li>Dapeng Bi, Jie Zhang, Bulbul Chakraborty y Robert P. Behringer. «Jamming by shear». <em>Nature</em> 480.7377 (2011), pág. 355.</li>
+                <li>R. Blumenfeld y S.F. Edwards. «Granular statistical mechanics — a personal perspective». <em>The European Physical Journal Special Topics</em> 223.11 (oct. de 2014), págs. 2189-2204.</li>
+                <li>C. Manuel Carlevaro, Ryan Kozlowski y Luis A. Pugnaloni. «Flow rate in 2D silo discharge of binary granular mixtures: the role of ordering in monosized systems». <em>Frontiers in Soft Matter</em> 4 (2024).</li>
+                <li>C.M. Carlevaro y L.A. Pugnaloni. «Steady state of tapped granular polygons». <em>Journal of Statistical Mechanics: Theory and Experiment</em> 2011 (2011).</li>
+                <li>Massimo Pica Ciamarra y Antonio Coniglio. «Random Very Loose Packings». <em>Phys. Rev. Lett.</em> 101 (12 sep. de 2008), pág. 128001.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 27: LECTURAS RECOMENDADAS II                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:1.2em 2em; margin:0 -2em;">
+            <h2>Lecturas recomendadas II</h2>
+            <ul style="font-size:0.65em; line-height:2.2;">
+                <li>Y. Jiao, F. H. Stillinger y S. Torquato. «Modeling heterogeneous materials via two-point correlation functions: Basic principles». <em>Phys. Rev. E</em> 76 (3 sep. de 2007), pág. 031110.</li>
+                <li>Takashi Matsushima y Raphael Blumenfeld. «Fundamental structural characteristics of planar granular assemblies: self-organisation and scaling away friction and initial state». <em>arXiv preprint arXiv:1207.2988</em> (2012).</li>
+                <li>George Y. Onoda y Eric G. Liniger. «Random loose packings of uniform spheres and the dilatancy onset». <em>Phys. Rev. Lett.</em> 64 (22 mayo de 1990), págs. 2727-2730.</li>
+                <li>M. Palombo, A. Gabrielli, VDP Servedio, G. Ruocco y S. Capuani. «Structural disorder and anomalous diffusion in random packing of spheres». <em>Scientific reports</em> 3 (2013), pág. 2631.</li>
+                <li>Leonardo E. Silbert. «Jamming of frictional spheres and random loose packing». <em>Soft Matter</em> 6 (13 2010), págs. 2918-2924.</li>
+                <li>Paul J. Steinhardt, David R. Nelson y Marco Ronchetti. «Bond-orientational order in liquids and glasses». <em>Phys. Rev. B</em> 28 (2 jul. de 1983), págs. 784-805.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 28: LECTURAS RECOMENDADAS III                         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:1.2em 2em; margin:0 -2em;">
+            <h2>Lecturas recomendadas III</h2>
+            <ul style="font-size:0.65em; line-height:2.2;">
+                <li>S. Torquato, T. M. Truskett y P. G. Debenedetti. «Is Random Close Packing of Spheres Well Defined?» <em>Phys. Rev. Lett.</em> 84 (10 mar. de 2000), págs. 2064-2067.</li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

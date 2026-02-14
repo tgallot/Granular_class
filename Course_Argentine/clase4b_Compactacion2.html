@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4b — Compactación de Materiales Granulares (cont.)</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- S1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Compactación<br>de Materiales Granulares
+            </h1>
+            <p style="font-size:0.7em; color:#666;">(continuación)</p>
+        </div>
+        <div style="text-align:center; margin-top:0.5em;">
+            <img src="media/extracted_u4b/img-000.png" alt="Soil compaction" style="max-height:380px; border-radius:8px;">
+        </div>
+    </section>
+
+    <!-- S2: MODELO DE VOLUMEN LIBRE -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de volumen libre</h2>
+            <p class="credit" style="color:#2980b9; font-size:0.55em;">Boutreux, T. &amp; de Gennes, P. Compaction of granular mixtures: a free volume model. Physica A 244, 59–67 (1997)</p>
+            <div style="font-size:0.85em;">
+                <ul style="line-height:2.0;">
+                    <li>Calculan el volumen libre por grano (promedio)</li>
+                </ul>
+                <div class="eq-box" style="font-size:1.2em; margin:0.8em 0;">
+                    $v = w\left(\dfrac{1}{\phi} - \dfrac{1}{\phi_m}\right) \sim \dfrac{w(\phi_m - \phi)}{\phi^{m^2}}$
+                </div>
+                <p>siendo $w$ el volumen de una partícula y $\phi_m$ la fracción de volumen máxima que puede alcanzar el empaquetamiento.</p>
+                <ul style="line-height:2.0; margin-top:0.5em;">
+                    <li>Una hipótesis es que para compactar necesitan que una partícula entre en un "hueco" de tamaño adecuado $\to$ volumen $\geq w$</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- S3: VOLUMEN LIBRE (cont.) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de volumen libre</h2>
+            <div style="font-size:0.82em;">
+                <ul style="line-height:2.0;">
+                    <li>Además suponen que distribución de "huecos" sigue una distribución de Poisson y la cinética de compactación estará relacionada a:</li>
+                </ul>
+                <div class="eq-box" style="font-size:1.1em;">
+                    $f(\Omega = w) = \exp\!\left(-\dfrac{w}{v}\right) = \exp\!\left(-\dfrac{\phi_m^2}{(\phi_m - \phi)}\right)$
+                </div>
+                <ul style="line-height:2.0; margin-top:0.3em;">
+                    <li>La tasa de compactación (siendo $n$ el número de tappings):</li>
+                </ul>
+                <p style="text-align:center; font-size:1.0em;">$\dfrac{d\phi}{dn} = k\exp\!\left(-\dfrac{\phi_m^2}{(\phi_m - \phi)}\right)$</p>
+                <div class="eq-box" style="font-size:1.1em; margin-top:0.5em;">
+                    $n = \dfrac{1}{n_0}\exp\!\left(\dfrac{\phi_m^2}{\phi_m - \phi}\right)$
+                </div>
+                <p style="color:#c0392b; font-style:italic; font-size:0.85em; margin-top:0.3em;">$n_0$ es un indicador "grueso" del número de tappings que se necesita para pasar de $\phi_1$ a $\phi_m$</p>
+                <p style="text-align:center;">$n_0 = k\dfrac{\phi_m^2}{\phi_m - \phi_1}$</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- S4: VOLUMEN LIBRE (cont.) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de volumen libre</h2>
+            <div style="font-size:0.85em;">
+                <div class="eq-box" style="font-size:1.2em;">
+                    $\phi_m - \phi = \dfrac{\phi_m^2}{\ln n - \ln n_0}$
+                </div>
+                <p style="margin-top:1em; color:#c0392b; font-style:italic; text-align:center;">dependencia similar a la encontrada en los experimentos de Chicago</p>
+                <p style="text-align:center; margin-top:0.5em; font-size:1.0em;">$\rho(t) = \rho_f - \dfrac{\rho_0 - \rho_f}{1 + B\ln(1+t/\tau)}$</p>
+                <p style="margin-top:2em; font-weight:700; text-align:center;">Si bien este enfoque predice correctamente la compactación lenta, no tiene en cuenta la influencia de la amplitud del tapping ni los fenómenos observados cuando esta amplitud varía durante el experimento.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- S5: FRUSTRACIÓN DE RED -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de frustración de red</h2>
+            <p class="credit" style="color:#2980b9; font-size:0.5em;">Nicodemi &amp; Coniglio (1998): "Aging and Multiscaling in Out-of-Equilibrium Dynamical Processes in Granular Media" – PRL 82-5<br>
+            Caglioti et al. (1997) A "Tetris-Like" Model for the Compaction of Dry Granular Media – PRL 79-8</p>
+            <p style="font-size:0.85em; text-align:center; font-weight:700; margin-top:0.5em;">Modelo de ocupación en una red bidimensional o tridimensional</p>
+            <p style="font-size:0.85em; text-align:center;">Cada sitio puede estar vacío o contener una partícula, sujeta a ciertas restricciones geométricas y dinámicas</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div style="font-size:0.85em;">
+                    <ul style="line-height:2.2;">
+                        <li>Las partículas tienen forma anisotrópica (<em>como las piezas del juego Tetris</em>).</li>
+                        <li>La hipótesis es que NO pueden superponerse (<em>dos partículas no pueden ocupar sitios vecinos si no cumplen cierta condición de compatibilidad</em>)</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-002.png" alt="Piezas tipo Tetris" style="max-height:300px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S6: FRUSTRACIÓN DE RED (cont.) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de frustración de red</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-003.png" alt="Red tipo Tetris con gravedad" style="max-height:450px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.78em;">
+                    <p><strong style="color:#2980b9;">Tapping</strong>: El sistema se perturba al permitir que los granos se muevan en cualquier dirección permitida con una probabilidad $p_{up}$ de moverse hacia arriba ($0 &lt; p_{up} &lt; 0{,}5$) y una probabilidad $p_{down} = 1 - p_{up}$ de moverse hacia abajo.</p>
+                    <p style="margin-top:1em;"><strong style="color:#2980b9;">Relajación</strong>: sólo se pueden mover hacia abajo.</p>
+                    <p style="margin-top:1em;">La "amplitud de vibración" (análoga a una temperatura efectiva) está controlada por $x = p_{up}/p_{down}$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S7: FRUSTRACIÓN DE RED — ρ(t_n) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de frustración de red</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-004.png" alt="ρ(t_n) vs t_n" style="max-height:420px; border-radius:4px;">
+                    <p style="font-size:0.65em; color:#2980b9;">$\leftarrow x$</p>
+                </div>
+                <div style="font-size:0.72em;">
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\rho(t_n) = \rho_\infty - \dfrac{\Delta\rho_\infty}{1 + B\ln\!\left(\dfrac{t_n}{\tau}+1\right)}$
+                    </div>
+                    <p style="margin-top:0.5em;">donde</p>
+                    <ul style="line-height:1.8;">
+                        <li>$\rho_\infty = 1$</li>
+                        <li>$\Delta\rho_\infty = 0{,}25$</li>
+                        <li>$B$ y $\tau$: parámetros libres</li>
+                    </ul>
+                    <p style="margin-top:0.5em;">$\tau = 4{,}3\,x^{-0{,}84}$</p>
+                    <p style="font-size:0.85em; margin-top:0.5em; color:#c0392b;">$\tau$ representa el tiempo mínimo tras el cual se empieza a observar un proceso de compactación. Para $t_n \ll \tau$, la fracción se mantiene prácticamente en el valor inicial</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S8: FRUSTRACIÓN DE RED — ρ(Γ) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de frustración de red</h2>
+            <p style="font-size:0.75em;">Cada tap se realiza permitiendo que las partículas relajen bajo la gravedad manteniendo $\Gamma$ constante durante el intervalo de tiempo del tap ($\tau_0$) y luego apagando la vibración hasta que el sistema alcance una configuración estática</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-005.png" alt="ρ(Γ) reversible/irreversible" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <p style="text-align:center; font-size:1.1em;">$\Gamma = -\dfrac{1}{\ln x}$</p>
+                    <p style="margin-top:0.5em;">Incremento de la amplitud $\to$ $\gamma = \Delta\Gamma/\tau_0$</p>
+                    <p style="margin-top:1em; color:#c0392b;">Sistema fuera del equilibrio (vidrios) ya que los tiempos de relajación son mayores que el tiempo $\tau_0$ de los experimentos</p>
+                    <p style="margin-top:0.5em; color:#c0392b;">La rama reversible depende de la "tasa de enfriamiento $\gamma$"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S9: FRUSTRACIÓN DE RED — γ dependence -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de frustración de red</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-005.png" alt="ρ(Γ) inc/dec/inc" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-007.png" alt="ρ vs Γ para distintos γ" style="max-height:380px; border-radius:4px;">
+                </div>
+            </div>
+            <p style="font-size:0.8em; margin-top:0.3em; color:#c0392b; text-align:center;">Sistema fuera del equilibrio (vidrios) ya que los tiempos de relajación son mayores que el tiempo $\tau_0$ de los experimentos</p>
+            <p style="font-size:0.8em; color:#c0392b; text-align:center;">La rama reversible depende de la "tasa de enfriamiento $\gamma$"</p>
+        </div>
+    </section>
+
+    <!-- S10: OTROS MODELOS NUMÉRICOS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Otros modelos numéricos</h2>
+            <p class="credit" style="color:#2980b9; font-size:0.55em;">Luis A. Pugnaloni et al. (2008) Nonmonotonic reversible branch in four model granular beds subjected to vertical vibration. Physical Review E 78, 051305</p>
+            <div style="font-size:0.85em; margin-top:1em;">
+                <p>A- Monte Carlo híbrido + deposición balística</p>
+                <p>B- Pseudo-dinámica</p>
+                <p>C- Deposición de Monte Carlo</p>
+                <p>D- Dinámica Granular DEM</p>
+                <p style="margin-top:1.5em;">En los modelos A–C, la intensidad del tapping se parametriza con un factor de expansión "A" en lugar de una aceleración reducida real.</p>
+                <div class="eq-box" style="font-size:1.3em; margin-top:0.8em;">
+                    $\varepsilon = \sqrt{A-1}$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S11: MODELOS — DISCOS Y ESFERAS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Otros modelos numéricos</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <p style="font-weight:700;">DISCOS</p>
+                    <img src="media/extracted_u4b/img-008.png" alt="φ vs ε DISCOS" style="max-height:400px; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <p style="font-weight:700;">ESFERAS</p>
+                    <img src="media/extracted_u4b/img-009.png" alt="φ vs ε ESFERAS" style="max-height:400px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S12: MODELOS — ARCOS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Otros modelos numéricos</h2>
+            <p style="font-size:0.85em;">Determinan las partículas mutuamente estables para analizar los arcos en el empaquetamiento (salvo en el modelo C).</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-010.png" alt="Arcos por partícula vs ε" style="max-height:380px; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-011.png" alt="Tamaño medio de arcos vs ε" style="max-height:380px; border-radius:4px;">
+                </div>
+            </div>
+            <p style="font-size:0.8em; color:#c0392b; font-style:italic; text-align:center; margin-top:0.3em;">Tanto el número de arcos como el tamaño medio de los arcos presentan un máximo en la intensidad de tapping donde la fracción de empaquetamiento es menor.</p>
+        </div>
+    </section>
+
+    <!-- S13: PENTÁGONOS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Simulaciones numéricas: otras geometrías</h2>
+            <p class="credit" style="color:#2980b9; font-size:0.5em;">Vidales AM, Pugnaloni LA, Ippolito C. Compaction and arching in tapped pentagon deposits. Granular Matter (2009)</p>
+            <p style="font-weight:700; font-size:0.9em;">PENTÁGONOS</p>
+            <div style="display:flex; gap:1em; align-items:flex-start;">
+                <img src="media/extracted_u4b/img-012.png" alt="Pentágonos (a)(b)" style="max-height:300px; border-radius:4px;">
+                <img src="media/extracted_u4b/img-013.png" alt="Overlap geometry" style="max-height:250px; border-radius:4px;">
+                <img src="media/extracted_u4b/img-014.png" alt="Arreglos (a-d)" style="max-height:250px; border-radius:4px;">
+            </div>
+            <p style="font-size:0.85em; margin-top:0.3em;">Pseudo-dinámica (PMDM)</p>
+        </div>
+    </section>
+
+    <!-- S14: PENTÁGONOS — RESULTADOS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Simulaciones numéricas: otras geometrías</h2>
+            <p style="font-size:0.85em; color:#c0392b; font-style:italic; text-align:center;">La compacidad crece a medida que aumenta A, sin mínimo (monótono)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-015.png" alt="Final packing fraction vs A" style="max-height:420px; border-radius:4px;">
+                </div>
+                <div>
+                    <p style="font-size:0.85em; font-weight:700;">Distribución de tamaños de arcos</p>
+                    <img src="media/extracted_u4b/img-016.png" alt="n(s) vs s" style="max-height:380px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S15: HORMIGÓN -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: resistencia del hormigón</h2>
+            <p class="credit" style="color:#2980b9; font-size:0.5em;">Medici M.E., Benegas O.A., Uñac, R.O., Vidales A M. The effect of blending granular aggregates of different origin on the strength of concrete. Physica A (2012)</p>
+            <p style="font-size:0.9em; text-align:center; margin-top:1em;">Las propiedades físicas de los granos afectan directamente las propiedades mecánicas del hormigón</p>
+            <div style="font-size:0.85em; margin-top:1.5em;">
+                <p><strong>Resistencia a compresión</strong>: Es la propiedad mecánica más relevante del hormigón estructural y depende de múltiples factores:</p>
+                <ul style="line-height:2.0; margin-top:0.3em;">
+                    <li>Tipo y distribución de tamaño del árido</li>
+                    <li>Tipo y cantidad de cemento</li>
+                    <li>Relación agua/cemento</li>
+                    <li>Aditivos químicos y condiciones de curado</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- S16: HORMIGÓN — METODOLOGÍA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: resistencia del hormigón</h2>
+            <div style="font-size:0.85em;">
+                <ul style="line-height:2.5;">
+                    <li>Se usaron áridos de dos canteras distintas (Q1 y Q2)</li>
+                    <li>Se compararon áridos naturales (NA) y triturados (CA)</li>
+                    <li>Se estudió el efecto de la proporción CA/NA en la resistencia a compresión</li>
+                    <li>Se definió un parámetro $f$ que representa el porcentaje másico de árido triturado</li>
+                </ul>
+                <div class="eq-box" style="font-size:1.2em; margin-top:0.8em;">
+                    $f(\%) = \dfrac{m_{CA}}{m_{CA} + m_{NA}}\cdot 100$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S17: HORMIGÓN — DISTRIBUCIÓN -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: resistencia del hormigón</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-018.png" alt="Distribución de tamaño de grano" style="max-height:400px; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-019.png" alt="Packing density vs grain size" style="max-height:400px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S18: HORMIGÓN — PACKING + SSA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: resistencia del hormigón</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u4b/img-020.png" alt="Packing density c vs f(%)" style="max-height:400px; border-radius:4px;">
+                    <p style="font-size:0.65em; color:#c0392b;"><span style="margin-right:3em;">natural</span> <span>triturado</span></p>
+                </div>
+                <div>
+                    <p style="font-size:0.85em; text-align:center; font-weight:700;">Factor de forma<br>"specific surface area" (SSA)</p>
+                    <img src="media/extracted_u4b/img-021.png" alt="SSA vs f(%)" style="max-height:350px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- S19: HORMIGÓN — F_C -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: resistencia del hormigón</h2>
+            <p style="font-size:0.9em; text-align:center; font-weight:700;">Ensayo Uniaxial</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u4b/img-022.png" alt="F_C vs f(%)" style="max-height:420px; border-radius:4px;">
+            </div>
+            <p style="font-size:0.85em; color:#c0392b; font-style:italic; text-align:center; margin-top:0.3em;">Dependencia parabólica – competición de efectos $\to$ SSA y c</p>
+        </div>
+    </section>
+
+    <!-- FIN -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:2em; margin:0 -2em; text-align:center;">
+            <h1 style="font-size:2em; color:var(--color-title); margin-top:2em;">FIN.</h1>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

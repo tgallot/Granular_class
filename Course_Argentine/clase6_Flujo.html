@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 6 — Flujo Granular</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .three-col { display: flex; gap: 1em; }
+        .reveal .three-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+        .reveal .red-box {
+            border: 3px solid #c0392b;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Flujo Granular
+            </h1>
+            <p style="font-size:0.55em; color:#666; margin:0.3em 0 0;">
+                Unidad 6 — Geofísica de Medios Granulares
+            </p>
+        </div>
+        <div class="two-col" style="margin-top:0.6em;">
+            <div>
+                <ul style="font-size:0.55em; color:#444;">
+                    <li>Reología local inercial</li>
+                    <li>Número de inercia</li>
+                    <li>Relaciones constitutivas</li>
+                    <li>Flujos en silos y tolvas</li>
+                    <li>Ángulo de fricción de pared</li>
+                </ul>
+                <p style="font-size:0.45em; color:#888; margin-top:1em;">
+                    Thomas Gallot · María Alejandra Aguirre<br>Mayo 2025
+                </p>
+            </div>
+            <div style="text-align:center;">
+                <img src="media/extracted_u6/img-004.jpg" style="max-height:140px;"><br>
+                <img src="media/extracted_u6/img-005.jpg" style="max-height:140px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: FLUJO EN UN CANAL 2D                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujo en un canal 2D</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6/img-008.jpg" style="max-height:320px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p>Se varía el ángulo de inclinación (régimen de flujo estacionario)</p>
+                    <p>A partir de un gran embudo inicialmente se colocan 15000–30000 esferas.</p>
+                </div>
+            </div>
+            <p style="font-size:0.5em; margin-top:0.5em;">Canal bidimensional de vidrio de 3.7 m de largo, 0.5 m de profundidad y 6.7 mm de ancho.<br>
+            Bolitas de acetato-celulosa de 6 mm de diámetro. Fondo: rugoso (bolitas pegadas).</p>
+            <p class="footnote">T. G. Drake, "Structural features in granular flows," J. Geophys. Res. 95, NO.B6, 8681 (1990)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: TIPOS DE FLUJOS — imagen                          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Tipos de flujos</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6/img-009.jpg" style="max-height:420px;">
+                </div>
+                <div style="font-size:0.55em;">
+                    <p style="color:var(--color-mauve); font-weight:bold;">Región de colisiones</p>
+                    <ul>
+                        <li>Zona de saltación</li>
+                        <li>Zona caótica</li>
+                        <li>Zona de capas deslizantes</li>
+                    </ul>
+                    <br>
+                    <p style="color:var(--color-mauve); font-weight:bold;">Región de fricción</p>
+                    <ul>
+                        <li>Zona de bloques deslizantes</li>
+                        <li>Zona cuasi-estática</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: TIPOS DE FLUJOS — detalle regiones                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Tipos de flujos</h2>
+            <div class="two-col" style="font-size:0.48em;">
+                <div>
+                    <h3 style="color:var(--color-mauve); font-size:1.2em;">Región de fricción</h3>
+                    <p style="color:#c0392b; font-weight:bold;">• Región cuasi-estática</p>
+                    <p>Fuerte influencia de la base. Movimiento cercano al de un cuerpo rígido. Desplazamientos o rotaciones individuales imperceptibles.</p>
+                    <p style="color:#c0392b; font-weight:bold;">• Región de bloques deslizantes</p>
+                    <p>Fuerte influencia de la base. Desplazamiento en bloques (varias partículas). Velocidad &gt; vel. cuasi-estática. Ocupa ~25% de la región de flujo.</p>
+                </div>
+                <div>
+                    <h3 style="color:var(--color-mauve); font-size:1.2em;">Región de colisiones</h3>
+                    <p style="color:#c0392b; font-weight:bold;">• Región de capas deslizantes</p>
+                    <p>Desplazamientos relativos de capas de granos (similar a bloques, pero con predominio de colisiones internas).</p>
+                    <p style="color:#c0392b; font-weight:bold;">• Región caótica</p>
+                    <p>Desplazamientos aleatorios. Camino libre medio ~ d</p>
+                    <p style="color:#c0392b; font-weight:bold;">• Región saltación</p>
+                    <p>Camino libre medio ~ 100 d. Sensible a la inclinación del canal.</p>
+                    <p style="text-align:center; color:#c0392b; font-weight:bold; font-size:1.3em;">↓ Superficie libre</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: TIPOS DE FLUJOS — enfoques teóricos               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Tipos de flujos</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6/img-010.jpg" style="max-height:380px;">
+                </div>
+                <div style="font-size:0.5em;">
+                    <div class="highlight-box" style="background:rgba(139,94,107,0.1);">
+                        <p><strong style="color:var(--color-mauve);">Región de colisiones</strong><br>
+                        <span style="color:#c0392b;">Gas disipativo:</span> Teoría cinética modificada. Colisiones binarias.</p>
+                    </div>
+                    <div class="highlight-box" style="border-left-color:var(--color-teal);">
+                        <p><strong style="color:var(--color-dark);">Líquido: visco-plástico</strong><br>
+                        Leyes constitutivas. Interacciones multicontactos.</p>
+                    </div>
+                    <div class="highlight-box" style="background:rgba(139,94,107,0.1);">
+                        <p><strong style="color:var(--color-mauve);">Región de fricción</strong><br>
+                        <span style="color:#c0392b;">Sólido (cuasiestático):</span> Teorías de plasticidad (suelos).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: REOLOGÍA LOCAL — Cizalla plana                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:0.95em;">Reología local (inercial) para flujos densos</h2>
+            <p style="font-size:0.5em; color:#c0392b; font-weight:bold;">Cizalla con un plano — Régimen friccional</p>
+            <p style="font-size:0.48em;">Configuración sencilla para estudiar la reología: esfuerzo de corte \(\tau\) y compactación \(\phi\) en función de tasa de corte \(\dot{\gamma}\) y presión <strong>P</strong>.</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-012.jpg" style="max-height:250px;">
+                </div>
+                <div style="font-size:0.48em;">
+                    <p style="color:#c0392b; font-weight:bold;">Material granular:</p>
+                    <p>Partículas de diámetro d y densidad \(\rho\), confinado entre dos placas rugosas sometido a presión P en la placa superior.</p>
+                    <p>Se impone \(V_w\) en la placa superior ⇒ material se cizalla con tasa de corte:</p>
+                    <div class="eq-box">
+                        \[\dot{\gamma} = \frac{V_w}{L}\]
+                    </div>
+                    <p>En ausencia de gravedad: \(\tau = \sigma_{xz}\) y \(P = \sigma_{zz}\) son homogéneos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: NÚMERO DE INERCIA                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Número de inercia</h2>
+            <p style="font-size:0.48em;">Para sistemas grandes (\(L/d \gg 1\)) y partículas rígidas (módulo de Young \(\gg P\)) el sistema es controlado por un único parámetro adimensional:</p>
+            <div class="eq-box">
+                \[I = \frac{t_{micro}}{t_{macro}} = \frac{\dot{\gamma}\, d}{\sqrt{P/\rho_p}} = \frac{\text{Fza de inercias}}{\text{Fza de presión}}\]
+            </div>
+            <div class="two-col" style="font-size:0.45em;">
+                <div>
+                    <p style="color:#c0392b; font-weight:bold;">Tiempo microscópico</p>
+                    <p>Tiempo que una partícula tarda en moverse una distancia <em>d</em> bajo la presión de confinamiento P.</p>
+                    \[m\frac{d^2 z}{dt^2} = F_Z \quad \Rightarrow \quad t_{micro} = \frac{d}{\sqrt{P/\rho_p}}\]
+                </div>
+                <div>
+                    <p style="color:#c0392b; font-weight:bold;">Tiempo macroscópico</p>
+                    <p>Relacionado a la deformación media y el tiempo entre entrampamiento.</p>
+                    \[\Delta u = \dot{\gamma}\,d \quad \Rightarrow \quad t_{macro} = \frac{1}{\dot{\gamma}}\]
+                </div>
+            </div>
+            <p class="footnote">Forterre Y. y Pouliquen O., Granular Flows. Seminaire Poincaré XIII (2009) 69-100.<br>
+            Fei et al. Scientific Reports, Nature, 10:12162 (2020)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: NÚMEROS ADIMENSIONALES                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Números adimensionales</h2>
+            <p style="font-size:0.48em;">Número adimensional que considera los parámetros de control (\(P, \rho_p, d, L, V_w\)):</p>
+            <div class="eq-box" style="display:inline-block;">
+                \[I = \frac{t_{micro}}{t_{macro}} = \frac{\dot{\gamma}\, d}{\sqrt{P/\rho_p}} \qquad \text{Número de Inercia I}\]
+            </div>
+            <p style="font-size:0.48em;">Números adimensionales que consideran la <em>respuesta</em> del sistema:<br>
+            Considera el \(\tau\) necesario para poder fluir, tiene en cuenta la respuesta interna del sistema.</p>
+            <div class="two-col" style="font-size:0.5em;">
+                <div style="text-align:center;">
+                    <p style="color:#c0392b;">Coeficiente de fricción efectivo (macroscópico)</p>
+                    <div class="eq-box">\[\mu(I) = \frac{\tau}{P}\]</div>
+                </div>
+                <div style="text-align:center;">
+                    <p style="color:#c0392b;">Fracción de compactación</p>
+                    <div class="eq-box">\[\phi(I)\]</div>
+                </div>
+            </div>
+            <p style="font-size:0.42em;">\(\mu\) no depende del coeficiente de fricción (pero no puede ser nulo) entre granos ni del coeficiente de restitución.</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-015.jpg" style="max-height:200px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <p><em>Deformación \(\gamma\)</em></p>
+                    <p>¿Qué pasa con \(\mu\) vs I y \(\phi\) vs I?</p>
+                </div>
+            </div>
+            <p class="footnote">Forterre Y. y Pouliquen O., Seminaire Poincaré XIII (2009) 69-100. Fei et al., Nature 10:12162 (2020). Barker et al., J. Fluid Mech. 779, 794–818 (2015).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: RELACIONES CONSTITUTIVAS — regímenes              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <p style="font-size:0.5em;">Análisis adimensional impone ⇒ relaciones constitutivas:</p>
+            <div class="eq-box">
+                \[\tau = P\,\mu(I) \qquad \phi = \phi(I) \qquad I = \frac{t_{micro}}{t_{macro}} = \frac{\dot{\gamma}\, d}{\sqrt{P/\rho_p}}\]
+            </div>
+            <p style="font-size:0.48em;">Permite clasificar diferentes regímenes de flujo en sistemas densos:</p>
+            <div class="highlight-box" style="font-size:0.48em;">
+                <p><strong style="color:#c0392b;">Régimen cuasiestático (\(I \lt 0.01\)):</strong> la deformación macroscópica es lenta en relación a reacomodamientos microscópicos. Puede haber situaciones donde las relaciones constitutivas deban ser modificadas.</p>
+            </div>
+            <div class="highlight-box red" style="font-size:0.48em;">
+                <p><strong style="color:#c0392b;">Régimen inercial (\(I > 0.1\)):</strong> flujo rápido, se obtiene aumentando tasa de corte o disminuyendo P.</p>
+            </div>
+            <p style="font-size:0.42em; color:#c0392b;">Contras de estas relaciones constitutivas:</p>
+            <p style="font-size:0.42em;">No tiene en cuenta efectos colectivos: tamaño de bandas de cizalla, ángulos de máxima estabilidad para sistemas de pocas capas, fenómenos a escala del grano. Solo sirve para describir flujos uniformes y estacionarios o si \(\tau\) depende de P y \(\dot{\gamma}\) locales.</p>
+            <p style="font-size:0.42em;">⇒ reometría localizada = <strong>reometría inercial</strong>.</p>
+            <p class="footnote">Forterre Y. & Pouliquen O., Seminaire Poincaré XIII, 69-100 (2009). Fei et al., Nature 10:12162 (2020). Barker et al., J. Fluid Mech. 779, 794–818 (2015). Kamrin, Front. Phys. 7:116 (2019)</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: RELACIONES CONSTITUTIVAS — simulaciones          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <p style="font-size:0.48em;">Análisis adimensional: \(\tau = P\,\mu(I)\), \(\phi = \phi(I)\). Mediante simulaciones numéricas y experimentos:</p>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <div class="eq-box">\[I = \frac{\dot{\gamma}\,d}{\sqrt{P/\rho_p}}\]</div>
+                    <p style="margin-top:0.3em;"><em>Discos</em> (2D) y <em>Esferas</em> (3D)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-021.jpg" style="max-height:350px;">
+                </div>
+            </div>
+            <ul style="font-size:0.42em;">
+                <li>\(\mu\) aumenta con el aumento de la tasa de corte o la disminución de P</li>
+                <li>\(\phi\) decrece linealmente</li>
+                <li>En el límite cuasiestático (\(I \to 0\)): \(\mu \to \mu_S\) cte y \(\phi = \phi^{max}\)</li>
+                <li>⇒ En flujos densos ⇒ \(\mu\) y \(\phi\) no dependen de propiedades microscópicas de los granos</li>
+                <li>Los granulares se comportan como fluidos visco-plásticos donde el esfuerzo de fluencia está asociado a la fricción estática.</li>
+            </ul>
+            <p class="footnote">O. Pouliquen, Phys. Fluids 11 (1999). L.E. Silbert et al, Phys. Fluids 15, 1 (2003). Forterre Y. & Pouliquen O., Seminaire Poincaré XIII (2009).<br>
+            G. Lois et al, Phys. Rev. E 72, 051303 (2005). S.B. Savage, Adv. Appl. Mech. 24, 289 (1984).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: RELACIONES CONSTITUTIVAS — reología intrínseca   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <div class="eq-box">
+                        \[I = \frac{\dot{\gamma}\,d}{\sqrt{P/\rho_p}} \qquad \tau = P\mu(I) \qquad \phi = \phi(I)\]
+                    </div>
+                    <p>Perfil de velocidad lineal.</p>
+                    <p>Si los esfuerzos dependen solo de la presión local y la tasa de corte local se puede definir una <strong>reología intrínseca</strong>.</p>
+                    <img src="media/extracted_u6/img-022.jpg" style="max-height:160px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-023.jpg" style="max-height:320px;">
+                </div>
+            </div>
+            <p style="font-size:0.42em;">Al aumentar I:
+            <ul style="font-size:0.42em;">
+                <li>La red de fuerzas es menos densa, la longitud de correlación y el tiempo de contacto entre granos disminuye</li>
+                <li>Aumentan las fuerzas impulsivas y los contactos donde se movilizó la fricción</li>
+            </ul>
+            </p>
+            <p style="font-size:0.42em;">Para flujos inerciales: el aumento de \(\mu\) con I se debe a la <strong>anisotropía en los contactos</strong>.</p>
+            <p class="footnote">Forterre Y. & Pouliquen O., Granular Flows. Seminaire Poincaré XIII, 69-100 (2009).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: RELACIONES CONSTITUTIVAS — expresiones analíticas -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <p style="font-size:0.48em;">Ajustando los experimentos y simulaciones se pueden obtener expresiones analíticas:</p>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u6/img-024.jpg" style="max-height:180px;">
+                    <img src="media/extracted_u6/img-025.jpg" style="max-height:180px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <p><strong>Caso 3D: esferas de vidrio monodispersas</strong></p>
+                    <p>\(\mu_1 = \tan 21°, \; \mu_2 = \tan 33°\)<br>
+                    \(I_0 = 0.3, \; \phi_{max} = 0.6, \; \phi_{min} = 0.4\)</p>
+                    <p>Existe un valor crítico \(\mu_1\) ⇒ hay que imponer \(\tau > \mu_1\, P\) para que el sistema empiece a fluir.</p>
+                </div>
+            </div>
+            <div class="eq-box" style="font-size:0.55em;">
+                \[\mu(I) = \mu_1 + \frac{\mu_2 - \mu_1}{I_0/I + 1} \qquad \phi = \phi_{max} + (\phi_{min} - \phi_{max})\, I\]
+            </div>
+            <p style="font-size:0.45em; color:#c0392b;">Relaciones constitutivas: Pueden ser usadas para estudiar otras configuraciones</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-026.jpg" style="max-height:180px;">
+                </div>
+                <div style="font-size:0.42em;">
+                    <p>En flujos en planos inclinados se observa que \(\mu\) satura a un valor finito (\(\mu_2\)) cuando \(I \to \infty\) (en el frente).</p>
+                </div>
+            </div>
+            <p class="footnote">Forterre & Pouliquen, Seminaire Poincaré XIII, 69-100 (2009). Pouliquen et al., J. Stat. Mech. P07020 (2006).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: RELACIONES CONSTITUTIVAS — Da Cruz               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-016.jpg" style="max-height:200px;">
+                    <p style="font-size:0.4em;">\(\mu^*\): coeficiente de fricción efectiva</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-027.jpg" style="max-height:280px;">
+                    <p style="font-size:0.4em;">Da Cruz 2005</p>
+                </div>
+            </div>
+            <ul style="font-size:0.42em;">
+                <li>Régimen cuasiestático crítico para valores muy pequeños de I: \(\mu^*\) casi no cambia y se observan intermitencias.</li>
+                <li>La transición al régimen de flujo denso no está bien definida (\(I \cong 10^{-3}\)): puede depender del tamaño del sistema.</li>
+                <li>La transición entre flujo denso y régimen colisional ocurre en \(I \cong 10^{-1}\).</li>
+                <li>\(\mu^*\) aumenta en el régimen de flujo denso y satura en el régimen colisional.</li>
+            </ul>
+            <p class="footnote">Da Cruz et al, Phys Rev E 72, 021309 (2005). Rognon et al, Powders and Grains 2005, 565-568.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: RELACIONES CONSTITUTIVAS — Couette               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Relaciones constitutivas</h2>
+            <p style="font-size:0.48em; color:#c0392b;">Hay casos donde el sistema no responde a estas relaciones si I es pequeño (régimen cuasiestático)</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-028.jpg" style="max-height:200px;">
+                    <p style="font-size:0.4em;">Campo de velocidades: observado vs predicción</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-029.jpg" style="max-height:200px;">
+                </div>
+            </div>
+            <ul style="font-size:0.42em;">
+                <li>Para I pequeños: existe flujo por debajo del valor crítico \(\mu_1\)</li>
+                <li>Para I grandes: coincide con los datos del experimento de plano cizallado (---).</li>
+            </ul>
+            <p class="footnote">Da Cruz et al, Phys Rev E 72, 021309 (2005). Koval, Phys Rev E 79, 021306 (2009). Kamrin & Koval, PRL 108, 178301 (2012).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: FLUJOS EN SILOS Y TOLVAS — regímenes             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujos en silos y tolvas</h2>
+            <p style="font-size:0.5em;">Se pueden presentar los siguientes regímenes:</p>
+            <div class="highlight-box" style="font-size:0.5em;">
+                <p><strong style="color:#c0392b;">Flujo continuo</strong><br>
+                Se presenta cuando la boca de salida D<sub>o</sub> es suficientemente grande para no bloquearse por formación de arcos (2D) o bóvedas (3D) en la boca del silo.</p>
+            </div>
+            <div class="highlight-box red" style="font-size:0.5em;">
+                <p><strong style="color:#c0392b;">Flujo intermitente</strong><br>
+                El flujo se bloquea y desbloquea periódicamente por formación y ruptura de arcos (o bóvedas) respectivamente en la boca del silo.</p>
+            </div>
+            <div class="highlight-box" style="font-size:0.5em; border-left-color:#c0392b;">
+                <p><strong style="color:#c0392b;">Sin flujo</strong><br>
+                El flujo se bloquea por formación de arcos en la boca (o bóvedas) del silo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: FLUJO CONTINUO — EUROCODE                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujo continuo</h2>
+            <p style="font-size:0.48em;">Clasificación según las normas europeas de construcciones estructurales <strong>EUROCODE</strong>.<br>
+            Se describen tres tipos principales de flujo:</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u6/img-031.jpg" style="max-height:340px;">
+            </div>
+            <div class="two-col" style="font-size:0.45em; text-align:center;">
+                <div><p style="color:#c0392b; font-weight:bold;">Flujo de masa</p></div>
+                <div><p style="color:#c0392b; font-weight:bold;">Flujo embudo: central e interno</p></div>
+            </div>
+            <p class="footnote">Eurocode 1, Basis of design and actions on structures - Part 4: Actions in silos and tanks, Marzo 1998.<br>
+            Reed, A.R, Hopper Shapes and Flow Patterns, University of Greenwich, London, 1994.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: FLUJO DE MASA (Mass Flow)                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujo de Masa (Mass Flow)</h2>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <ul>
+                        <li>Todas las partículas del silo están en movimiento</li>
+                        <li>No hay zonas de estancamiento</li>
+                        <li>Descarga con patrón <strong>FIFO</strong> (First in, First out): el grano que ingresó primero al silo sale aproximadamente primero.</li>
+                        <li>Ocurre cuando la fricción grano-pared es menor que la fricción grano-grano.</li>
+                        <li>El ancho del canal de flujo coincide con el ancho del silo.</li>
+                        <li>No necesariamente todas las partículas se mueven a velocidades iguales.</li>
+                    </ul>
+                    <p style="margin-top:0.5em;">Configuración más usual: paredes inclinadas con \(\alpha > 70°\)<br>
+                    ⇒ Se pierde capacidad de almacenamiento.<br>
+                    ⇒ No se usan para silos de almacenamiento prolongado pero sí para tolvas de descarga.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-030.jpg" style="max-height:350px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: FLUJOS EMBUDO (Funnel Flow)                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:0.95em;">Flujos embudo o tubular (Funnel Flow)</h2>
+            <p style="font-size:0.45em; color:#c0392b;">Flujo central y flujo interno</p>
+            <div class="two-col">
+                <div style="font-size:0.42em;">
+                    <ul>
+                        <li>El material forma una zona de estancamiento que reduce la capacidad real de vaciado del silo.</li>
+                        <li>Se favorece la segregación por existencia de zonas de altos gradientes de velocidad.</li>
+                        <li>Para almacenamiento de materiales perecederos: zonas con material que nunca es evacuado ⇒ puede producir caducidad o contaminación.</li>
+                        <li>Si el material de la "zona muerta" permanece demasiado tiempo, se produce <strong>"caking"</strong> asistido por la humedad.</li>
+                        <li>Ej: azúcar y sal.</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-033.jpg" style="max-height:300px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: FLUJO CENTRAL (Core Flow)                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujo Central (Core Flow)</h2>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <ul>
+                        <li>Aparecen zonas de estancamiento adyacentes a la pared del silo en las cercanías de la boca de descarga, formando un canal de flujo con paredes constituidas por el propio material granular.</li>
+                        <li>Existe rozamiento entre el medio granular y la pared en las zonas superiores del silo.</li>
+                        <li>La fricción grano-pared comienza a ser preponderante frente a la fricción interna grano-grano.</li>
+                        <li>La fricción grano-pared frena los granos cerca de la pared y la superficie libre cambia de forma.</li>
+                        <li>Existe un gradiente de velocidades desde la pared hacia el centro mucho más marcado que en el flujo de masa.</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-032.jpg" style="max-height:350px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: FLUJO INTERNO (Internal Flow)                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujo Interno (Internal Flow)</h2>
+            <ul style="font-size:0.45em;">
+                <li>Todos los granos en contacto con la pared del silo permanecen en reposo.</li>
+                <li>Canal formado por el medio granular que abarca toda la altura del apilamiento.</li>
+                <li>La zona central del silo posee mayores velocidades ⇒ depresión cónica (3D) o angular (2D).</li>
+                <li>Durante la descarga, el avance de la superficie libre provoca avalanchas del material estancado en las adyacencias de la pared.</li>
+                <li><strong>Ratholes:</strong> aparece cuando el material adyacente a la pared nunca se descarga debido a efectos cohesivos.</li>
+            </ul>
+            <div style="text-align:center; margin-top:0.5em;">
+                <img src="media/extracted_u6/img-033.jpg" style="max-height:280px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 21: TIPOS DE FLUJO CONTINUO — φw vs α                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Tipos de flujo continuo</h2>
+            <p style="font-size:0.48em;">Los límites entre un tipo de flujo y otro se han estudiado experimentalmente en función de variables constructivas del silo.</p>
+            <p style="font-size:0.45em;"><strong>Patrones de flujo en silos en función de parámetros constructivos</strong><br>
+            (forma geométrica del silo, inclinación de paredes \(\alpha\) y ángulo de fricción de pared \(\varphi_w\))</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u6/img-034.jpg" style="max-height:340px;">
+            </div>
+            <p class="footnote">Reed, A.R, <em>Hopper Shapes and Flow Patterns, Effects on product Quality and Downstream Processes</em>, University of Greenwich, London, 1994.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 22: TIPOS DE FLUJO CONTINUO — zona indefinida        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Tipos de flujo continuo</h2>
+            <div class="two-col">
+                <div style="font-size:0.45em;">
+                    <p>Alto \(\alpha\) y/o bajo \(\varphi_w\): <strong style="color:#c0392b;">flujo embudo</strong></p>
+                    <p style="color:#c0392b;">Zona indefinida</p>
+                    <p>Bajo \(\alpha\) y/o alto \(\varphi_w\): <strong style="color:#c0392b;">flujo masa</strong></p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-035.jpg" style="max-height:240px;">
+                </div>
+            </div>
+            <div style="font-size:0.42em; margin-top:0.5em;">
+                <p><strong style="color:#c0392b;">Zona indefinida:</strong> pueden existir ambos tipos de flujo.</p>
+                <ul>
+                    <li>Que se produzca uno u otro depende fuertemente de otros parámetros como distribución de tamaños y forma de los granos, grado de carga del silo, etc.</li>
+                    <li>Es posible observar una alternancia temporal entre los dos tipos de flujo, que en grandes silos puede ocasionar vibraciones que solicitan la estructura a la fatiga.</li>
+                    <li>Pueden coexistir dos o más configuraciones según la posición de altura en el silo: flujo de masa en la boca de descarga que se transforma en flujo central para posiciones alejadas.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 23: EJEMPLO DE FLUJO CONTINUO — velocidades          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ejemplo de flujo continuo</h2>
+            <p style="font-size:0.42em;">Mapa de velocidades en escala cromática correspondiente al vaciado de una tolva llena con microesferas de vidrio de tamaño medio 1 mm, con un ángulo de pared \(\alpha = 75°\). La boca de descarga se encuentra en la posición Y = 0.</p>
+            <div class="two-col">
+                <div style="font-size:0.42em;">
+                    <p>Para \(Y \geq 120\) mm:</p>
+                    <ul>
+                        <li>Comienza a formarse una zona de estancamiento adyacente a las paredes del silo.</li>
+                        <li>La densidad aparente del medio granular es menor y más uniforme (en Y) que en la zona de la boca de descarga.</li>
+                    </ul>
+                    <p style="color:#c0392b;">⇒ la fricción intergranular será menor que la fricción entre los granos y la pared</p>
+                    <p style="color:#c0392b;">⇒ movimiento relativo intergranular demanda menor energía que el movimiento relativo entre granos y pared.</p>
+                    <p><strong>Conclusión:</strong> flujo de masa en la boca de descarga y flujo central para posiciones alejadas.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-036.jpg" style="max-height:380px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 24: TIPOS DE FLUJO CONTINUO — factores               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Tipos de flujo continuo</h2>
+            <p style="font-size:0.5em;">La presencia de cada uno los tipos de flujos descriptos depende fundamentalmente:</p>
+            <ul style="font-size:0.5em;">
+                <li>geometría del silo (cilíndrico o rectangular, altura h y diámetro D)</li>
+                <li>inclinación y rugosidad de las paredes</li>
+                <li>tipo y tamaño de los granos</li>
+            </ul>
+            <br>
+            <div class="highlight-box" style="font-size:0.5em;">
+                <p>Típicamente, el <strong>flujo de masa</strong> ocurrirá en silos esbeltos (\(h/D > 1.5\)) mientras que el <strong>flujo tipo embudo</strong> es más característico de silos de baja esbeltez (\(h/D \lt 1.5\)).</p>
+            </div>
+            <p class="footnote">Lecture 15C.2: Structural design of Bins, Master Teaching, Katholieke Universiteit Leuven, 2003.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 25: ÁNGULO DE FRICCIÓN DE PARED — definición         -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ángulo de fricción de pared (\(\varphi_w\))</h2>
+            <p style="font-size:0.5em;">Caracteriza la fricción entre un medio granular y la superficie de un sólido (pared del silo o tolva).</p>
+            <p style="font-size:0.5em;">Define el tipo de flujo que se desarrollará en el interior de un silo o una tolva.</p>
+            <div class="highlight-box" style="font-size:0.5em;">
+                <p>Para asegurar un escurrimiento del tipo flujo de masa, hay que <strong>disminuir</strong> el valor del coeficiente de fricción de pared ya sea disminuyendo la rugosidad de pared o cambiando las propiedades del material granular.</p>
+            </div>
+            <p class="footnote">Schulze, D., <em>Development and application of a novel ring shear tester</em>, Aufbereitungs-technik 35 (1994) 10, pp. 524–535.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 26: ÁNGULO DE FRICCIÓN DE PARED — ensayo             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ángulo de fricción de pared (\(\varphi_w\))</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u6/img-037.jpg" style="max-height:120px;">
+            </div>
+            <p style="font-size:0.45em;">Se determina experimentalmente mediante un ensayo de laboratorio.</p>
+            <p style="font-size:0.45em;">Se dispone una muestra de material granular sobre una superficie de características similares a la pared del silo o tolva por la que debe poder deslizar el material y se somete a una tensión normal vertical, llamada <em>tensión normal de pared</em> \(\sigma_w\).</p>
+            <p style="font-size:0.45em;">Luego se genera un movimiento relativo entre ambas piezas (generalmente el elemento móvil es el que simula la pared del silo), se mide la fuerza de corte necesaria para realizar el movimiento y con ese valor se determina la tensión tangencial \(\tau_w\) existente entre el medio granular y la pared.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 27: ÁNGULO DE FRICCIÓN DE PARED — wall yield locus   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ángulo de fricción de pared (\(\varphi_w\))</h2>
+            <p style="font-size:0.42em;">Para una dada tensión normal, la tensión tangencial se releva cuando el material granular llega al estado estacionario: requiriendo una tensión tangencial constante para ser deslizado respecto de la superficie del sólido.</p>
+            <p style="font-size:0.42em;">Luego se retira una cierta cantidad de carga normal, y se desplaza la superficie móvil nuevamente. El proceso se repite tantas veces como puntos de la curva \(\sigma_w - \tau_w\) quieran relevarse.</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u6/img-038.jpg" style="max-height:300px;">
+                </div>
+                <div style="font-size:0.45em;">
+                    <p>Si la dependencia es lineal:<br>
+                    ⇓<br>
+                    <strong style="color:#c0392b;">\(\varphi_w\) = pendiente</strong></p>
+                    <p>La curva \(\sigma_w - \tau_w\) representa el límite de fluencia del material respecto de la pared que lo rodea.</p>
+                    <p>A tensiones tangenciales por encima de la curva, el material fluye sin problemas; por debajo, el material granular está impedido de deslizarse respecto de la pared.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 28: ÁNGULO DE FRICCIÓN DE PARED — no lineal          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ángulo de fricción de pared (\(\varphi_w\))</h2>
+            <p style="font-size:0.45em;">Cuando la curva \(\sigma_w - \tau_w\) no es una recta:</p>
+            <ul style="font-size:0.45em;">
+                <li>El ángulo de fricción de pared \(\varphi_w\) depende de \(\sigma_w\).</li>
+                <li>Se calcula como la pendiente de la recta que pasa por el origen de coordenadas y el punto de la curva correspondiente a la tensión normal elegida \(\sigma_w\).</li>
+            </ul>
+            <p style="font-size:0.45em;">El coeficiente de fricción de pared se define entonces como \(\tau_w / \sigma_w = \text{tg}(\varphi_{w\text{-}i})\).</p>
+            <div style="text-align:center;">
+                <img src="media/extracted_u6/img-039.jpg" style="max-height:330px;">
+            </div>
+            <p style="font-size:0.45em;">Existen varios métodos y equipos para realizar el ensayo: la <strong>celda de Jenike</strong> y la <strong>celda de Schulze</strong>.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 29: ÁNGULO DE FRICCIÓN DE PARED — Jenike y Schulze   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.0em;">Ángulo de fricción de pared (\(\varphi_w\))</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="color:#c0392b; font-size:0.6em;">Celda de Jenike</h3>
+                    <img src="media/extracted_u6/img-040.jpg" style="max-height:220px;">
+                    <ul style="font-size:0.38em;">
+                        <li>Un anillo retiene el material granular apoyado sobre una superficie sólida similar a la pared del silo.</li>
+                        <li>Se aplica la fuerza normal F<sub>N</sub> con una tapa circular.</li>
+                        <li>Se desplaza en forma rectilínea el anillo y se mide la fuerza necesaria F<sub>S</sub>.</li>
+                        <li><strong>Contra:</strong> limitado número de puntos (movimiento lineal, dimensiones acotadas).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color:#c0392b; font-size:0.6em;">Celda de Schulze</h3>
+                    <img src="media/extracted_u6/img-041.jpg" style="max-height:220px;">
+                    <ul style="font-size:0.38em;">
+                        <li>El material granular se coloca en un canal toroidal cuya base está construida con el mismo material que la pared del silo.</li>
+                        <li>Se aplica F<sub>N</sub> mediante una viga transversal.</li>
+                        <li>Desplazamiento mediante giro lento del "piso" a velocidad constante w.</li>
+                        <li><strong>Ventaja:</strong> se obtiene la curva completa \(\sigma_w - \tau_w\) con una sola carga.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 30: FLUJOS EN SILOS Y TOLVAS — atascamiento          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%" data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="color:var(--color-mauve); font-size:1.1em;">Flujos en silos y tolvas</h2>
+            <p style="font-size:0.5em;">Se pueden presentar los siguientes regímenes:</p>
+            <div class="highlight-box" style="font-size:0.48em;">
+                <p><strong style="color:#c0392b;">Flujo continuo</strong><br>
+                Se presenta cuando la boca de salida D<sub>o</sub> es suficientemente grande para no bloquearse por formación de arcos (2D) o bóvedas (3D) en la boca del silo.</p>
+            </div>
+            <div class="red-box" style="font-size:0.48em;">
+                <p><strong style="color:#c0392b;">Flujo intermitente</strong><br>
+                El flujo se bloquea y desbloquea periódicamente por formación y ruptura de arcos (o bóvedas) respectivamente en la boca del silo.</p>
+                <p><strong style="color:#c0392b;">Sin flujo</strong><br>
+                El flujo se bloquea por formación de arcos en la boca (o bóvedas) del silo.</p>
+            </div>
+            <p style="font-size:0.6em; text-align:center; color:var(--color-mauve); margin-top:0.5em;">⇓</p>
+            <p style="font-size:0.7em; text-align:center; color:#c0392b; font-weight:bold;">Atascamiento (clogging – local jamming)</p>
+        </div>
+    </section>
+
+</div><!-- slides -->
+</div><!-- reveal -->
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/math/math.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        width: 1600,
+        height: 900,
+        margin: 0.04,
+        transition: 'slide',
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealNotes, RevealHighlight, RevealMath.MathJax3 ]
+    });
+</script>
+</body>
+</html>

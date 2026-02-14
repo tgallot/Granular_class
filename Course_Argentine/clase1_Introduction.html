@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 1 — Introducción y Tribología</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .highlight-box.orange { border-left-color: #e67e22; }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .img-placeholder {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 2em;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin: 0.5em 0;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  PART 0: TITLE                                               -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.6em; color:var(--color-title); line-height:1.2; margin:0;">
+                Introducción a la Física de<br>Materiales Granulares
+            </h1>
+            <p style="font-size:0.7em; color:#666; margin-top:0.3em;">
+                Historia, aplicaciones industriales, desafíos y estructura del curso.
+            </p>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            MARCOS A. MADRID
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            CONICET — Departamento de Ingeniería Mecánica<br>UTN FRLP
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  PART 1: INTRODUCTION                                        -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 2: DEFINICIÓN -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Definición</h2>
+            <div class="def-box">
+                <strong>Materiales granulares</strong><br>
+                Colección de partículas macroscópicas sólidas (<span style="color:#c0392b;">granos</span>) que interactúa con sus vecinas
+                principalmente por fricción y colisiones.
+            </div>
+            <p style="margin-top:1em;"><strong>Características:</strong></p>
+            <ul>
+                <li class="fragment">Tamaño mínimo: $100\;\mu\text{m}$.</li>
+                <li class="fragment">Tamaño máximo: $\sim$ km.</li>
+                <li class="fragment">Sin efecto de fluctuaciones térmicas.</li>
+                <li class="fragment">Disipación.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: ESCALAS E INTERACCIONES -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Escalas e interacciones</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-000.png" alt="Escalas: coloides, polvos, granulares" style="max-width:70%; border-radius:4px;">
+            </div>
+            <div style="display:flex; justify-content:space-around; margin-top:0.8em; font-size:0.7em;">
+                <div style="text-align:center; border:2px solid var(--color-teal); border-radius:8px; padding:0.6em; flex:1; margin:0 0.3em;">
+                    <strong style="color:var(--color-teal);">Coloides</strong><br>
+                    Agitación térmica
+                </div>
+                <div style="text-align:center; border:2px solid #e67e22; border-radius:8px; padding:0.6em; flex:1; margin:0 0.3em;">
+                    <strong style="color:#e67e22;">Polvos</strong><br>
+                    Van der Waals<br>Humedad<br>Arrastre del aire
+                </div>
+                <div style="text-align:center; border:2px solid #e74c3c; border-radius:8px; padding:0.6em; flex:1; margin:0 0.3em;">
+                    <strong style="color:#e74c3c;">Materiales granulares</strong><br>
+                    Fricción<br>Colisión
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: EJEMPLOS (grid) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos</h2>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px; max-width:85%;">
+                <img src="media/extracted/img-001.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-002.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-003.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-004.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-005.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-006.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-007.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-008.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-009.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-010.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-011.png" alt="" style="width:100%; border-radius:4px;">
+                <img src="media/extracted/img-012.png" alt="" style="width:100%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: EJEMPLOS (sandcastle etc.) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-013.png" alt="Castillo de arena, carga de granos, tormenta de arena" style="max-width:85%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: EJEMPLOS (hourglass) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-014.png" alt="Reloj de arena" style="max-width:60%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: HISTORIA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Historia</h2>
+            <table style="font-size:0.55em;">
+                <tbody>
+                    <tr><td><strong>1493-1515</strong></td><td>Leonardo da Vinci: leyes de fricción</td></tr>
+                    <tr><td><strong>1773</strong></td><td>Charles Coulomb: Leyes de fricción seca [Acad. Roy. Sci. Mem. Phys. Divers Savants <strong>7</strong>, 343 (1773)].</td></tr>
+                    <tr><td><strong>1787</strong></td><td>Ernst Chladni: Figuras complementarias</td></tr>
+                    <tr><td><strong>1831</strong></td><td>Michael Faraday: Vibración de una pila de arena [Philos. Trans. Roy. Soc. London <strong>52</strong>, 299 (1831)].</td></tr>
+                    <tr><td><strong>1857</strong></td><td>William Rankine: Estados activos y pasivos.</td></tr>
+                    <tr><td><strong>1852-1906</strong></td><td>G. H. L. Hagen (1852), I. Roberts (1884), H. Janssen (1895), Lord Rayleigh (1906): Presión en silos.</td></tr>
+                    <tr><td><strong>1885</strong></td><td>Osborne Reynolds: Dilatancia.</td></tr>
+                    <tr><td><strong>1941</strong></td><td>Ralph A. Bagnold: Números adimensionales ["The physics of blown sand and desert dunes" (1941)].</td></tr>
+                    <tr><td><strong>1961</strong></td><td>W. A. Beverloo: Descarga de silos.</td></tr>
+                    <tr><td><strong>Recientes</strong></td><td>S. Nagel, E. Clement, J. Duran, R. Behringer, R. L. Brown, J. C. Richards, H. M. Jaeger, I. Goldhirsch, S. Luding, H. Herrmann, D. Bideau, T. Poeschel, A. Mehta, R. M. Nedderman, S. Edwards...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: EJEMPLOS — OBELISCO -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ejemplos</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-027.png" alt="Obelisco egipcio erigido con arena" style="max-width:80%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: IMPORTANCIA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Importancia</h2>
+            <ul style="line-height:2.2;">
+                <li class="fragment">Mundialmente se manipulan $10{,}000{,}000{,}000$ Tn por año (1999)$^1$.</li>
+                <li class="fragment">$10\,\%$ energía total producida es consumida en el procesamiento y manipulación de granos$^{1,2}$.</li>
+                <li class="fragment">Cerca del $40\,\%$ de la capacidad de las plantas industriales es desperdiciado$^3$.</li>
+                <li class="fragment">Más del $50\,\%$ de los productos vendidos son granos o involucran granos en su producción$^4$.</li>
+                <li class="fragment">Sólo en cereales $2{,}000{,}000{,}000$ Tn, producción promedio de los últimos 20 años$^5$.</li>
+            </ul>
+            <div class="footnote">
+                1: Duran, J., Reisinger A. (1999), <em>Sands, Powders, and Grains</em>. Springer Verlag.<br>
+                2: Ennis, B. J., Green, J., Davies, R. (1994): Particle technology. Chem. Eng. Prog. 90, 32-43.<br>
+                3: Holdich, R. (2006): <em>Fundamentals of Particle Technology</em>. Midland Information &amp; Publishing.<br>
+                4: Bates, L. (2006): The need for industrial education in bulk technology. Bulk Solids Handl. 26, 464-473.<br>
+                5: FAO (Food and Agriculture Organization of the United Nations)
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: ÁMBITOS DE APLICACIÓN -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Algunos ámbitos de aplicación</h2>
+            <ul style="line-height:1.8; font-size:0.85em;">
+                <li><strong>Agricultura:</strong> Procesamiento, transporte y almacenamiento (bloqueos de flujo, segregación)</li>
+                <li><strong>Construcción:</strong> Extracción (canteras o depósitos subacuáticos), transporte (cintas o cañerías), separación de residuos, trituración y molienda, tamizado, almacenamiento.</li>
+                <li><strong>Industria farmacéutica:</strong> Obstrucciones y problemas de segregación
+                    <ul style="font-size:0.85em;">
+                        <li>Grandes cantidades de material granular o en forma de polvos (mismos problemas que en construcción)</li>
+                        <li>Materiales preparados en pequeñas cantidades de alto valor (pureza, reproducibilidad)</li>
+                    </ul>
+                </li>
+                <li><strong>Industria alimenticia:</strong> Dosificación, empaque, transporte, ....</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  PART 2: UNIDAD 1 — LEYES DE CONTACTO / TRIBOLOGÍA          -->
+    <!-- ============================================================ -->
+
+    <!-- SLIDE 11: OUTLINE -->
+    <section data-background-image="media/bg_teal.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Unidad 1: Leyes de contacto — Tribología</h2>
+            <ul style="line-height:2.2;">
+                <li>Leyes de Coulomb-Amontons.</li>
+                <li>Respuesta mecánica de materiales.</li>
+                <li>Contacto de Hertz (esfera plano).</li>
+                <li>Contacto con asperezas. Contacto tangencial.</li>
+                <li>Fricción de rodadura.</li>
+                <li>Modelos microscópicos.</li>
+                <li>Colisiones.</li>
+                <li>Modelos de fuerzas para simulación.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: LEONARDO DA VINCI (1493) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Experimentos de Leonardo da Vinci (1493)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-029.png" alt="Leonardo da Vinci - experimentos de fricción" style="max-width:80%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: LEONARDO — DIAGRAMS -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Experimentos de Leonardo da Vinci</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-030.png" alt="Diagramas de fricción" style="max-width:70%; border-radius:4px;">
+            </div>
+            <p>Observaciones:</p>
+            <ul>
+                <li class="fragment">$F_{Ts}$ no depende del área de contacto</li>
+                <li class="fragment">$F_{Ts} \propto N$</li>
+                <li class="fragment">Cuando hay movimiento, $F_{Td} &lt; F_{Ts}$</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: AMONTONS (1699) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Amontons (1699)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-030.png" alt="Diagramas de fricción" style="max-width:65%; border-radius:4px;">
+            </div>
+            <p>Observaciones:</p>
+            <ul>
+                <li>$F_{Ts}$ no depende del área de contacto</li>
+                <li>$F_{Ts} \propto N$</li>
+                <li>Cuando hay movimiento, $F_{Td} &lt; F_{Ts}$</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: LEYES DE COULOMB-AMONTONS (1785) — estática -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb-Amontons (1785)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-030.png" alt="Diagramas de fricción" style="max-width:45%; border-radius:4px;">
+                <img src="media/extracted/img-032.png" alt="Bloque en plano inclinado" style="max-width:38%; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.85em;">
+                <li>Fuerza tangencial mínima para el movimiento: $|\boldsymbol{R}_{Ts}| = \mu_s |\boldsymbol{R}_N|$.<br>
+                    $\mu_s$: coeficiente estático de fricción.</li>
+                <li>Cuando no hay movimiento relativo, la fuerza de fricción <span style="color:#c0392b;">se desconoce <em>a priori</em></span>:<br>
+                    $|\boldsymbol{R}_{Ts}| \leq \mu_s |\boldsymbol{R}_N|$.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 16: COULOMB-AMONTONS — dinámica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb-Amontons (1785)</h2>
+            <ul style="font-size:0.85em;">
+                <li>Cuando hay deslizamiento: $|\boldsymbol{R}_{Td}| = \mu_d |\boldsymbol{R}_N|$.<br>
+                    $\mu_d$: coeficiente dinámico de fricción.<br>
+                    La fuerza de fricción se ejerce en sentido opuesto al movimiento (no depende de la velocidad)</li>
+                <li style="margin-top:0.8em;">$\mu_s$ y $\mu_d$ son aproximadamente constantes y dependen de los materiales en contacto.<br>
+                    Típicamente, $0{,}1 &lt; \mu_d \leq \mu_s &lt; 1$ (Euler)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 17: COULOMB (comentarios) — envejecimiento -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-033.png" alt="F vs ln(t+ta)" style="max-width:42%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-034.png" alt="Tabla de datos" style="max-width:38%; border-radius:4px; vertical-align:middle;">
+            </div>
+            <p>Hay una dependencia con el tiempo de envejecimiento del contacto.</p>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction: Physical Principles and Applications</em>. Springer Berlin Heidelberg, 2017, Capítulo 10.4 - 10.10.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 18: COULOMB (comentarios) — temperatura -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-035.png" alt="μ vs Temperatura" style="max-width:60%; border-radius:4px;">
+            </div>
+            <p>Hay una dependencia con temperatura.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 19: COULOMB (comentarios) — fuerza normal -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-036.png" alt="μ vs Fuerza Normal" style="max-width:60%; border-radius:4px;">
+            </div>
+            <p>La dependencia lineal entre fuerza de fricción y la normal es válida por muchos
+            órdenes de magnitud entre metales.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 20: COULOMB (comentarios) — acero/teflon -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-037.png" alt="Fricción vs fuerza normal log-log" style="max-width:60%; border-radius:4px;">
+            </div>
+            <p>Deja de ser válida la dependencia lineal entre fuerza de fricción y la normal por
+            ejemplo entre acero y teflon.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 21: COULOMB (comentarios) — velocidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-038.png" alt="F vs v - estabilidad" style="max-width:55%; border-radius:4px;">
+            </div>
+            <p>La independencia del coeficiente de fricción con la velocidad es válido cuando las
+            velocidades no son ni muy grandes, ni muy chicas.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 22: COULOMB (comentarios) — rugosidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Leyes de Coulomb (comentarios)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-039.png" alt="Rugosidad superficial" style="max-width:65%; border-radius:4px;">
+            </div>
+            <p>Rugoso $\simeq$ fricción, liso $\simeq$ no (tanta) fricción.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 23: RESPUESTA MECÁNICA — Young -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Respuesta mecánica de materiales</h2>
+            <div class="two-col">
+                <div>
+                    <p>Módulo de elasticidad o módulo de Young $E = \sigma/\epsilon$<br>
+                    (en el régimen elástico).</p>
+                    <ul>
+                        <li>Estrés $\sigma = F/A$.</li>
+                        <li>Deformación $\epsilon = \delta l / l_0$.</li>
+                        <li>Tensión de fluencia $\sigma_c$.</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-040.png" alt="Curva σ vs ε" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 24: RESPUESTA MECÁNICA — Poisson -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Respuesta mecánica de materiales</h2>
+            <div class="two-col">
+                <div>
+                    <p>Coeficiente de Poisson $\nu = \epsilon_\perp / \epsilon_\parallel$.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-041.png" alt="Coeficiente de Poisson" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 25: RESPUESTA MECÁNICA — Cizalladura -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Respuesta mecánica de materiales</h2>
+            <div class="two-col">
+                <div>
+                    <p>Módulo de cizalladura $G = \sigma_{xy}/\gamma_{xy}$.</p>
+                    <ul>
+                        <li>Tensión de cizalla en el régimen elástico $\sigma_{xy} = F/A$.</li>
+                        <li>Deformación de cizalla $\gamma_{xy} = \delta x / l$.</li>
+                    </ul>
+                    <div class="eq-box" style="margin-top:1em;">
+                        En el régimen elástico $E = 2G(1 + \nu)$
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-043.png" alt="Deformación de cizalla" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 26: RESPUESTA MECÁNICA — Dureza -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Respuesta mecánica de materiales</h2>
+            <p style="text-align:center;">
+                Dureza $\sigma_0 = F/A$ en el régimen plástico o de fluencia. $\sigma_0 \approx 3\sigma_c$.
+            </p>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-044.png" alt="Vickers y Brinell" style="max-width:42%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-045.png" alt="Curva σ-ε" style="max-width:35%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-046.png" alt="Indentación" style="max-width:22%; border-radius:4px; vertical-align:middle;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 27: CONTACTO DE HERTZ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Contacto de Hertz (esfera – plano)</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <p>Área de contacto $A = \pi a^2 \approx 2\pi R d$. Donde $a \approx \sqrt{2Rd}$.</p>
+                    <ul>
+                        <li>Si la deformación es elástica y la suponemos concentrada en el área de contacto, entonces
+                        la deformación relativa
+                        $$\epsilon \approx d/(2a) \implies \sigma \approx Ed/(2a).$$</li>
+                    </ul>
+                    <p>Luego, la fuerza entre cuerpos es</p>
+                    $$F = \sigma A \approx \frac{Ed\pi a^2}{2a} \approx \frac{Ed\pi}{2}\sqrt{2Rd} = \frac{\pi}{\sqrt{2}} E d^{3/2} R^{1/2}.$$
+                    <p>El cálculo exacto da como resultado<br>
+                    $F = \frac{4}{3} E d^{3/2} R^{1/2}$.</p>
+                    <ul>
+                        <li>Si la deformación es plástica<br>
+                        $\sigma_0 = F/A \implies F = 2\pi\sigma_0 R d$</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-048.png" alt="Contacto esfera-plano" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 28: GREENWOOD-WILLIAMSON -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Contacto con asperezas (Greenwood - Williamson)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-050.png" alt="Asperezas" style="max-width:40%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-051.png" alt="Superficie rugosa" style="max-width:40%; border-radius:4px; vertical-align:middle;">
+            </div>
+            <ul style="font-size:0.8em;">
+                <li class="fragment">Si todas las asperezas son iguales y asumimos que se deforman elásticamente se obtiene
+                que el área de contacto real es proporcional a $F_N^{2/3}$.</li>
+                <li class="fragment">Si suponemos que hay una distribución en las alturas de las asperezas entonces el área
+                real de contacto entre cuerpos es aproximadamente proporcional a $F_N$.</li>
+                <li class="fragment">Si asumimos que la deformación es plástica en las asperezas entonces el área real de
+                contacto $A \approx F_N / \sigma_0$</li>
+            </ul>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 7.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 29: CONTACTO TANGENCIAL -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Contacto tangencial (esfera-plano)</h2>
+            <div class="two-col">
+                <div style="font-size:0.85em;">
+                    $$p = p_0 \left(1 - (r/a)^2\right)^{1/2}$$
+                    $$\tau = \tau_0 \left(1 - (r/a)^2\right)^{-1/2}$$
+                    <ul>
+                        <li>Cuando se agrega una fuerza tangencial se crean dos regiones: una de deslizamiento
+                        ($\tau > \mu p$) y otra de adhesión ($\tau &lt; \mu p$).</li>
+                        <li><strong>Fretting:</strong> Desgaste por la frotación en la zona de deslizamiento ante cargas tangenciales cíclicas.</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-059.png" alt="Contacto tangencial" style="max-width:100%; border-radius:4px;">
+                    <img src="media/extracted/img-061.png" alt="Fretting" style="max-width:85%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 8.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 30: FRICCIÓN DE RODADURA -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fricción de rodadura</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-062.png" alt="Fricción de rodadura" style="max-width:38%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-064.png" alt="Deformación rueda" style="max-width:22%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-065.png" alt="" style="max-width:22%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-066.png" alt="" style="max-width:22%; border-radius:4px; vertical-align:middle;">
+            </div>
+            <ul style="font-size:0.85em;">
+                <li>$F = \mu_r F_N$</li>
+                <li>La velocidad de rotación $v$ tiene una componente rígida más una elástica. Como
+                consecuencia, la velocidad circunferencial de la rueda es más rápida que la velocidad de
+                traslación en la aceleración y menor en el frenado.</li>
+            </ul>
+            <p style="text-align:center;">$v_{\text{fluencia}} = v - \omega R$</p>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 9.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 31: MODELOS MICROSCÓPICOS (Coulomb) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos microscópicos (Coulomb)</h2>
+            <!-- Vector diagram from PDF (not bitmap - needs to be recreated or screenshotted) -->
+            <div style="text-align:center; color:#999; font-size:0.7em; padding:1em; border:1px dashed #ccc; border-radius:8px; max-width:60%; margin:0.5em auto;">
+                [Diagrama vectorial: superficie ondulada con esfera, $F$, $F_N$, $R$, $\theta$]
+            </div>
+            <ul style="font-size:0.85em;">
+                <li>Equilibrio $\implies F = F_N \tan\theta \implies F_{\max} = F_N \tan\theta_{\max} \implies \mu_{\max} = \tan\theta_{\max}$<br>
+                Donde $\theta_{max}$ es el máximo ángulo de la superficie.</li>
+                <li>Si este modelo fuera correcto, ¿por qué el coeficiente de fricción estático $\mu_s$ no depende
+                mucho de la rugosidad de las superficies?</li>
+            </ul>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 10.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 32: MODELOS MICROSCÓPICOS (Bowden-Tabor) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos microscópicos (Bowden-Tabor)</h2>
+            <p style="font-size:0.85em;">Si asumimos que las asperezas sufren deformación plástica entonces $A \approx F_N/\sigma_0$, donde $A$ es
+            el área real de contacto y $\sigma_0$ es la dureza del material.</p>
+            <p style="font-size:0.85em;">Si $\tau_c$ es la tensión de cizalla máxima necesaria para hacer fluir un contacto ($\tau_c = \sigma^0_{xy}$ es la
+            tensión de cizalla en la fluencia).</p>
+            <div class="eq-box">
+                $F_s = F_N \dfrac{\tau_c}{\sigma_0} \implies \mu_s = \dfrac{\tau_c}{\sigma_0}.$
+            </div>
+            <p style="font-size:0.85em;">Se cumple en general para los materiales que $\tau_c \approx \sigma_c/\sqrt{3} = \sigma_0/3/\sqrt{3} \implies \mu_s \approx 0{,}2$.</p>
+            <p style="font-size:0.85em;">Donde $\sigma_c$ es la tensión para fluencia en tracción.</p>
+            <p style="font-size:0.85em;">Esta estimación no permite explicar el rango amplio de valores de $\mu_s$ posibles.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 33: MODELOS MICROSCÓPICOS (Prandtl-Tomlinson) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos microscópicos (Prandtl-Tomlinson)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-098.png" alt="Prandtl-Tomlinson" style="max-width:70%; border-radius:4px;">
+            </div>
+            <div class="eq-box">
+                $m\ddot{x}(t) = F - \eta\dot{x}(t) - N\,\text{sen}[kx(t)]$
+            </div>
+            <p>$F_s = N$ porque si $N &lt; F$ no hay solución estática.</p>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 11.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 34: INESTABILIDAD (stick-slip) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Inestabilidad (stick-slip)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-099.png" alt="U(x) + resorte" style="max-width:40%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-100.png" alt="Stick-slip" style="max-width:40%; border-radius:4px; vertical-align:middle;">
+            </div>
+            <div class="eq-box">
+                $m\ddot{x}(t) + \eta\dot{x}(t) + \dfrac{\partial U}{\partial x} = C(x_0 - x)$
+            </div>
+            <p class="footnote">Ver: V.L. Popov. <em>Contact Mechanics and Friction</em>. Springer Berlin Heidelberg, 2017, Capítulo 11.3.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 35: COLISIONES -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colisiones</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-101.png" alt="Colisión de dos cuerpos" style="max-width:55%; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.8em;">
+                <li>Conservación del momento lineal y angular en todas las colisiones.</li>
+                <li>La energía cinética puede no conservarse y dar lugar a colisiones inelásticas.</li>
+            </ul>
+            <p style="font-size:0.85em;">Coeficiente de restitución:</p>
+            <div class="eq-box">
+                $\varepsilon = \dfrac{-(v_1 - v_2)}{(u_1 - u_2)} = \sqrt{\dfrac{K_{\text{después}}}{K_{\text{antes}}}}$
+            </div>
+            <p style="font-size:0.8em;">Solución:</p>
+            <p style="font-size:0.75em; text-align:center;">
+                $\begin{cases} m_1 u_1 + m_2 u_2 = m_1 v_1 + m_2 v_2 & \text{(conservación momento)} \\ v_1 - v_2 = -\varepsilon(u_1 - u_2) & \text{(restitución)} \end{cases}$
+            </p>
+            <p style="font-size:0.7em; text-align:center;">
+                $v_1 = \dfrac{\varepsilon m_2(u_2 - u_1) + m_1 u_1 + m_2 u_2}{m_1 + m_2};\quad
+                 v_2 = \dfrac{\varepsilon m_1(u_1 - u_2) + m_1 u_1 + m_2 u_2}{m_1 + m_2}$
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 36: COLISIONES (esferas) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colisiones (esferas)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-103.png" alt="Colisión de esferas" style="max-width:50%; border-radius:4px;">
+            </div>
+            <p style="font-size:0.75em;">La velocidad relativa $g_{ij}$ en el punto de contacto entre dos esferas de radio $R$ es</p>
+            <p style="font-size:0.75em; text-align:center;">
+                $\boldsymbol{g}_{ij} = (\boldsymbol{v}_i - \boldsymbol{\omega}_i \times R\boldsymbol{n}_{ij}) - (\boldsymbol{v}_j - \boldsymbol{\omega}_j \times R\boldsymbol{n}_{ij}) = \boldsymbol{v}_{ij} - R(\boldsymbol{\omega}_i + \boldsymbol{\omega}_j) \times \boldsymbol{n}_{ij}$
+            </p>
+            <p style="font-size:0.75em;">donde $\quad \boldsymbol{v}_{ij} = \boldsymbol{v}_i - \boldsymbol{v}_j;\qquad \boldsymbol{n}_{ij} = \dfrac{\boldsymbol{r}_i - \boldsymbol{r}_j}{|\boldsymbol{r}_i - \boldsymbol{r}_j|}$</p>
+            <p style="font-size:0.75em;">y las componentes normales y tangenciales de $g_{ij}$ al punto de contacto son</p>
+            <p style="font-size:0.75em; text-align:center;">
+                $g^n_{ij} = (\boldsymbol{g}_{ij} \cdot \boldsymbol{n}_{ij})\boldsymbol{n}_{ij}$
+            </p>
+            <p style="font-size:0.75em; text-align:center;">
+                $\boldsymbol{g}^t_{ij} = -\boldsymbol{n}_{ij} \times (\boldsymbol{n}_{ij} \times \boldsymbol{g}_{ij}) = \boldsymbol{g}_{ij} - g^n_{ij}$
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 37: COLISIONES (esferas) — restitución -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colisiones (esferas)</h2>
+            <p style="font-size:0.8em;">Los coeficientes de restitución normal y tangencial se definen como<br>
+            (primas significan después de la colisión)</p>
+            <div class="eq-box" style="font-size:0.9em;">
+                $(g^n_{ij})' = -\varepsilon^n g^n_{ij} \qquad 0 \leq \varepsilon^n \leq 1$<br><br>
+                $(g^t_{ij})' = \varepsilon^t g^n_{ij} \qquad -1 \leq \varepsilon^t \leq 1$
+            </div>
+            <p style="font-size:0.8em;">y la conservación del momento lineal y angular es (para masas $m$ y momento de inercia $I$ iguales)</p>
+            <p style="font-size:0.75em; text-align:center;">
+                $\boldsymbol{v}'_i + \boldsymbol{v}'_j = \boldsymbol{v}_i + \boldsymbol{v}_j$
+            </p>
+            <p style="font-size:0.75em; text-align:center;">
+                $mR(\boldsymbol{n}_{ij} \times \boldsymbol{v}'_i + I\boldsymbol{\omega}'_i) = mR(\boldsymbol{n}_{ij} \times \boldsymbol{v}_i + I\boldsymbol{\omega}_i)$
+            </p>
+            <p style="font-size:0.7em;">Las dos últimas ecuaciones son la conservación del momento angular para cada partícula
+            alrededor del punto de contacto (donde no hay torque y esta separación es válida).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 38: COLISIONES (esferas) — solución -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colisiones (esferas)</h2>
+            <p style="font-size:0.75em;">La solución, tomando $\bar{I} \equiv I/(mR^2)$ como el momento de inercia reducido<br>
+            <span class="credit">(ver T. Poeschel, <em>Computational Granular Dynamics</em>)</span></p>
+            <div style="font-size:0.7em; text-align:center;">
+                $\boldsymbol{v}'_i = \boldsymbol{v}_i - \dfrac{1+\varepsilon^n}{2}\boldsymbol{g}^n_{ij} + \dfrac{\bar{I}(\varepsilon^t - 1)}{2(\bar{I}+1)}\boldsymbol{g}^t_{ij}$
+                <br><br>
+                $\boldsymbol{v}'_j = \boldsymbol{v}_j + \dfrac{1+\varepsilon^n}{2}\boldsymbol{g}^n_{ij} - \dfrac{\bar{I}(\varepsilon^t - 1)}{2(\bar{I}+1)}\boldsymbol{g}^t_{ij}$
+                <br><br>
+                $\boldsymbol{\omega}'_i = \boldsymbol{\omega}_i - \dfrac{\varepsilon^t - 1}{2R(\bar{I}+1)}(\boldsymbol{n}_{ij} \times \boldsymbol{g}^t_{ij})$
+                <br><br>
+                $\boldsymbol{\omega}'_j = \boldsymbol{\omega}_j - \dfrac{\varepsilon^t - 1}{2R(\bar{I}+1)}(\boldsymbol{n}_{ij} \times \boldsymbol{g}^t_{ij})$
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 39: VALORES DE ε^n -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Valores de $\varepsilon^n$</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-105.png" alt="εn vs velocidad" style="max-width:50%; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.75em;">
+                <li>$\varepsilon^n$ depende de la velocidad de colisión normal $g^n_{ij}$.</li>
+                <li>Si se conoce la fuerza de interacción entre las partículas $F(\xi, \dot{\xi})$ como función de la penetración $\xi$ y su derivada, se
+                puede calcular $\varepsilon^n$ resolviendo la ecuación de Newton
+                $$m_e\ddot{\xi}(t) = F(\xi(t), \dot{\xi}(t)),\quad \dot{\xi}(0) = |g^n_{ij}|,\; \xi(0) = 0$$</li>
+                <li>Si se conoce la fricción por rodadura $\mu_r$, se puede calcular $\varepsilon^n$ usando (ver Brilliantov, EPJB (1999))
+                $$\frac{1 - \varepsilon^n}{2{,}28(\rho/m)^{2/5}|g^n_{ij}|^{1/5}} = \frac{\mu_r}{V}$$
+                donde $V$ es la velocidad lineal de rodadura y
+                $\rho = \dfrac{2Y}{3(1-\nu^2)}\dfrac{\sqrt{R^*}}{m_e}$
+                con $Y$ el módulo de Young y $\nu$ el coeficiente de Poisson.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 40: VALORES DE ε^t -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Valores de $\varepsilon^t$</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-107.png" alt="εt regiones" style="max-width:38%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-109.png" alt="Cono de Coulomb" style="max-width:22%; border-radius:4px; vertical-align:middle;">
+                <img src="media/extracted/img-111.png" alt="Geometría colisión" style="max-width:25%; border-radius:4px; vertical-align:middle;">
+            </div>
+            <ul style="font-size:0.7em;">
+                <li>Si $\varepsilon^t > 0 \longrightarrow$ deslizamiento; si $\varepsilon^t &lt; 0 \longrightarrow$ inversión de rotación.</li>
+                <li>Si $g^n_{ij} \to 0$ la fuerza normal es pequeña y la tangencial también por lo que $\varepsilon^t \to 1$.</li>
+                <li>Si $g^n_{ij}$ crece la normal y la tangencial crecen por lo que si $g^t_{ij}$ es pequeña no habrá deslizamiento sino rodadura
+                perfecta. Si hay inversión de rotación $\varepsilon^t &lt; 0$ el valor de $\varepsilon^t$ no puede llegar a $-1$ porque parte de la energía se pierde
+                en la deformación normal.</li>
+                <li>Si aplicamos el criterio de Coulomb $F^t_{\max} = \mu_s F^n$ entonces la rodadura se produce si $F^t &lt; \mu_s F^n$ y el deslizamiento
+                si $F^t > \mu_s F^n$. Se puede representar un "cono de Coulomb" en el contacto con ángulo $\theta = \text{tg}^{-1}(\mu_s)$. Si $F \in$ al cono
+                habrá rodadura, si no habrá deslizamiento.</li>
+                <li>Dos esferas nunca pueden tener $\varepsilon^t = 1$ para todo $g^n_{ij}$ aún siendo perfectamente suaves.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 41: MODELOS DE FUERZAS PARA SIMULACIÓN (normales) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos de fuerzas para simulación (normales)</h2>
+            <ul style="font-size:0.75em;">
+                <li><strong>Hertz:</strong> Fuerza normal basado en la deformación de esferas elásticas sin roce.
+                $$F^n = \frac{2Y\sqrt{R^*}}{3(1-\nu^2)}\xi^{3/2},\quad \frac{1}{R^*} = \frac{1}{R_1} + \frac{1}{R_2},\quad \xi = \text{deformación normal}$$</li>
+                <li><strong>Lineal:</strong>
+                $$F^n = Y\xi$$</li>
+                <li><strong>Walton-Braun:</strong> Deformación plástica permanente $\xi_0$
+                $$F^n = \begin{cases} Y_l\xi & \text{si } \dot{\xi} \geq 0 \\ Y_u(\xi - \xi_0) & \text{si } \dot{\xi} &lt; 0 \end{cases}$$</li>
+                <li><strong>Spring-dashpot:</strong>
+                $$F^n = Y\xi + \gamma^n\dot{\xi}$$
+                Esta fuerza lleva a un coeficiente de restitución normal
+                $$\varepsilon^n = \exp\left[\frac{-\pi\gamma^n}{2m^*}\left(\frac{Y}{m^*} - \left(\frac{\gamma^n}{2m^*}\right)^2\right)^{-1/2}\right]$$
+                que claramente no depende de la velocidad de la colisión $\dot{\xi}$.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 42: MODELOS (normales) — Hertz-Kuwabara-Kono -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos de fuerzas para simulación (normales)</h2>
+            <ul style="font-size:0.8em;">
+                <li><strong>Hertz-Kuwabara-Kono:</strong> (ver también Brilliantov, Phys. Rev. E (1996))
+                $$F^n = \frac{2Y\sqrt{R^*}}{3(1-\nu^2)}(\xi^{3/2} + A\sqrt{\xi\dot{\xi}})$$
+                donde $A$ depende de la viscosidad del material de las esferas.<br>
+                Esta fuerza lleva a un coeficiente de restitución normal más realista
+                $$\varepsilon^n = 1 + C_1 A\rho^{2/3}g^{n\,1/3}_0 + C_2 A^2\rho^{4/3}g^{n\,2/3}_0 + \ldots$$
+                donde $g^n_0$ es la velocidad normal de colisión y $\rho = \dfrac{2Y}{3(1-\nu^2)}\dfrac{\sqrt{R^*}}{m_e}$;<br>
+                $C_1 = -1{,}15344$; $C_2 = 0{,}79826$; $C_3 = -0{,}48358$; $C_4 = 0{,}28528$; ...</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 43: MODELOS (normales) — duración de colisión -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos de fuerzas para simulación (normales)</h2>
+            <p style="text-align:center; font-weight:700;">Duración de una colisión</p>
+            <div style="text-align:center;">
+                <img src="media/extracted/img-113.png" alt="Duración de colisión" style="max-width:70%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 44: MODELOS DE FUERZAS (tangenciales) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos de fuerzas para simulación (tangenciales)</h2>
+            <ul style="font-size:0.8em;">
+                <li><strong>Haff-Werner:</strong>
+                $$F^t = -\text{sign}(\boldsymbol{v}^t_{ij})\min[\gamma^t|\boldsymbol{v}^t_{ij}|;\; \mu|\boldsymbol{F}^n|]$$
+                Este modelo no representa bien el caso de partículas que están en reposo en el contacto
+                ya que $F^t = 0$ en ese caso y no es capaz de considerar así la fricción estática.</li>
+                <li><strong>Brilliantov:</strong>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-115.png" alt="F vs ζ" style="max-width:50%; border-radius:4px;">
+                </div>
+                $$F^t = -\mu F^n \left[\frac{\zeta}{\zeta_0} - \text{int}\left(\frac{\zeta}{\zeta_0}\right)\right]$$
+                donde $\zeta_0$ es la longitud típica de una aspereza y debe ser mucho menor a la deformación
+                tangencial total típica durante una colisión.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 45: MODELOS (tangenciales) — Cundall-Strack -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelos de fuerzas para simulación (tangenciales)</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <p><strong>Cundall-Strack:</strong></p>
+                    $$F^t = -\text{sign}(\boldsymbol{v}^t_{ij})\min[k^t\zeta;\; \mu|\boldsymbol{F}^n|]$$
+                    <p>donde $\zeta(t)$ es la deformación tangencial desde el inicio del contacto</p>
+                    $$\zeta(t) = \int_{t_0} \boldsymbol{v}^t_{ij}(t')\,\text{d}t'$$
+                    <p style="font-size:0.85em;">– Este modelo da resultados razonables si $k^t/Y \approx 2/7$, donde $Y$ es el coeficiente del resorte
+                    lineal para la parte normal en un modelo Spring-dashpot.</p>
+                    <p style="font-size:0.85em;">– Notar que el resultado del efecto tangencial depende fundamentalmente de la fase en que
+                    termina la oscilación cuando termina el contacto.
+                    Esto es, depende de $T^t/T^n$ (cociente del período
+                    de oscilación tangencial y normal) que es proporcional a $k^t/Y$.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted/img-117.png" alt="γ' vs ψ" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 46: BIBLIOGRAFÍA -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:1.5em 2em; margin:0 -2em;">
+            <h2>Bibliografía</h2>
+            <ul style="line-height:2.2; font-size:0.85em;">
+                <li>B. Andreotti, Y. Forterre y O. Pouliquen. <em>Granular Media: Between Fluid and Solid</em>.
+                Cambridge University Press, 2013.</li>
+                <li>Jacques Duran. <em>Sands, powders, and grains: an introduction to the physics of granular
+                materials</em>. New York: Springer, 2000.</li>
+                <li>V.L. Popov. <em>Contact Mechanics and Friction: Physical Principles and Applications</em>. Springer
+                Berlin Heidelberg, 2017.</li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

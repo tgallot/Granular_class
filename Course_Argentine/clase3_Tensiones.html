@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 3 — Descripción del estado tensional de materiales granulares</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .def-box {
+            background: #eee;
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .def-box strong { color: #c0392b; }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 2px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .slides section img { max-height: 450px; object-fit: contain; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 1: TITLE                                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <h1 style="font-size:1.5em; color:var(--color-title); line-height:1.2; margin:0;">
+                Introducción a la Física de los<br>Materiales Granulares
+            </h1>
+            <p style="font-size:0.8em; color:#666; margin-top:0.3em;">
+                Descripción del estado tensional de materiales granulares.
+            </p>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            LUIS A. PUGNALONI
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Departamento de Física<br>
+            Facultad de Ciencias Exactas y Naturales<br>
+            Universidad Nacional de La Pampa — CONICET
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 2: RESUMEN                                            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen</h2>
+            <ul style="line-height:2.0; font-size:0.85em;">
+                <li>Fenomenología</li>
+                <li>Tensor de tensiones de Cauchy (definición y propiedades)</li>
+                <li>Círculo de Mohr</li>
+                <li>Criterio de falla Mohr–Coulomb</li>
+                <li>Efecto Janssen</li>
+                <li>Modelo OSL</li>
+                <li>Otras relaciones constitutivas</li>
+                <li>Promediado: De lo micro a lo macro</li>
+                <li>Redes de fuerza</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 3: FENOMENOLOGÍA — EFECTO JANSSEN                     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fenomenología (efecto Janssen)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u3/img-000.png" alt="Efecto Janssen: silo y saturación" style="max-width:95%; max-height:420px; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.75em; margin-top:0.3em; line-height:1.8;">
+                <li>$F &lt; Mg$</li>
+                <li>La fricción con las paredes cambia la saturación.</li>
+                <li>La forma de llenado cambia la saturación.</li>
+                <li>La columna tiene que estar en fricción "movilizada" para que se observe la saturación. Esto es, al borde de iniciar el deslizamiento del material sobre las paredes del silo.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 4: FENOMENOLOGÍA — PILAS                              -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fenomenología (pilas)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u3/img-002.png" alt="Pilas: presión vs posición radial" style="max-width:95%; max-height:420px; border-radius:4px;">
+            </div>
+            <p style="font-size:0.85em; margin-top:0.5em;">
+                El punto de mayor presión en el fondo no siempre coincide con el centro de la pila.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 5: FENOMENOLOGÍA — FUNCIÓN RESPUESTA                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fenomenología (función respuesta)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u3/img-004.png" alt="Función respuesta: carga puntual y distribución" style="max-width:95%; max-height:500px; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 6: DISTRIBUCIÓN DE FUERZAS DE CONTACTO                -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Distribución de fuerzas de contacto</h2>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u3/img-006.png" alt="Cilindro carbónico y distribución P(f)" style="max-width:100%; border-radius:4px; display:block; margin:0 auto;">
+                    <div class="eq-box" style="font-size:0.75em;">
+                        $P(f) \propto \begin{cases} (f/\langle f\rangle)^\alpha & f \lt \langle f\rangle \\ \exp[-\beta f/\langle f\rangle] & f \gt \langle f\rangle \end{cases}$
+                    </div>
+                </div>
+                <div style="font-size:0.75em;">
+                    <p>Para $f \lt \langle f\rangle$ diferentes autores encuentran comportamientos diferentes (meseta, máximo, decrecimiento, etc.). En particular depende de si se miden contactos de la periferia o contactos del centro del sistema.</p>
+                    <p style="margin-top:0.5em;">Estudios recientes muestran que $P(f) \propto \exp[-\beta(f/\langle f\rangle)^2]$ para $f \gt \langle f\rangle$.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 7: TENSOR DE TENSIÓN DE CAUCHY                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Tensor de tensión de Cauchy</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <ul style="line-height:1.8;">
+                        <li>$\boldsymbol{T}^{(\boldsymbol{n})} = \displaystyle\lim_{\Delta s\to 0}\frac{\Delta\boldsymbol{F}}{\Delta s} = \frac{d\boldsymbol{F}}{ds}$ existe. $\boldsymbol{T}^{(\boldsymbol{n})}$ es el <strong>vector de tensión</strong> (principio de Cauchy).</li>
+                        <li>$\sigma = \displaystyle\lim_{\Delta s\to 0}\frac{\Delta F^n}{\Delta s}$ &nbsp;y&nbsp; $\tau = \displaystyle\lim_{\Delta s\to 0}\frac{\Delta F^t}{\Delta s}$</li>
+                        <li>$\boldsymbol{T}^{(\boldsymbol{n})}$ es el mismo para un dado punto del material y un dado $\boldsymbol{n}$ sin importar la curvatura de $\Delta s$ (postulado de Cauchy).</li>
+                        <li>$-\boldsymbol{T}^{(\boldsymbol{n})} = \boldsymbol{T}^{(-\boldsymbol{n})}$ (lema fundamental de Cauchy). Tercera ley de Newton.</li>
+                        <li>Para cada punto del material existe un tensor $[\sigma]$ tal que el vector de tensión para una normal $\boldsymbol{n}$ es<br>
+                        $\boldsymbol{T}^{(\boldsymbol{n})} = [\sigma]\boldsymbol{n} \to T_j^{(\boldsymbol{n})} = \sigma_{ij}n_i$ (teorema de la tensión de Cauchy).</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-008.png" alt="Cubo y elemento de superficie con tensiones" style="max-width:100%; max-height:550px; border-radius:4px;">
+                    <p style="font-size:0.7em; margin-top:0.5em;">$\sigma = F^n/A$<br>$\tau = F^t/A$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 8: TEOREMA DE CAUCHY (demostración)                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teorema de Cauchy (demostración)</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-010.png" alt="Tetraedro de Cauchy" style="max-width:50%; border-radius:4px;">
+                    <img src="media/extracted_u3/img-012.png" alt="Cubo con componentes σ_ij" style="max-width:50%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="font-size:0.7em;">
+                    <p>Aplicando la segunda ley de Newton sobre el tetraedro de la figura</p>
+                    <p style="text-align:center;">$\boldsymbol{T}^{(\boldsymbol{n})}dA + \boldsymbol{T}^{(-\boldsymbol{e}_1)}dA_1 + \boldsymbol{T}^{(-\boldsymbol{e}_2)}dA_2 + \boldsymbol{T}^{(-\boldsymbol{e}_3)}dA_3 = dm\,\boldsymbol{a}$</p>
+                    <p>donde $dm$ es la masa del tetraedro y $\boldsymbol{a}$ su aceleración.<br>
+                    Como $\boldsymbol{T}^{(-\boldsymbol{n})} = -\boldsymbol{T}^{(\boldsymbol{n})}$ y $dA_1 = (\boldsymbol{n}\cdot\boldsymbol{e}_1)dA$ etc. tenemos</p>
+                    <p style="text-align:center; font-size:0.95em;">$\boldsymbol{T}^{(\boldsymbol{n})}dA - \boldsymbol{T}^{(\boldsymbol{e}_1)}(\boldsymbol{n}\cdot\boldsymbol{e}_1)dA - \boldsymbol{T}^{(\boldsymbol{e}_2)}(\boldsymbol{n}\cdot\boldsymbol{e}_2)dA - \boldsymbol{T}^{(\boldsymbol{e}_3)}(\boldsymbol{n}\cdot\boldsymbol{e}_3)dA = dm\,\boldsymbol{a}$</p>
+                    <p>Si $dm \to 0$, entonces</p>
+                    <div class="eq-box">
+                        $\boldsymbol{T}^{(\boldsymbol{n})} = \boldsymbol{T}^{(\boldsymbol{e}_1)}n_1 + \boldsymbol{T}^{(\boldsymbol{e}_2)}n_2 + \boldsymbol{T}^{(\boldsymbol{e}_3)}n_3$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 9: TEOREMA DE CAUCHY (demostración cont.)             -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teorema de Cauchy (demostración)</h2>
+            <div class="two-col">
+                <div style="font-size:0.68em;">
+                    <p style="text-align:center;">$\boldsymbol{T}^{(\boldsymbol{n})} = \boldsymbol{T}^{(\boldsymbol{e}_1)}n_1 + \boldsymbol{T}^{(\boldsymbol{e}_2)}n_2 + \boldsymbol{T}^{(\boldsymbol{e}_3)}n_3$</p>
+                    <p>El vector de tensión en cada cara puede descomponerse en sus componentes cartesianas como</p>
+                    <p>$\boldsymbol{T}^{(\boldsymbol{e}_1)} = T_1^{(\boldsymbol{e}_1)}\boldsymbol{e}_1 + T_2^{(\boldsymbol{e}_1)}\boldsymbol{e}_2 + T_3^{(\boldsymbol{e}_1)}\boldsymbol{e}_3 = \sigma_{11}\boldsymbol{e}_1 + \sigma_{12}\boldsymbol{e}_2 + \sigma_{13}\boldsymbol{e}_3$</p>
+                    <p>$\boldsymbol{T}^{(\boldsymbol{e}_2)} = T_1^{(\boldsymbol{e}_2)}\boldsymbol{e}_1 + T_2^{(\boldsymbol{e}_2)}\boldsymbol{e}_2 + T_3^{(\boldsymbol{e}_2)}\boldsymbol{e}_3 = \sigma_{21}\boldsymbol{e}_1 + \sigma_{22}\boldsymbol{e}_2 + \sigma_{23}\boldsymbol{e}_3$</p>
+                    <p>$\boldsymbol{T}^{(\boldsymbol{e}_3)} = T_1^{(\boldsymbol{e}_3)}\boldsymbol{e}_1 + T_2^{(\boldsymbol{e}_3)}\boldsymbol{e}_2 + T_3^{(\boldsymbol{e}_3)}\boldsymbol{e}_3 = \sigma_{31}\boldsymbol{e}_1 + \sigma_{32}\boldsymbol{e}_2 + \sigma_{33}\boldsymbol{e}_3$</p>
+                    <p style="margin-top:0.5em;">Luego</p>
+                    <p>$\boldsymbol{T}^{(\boldsymbol{n})} = \sigma_{ij}\,\boldsymbol{e}_j\,n_i \to T_j^{(\boldsymbol{n})} = \sigma_{ij}\,n_i \to$ <span style="border:2px solid var(--color-teal); padding:2px 8px; border-radius:4px;">$\boldsymbol{T}^{(\boldsymbol{n})} = [\sigma]\boldsymbol{n}$</span></p>
+                    <p style="margin-top:0.5em;">Tensión normal y tangencial:</p>
+                    <p>$\sigma_n = \boldsymbol{T}^{(\boldsymbol{n})}\cdot\boldsymbol{n} = ([\sigma]\boldsymbol{n})\cdot\boldsymbol{n} = \sigma_{ij}n_in_j$</p>
+                    <p>$\tau_n = \sqrt{(\boldsymbol{T}^{(\boldsymbol{n})})^2 - \sigma_n^2} = \sqrt{\sigma_{ij}\sigma_{ik}n_jn_k - (\sigma_{ij}n_in_j)^2}$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-010.png" alt="Tetraedro de Cauchy" style="max-width:50%; border-radius:4px;">
+                    <img src="media/extracted_u3/img-012.png" alt="Cubo con componentes σ_ij" style="max-width:50%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 10: EQUILIBRIO MECÁNICO — TRASLACIÓN                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">Equilibrio mecánico y tensor de Cauchy (traslación)</h2>
+            <div style="font-size:0.75em;">
+                <p>Un cuerpo está sometido a fuerzas $\boldsymbol{T}^{(\boldsymbol{n})}$ en su superficie y fuerzas $\boldsymbol{F}$ en su volumen. Si no posee aceleración las fuerzas aplicadas se anulan, luego</p>
+                <p style="text-align:center;">$\displaystyle\oint_S T_i^{(\boldsymbol{n})}\,dS + \int_V F_i\,dV = 0 \quad \forall i$</p>
+                <p style="text-align:center;">$\displaystyle\oint_S \sigma_{ji}\,n_j\,dS + \int_V F_i\,dV = 0 \quad \forall i$</p>
+                <p>Pero el teorema de Gauss dice que</p>
+                <p style="text-align:center;">$\displaystyle\oint_S \sigma_{ji}\,n_j\,dS = \int_V \text{div}(\sigma_{ji})\,dV = \int_V \sigma_{ji,j}\,dV \quad\text{donde}\quad \text{div}(\sigma_{ji}) = \sigma_{ji,j} = \sum_j \frac{\partial\sigma_{ji}}{\partial x_j}$</p>
+                <p>Luego</p>
+                <p style="text-align:center;">$\displaystyle\int_V [\sigma_{ji,j} + F_i]\,dV = 0 \quad$ entonces para $V \to 0$ tenemos</p>
+                <div class="eq-box">
+                    $\sigma_{ji,j} + F_i = 0$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 11: EQUILIBRIO MECÁNICO — ROTACIÓN                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">Equilibrio mecánico y tensor de Cauchy (rotación)</h2>
+            <div style="font-size:0.75em;">
+                <p>Si el cuerpo anterior además no posee aceleración angular los torques aplicados se anulan, luego</p>
+                <p style="text-align:center;">$\displaystyle\oint_S (\boldsymbol{r}\times\boldsymbol{T}^{(\boldsymbol{n})})\,dS + \int_V (\boldsymbol{r}\times\boldsymbol{F})\,dV = \boldsymbol{0}$</p>
+                <p>La componente $\boldsymbol{e}_3$ será</p>
+                <p style="text-align:center;">$\displaystyle\oint_S (x_1 T_2^{(\boldsymbol{n})} - x_2 T_1^{(\boldsymbol{n})})\,dS + \int_V (x_1 F_2 - x_2 F_1)\,dV = 0$</p>
+                <p>Según la definición del tensor de Cauchy</p>
+                <p style="text-align:center;">$\displaystyle\oint_S (x_1\sigma_{i2}n_i - x_2\sigma_{i1}n_i)\,dS + \int_V (x_1 F_2 - x_2 F_1)\,dV = 0$</p>
+                <p>Usando el teorema de Gauss</p>
+                <p style="text-align:center;">$\displaystyle\int_V \text{div}(x_1\sigma_{i2} - x_2\sigma_{i1})\,dV + \int_V (x_1 F_2 - x_2 F_1)\,dV = 0$</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 12: EQUILIBRIO MECÁNICO — ROTACIÓN (cont.)            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">Equilibrio mecánico y tensor de Cauchy (rotación)</h2>
+            <div style="font-size:0.72em;">
+                <p style="text-align:center;">$\displaystyle\int_V \text{div}(x_1\sigma_{i2} - x_2\sigma_{i1})\,dV + \int_V (x_1 F_2 - x_2 F_1)\,dV = 0$</p>
+                <p style="text-align:center;">$\displaystyle\int_V (x_{1,i}\sigma_{i2} + x_1\sigma_{i2,i} - x_{2,i}\sigma_{i1} - x_2\sigma_{i1,i} + x_1 F_2 - x_2 F_1)\,dV = 0$</p>
+                <p style="text-align:center;">$\displaystyle\int_V [\delta_{1i}\sigma_{i2} - \delta_{2i}\sigma_{i1} + x_1(\sigma_{i2,i} + F_2) - x_2(\sigma_{i1,i} + F_1)]\,dV = 0$</p>
+                <p>donde $\delta_{ij}$ es la delta de Kronecker y los dos últimos términos se cancelan por la condición de equilibrio de traslación. Luego</p>
+                <p style="text-align:center;">$\displaystyle\int_V (\sigma_{12} - \sigma_{21})\,dV = 0 \quad$ entonces</p>
+                <div class="eq-box">
+                    $\sigma_{12} = \sigma_{21}$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 13: TENSOR PRINCIPAL DE TENSIÓN                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Tensor principal de tensión</h2>
+            <div style="font-size:0.8em;">
+                <ul style="line-height:2.0;">
+                    <li>El tensor $[\sigma]$ se puede diagonalizar eligiendo (rotando) el sistema cartesiano de modo de obtener los ejes principales y los autovalores $\sigma_1$, $\sigma_2$ y $\sigma_3$ que forman su diagonal.</li>
+                    <li>Cuando $[\sigma]$ es simétrico (sistema mecánicamente estable) los autovalores son reales.</li>
+                    <li>Los coeficientes de la ecuación característica son invariantes ya que no dependen del sistema coordenado y son:
+                        <p style="text-align:center; margin:0.3em 0;">$I_1 = Tr([\sigma]); \quad I_2 = \sigma_1\sigma_2 + \sigma_2\sigma_3 + \sigma_3\sigma_1; \quad I_3 = \det([\sigma])$</p>
+                    </li>
+                    <li>Puede descomponerse $[\sigma]$ en una parte hidrostática $\frac{1}{3}Tr([\sigma])$ y un deviator $s_{ij}$
+                        <div class="eq-box">
+                            $\sigma_{ij} = \dfrac{1}{3}Tr([\sigma])\delta_{ij} + s_{ij}$
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 14: CÍRCULO DE MOHR (2D) — σ_n                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Círculo de Mohr (2D)</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <p>En el sistema coordenado principal $(1,2)$ la tensión normal al plano es</p>
+                    <p style="text-align:center;">$\sigma_n = \sigma_{ij}n_in_j = \sigma_1 n_1^2 + \sigma_2 n_2^2$.</p>
+                    <p>Luego, $\sigma_n$ puede escribirse como</p>
+                    <p>$\sigma_n = \sigma_1\cos^2\theta + \sigma_2\sin^2\theta = \sigma_1\left(\dfrac{1+\cos 2\theta}{2}\right) + \sigma_2\left(\dfrac{1-\cos 2\theta}{2}\right)$</p>
+                    <div class="eq-box">
+                        $\sigma_n = \dfrac{\sigma_1 + \sigma_2}{2} + \dfrac{\sigma_1 - \sigma_2}{2}\cos 2\theta$
+                    </div>
+                </div>
+                <div style="font-size:0.7em;">
+                    <img src="media/extracted_u3/img-018.png" alt="Ejes principales y ángulo θ" style="max-width:100%; border-radius:4px;">
+                    <p>En $(x,y)$:</p>
+                    <p>$[\sigma] = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{yx} & \sigma_{yy}\end{bmatrix}$</p>
+                    <p>En $(1,2)$, $[\sigma]$ es diagonal:</p>
+                    <p>$[\sigma] = \begin{bmatrix} \sigma_1 & 0 \\ 0 & \sigma_2\end{bmatrix}$</p>
+                    <p>con $\sigma_1 > \sigma_2$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 15: CÍRCULO DE MOHR (2D) — τ_n                       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Círculo de Mohr (2D)</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <p>En el sistema coordenado principal $(1,2)$ la tensión tangencial al plano es</p>
+                    <p style="text-align:center;">$\tau_n^2 + \sigma_n^2 = \sigma_{ij}\sigma_{ik}n_jn_k = \sigma_1^2 n_1^2 + \sigma_2^2 n_2^2$.</p>
+                    <p>Luego, $\tau_n$ puede escribirse como:</p>
+                    <p>$\tau_n^2 = \sigma_1^2\cos^2\theta + \sigma_2^2\sin^2\theta - [\sigma_1\cos^2\theta + \sigma_2\sin^2\theta]^2$.</p>
+                    <p>Usando $\cos^2\theta = \frac{1}{2}(1+\cos 2\theta)$ y $\cos\theta\sin\theta = \frac{1}{2}\sin 2\theta$ obtenemos</p>
+                    <div class="eq-box">
+                        $\tau_n = \dfrac{\sigma_1 - \sigma_2}{2}\sin 2\theta$
+                    </div>
+                </div>
+                <div style="font-size:0.7em;">
+                    <img src="media/extracted_u3/img-018.png" alt="Ejes principales y ángulo θ" style="max-width:100%; border-radius:4px;">
+                    <p>En $(x,y)$:</p>
+                    <p>$[\sigma] = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{yx} & \sigma_{yy}\end{bmatrix}$</p>
+                    <p>En $(1,2)$, $[\sigma]$ es diagonal:</p>
+                    <p>$[\sigma] = \begin{bmatrix} \sigma_1 & 0 \\ 0 & \sigma_2\end{bmatrix}$</p>
+                    <p>con $\sigma_1 > \sigma_2$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 16: CÍRCULO DE MOHR (2D) — ecuación del círculo       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Círculo de Mohr (2D)</h2>
+            <div class="two-col">
+                <div style="font-size:0.68em;">
+                    <p>Las ecuaciones de $\sigma_n$ y $\tau_n$ son la ecuación paramétrica de un círculo de radio $\frac{\sigma_1-\sigma_2}{2}$ con centro en $\left(\frac{\sigma_1+\sigma_2}{2},\,0\right)$</p>
+                    <p style="text-align:center;">$\sigma_n = \dfrac{\sigma_1+\sigma_2}{2} + \dfrac{\sigma_1-\sigma_2}{2}\cos 2\theta$</p>
+                    <p style="text-align:center;">$\tau_n = \dfrac{\sigma_1-\sigma_2}{2}\sin 2\theta$</p>
+                    <img src="media/extracted_u3/img-022.png" alt="Diagrama de Mohr" style="max-width:100%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="font-size:0.7em;">
+                    <img src="media/extracted_u3/img-018.png" alt="Ejes principales" style="max-width:80%; border-radius:4px;">
+                    <p>$[\sigma] = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{yx} & \sigma_{yy}\end{bmatrix}$</p>
+                    <p style="margin-top:0.3em;">Ejemplo (simétrico):</p>
+                    <p>$\boldsymbol{n} = (1,0)$; $\boldsymbol{t} = (0,1)$<br>
+                    $\sigma_n = \sigma_{xx}$ &nbsp; $\tau_n = \sigma_{xy}$</p>
+                    <p>$\boldsymbol{n} = (0,1)$; $\boldsymbol{t} = (-1,0)$<br>
+                    $\sigma_n = \sigma_{yy}$ &nbsp; $\tau_n = -\sigma_{xy}$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 17: CRITERIO DE FALLA MOHR–COULOMB                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">Criterio de falla de un material granular (Mohr–Coulomb)</h2>
+            <div style="text-align:center;">
+                <img src="media/extracted_u3/img-026.png" alt="Criterio Mohr-Coulomb y bloque" style="max-width:90%; max-height:320px; border-radius:4px;">
+            </div>
+            <ul style="font-size:0.8em; line-height:2.0; margin-top:0.3em;">
+                <li>$\sigma_{yy} = \dfrac{W}{S}$ &nbsp; $\sigma_{xy} = \dfrac{F}{S}$.</li>
+                <li>El material cede bajo una tensión tangencial superior al "shear strength"$= \mu(\sigma_{yy} + \sigma_a)$ (criterio de Coulomb).</li>
+                <li>Cuando el material no es cohesivo $\sigma_a = 0$.</li>
+                <li>$\mu = \tan\phi$.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 18: CRITERIO DE FALLA MOHR–COULOMB (cont.)            -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.9em;">Criterio de falla de un material granular (Mohr–Coulomb)</h2>
+            <div class="two-col">
+                <div style="font-size:0.75em;">
+                    <ul style="line-height:2.0;">
+                        <li>$\varphi_1 = $ ángulo del plano de deslizamiento respecto del autovector de $\sigma_1$.</li>
+                        <li>$\varphi_1 = \left(\frac{1}{4}\pi + \frac{1}{2}\phi\right)$, &nbsp; $\varphi_2 = -\left(\frac{1}{4}\pi + \frac{1}{2}\phi\right)$.</li>
+                        <li>Si $\sigma_a = 0 \to \overline{PA} = \overline{PB} = \frac{\sigma_1-\sigma_2}{2}$, &nbsp; $\overline{QP} = \frac{\sigma_1+\sigma_2}{2}$, &nbsp; $\overline{PA} = \overline{QP}\sin\phi$. Luego</li>
+                    </ul>
+                    <div class="eq-box">
+                        $\sigma_2 = \dfrac{1-\sin\phi}{1+\sin\phi}\,\sigma_1$
+                    </div>
+                    <p style="font-size:0.85em; margin-top:0.5em;">En el punto de deslizamiento la relación entre los autovalores es conocida.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-028.png" alt="Círculo de Mohr con criterio de falla" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 19: EFECTO JANSSEN                                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Efecto Janssen</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p>$\pi R^2 \sigma_{zz}(z+dz) - \pi R^2 \sigma_{zz}(z) - \rho g\pi R^2 dz + \sigma_{rz}(R)\,2\pi R\,dz = 0$</p>
+                    <ul style="line-height:1.6; margin-top:0.3em;">
+                        <li>Fricción completamente movilizada: $\sigma_{rz}(R) = \mu_s\sigma_n(R)$.</li>
+                        <li>Asumimos que $\sigma_n = k\sigma_{zz}\,\psi(z,r)$ (relación constitutiva).<br>$k$ es la "constante de redirección de fuerzas".</li>
+                    </ul>
+                    <p style="margin-top:0.3em;">$\dfrac{\partial\sigma_{zz}(z)}{\partial z} - \rho g + \dfrac{2\mu_s k}{R}\sigma_{zz}(z) = 0$</p>
+                    <p>$\sigma_{zz}(z=0) = 0$</p>
+                    <p style="margin-top:0.3em;">Proponemos una solución: $\sigma_{zz}(z) = A\exp\!\left[\frac{-2\mu_s kz}{R}\right] + C$.</p>
+                    <p>Reemplazando se obtiene: $C = \frac{\rho gR}{2\mu_s k}$ y $A = \frac{-\rho gR}{2\mu_s k}$. Luego</p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\sigma_{zz}(z) = \dfrac{\rho gR}{2\mu_s k}\left[1 - \exp\!\left(\dfrac{-2\mu_s kz}{R}\right)\right]$
+                    </div>
+                    <p style="margin-top:0.3em;">Experimentalmente se comprueba que la masa aparente de saturación es proporcional a $R^3$ que es consistente con $\sigma_{zz} \to \frac{\rho gR}{2\mu_s k}$.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-030.png" alt="Silo Janssen y curva de saturación σ_zz" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 20: MODELO OSL                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo OSL (Oriented Stress Linearity)</h2>
+            <div class="two-col">
+                <div style="font-size:0.68em;">
+                    <p>Se puede tomar la condición de equilibrio mecánico ($\sigma_{ij,j} + F_i = 0$; $\sigma_{ij} = \sigma_{ji}$) y agregar una relación constitutiva para tener un sistema cerrado de ecuaciones. En 2D...</p>
+                    <p style="margin-top:0.3em;">$\sigma_{xx} = k\sigma_{zz} \quad$ (1) relación constitutiva</p>
+                    <p>$\dfrac{\partial\sigma_{xx}}{\partial x} + \dfrac{\partial\sigma_{zx}}{\partial z} = 0 \quad$ (2)</p>
+                    <p>$\dfrac{\partial\sigma_{xz}}{\partial x} + \dfrac{\partial\sigma_{zz}}{\partial z} = -\rho g \quad$ (3)</p>
+                    <p style="margin-top:0.3em;">Reemplazando (1) en (2) y derivando respecto de $z$ tenemos $\frac{\partial^2 \sigma_{zz}}{\partial z^2} = -k\frac{\partial^2 \sigma_{zx}}{\partial x\partial z}$. Derivando respecto de $x$ la Ec. (3)</p>
+                    <p>tenemos $\frac{\partial^2 \sigma_{xz}}{\partial x\partial z} = -\frac{\partial^2 \sigma_{zz}}{\partial x^2}$. De estas ecuaciones podemos obtener una ecuación diferencial separada para $\sigma_{xz}$</p>
+                    <div class="eq-box">
+                        $\dfrac{\partial^2\sigma_{xz}}{\partial z^2} = k\,\dfrac{\partial^2\sigma_{xz}}{\partial x^2}$
+                    </div>
+                    <p>Ecuaciones idénticas pueden escribirse para $\sigma_{xx}$ y $\sigma_{zz}$ que corresponden a ecuaciones de ondas con velocidad de propagación $c = \sqrt{k}$.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-032.png" alt="Contenedor granular con ejes X,Z" style="max-width:45%; border-radius:4px;">
+                    <img src="media/extracted_u3/img-034.jpg" alt="Modelo OSL - distribución de tensiones 3D" style="max-width:100%; border-radius:4px; margin-top:0.5em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 21: TENSOR DE TENSIÓN DESDE FUERZAS DE CONTACTO       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em;">Tensor de tensión partiendo de las fuerzas de contacto</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p>Sean $N$ granos con posiciones $\boldsymbol{r}_i$ y velocidades $\boldsymbol{v}_i$. La densidad a escala microscópica es:</p>
+                    <p>$\rho_{mic}(\boldsymbol{r},t) = \displaystyle\sum_{i=1}^{N} m_i\delta(\boldsymbol{r}-\boldsymbol{r}_i(t)) \to \int_V \rho_{mic}(\boldsymbol{r},t)\,d\boldsymbol{r} = \sum_{i=1}^{N} m_i$</p>
+                    <p>La cantidad de movimiento por unidad de volumen es:</p>
+                    <p>$\boldsymbol{p}_{mic}(\boldsymbol{r},t) = \displaystyle\sum_{i=1}^{N} m_i\boldsymbol{v}_i(t)\delta(\boldsymbol{r}-\boldsymbol{r}_i(t)) \to \int_V \boldsymbol{p}_{mic}(\boldsymbol{r},t)\,d\boldsymbol{r} = \sum_{i=1}^{N} m_i\boldsymbol{v}_i(t)$</p>
+                    <p>Para pasar al continuo suavizamos con una función localizada $\phi(\boldsymbol{R})$ positiva y normalizada de modo de obtener las propiedades en un volumen "pequeño pero macroscópico".</p>
+                    <p>$\rho(\boldsymbol{r},t) = \displaystyle\int \phi(\boldsymbol{r}-\boldsymbol{r}')\rho_{mic}(\boldsymbol{r}',t)\,d\boldsymbol{r}' = \sum_{i=1}^{N} m_i\phi(\boldsymbol{r}-\boldsymbol{r}_i(t))$</p>
+                    <p>$\boldsymbol{p}(\boldsymbol{r},t) = \displaystyle\int \phi(\boldsymbol{r}-\boldsymbol{r}')\boldsymbol{p}_{mic}(\boldsymbol{r}',t)\,d\boldsymbol{r}' = \sum_{i=1}^{N} m_i\boldsymbol{v}_i\phi(\boldsymbol{r}-\boldsymbol{r}_i(t))$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-035.png" alt="Función de suavizado φ(R)" style="max-width:80%; border-radius:4px;">
+                    <p style="font-size:0.6em; margin-top:0.5em;">P. Claudin, Capítulo 14 En:<br>A. Mehta, <em>Granular Physics</em>, Cambridge U. Press (2007).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 22: TENSOR DESDE CONTACTOS (cont.)                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em;">Tensor de tensión partiendo de las fuerzas de contacto</h2>
+            <div class="two-col">
+                <div style="font-size:0.68em;">
+                    <p>Se puede demostrar que:</p>
+                    <div class="eq-box">
+                        $\dfrac{\partial\rho(\boldsymbol{r},t)}{\partial t} + \nabla\cdot\boldsymbol{p}(\boldsymbol{r},t) = 0$
+                    </div>
+                    <p>(conservación de la masa).</p>
+                    <p style="margin-top:0.5em;">Y aplicando la segunda ley de Newton sobre un cubo pequeño de material:</p>
+                    <div class="eq-box">
+                        $\dfrac{\partial p_\alpha(\boldsymbol{r},t)}{\partial t} + \dfrac{\partial\sigma_{\alpha\beta}(\boldsymbol{r},t)}{\partial r_\beta} = F_\alpha^{\text{ext}}(\boldsymbol{r},t)$
+                    </div>
+                    <p>(conservación del momento).</p>
+                    <p style="margin-top:0.5em;">Aquí $\alpha$ y $\beta$ pueden ser las direcciones cartesianas $x$, $y$ o $z$. $\boldsymbol{F}$ es una fuerza externa que actúa sobre todo elemento de volumen (e.g., la gravedad) y $\sigma_{\alpha\beta}$ es el tensor de tensiones en el cubo pequeño.</p>
+                    <p style="margin-top:0.3em;">El valor de $\frac{\partial p_\alpha(\boldsymbol{r},t)}{\partial t}$ se puede poner en función de las variable microscópicas $\boldsymbol{r}_i$ y $\boldsymbol{v}_i$ de las definiciones previas.</p>
+                    <p>$\dfrac{\partial p_\alpha(\boldsymbol{r},t)}{\partial t} = \displaystyle\sum_{i=1}^{N} m_i\frac{\partial v_{i\alpha}}{\partial t}\phi(\boldsymbol{r}-\boldsymbol{r}_i(t)) - \frac{\partial}{\partial r_\beta}\sum_{i=1}^{N} m_i v_{i\alpha}v_{i\beta}\phi(\boldsymbol{r}-\boldsymbol{r}_i(t))$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-037.png" alt="Cubo con fuerzas" style="max-width:65%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 23: TENSOR DESDE CONTACTOS (cont.)                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em;">Tensor de tensión partiendo de las fuerzas de contacto</h2>
+            <div style="font-size:0.7em;">
+                <p>En el primer término: $m_i\frac{\partial v_{i\alpha}}{\partial t} = f_{i\alpha}^{\text{ext}} + \sum_{j\neq i} f_{ij\alpha}$. Teniendo en cuenta que $f_{ij\alpha} = -f_{ji\alpha}$, puede escribirse</p>
+                <p style="text-align:center;">$\dfrac{\partial p_\alpha(\boldsymbol{r},t)}{\partial t} = \dfrac{1}{2}\displaystyle\sum_{i=1}^{N}\sum_{j=1}^{N} f_{ij\alpha}[\phi(\boldsymbol{r}-\boldsymbol{r}_i(t)) - \phi(\boldsymbol{r}-\boldsymbol{r}_j(t))]$</p>
+                <p style="text-align:center;">$\quad - \dfrac{\partial}{\partial r_\beta}\displaystyle\sum_{i=1}^{N} m_iv_{i\alpha}v_{i\beta}\phi(\boldsymbol{r}-\boldsymbol{r}_i(t)) + F_\alpha^{\text{ext}}(\boldsymbol{r},t)$</p>
+                <p style="margin-top:0.8em;">Se puede demostrar que:</p>
+                <div class="eq-box">
+                    $\phi(\boldsymbol{r}-\boldsymbol{r}_i(t)) - \phi(\boldsymbol{r}-\boldsymbol{r}_j(t)) = r_{ij\beta}\dfrac{\partial}{\partial r_\beta}\displaystyle\int_0^1 \phi(\boldsymbol{r}-\boldsymbol{r}_i(t)+s\boldsymbol{r}_{ij}(t))\,ds$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 24: TENSOR DESDE CONTACTOS (cont.)                    -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:0.85em;">Tensor de tensión partiendo de las fuerzas de contacto</h2>
+            <div class="two-col">
+                <div style="font-size:0.68em;">
+                    <p>Luego, reemplazando en la ecuación de conservación de cantidad de movimiento</p>
+                    <p style="text-align:center;">$\sigma_{\alpha\beta} = \dfrac{1}{2}\displaystyle\sum_{i=1}^{N}\sum_{j=1}^{N} f_{ij\alpha}\,r_{ij\beta}\int_0^1 \phi(\boldsymbol{r}-\boldsymbol{r}_i(t)+s\boldsymbol{r}_{ij}(t))\,ds$</p>
+                    <p style="text-align:center;">$\quad - \displaystyle\sum_{i=1}^{N} m_iv_{i\alpha}v_{i\beta}\phi(\boldsymbol{r}-\boldsymbol{r}_i(t))$</p>
+                    <p style="margin-top:0.5em;">Si tomamos $\phi(\boldsymbol{R}) = 1/V$ para $R \leq V^{1/3}$ y $\phi(\boldsymbol{R})=0$ para $R > V^{1/3}$ obtenemos la fórmula de Born–Huang (1947)</p>
+                    <div class="eq-box">
+                        $\sigma_{\alpha\beta} = \dfrac{1}{2V}\displaystyle\sum_{i=1}^{N}\sum_{j=1}^{N} f_{ij\alpha}\,b_{ij\beta} - \dfrac{1}{V}\sum_{i=1}^{N} m_iv_{i\alpha}v_{i\beta}$
+                    </div>
+                    <p style="margin-top:0.3em;">Donde sólo se consideran las partículas $i$ dentro del volumen de interés $V$ y $\boldsymbol{b}_{ij}$ son los "branch vector" de los contactos. $\boldsymbol{b}_{ij}$ sólo incluye la porción del vector $\boldsymbol{r}_{ij}$ que está dentro del volumen de interés $V$.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-039.png" alt="Branch vectors entre partículas" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 25: REDES DE FUERZA — TOPOLOGÍA                      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Redes de fuerza (topología)</h2>
+            <div class="two-col">
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:1.8;">
+                        <li>Red formada por los centros de los granos (<strong>nodos</strong>) y las fuerzas de contacto (<strong>lados</strong>).</li>
+                        <li>Las fuerzas son vectores, pero puede tomarse una componente o su norma.</li>
+                        <li>Extensión de la fuerza a nodos y <strong>simplices</strong> 2D (triángulos).</li>
+                        <li>Filtrado por umbral de fuerza.</li>
+                        <li><strong>Componentes conectados</strong> (clusters)</li>
+                        <li><strong>Lazos</strong> (loops $\equiv$ agujeros)</li>
+                        <li>Números de Betti</li>
+                    </ul>
+                    <p class="credit" style="margin-top:0.5em;">Kramár et al., Physica D (2014)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/extracted_u3/img-041.jpg" alt="Celda biaxial fotoelástica" style="max-width:100%; max-height:250px; border-radius:4px;">
+                    <img src="media/extracted_u3/img-042.jpg" alt="Topología de redes de contacto (a-h)" style="max-width:100%; max-height:300px; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 26: REDES DE FUERZA — PERSISTENCIA                   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Redes de fuerza (análisis de persistencia)</h2>
+            <p style="font-size:0.85em; font-weight:700;">1D</p>
+            <div class="two-col">
+                <div>
+                    <img src="media/extracted_u3/img-043.png" alt="Análisis de persistencia 1D (barcode)" style="max-width:100%; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:2.0;">
+                        <li>Nacimiento y muerte.</li>
+                        <li>Diagrama de persistencia.</li>
+                        <li>Sobre clusters o lazos o poros (3D).</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="font-size:0.85em; font-weight:700; margin-top:0.5em;">2D</p>
+            <div style="display:flex; gap:1em; justify-content:center;">
+                <img src="media/extracted_u3/img-045.jpg" alt="Topología 2D anotada" style="max-width:55%; border-radius:4px;">
+                <img src="media/extracted_u3/img-046.png" alt="Diagrama de persistencia" style="max-width:35%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  SLIDE 27: FIN                                               -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:2em; margin:0 -2em; text-align:center;">
+            <h1 style="font-size:2em; color:var(--color-title); margin-top:2em;">FIN.</h1>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/math/math.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
