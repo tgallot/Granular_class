@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 13 - Terremotos a Escala de Laboratorio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 13 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:1.8em; color:var(--color-title); line-height:1.1; margin:0;">
+                TERREMOTOS A ESCALA<br>DE LABORATORIO
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Terremotos en laboratorio: motivación</li>
+                <li>Montaje experimental: banco de fricción</li>
+                <li>Señales acústicas y mecánicas</li>
+                <li>Análisis estadístico de eventos</li>
+                <li>Datos de experimentos en Grenoble</li>
+                <li>Conexión con sismología real</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Motivacion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Terremotos en laboratorio: &#191;por qu&#233;?</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Ventajas:</strong></p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <ol style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Condiciones controladas:</strong> tensi&#243;n normal $\sigma_n$, velocidad de cizalla $v$, temperatura, humedad</li>
+                            <li><strong>Repetibilidad:</strong> miles de eventos en horas (vs. siglos en la naturaleza)</li>
+                            <li><strong>Instrumentaci&#243;n completa:</strong> galgas extensom&#233;tricas, sensores de emisi&#243;n ac&#250;stica, c&#225;maras de alta velocidad</li>
+                            <li><strong>Acceso a la zona de falla:</strong> evoluci&#243;n del gouge, microestructura, localizaci&#243;n del cizallamiento</li>
+                            <li><strong>Compresi&#243;n temporal:</strong> ciclo s&#237;smico completo en minutos en lugar de siglos</li>
+                        </ol>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Limitaciones:</strong></p>
+                    <div class="highlight-box red" style="font-size:0.8em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Escalamiento:</strong> laboratorio mm $\to$ falla km ($\sim 10^6$ &#243;rdenes)</li>
+                            <li><strong>Geometr&#237;a simplificada:</strong> bloques planos vs. fallas 3D con rugosidad fractal</li>
+                            <li><strong>Materiales:</strong> granos esf&#233;ricos vs. roca con mineralog&#237;a compleja</li>
+                            <li><strong>Presiones:</strong> $\sigma_n \lesssim 100$ MPa en lab vs. GPa en profundidad</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.85em; text-align:center;">
+                        <strong>Pregunta clave:</strong><br>
+                        &#191;Los &#171;terremotos&#187; de laboratorio obedecen las <em>mismas leyes estad&#237;sticas</em> que los terremotos naturales?
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Scholz, <em>The Mechanics of Earthquakes and Faulting</em>, 3rd ed. (2019); Marone, Ann. Rev. Earth Planet. Sci. 26, 643 (1998)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Montaje experimental -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Montaje experimental: banco de fricci&#243;n</h2>
+            <p style="font-size:0.85em;">Configuraci&#243;n cl&#225;sica: dos bloques r&#237;gidos con una capa de gouge granular entre ellos.</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Componentes del banco:</strong></p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Carga normal:</strong> prensa hidr&#225;ulica o peso muerto ($\sigma_n = 1$&ndash;$100$ MPa)</li>
+                            <li><strong>Accionamiento de cizalla:</strong> motor + tornillo o actuador hidr&#225;ulico ($v = 0.1\;\mu$m/s a $10$ mm/s)</li>
+                            <li><strong>Celda de carga:</strong> mide la fuerza de cizalla $F(t)$ con alta resoluci&#243;n</li>
+                            <li><strong>Sensor de desplazamiento:</strong> LVDT o interfer&#243;metro l&#225;ser</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Sensores y materiales:</strong></p>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Emisi&#243;n ac&#250;stica (EA):</strong> transductores piezoel&#233;ctricos ($100$ kHz &ndash; $1$ MHz)</li>
+                            <li><strong>Material de gouge:</strong> esferas de vidrio, arena de cuarzo, gouge natural de falla</li>
+                            <li><strong>Espesor del gouge:</strong> $h = 1$&ndash;$10$ mm</li>
+                        </ul>
+                    </div>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        <strong>Observable principal:</strong><br>
+                        $\mu = \dfrac{F}{\sigma_n \cdot A}$<br>
+                        <span style="font-size:0.75em;">coeficiente de fricci&#243;n macrosc&#243;pico</span>
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Montaje inspirado en los experimentos del grupo T. Gallot, Laboratoire 3SR / ISTerre, Grenoble</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Marco teórico BK-laboratorio -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Marco teórico: del modelo BK al experimento</h2>
+            <p style="font-size:0.85em;">El banco de fricción <strong>ES</strong> un modelo de Burridge-Knopoff de un solo bloque:</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <table style="font-size:0.65em; margin-top:0.3em;">
+                        <thead><tr><th>Banco de fricción</th><th>Modelo BK</th></tr></thead>
+                        <tbody>
+                            <tr><td>Bloque PMMA</td><td>Bloque \(j\)</td></tr>
+                            <tr><td>Rigidez del aparato</td><td>Resorte \(k\)</td></tr>
+                            <tr><td>Velocidad impuesta</td><td>Velocidad cinta \(v\)</td></tr>
+                            <tr><td>Sin acoplamiento lateral</td><td>Sin resortes inter-bloque (asperidad única)</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>En estado estacionario (rate-and-state):</strong></p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        $\mu_{ss} = \mu_0 + (a-b)\ln\!\left(\dfrac{V}{V_0}\right)$
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;">
+                        Para PMMA: \(a - b < 0\) &rarr; velocity weakening &rarr; stick-slip observado.
+                    </p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Señal esperada:</strong> fuerza en diente de sierra con período:
+                    </div>
+                    <div class="eq-box" style="font-size:0.9em; margin-top:0.3em;">
+                        $T \approx \dfrac{\Delta\mu \cdot F_N}{k \cdot V}$
+                    </div>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Conexión con terremotos:</strong></p>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li>Magnitud laboratorio: \(M_\text{lab} \sim -7\) a \(-5\)</li>
+                            <li>Duración de evento: microsegundos (vs. segundos para terremotos reales)</li>
+                            <li><strong>MISMA física:</strong> velocity weakening + carga elástica &rarr; inestabilidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.78em; margin-top:0.3em;">
+                El banco de fricción reproduce la física esencial de los terremotos en condiciones controladas — permitiendo estudiar estadística, precursores y leyes de escala.
+            </div>
+            <p class="credit">Duran (1999), &sect;2.2.1/&sect;4.2.2; Burridge &amp; Knopoff (1967).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Senales -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Se&#241;ales ac&#250;sticas y mec&#225;nicas</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Se&#241;al mec&#225;nica: $\mu(t)$</strong></p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <p>El coeficiente de fricci&#243;n muestra oscilaciones <em>stick-slip</em>:</p>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li><strong>Fase stick:</strong> $\mu$ crece linealmente (carga el&#225;stica del sistema motor-muestra)</li>
+                            <li><strong>Fase slip:</strong> $\mu$ cae bruscamente (ruptura din&#225;mica en el gouge)</li>
+                        </ul>
+                        <p style="margin-top:0.3em;">Amplitud $\Delta F$ y tiempo de recurrencia $T$ dependen de:</p>
+                        <ul style="line-height:1.6;">
+                            <li>Velocidad de arrastre $V$</li>
+                            <li>Tensi&#243;n normal $\sigma_n$</li>
+                            <li>Rigidez del sistema $k$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Emisi&#243;n ac&#250;stica (EA)</strong></p>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <p>R&#225;fagas de ondas de alta frecuencia durante los eventos de deslizamiento:</p>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Energ&#237;a ac&#250;stica $E_\text{EA}$ correlaciona con la magnitud del slip</li>
+                            <li>EA tambi&#233;n detectada durante periodos &#171;calmos&#187; $\to$ &#191;precursores?</li>
+                            <li>Contenido frecuencial: $10$ kHz &ndash; $1$ MHz (lab) vs. $0.01$ &ndash; $10$ Hz (campo)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.78em;">
+                        <strong>Detecci&#243;n de eventos:</strong><br>
+                        Umbral sobre la se&#241;al de EA o la derivada de la fuerza $\dot{F}(t)$.<br>
+                        <strong>Cat&#225;logo:</strong> lista de eventos con tiempo, magnitud ($\Delta F$ o $E_\text{EA}$) y duraci&#243;n.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Analisis estadistico -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>An&#225;lisis estad&#237;stico de eventos</h2>
+            <p style="font-size:0.85em;">A partir del cat&#225;logo de eventos, se calculan distribuciones estad&#237;sticas:</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Distribuci&#243;n de magnitudes:</strong></p>
+                    <div class="eq-box">
+                        $P(\Delta F) \propto \Delta F^{-\beta}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.3em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li>Ley de potencia &mdash; an&#225;logo a <strong>Gutenberg-Richter</strong></li>
+                            <li>Exponente $\beta \approx 1.5$&ndash;$2.5$ seg&#250;n condiciones</li>
+                            <li>En t&#233;rminos de $b$-value: $b = (\beta - 1) \times \frac{2}{3} \approx 0.5$&ndash;$1.5$</li>
+                            <li>Rango de validez: 2&ndash;3 d&#233;cadas en $\Delta F$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Tiempos de espera:</strong></p>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <p><strong>Condiciones estacionarias:</strong></p>
+                        <p>$P(\Delta t) \approx$ exponencial (proceso de Poisson)</p>
+                        <p style="margin-top:0.3em;"><strong>Durante transitorios:</strong></p>
+                        <p>Eventos agrupados (secuencias de r&#233;plicas tipo Omori)</p>
+                    </div>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Recurrencia:</strong></p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Stick-slip regular:</strong> distribuci&#243;n estrecha de $T$ (cuasi-peri&#243;dico)</li>
+                            <li><strong>R&#233;gimen irregular:</strong> distribuci&#243;n ancha de $T$ (ca&#243;tico)</li>
+                            <li>Transici&#243;n controlada por rigidez $k$ y velocidad $V$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Datos Grenoble -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Datos experimentales: Grenoble</h2>
+            <p style="font-size:0.85em;"><strong>Contexto:</strong> Experimentos de fricci&#243;n en el Laboratoire 3SR / ISTerre, Grenoble.</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Configuraci&#243;n:</strong></p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Celda de cizalla anular</strong> con gouge granular</li>
+                            <li>Esferas de vidrio, $d = 0.5$&ndash;$2$ mm</li>
+                            <li>Tensi&#243;n normal: $\sigma_n = 10$&ndash;$100$ kPa</li>
+                            <li>Velocidad de cizalla: $v = 0.01$&ndash;$10$ mm/s</li>
+                        </ul>
+                    </div>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Tipos de datos:</strong></p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.6;">
+                            <li>Serie temporal de fuerza $F(t)$</li>
+                            <li>Formas de onda de EA</li>
+                            <li>Espesor del gouge $h(t)$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Observaciones clave:</strong></p>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li>R&#233;gimen <em>stick-slip</em> claro con eventos bien definidos</li>
+                            <li>Emisi&#243;n ac&#250;stica registrada con sensores piezo en m&#250;ltiples posiciones</li>
+                            <li>Fuerza medida con alta resoluci&#243;n temporal ($&gt; 1$ kHz)</li>
+                            <li><strong>Miles de eventos por experimento</strong> $\to$ estad&#237;stica robusta</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.78em; text-align:center;">
+                        <strong>Ventaja de la geometr&#237;a anular:</strong><br>
+                        desplazamiento ilimitado sin efecto de borde &mdash; condiciones estacionarias reales.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Datos Grenoble II -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>An&#225;lisis de datos: resultados</h2>
+            <p style="font-size:0.85em;">Resultados principales de los experimentos de Grenoble:</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Gutenberg-Richter en el laboratorio:</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Distribuci&#243;n de tama&#241;os de eventos en ley de potencia confirmada</li>
+                            <li>$b$-value depende de $\sigma_n$ y del tama&#241;o de grano</li>
+                            <li>Mayor $\sigma_n$ $\to$ menor $b$ (m&#225;s eventos grandes)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.78em;">
+                        <strong>R&#233;plicas tipo Omori:</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Tras un gran deslizamiento, los eventos menores se agrupan temporalmente</li>
+                            <li>Tasa de decaimiento compatible con la ley de Omori:</li>
+                        </ul>
+                        <div class="eq-box" style="margin:0.3em 0;">
+                            $n(t) \propto t^{-p}, \quad p \approx 0.8$&ndash;$1.2$
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Actividad precursora:</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Aumento de la tasa de EA antes de grandes eventos</li>
+                            <li>Aceleraci&#243;n de la deformaci&#243;n (creep) $\to$ analog&#237;a con la predicci&#243;n s&#237;smica</li>
+                            <li>&#191;Se&#241;ales explotables para alerta temprana?</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.78em;">
+                        <strong>Fricci&#243;n efectiva:</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>$\mu_\text{eff}$ disminuye con la velocidad creciente (<em>velocity weakening</em>)</li>
+                            <li>Coherente con la ley rate-and-state (clase 12)</li>
+                        </ul>
+                        <div class="eq-box" style="margin:0.3em 0; font-size:0.9em;">
+                            $\mu(v,\theta) = \mu_0 + a\ln\!\left(\frac{v}{v_0}\right) + b\ln\!\left(\frac{v_0\,\theta}{D_c}\right)$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Conexion sismologia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Del laboratorio al campo: leyes universales</h2>
+            <p style="font-size:0.85em;">Leyes estad&#237;sticas observadas <strong>tanto</strong> en el laboratorio <strong>como</strong> en el campo:</p>
+            <table style="font-size:0.7em; margin-top:0.3em;">
+                <thead>
+                    <tr><th>Ley</th><th>Laboratorio</th><th>Campo (sismolog&#237;a)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Gutenberg-Richter</strong></td><td>$P(\Delta F) \propto \Delta F^{-\beta}$</td><td>$\log N = a - bM$</td></tr>
+                    <tr><td><strong>Omori (r&#233;plicas)</strong></td><td>$n(t) \propto t^{-p}$, $p \approx 0.8$&ndash;$1.2$</td><td>$n(t) \propto t^{-p}$, $p \approx 1$</td></tr>
+                    <tr><td><strong>B&#229;th</strong></td><td>$\Delta M_\text{max} \approx 1$&ndash;$2$</td><td>$\Delta M_\text{max} \approx 1.2$</td></tr>
+                    <tr><td><strong>Rate-and-state</strong></td><td>$\mu(v,\theta)$ medido directamente</td><td>$\mu(v,\theta)$ inferido de inversiones</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box" style="margin-top:0.5em; font-size:0.8em; text-align:center;">
+                <strong>Invariancia de escala:</strong> las mismas leyes estad&#237;sticas se verifican sobre $\sim 10$ &#243;rdenes de magnitud en tama&#241;o (mm $\to$ km).
+            </div>
+            <p style="font-size:0.85em; margin-top:0.3em;"><strong>Preguntas abiertas:</strong></p>
+            <div class="two-col" style="font-size:0.78em;">
+                <div>
+                    <div class="highlight-box red">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li>&#191;Es posible la predicci&#243;n s&#237;smica? El laboratorio sugiere que existen precursores...</li>
+                            <li>&#191;Rol de los fluidos? Efecto de la presi&#243;n de poro sobre la estabilidad de la falla</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <ul style="margin:0.2em 0; line-height:1.7;">
+                            <li>&#191;Rol de la f&#237;sica granular? La din&#225;mica del gouge controla el comportamiento de la ruptura</li>
+                            <li>La f&#237;sica granular proporciona el <strong>mecanismo microsc&#243;pico</strong> para el comportamiento s&#237;smico macrosc&#243;pico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Cierre y presentaciones -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Próximas semanas: presentaciones finales</h2>
+            <p>Semanas 14-15:</p>
+            <ul style="line-height:2;">
+                <li>Elegir uno de los experimentos del curso</li>
+                <li>Agregarle un análisis original</li>
+                <li>O desarrollar un mini-proyecto experimental o numérico</li>
+                <li>Presentación oral de 15-20 minutos</li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

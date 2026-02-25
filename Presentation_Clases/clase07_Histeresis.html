@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7 - Histeresis y Modelado</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .highlight-box.orange { border-left-color: #e67e22; }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .red-box { background: rgba(139,94,107,0.08); border: 2px solid var(--color-mauve); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .warn-box {
+            background: #fef3f3; border: 2px solid #c0392b; border-radius: 8px;
+            padding: 0.5em 1em; margin: 0.5em 0; font-size: 0.5em;
+        }
+        .reveal .warn-box::before { content: "! "; color: #c0392b; font-weight: 700; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 7 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:1.8em; color:var(--color-title); line-height:1.1; margin:0;">
+                HISTERESIS Y MODELADO<br>CON CONTACTOS ELASTICOS
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Histeresis en ciclos carga-descarga</li>
+                <li>Disipacion de energia</li>
+                <li>Introduccion al DEM (Discrete Element Method)</li>
+                <li>Modelos de contacto: fuerza normal (Hertz + amortiguamiento)</li>
+                <li>Modelos de contacto: fuerza tangencial (Cundall-Strack)</li>
+                <li>Integracion numerica (Verlet / Velocity-Stormer)</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Histeresis en carga-descarga -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Histeresis en ciclos carga-descarga</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">Cuando se comprime y luego se descarga un ensemble granular, la curva fuerza-deformacion presenta un <strong>ciclo de histeresis</strong>.</p>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Origenes de la histeresis:</strong>
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li><strong>Reordenamiento de contactos:</strong> apertura y cierre de contactos entre granos</li>
+                            <li><strong>Deformacion plastica local:</strong> las asperezas se deforman irreversiblemente</li>
+                            <li><strong>Friccion entre granos:</strong> disipacion de energia por deslizamiento</li>
+                            <li><strong>Disipacion viscoelastica:</strong> amortiguamiento interno del material</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em; margin-top:0.4em;">
+                        <strong>Indeterminacion fundamental:</strong><br>
+                        La fuerza de friccion en un contacto estatico no tiene un valor unico:
+                        $0 \leq F_t \leq \mu_s F_n$.<br>
+                        La fuerza real depende de <em>como</em> se establecio el contacto.
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: F vs delta with hysteresis cycle -->
+                    <svg viewBox="0 0 320 310" style="width:95%;">
+                        <!-- Axes -->
+                        <line x1="50" y1="270" x2="300" y2="270" stroke="#333" stroke-width="1.5"/>
+                        <line x1="50" y1="270" x2="50" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="175" y="298" text-anchor="middle" font-size="13" fill="#333">Deformacion &#x03B4;</text>
+                        <text x="22" y="145" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,22,145)">Fuerza F</text>
+                        <!-- Loading curve (Hertz-like) -->
+                        <path d="M50,270 C80,265 120,245 160,200 C200,145 240,80 280,30" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <!-- Unloading curve (lower, steeper) -->
+                        <path d="M280,30 C250,85 210,160 170,210 C130,248 100,260 80,266 L50,270" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Shaded hysteresis area -->
+                        <path d="M50,270 C80,265 120,245 160,200 C200,145 240,80 280,30
+                                 C250,85 210,160 170,210 C130,248 100,260 80,266 Z"
+                              fill="rgba(192,57,43,0.12)"/>
+                        <!-- Arrows indicating direction -->
+                        <polygon points="180,178 174,190 186,188" fill="var(--color-teal)"/>
+                        <polygon points="170,222 178,215 166,214" fill="#c0392b"/>
+                        <!-- Labels -->
+                        <text x="230" y="65" font-size="12" fill="var(--color-teal)" font-weight="bold">Carga</text>
+                        <text x="95" y="240" font-size="12" fill="#c0392b" font-weight="bold">Descarga</text>
+                        <text x="165" y="195" font-size="14" fill="var(--color-mauve)" font-weight="bold">&#x0394;E</text>
+                        <!-- Residual deformation -->
+                        <line x1="80" y1="266" x2="80" y2="275" stroke="#888" stroke-width="1" stroke-dasharray="2,2"/>
+                        <text x="75" y="288" font-size="10" fill="#888">&#x03B4;&#x1D63;</text>
+                    </svg>
+                    <p style="font-size:0.5em; color:#888;">El area sombreada $\Delta E$ es la energia disipada por ciclo. Puede quedar una deformacion residual $\delta_r$.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Disipacion de energia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Disipacion de energia</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">La energia disipada por ciclo es:</p>
+                    <div class="red-box" style="font-size:0.7em;">
+                        $\Delta E = \oint F\,d\delta = \text{area del ciclo de histeresis}$
+                    </div>
+                    <p style="font-size:0.6em; margin-top:0.5em;">Para una colision entre dos esferas (clase 6):</p>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        $\Delta E_k = \frac{1}{2}m^* v^2 (1 - \varepsilon^2)$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Modelo viscoelastico (Hertz + disipacion):</strong><br>
+                        $F^n = k\,\delta^{3/2} + \gamma_n \sqrt{\delta}\,\dot\delta$<br><br>
+                        El termino $\gamma_n \sqrt{\delta}\,\dot\delta$ es responsable de la disipacion durante la colision.
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.6em;">
+                        <strong>A nivel macroscopico:</strong>
+                        <ul style="line-height:1.8; margin-top:0.2em;">
+                            <li>Multiples ciclos &rarr; la histeresis se reduce (consolidacion)</li>
+                            <li>Nuevos contactos &rarr; nuevos caminos de fuerza</li>
+                            <li>La rigidez <strong>aumenta</strong> con la historia de carga</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Analogia con magnetismo:</strong><br>
+                        La histeresis en medios granulares es analoga a los ciclos de magnetizacion:
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li>Formacion/destruccion de dominios &harr; reorganizacion de cadenas de fuerza</li>
+                            <li>La respuesta depende de la historia completa</li>
+                            <li>Concepto de <strong>memoria</strong> del material</li>
+                        </ul>
+                    </div>
+                    <p class="credit" style="margin-top:0.5em;">
+                        Nesterenko, <em>Dynamics of Heterogeneous Materials</em> (2001)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Introduccion al DEM -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Metodo de elementos discretos (DEM)</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.6em;">Introducido por <strong>Cundall (1971)</strong> y formalizado por <strong>Cundall y Strack (1979)</strong>. Simula el movimiento de cada grano resolviendo las ecuaciones de Newton.</p>
+                    <div class="highlight-box" style="font-size:0.55em;">
+                        <strong>Ecuaciones de movimiento:</strong>
+                        <div style="text-align:center; margin:0.3em 0;">
+                            $m_i \ddot{\mathbf{r}}_i = \displaystyle\sum_{j \neq i} \mathbf{F}_{ij} + m_i \mathbf{g}$
+                        </div>
+                        <div style="text-align:center;">
+                            $I_i \dot{\boldsymbol{\omega}}_i = \displaystyle\sum_{j \neq i} \mathbf{M}_{ij}$
+                        </div>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.55em; margin-top:0.3em;">
+                        <strong>Compresion mutua (overlap):</strong><br>
+                        $\xi_{ij} = R_i + R_j - |\mathbf{r}_i - \mathbf{r}_j|$
+                        <p style="margin-top:0.2em;">Contacto si $\xi_{ij} > 0$.</p>
+                    </div>
+                    <p style="font-size:0.55em; margin-top:0.3em;">Fuerza entre granos en contacto:</p>
+                    <div class="eq-box" style="font-size:0.5em; text-align:left;">
+                        $\mathbf{F}_{ij} = \begin{cases} \mathbf{F}_{ij}^n + \mathbf{F}_{ij}^t & \text{si } \xi_{ij} > 0 \\ \mathbf{0} & \text{si } \xi_{ij} \leq 0 \end{cases}$
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Tres instancias en cada paso temporal:</p>
+                    <ol style="font-size:0.5em; color:#444; line-height:1.8;">
+                        <li>Detectar contactos y calcular fuerzas $\mathbf{F}_{ij}$, torques $\mathbf{M}_{ij}$</li>
+                        <li>Integrar las ecuaciones de movimiento</li>
+                        <li>Actualizar posiciones y velocidades</li>
+                    </ol>
+                    <!-- DEM flowchart -->
+                    <div style="font-size:0.45em; text-align:center; margin-top:0.5em;">
+                        <div style="background:var(--color-teal); color:white; padding:8px 16px; border-radius:6px; display:inline-block; font-weight:700;">Condiciones iniciales</div>
+                        <div style="color:#888; margin:0.3em 0;">&#x2193;</div>
+                        <div style="background:#f0f0f0; border:2px solid var(--color-dark); padding:6px 14px; border-radius:6px; display:inline-block;">Detectar contactos</div>
+                        <div style="color:#888; margin:0.3em 0;">&#x2193;</div>
+                        <div style="background:#f0f0f0; border:2px solid var(--color-dark); padding:6px 14px; border-radius:6px; display:inline-block;">Calcular fuerzas $F_{ij}^n + F_{ij}^t$</div>
+                        <div style="color:#888; margin:0.3em 0;">&#x2193;</div>
+                        <div style="background:#f0f0f0; border:2px solid var(--color-dark); padding:6px 14px; border-radius:6px; display:inline-block;">Integrar: $\mathbf{r}(t+\Delta t)$, $\mathbf{v}(t+\Delta t)$</div>
+                        <div style="color:#888; margin:0.3em 0;">&#x2193; repetir</div>
+                        <div style="background:var(--color-mauve); color:white; padding:8px 16px; border-radius:6px; display:inline-block; font-weight:700;">Extraer resultados</div>
+                    </div>
+                    <p class="credit" style="margin-top:0.5em;">Cundall y Strack, <em>Geotechnique</em> 29 (1979)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Tres familias de simulacion discreta -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Tres familias de simulacion discreta</h2>
+            <p style="font-size:0.6em; color:#555;">Existen tres grandes enfoques para simular medios granulares a escala del grano:</p>
+            <div style="display:flex; gap:1em; margin-top:0.5em;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.55em;">
+                        <strong style="font-size:1.15em;">1. Event-driven</strong><br>
+                        <em>(gases diluidos)</em>
+                        <ul style="line-height:1.6; margin-top:0.3em;">
+                            <li>Colisiones binarias <strong>instantaneas</strong></li>
+                            <li>Valido solo para fraccion de volumen baja ($\phi < 0.1$)</li>
+                            <li>Eficiente para gases granulares</li>
+                            <li>Se avanza de evento en evento (sin paso temporal fijo)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.55em;">
+                        <strong style="font-size:1.15em;">2. Soft-particle / MD</strong><br>
+                        <em>(Cundall y Strack, 1979)</em>
+                        <ul style="line-height:1.6; margin-top:0.3em;">
+                            <li>Solapamiento $\xi > 0$ &rarr; fuerza</li>
+                            <li>Valido para flujos <strong>densos</strong> y estaticos</li>
+                            <li>Paso de tiempo pequeno: $\Delta t \ll \tau_c$</li>
+                            <li>Lo que veremos en esta clase</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box orange" style="font-size:0.55em;">
+                        <strong style="font-size:1.15em;">3. Contact Dynamics</strong><br>
+                        <em>(Moreau 1994, Jean 1999)</em>
+                        <ul style="line-height:1.6; margin-top:0.3em;">
+                            <li>Particulas <strong>perfectamente rigidas</strong></li>
+                            <li>Leyes de contacto no-suaves (sin solapamiento)</li>
+                            <li>Ideal para cuasi-estatico</li>
+                            <li>Sin parametro $\tau_c$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.6em; margin-top:0.5em;">
+                La eleccion del metodo depende del <strong>regimen</strong>: diluido &rarr; event-driven, denso &rarr; soft-particle o contact dynamics.
+            </div>
+            <p class="footnote">Andreotti, Forterre, Pouliquen, <em>Granular Media</em> (2013), Box p.29-30.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Modelo de contacto normal -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de contacto: fuerza normal</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.55em; color:#555; font-weight:700; font-style:italic;">Linear dashpot (resorte + amortiguador)</p>
+                    <div class="eq-box" style="font-size:0.55em;">
+                        $F^n = Y\xi + \gamma^n \dfrac{d\xi}{dt}$
+                    </div>
+                    <p style="font-size:0.5em; color:#555; margin-top:0.3em;">Coeficiente de restitucion:</p>
+                    <div style="font-size:0.48em; text-align:center; margin:0.3em 0;">
+                        $\varepsilon = \exp\!\left( -\dfrac{\pi \gamma^n}{2m^{\text{eff}}} \Big/ \sqrt{\dfrac{Y}{m^{\text{eff}}} - \left(\dfrac{\gamma^n}{2m^{\text{eff}}}\right)^2 } \right)$
+                    </div>
+                    <div class="warn-box">
+                        $\varepsilon$ independiente de la velocidad de impacto.<br>
+                        $\varepsilon = \text{const}$ no cumple la teoria de cuerpos viscoelasticos.
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.55em; color:#555; font-weight:700;">Esferas viscoelasticas (Hertz 1882 + Brilliantov-Poschel)</p>
+                    <div class="red-box" style="font-size:0.5em;">
+                        $F^n = \dfrac{2Y\sqrt{R^{\text{eff}}}}{3(1-\nu^2)} \left( \xi^{3/2} + A\sqrt{\xi}\,\dfrac{d\xi}{dt} \right)$
+                    </div>
+                    <p style="font-size:0.48em; color:#555; margin-top:0.3em;">con
+                        $\dfrac{1}{R^{\text{eff}}} = \dfrac{1}{R_i} + \dfrac{1}{R_j}$, &ensp;
+                        $m^{\text{eff}} = \dfrac{m_i m_j}{m_i + m_j}$
+                    </p>
+                    <p style="font-size:0.48em; color:#555; margin-top:0.3em;">Si los materiales son diferentes:</p>
+                    <div style="font-size:0.42em; text-align:center; margin:0.3em 0;">
+                        $F^n = \dfrac{2\sqrt{R^{\text{eff}}}}{3}\left(\dfrac{1-\nu_i^2}{Y_i} + \dfrac{1-\nu_j^2}{Y_j}\right)^{-1}
+                        \left(\xi^{3/2} + \dfrac{A_i+A_j}{2}\sqrt{\xi}\,\dfrac{d\xi}{dt}\right)$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.48em; margin-top:0.3em;">
+                        <strong>Ventaja:</strong> $\varepsilon$ depende de la velocidad de impacto como predicen los experimentos: $\varepsilon(v) \approx 1 - c_1 v^{1/5} + \ldots$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Duracion de colisiones -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Duracion de colisiones y fuerza negativa</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u9/img-004.jpg" style="max-height:450px;">
+                    <p class="credit">Poschel y Schwager, <em>Computational Granular Dynamics</em> (2005)</p>
+                </div>
+                <div>
+                    <p style="font-size:0.55em; color:#555;">
+                        Secuencia de una colision binaria: aproximacion, compresion maxima,
+                        separacion.
+                    </p>
+                    <div class="highlight-box red" style="font-size:0.55em;">
+                        <strong>Problema:</strong> Para el modelo viscoelastico, la fuerza $F$ puede ser <strong>negativa</strong> durante la fase de separacion (atraccion no fisica).
+                    </div>
+                    <p style="font-size:0.55em; margin-top:0.3em;">Solucion: forzar $F \geq 0$:</p>
+                    <div class="eq-box" style="font-size:0.5em; margin-top:0.3em;">
+                        $F^n = \max\!\left\{0,\; \dfrac{2Y\sqrt{R^{\text{eff}}}}{3(1-\nu^2)} \left(\xi^{3/2} + A\sqrt{\xi}\,\dfrac{d\xi}{dt}\right)\right\}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.55em; margin-top:0.5em;">
+                        <strong>Duracion del contacto:</strong><br>
+                        Con el termino viscoelastico, los granos se separan <em>antes</em> de que $\xi = 0$ (fila superior de la figura) o <em>en</em> $\xi = 0$ si la atraccion se anula (fila inferior).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Modelo de contacto tangencial -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de contacto: fuerza tangencial</h2>
+            <div class="highlight-box" style="font-size:0.55em;">
+                <p><strong style="color:#c0392b;">Velocidad relativa tangencial al contacto:</strong></p>
+                <p>$v_{\text{rel}}^t = (\mathbf{v}_j - \mathbf{v}_i) \cdot \mathbf{e}_{ij}^t + R_i\omega_i + R_j\omega_j$</p>
+            </div>
+            <div class="two-col" style="margin-top:0.4em;">
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Modelo de Haff y Werner (1986)</p>
+                    <div class="eq-box" style="font-size:0.5em;">
+                        $F^t = -\text{sign}(v_{\text{rel}}^t) \cdot \min(\gamma^t |v_{\text{rel}}^t|,\; \mu|F^n|)$
+                    </div>
+                    <div class="warn-box" style="margin-top:0.3em;">
+                        No incorpora friccion estatica.<br>
+                        No se puede medir $\gamma^t$ directamente; se calibra <em>a posteriori</em>.
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Modelo de Cundall y Strack (1979)</p>
+                    <div class="red-box" style="font-size:0.5em;">
+                        $F^t = -\text{sign}(\zeta) \cdot \min(\kappa^t |\zeta|,\; \mu|F^n|)$
+                    </div>
+                    <p style="font-size:0.48em; color:#555; margin-top:0.3em;">donde el <em>desplazamiento tangencial acumulado</em> es:
+                        $\zeta(t) = \displaystyle\int_{t_c}^{t} v_{\text{rel}}^t \, dt'$
+                    </p>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.55em; margin-top:0.3em;">
+                <strong>Criterio de Coulomb:</strong> En ambos modelos, la fuerza tangencial esta limitada por la friccion de Coulomb:
+                <div style="text-align:center; margin:0.3em 0; font-size:1.1em;">
+                    $|\mathbf{F}^t| \leq \mu \,|\mathbf{F}^n|$
+                </div>
+                Si la fuerza tangencial supera este umbral, el grano <strong>desliza</strong> y la fuerza se satura a $\mu |F^n|$.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Criterio de Coulomb (detalle) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Criterio de Coulomb en el DEM</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.6em;">El modelo de Cundall-Strack introduce un <strong>resorte tangencial</strong> que almacena la historia del desplazamiento relativo durante el contacto.</p>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Regimen elastico (adherencia):</strong><br>
+                        $|F^t| = \kappa^t |\zeta| < \mu |F^n|$<br>
+                        El resorte tangencial se estira sin deslizamiento.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em; margin-top:0.3em;">
+                        <strong>Regimen de deslizamiento:</strong><br>
+                        $|F^t| = \mu |F^n|$<br>
+                        La fuerza tangencial se satura; el grano desliza.
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.6em; margin-top:0.3em;">
+                        <strong>Implementacion:</strong> en cada paso de tiempo:<br>
+                        1. Actualizar $\zeta \leftarrow \zeta + v_{\text{rel}}^t \cdot \Delta t$<br>
+                        2. Calcular $F^t_{\text{trial}} = \kappa^t |\zeta|$<br>
+                        3. Si $F^t_{\text{trial}} > \mu |F^n|$ &rarr; recortar a $\mu |F^n|$
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: Coulomb cone diagram -->
+                    <svg viewBox="0 0 300 280" style="width:90%;">
+                        <!-- Axes -->
+                        <line x1="30" y1="250" x2="280" y2="250" stroke="#333" stroke-width="1.5"/>
+                        <line x1="150" y1="260" x2="150" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="155" y="15" font-size="12" fill="#333" font-weight="bold">F&#x207F;</text>
+                        <text x="270" y="245" font-size="12" fill="#333" font-weight="bold">F&#x1D57;</text>
+                        <!-- Coulomb lines -->
+                        <line x1="150" y1="250" x2="50" y2="50" stroke="#c0392b" stroke-width="2.5"/>
+                        <line x1="150" y1="250" x2="250" y2="50" stroke="#c0392b" stroke-width="2.5"/>
+                        <!-- Labels -->
+                        <text x="60" y="75" font-size="12" fill="#c0392b" font-weight="bold">|F&#x1D57;| = &#x03BC;F&#x207F;</text>
+                        <text x="210" y="75" font-size="12" fill="#c0392b" font-weight="bold">|F&#x1D57;| = &#x03BC;F&#x207F;</text>
+                        <!-- Shaded admissible region -->
+                        <path d="M150,250 L50,50 L250,50 Z" fill="rgba(107,154,154,0.1)"/>
+                        <!-- Point inside (elastic) -->
+                        <circle cx="170" cy="150" r="5" fill="var(--color-teal)"/>
+                        <text x="180" y="148" font-size="11" fill="var(--color-teal)" font-weight="bold">elastico</text>
+                        <!-- Point on boundary (sliding) -->
+                        <circle cx="210" cy="130" r="5" fill="var(--color-mauve)"/>
+                        <text x="218" y="128" font-size="11" fill="var(--color-mauve)" font-weight="bold">desliza</text>
+                        <!-- Arrow to boundary -->
+                        <line x1="195" y1="145" x2="207" y2="133" stroke="var(--color-mauve)" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arr7)"/>
+                        <defs><marker id="arr7" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="var(--color-mauve)"/></marker></defs>
+                        <!-- Angle label -->
+                        <path d="M150,230 A20,20 0 0,0 138,218" stroke="#888" stroke-width="1" fill="none"/>
+                        <text x="125" y="228" font-size="11" fill="#888">&#x03BC;</text>
+                    </svg>
+                    <p style="font-size:0.5em; color:#888;">Cono de Coulomb: la region admisible para $(F^n, F^t)$.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Integracion numerica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Integracion numerica: Verlet / Velocity-Stormer</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Algoritmo Velocity-Verlet (Velocity-Stormer):</p>
+                    <div class="eq-box" style="font-size:0.5em; text-align:left; line-height:2.0;">
+                        1. $\mathbf{r}(t + \Delta t) = \mathbf{r}(t) + \mathbf{v}(t)\,\Delta t + \frac{1}{2}\mathbf{a}(t)\,\Delta t^2$<br>
+                        2. $\mathbf{v}(t + \tfrac{1}{2}\Delta t) = \mathbf{v}(t) + \frac{1}{2}\mathbf{a}(t)\,\Delta t$<br>
+                        3. Calcular $\mathbf{a}(t + \Delta t)$ con las nuevas posiciones<br>
+                        4. $\mathbf{v}(t + \Delta t) = \mathbf{v}(t + \tfrac{1}{2}\Delta t) + \frac{1}{2}\mathbf{a}(t + \Delta t)\,\Delta t$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.5em; margin-top:0.3em;">
+                        <strong>Propiedades:</strong>
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li>Simplectico (conserva energia a largo plazo)</li>
+                            <li>Segundo orden en $\Delta t$</li>
+                            <li>Bajo costo computacional</li>
+                            <li>Muy utilizado en DEM y dinamica molecular</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Eleccion del paso temporal $\Delta t$:</p>
+                    <div class="highlight-box red" style="font-size:0.5em;">
+                        $\Delta t$ debe ser mucho menor que la <strong>duracion de colision</strong> $\tau_c$:
+                        <div style="text-align:center; margin:0.3em 0; font-size:1.1em;">
+                            $\Delta t \ll \tau_c = 2.94\left(\frac{m^{*2}}{k^2 v}\right)^{1/5}$
+                        </div>
+                        En practica: $\Delta t \approx \tau_c / 50$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.5em; margin-top:0.3em;">
+                        $\uparrow \Delta t \rightarrow \downarrow$ pasos para completar una simulacion<br>
+                        $\uparrow \Delta t \rightarrow \downarrow$ precision de la trayectoria
+                    </div>
+                    <div style="text-align:center; margin-top:0.3em;">
+                        <p style="font-size:0.5em; color:#555; font-weight:700;">Exponente de Lyapunov &gt; 0</p>
+                        <img src="../Course_Argentine/media/extracted_u9/img-005.jpg" style="max-height:220px;">
+                        <p class="credit">Allen y Tildesley, <em>Computer Simulation of Liquids</em> (2017)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Resumen y proxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        <strong>Histeresis:</strong> $\Delta E = \oint F\,d\delta > 0$
+                    </div>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        <strong>Normal (viscoelastico):</strong><br>$F^n = k\xi^{3/2} + \gamma_n \sqrt{\xi}\,\dot\xi$
+                    </div>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        <strong>Tangencial (Cundall-Strack):</strong><br>$F^t = \min(\kappa^t|\zeta|,\;\mu|F^n|)$
+                    </div>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        <strong>Coulomb:</strong> $|F^t| \leq \mu\, F^n$
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Ideas clave:</strong>
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li>La histeresis refleja disipacion e historia</li>
+                            <li>DEM: cada grano es un cuerpo rigido con overlap</li>
+                            <li>Fuerza normal: Hertz (elastico) + amortiguamiento (viscoso)</li>
+                            <li>Fuerza tangencial: resorte + criterio de Coulomb</li>
+                            <li>Velocity-Verlet: simple, rapido, simplectico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr style="border:none; border-top:2px solid var(--color-teal); margin-top:0.8em;">
+            <h3 style="font-size:0.8em; margin-top:0.5em;">Proxima clase</h3>
+            <p style="font-size:0.65em;">Clase 8: <strong>Friccion granular: Coulomb-Amontons</strong></p>
+            <ul style="font-size:0.6em; line-height:1.6;">
+                <li>Las tres leyes de la friccion</li>
+                <li>Friccion estatica vs dinamica</li>
+                <li>Conceptos de healing</li>
+            </ul>
+            <p style="font-size:0.55em; color:#888; margin-top:0.3em;">
+                Bibliografia: Duran, <em>Sands, Powders, and Grains</em> -- Cap. 3;
+                Poschel y Schwager, <em>Computational Granular Dynamics</em> (2005)
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2 - Descripción Estructural I</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Inter', sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 900;
+            color: #222;
+        }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] {
+            padding-left: 15%;
+        }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box {
+            background: rgba(107,154,154,0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 1px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 2 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                DESCRIPCIÓN ESTRUCTURAL I:<br>COMPACIDAD Y COORDINACIÓN
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan de la clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Ángulo de reposo</li>
+                <li>Densidad aparente y compacidad</li>
+                <li>Empaquetamientos regulares y aleatorios</li>
+                <li>Número de coordinación</li>
+                <li>Función de correlación de pares</li>
+                <li>Teselación de Voronoi</li>
+                <li>Introducción al Exp. 3: estructura local (numérico)</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Ángulo de reposo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ángulo de reposo</h2>
+            <div class="two-col">
+                <div>
+                    <img src="../Course_Argentine/media/extracted_u2/img-000.jpg" alt="Pila de granos" style="max-width:100%; border-radius:4px;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-001.jpg" alt="Pila de arena con ángulo α" style="max-width:100%; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div>
+                    <p style="font-size:0.8em;">El <strong>ángulo de reposo</strong> $\alpha$ es el ángulo máximo que forma la superficie libre de un montón de granos con la horizontal antes de que se produzca una avalancha.</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <p>Materiales secos: $17° \leq \alpha \leq 42°$</p>
+                        <p>Materiales cohesivos: $45° \leq \alpha \leq 90°$</p>
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Depende de: forma de los granos, rugosidad superficial, humedad, distribución de tamaños.</p>
+                    <img src="../Course_Argentine/media/extracted_u2/img-002.png" alt="Métodos de medición del ángulo de reposo" style="max-width:90%; border-radius:4px; margin-top:0.3em;">
+                    <p class="credit">Métodos de medición del ángulo de reposo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Densidad aparente y compacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Densidad aparente y fracción de empaquetamiento</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.8em;">Compacidad, fracción de volumen ocupado,
+                    packing fraction, volume fraction: $\phi$, $c$, $\eta$</p>
+                    <div class="eq-box">
+                        $\phi = \dfrac{\text{volumen real de las partículas}}{\text{volumen aparente de la muestra}}$
+                    </div>
+                    <p style="font-size:0.8em;">No confundir con la <strong>densidad numérica</strong>:</p>
+                    <div class="eq-box">
+                        $\rho = \dfrac{N}{V}$
+                    </div>
+                    <p style="font-size:0.8em;">Si todas las partículas son iguales ($v_g$: volumen de una partícula):</p>
+                    <div class="eq-box">
+                        $\phi = \dfrac{N v_g}{V} = \rho \, v_g$
+                    </div>
+                    <p style="font-size:0.8em; margin-top:0.5em;"><strong>Porosidad:</strong> $\epsilon = 1 - \phi$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-004.png" alt="Ilustraciones de empaquetamiento" style="max-width:80%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Empaquetamientos regulares 2D -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos regulares en 2D</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.85em;">Empaquetamiento cuadrado</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{cuadrado}} = \dfrac{\pi}{4} \approx 0.785$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Celda unitaria: cuadrado de lado $2R$, contiene 1 disco.</p>
+                    <h3 style="font-size:0.85em; margin-top:0.8em;">Empaquetamiento hexagonal</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{hex}} = \dfrac{\pi}{2\sqrt{3}} \approx 0.9069$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Es el empaquetamiento más denso posible en 2D (Thue, 1892).</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-006.jpg" alt="Esferas empaquetadas" style="max-width:90%; border-radius:4px;">
+                    <p style="font-size:0.7em; margin-top:0.5em;">Límite 2D: $\displaystyle 0 &lt; c &lt; \frac{\pi\sqrt{3}}{6} \approx 0.91$ (hexagonal)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Empaquetamientos regulares 3D -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos regulares en 3D</h2>
+            <div class="two-col">
+                <div>
+                    <table style="font-size:0.8em;">
+                        <thead>
+                            <tr><th>Estructura</th><th>$\phi$</th><th>$z$</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Cúbica simple (SC)</td><td>$\dfrac{\pi}{6} \approx 0.524$</td><td>6</td></tr>
+                            <tr><td>BCC</td><td>$\dfrac{\pi\sqrt{3}}{8} \approx 0.680$</td><td>8</td></tr>
+                            <tr><td>FCC / HCP</td><td>$\dfrac{\pi}{3\sqrt{2}} \approx 0.740$</td><td>12</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="highlight-box" style="margin-top:0.8em; font-size:0.8em;">
+                        <p><strong>Conjetura de Kepler (1611):</strong> El empaquetamiento más denso de esferas idénticas en 3D es $\phi = \frac{\pi}{3\sqrt{2}} \approx 0.7405$, alcanzado por FCC y HCP.</p>
+                        <p style="margin-top:0.3em;">Demostrado por T. Hales (1998, publicado 2005).</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-006.jpg" alt="Empaquetamiento de esferas" style="max-width:85%; border-radius:4px;">
+                    <p style="font-size:0.7em; margin-top:0.5em;">Límite 3D: $\displaystyle 0 &lt; \phi &lt; \frac{\pi}{3\sqrt{2}} \approx 0.74$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Random packing -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos aleatorios: RLP y RCP</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.8em;">Random Close Packing (RCP)</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{RCP}} \approx 0.64$ (3D) &nbsp;&mdash;&nbsp; $\phi_{\text{RCP}} \approx 0.82$ (2D)
+                    </div>
+                    <ul style="font-size:0.7em; line-height:1.8;">
+                        <li>Berryman, 1983, <em>Phys. Rev. A</em></li>
+                        <li>Torquato et al., 2000, <em>Phys. Rev. Lett.</em> &rarr; <span style="color:var(--color-teal);">Maximally jammed packing</span></li>
+                    </ul>
+
+                    <h3 style="font-size:0.8em; margin-top:0.8em;">Random Loose Packing (RLP)</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{RLP}} \approx 0.55$ (3D) &nbsp;&mdash;&nbsp; $\phi_{\text{RLP}} \approx 0.77$ (2D)
+                    </div>
+                    <ul style="font-size:0.7em; line-height:1.8;">
+                        <li>Onoda &amp; Liniger, 1990, <em>Phys. Rev. Lett.</em></li>
+                        <li>Silbert, 2010, <em>Soft Matter</em></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <p><strong>Empaquetamientos muy sueltos:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Bi et al., 2011, <em>Nature</em> &rarr; <span style="color:var(--color-teal);">Shear jammed packing</span></li>
+                            <li>Pica Ciamarra &amp; Coniglio, 2008, <em>PRL</em> &rarr; <span style="color:var(--color-teal);">Zero entropy packing</span></li>
+                        </ul>
+                    </div>
+                    <div style="text-align:center; margin-top:0.8em;">
+                        <img src="../Course_Argentine/media/extracted_u2/img-013.png" alt="φ vs Γ" style="max-width:90%; border-radius:4px;">
+                    </div>
+                    <p style="font-size:0.65em; margin-top:0.3em;">Polvos cohesivos (3D): $0.15 &lt; \phi &lt; 0.48$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Empaquetamientos bidispersos y polidispersos -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos bidispersos y polidispersos</h2>
+            <div class="two-col">
+                <div style="font-size:0.75em;">
+                    <p>Cuando partículas pequeñas llenan los intersticios de las grandes, la compacidad aumenta significativamente.</p>
+                    <p style="margin-top:0.5em;"><strong>Mezcla bidispersa:</strong></p>
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \[\phi_{\text{bi}} = \frac{\phi_1}{1 - x_2\!\left(1 - \frac{\phi_1}{\phi_2}\right)}\]
+                    </div>
+                    <p style="margin-top:0.3em;">donde \(x_2\) es la fracción volumétrica de la especie pequeña, y \(\phi_1\), \(\phi_2\) son las compacidades de cada especie por separado.</p>
+                    <p style="margin-top:0.5em;"><strong>Empaquetamiento de Apolonio:</strong> rellenando sucesivamente los intersticios con esferas cada vez más pequeñas, \(\phi \to 1\) para polidispersidad infinita.</p>
+                </div>
+                <div style="font-size:0.75em;">
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Los medios granulares naturales son polidispersos</strong> — comprender \(\phi\) requiere ir más allá del caso monodisperso.</p>
+                    </div>
+                    <p style="margin-top:0.8em;">Ejemplos naturales:</p>
+                    <ul style="line-height:1.8;">
+                        <li><strong>Sedimentos fluviales:</strong> mezcla de arena, limo y arcilla</li>
+                        <li><strong>Suelos:</strong> distribución granulométrica continua</li>
+                        <li><strong>Regolito lunar:</strong> amplia distribución de tamaños</li>
+                    </ul>
+                    <p style="margin-top:0.5em;">La distribución de tamaños se caracteriza por la <strong>curva granulométrica</strong> y el coeficiente de uniformidad \(C_u = d_{60}/d_{10}\).</p>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre &amp; Pouliquen, <em>Granular Media</em> (2013), §3.1.3, p.64–65.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Medición de la compacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad &mdash; medición</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8em; font-size:0.7em;">
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-015.png" alt="Geometría básica" style="max-width:90%; border-radius:4px;">
+                    <p>Geometría básica</p>
+                </div>
+                <div style="text-align:center;">
+                    <p>Fotografía<br>$\phi = \dfrac{N_{\text{black pixels}}}{N_{\text{pixels}}}$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-019.png" alt="Foto procesada" style="max-width:90%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-017.png" alt="Geometría probabilística" style="max-width:90%; border-radius:4px;">
+                    <p>Geometría probabilística<br>$\phi = \dfrac{N_{\text{hits}}}{N_{\text{shots}}}$</p>
+                </div>
+                <div style="text-align:center;">
+                    <p>Calibrar con<br>capacidad eléctrica</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-021.png" alt="Capacidad eléctrica" style="max-width:90%; border-radius:4px;">
+                </div>
+            </div>
+            <div style="text-align:center; font-size:0.7em; margin-top:0.5em;">
+                <p>Medir la altura: $\phi = \dfrac{Nv_g}{Ah}$</p>
+                <img src="../Course_Argentine/media/extracted_u2/img-023.png" alt="Medición de altura" style="max-width:18%; border-radius:4px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9b: Métodos avanzados de medición de φ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Métodos de medición de la compacidad</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <h3 style="font-size:0.95em;">Métodos directos</h3>
+                    <ul style="line-height:2.0;">
+                        <li><strong>Pesaje:</strong> \(\phi = M / (\rho_g V)\) — simple pero requiere conocer \(V\) con precisión</li>
+                        <li><strong>Análisis de imagen 2D:</strong> binarización y conteo de píxeles (limitado a la superficie)</li>
+                        <li><strong>Tomografía de capacitancia eléctrica:</strong> mide la permitividad local, no invasiva</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.72em;">
+                    <h3 style="font-size:0.95em;">Métodos no invasivos 3D</h3>
+                    <ul style="line-height:2.0;">
+                        <li><strong>Absorción de rayos gamma:</strong> ley de Beer-Lambert \(I = I_0 \, e^{-\mu \rho \ell}\)</li>
+                        <li><strong>Tomografía de rayos X (micro-CT):</strong> resolución ~\(\mu\)m, reconstrucción 3D completa</li>
+                        <li><strong>Resonancia magnética nuclear (RMN/MRI):</strong> ideal para granos en fluido</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.8em; margin-top:0.8em;">
+                <p><strong>Rayos X y gamma son los métodos estándar en geofísica de campo y laboratorio</strong> — permiten medir \(\phi\) de forma no destructiva en muestras opacas y a diferentes profundidades.</p>
+            </div>
+            <p class="footnote">Andreotti, Forterre &amp; Pouliquen, <em>Granular Media</em> (2013), §3.1, Box p.60–61.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Número de coordinación -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de coordinación $z$</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.8em;">El <strong>número de coordinación</strong> $z$ cuenta los vecinos más cercanos (primera capa) de una partícula.</p>
+                    <p style="font-size:0.8em; margin-top:0.5em;">El <strong>número de contacto</strong> cuenta solamente los vecinos que están en contacto mecánico real.</p>
+                    <p style="font-size:0.8em; margin-top:0.5em;">Si los granos son convexos:</p>
+                    <div class="eq-box">
+                        $\langle z \rangle = 2\,\dfrac{\text{número total de contactos}}{\text{número de partículas}}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.8em;">
+                        <p><strong>Valores máximos</strong> (monodisperso):</p>
+                        <p>Esferas (3D): $z_{\max} = 12$ &nbsp; | &nbsp; Discos (2D): $z_{\max} = 6$</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-025.png" alt="Número de coordinación" style="max-width:90%; border-radius:4px;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-029.png" alt="Número de contacto" style="max-width:90%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Número de coordinación — isostacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto &mdash; isostacidad</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.8em;">Deposición secuencial</h3>
+                    <p style="font-size:0.75em;">(cualquier forma convexa, partículas rígidas)</p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>2D: $\langle z \rangle = 2\frac{2N}{N} = 4$ (cada grano suma 2 contactos)</li>
+                        <li>3D: $\langle z \rangle = 2\frac{3N}{N} = 6$ (cada grano suma 3 contactos)</li>
+                    </ul>
+
+                    <h3 style="font-size:0.8em; margin-top:0.8em;">Isostático</h3>
+                    <p style="font-size:0.75em;">(contactos puntuales: ligaduras = fuerzas)</p>
+                    <ul style="font-size:0.7em; line-height:1.8;">
+                        <li><strong>2D:</strong> $3N$ ligaduras, $2N_c$ fuerzas &rarr; $N_c = \frac{3N}{2}$ &rarr; $\langle z \rangle = 3$</li>
+                        <li><strong>3D:</strong> $6N$ ligaduras, $3N_c$ fuerzas &rarr; $N_c = 2N$ &rarr; $\langle z \rangle = 4$</li>
+                    </ul>
+
+                    <p style="font-size:0.75em; margin-top:0.5em;"><strong>Valores experimentales</strong> (confocal):<br>
+                    $\phi = 0.4 \to \langle z \rangle = 4$; &nbsp; $\phi = 0.65 \to \langle z \rangle = 8$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-033.png" alt="Esferas empaquetadas" style="max-width:60%; border-radius:4px;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-035.png" alt="Deposición secuencial" style="max-width:60%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Número de contacto — medición -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto &mdash; medición</h2>
+            <ul style="font-size:0.8em; line-height:2.0;">
+                <li>El número de contacto es difícil de medir: es difícil distinguir contactos reales de "casi-contactos".</li>
+                <li>En simulaciones se requiere guardar posiciones con altísima precisión. Es mejor distinguir por las fuerzas.</li>
+                <li>Métodos experimentales: pintura, oxidación, trazadores fluorescentes, partículas fotoelásticas, puentes líquidos, conductividad.</li>
+            </ul>
+            <div style="display:flex; gap:1em; justify-content:center; margin-top:0.5em;">
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-037.jpg" alt="Behringer fotoelásticas" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Behringer (fotoelásticas)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-038.jpg" alt="Kudroli" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Kudroli</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: Función de correlación de pares -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Función de correlación de pares $g(r)$</h2>
+            <p style="font-size:0.8em;">$4\pi r^2 \rho\, g(r)\, dr =$ probabilidad de encontrar el centro de una partícula en un cascarón esférico de radio $r$ y espesor $dr$, centrado en otra partícula.</p>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-039.jpg" alt="Cascarón esférico" style="max-width:65%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-040.jpg" alt="g(r) para distintos φ" style="max-width:100%; border-radius:4px;">
+                </div>
+            </div>
+            <div style="font-size:0.75em; margin-top:0.5em;">
+                <p>$\displaystyle\int_0^\infty 4\pi r^2 \rho\, g(r)\,dr = N - 1$ &nbsp;&mdash;&nbsp; $h(r) = g(r) - 1$ &nbsp;&mdash;&nbsp; $S(k) = \mathcal{F}\{h(r)\}$ (factor de estructura)</p>
+            </div>
+            <p class="footnote">M. Palombo et al., 2013, <em>Scientific Reports</em>.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: g(r) — cálculo e interpretación -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>$g(r)$ &mdash; cálculo e interpretación</h2>
+            <div class="two-col">
+                <div style="font-size:0.75em;">
+                    <div class="highlight-box">
+                        <p><strong>Algoritmo:</strong> barrer todos los pares de partículas, poner la distancia entre sus centros en un histograma con bin $dr$, normalizar con $4\pi r^2 \rho\,dr$.</p>
+                    </div>
+                    <pre style="background:#2d2d2d; color:#f8f8f2; padding:0.5em; border-radius:4px; font-size:0.75em; margin-top:0.5em;"><code>for i in range(N):
+  for j in range(i+1, N):
+    rij = dist(pos[i], pos[j])
+    bin = int(rij / dr)
+    if bin <= maxbin:
+      hist[bin] += 1
+
+# Normalizar
+for k in range(1, maxbin+1):
+  r = (k - 0.5) * dr
+  shell = 4*pi*r*r*dr
+  g[k] = hist[k] / (shell*rho*N)</code></pre>
+                </div>
+                <div style="font-size:0.75em;">
+                    <div class="highlight-box red">
+                        <p><strong>Interpretación de $g(r)$:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>$g(r) = 0$ para $r &lt; d$ (exclusión de volumen)</li>
+                            <li>Pico en $r = d$ (primer vecino)</li>
+                            <li>Cristalino: picos bien definidos (orden de largo alcance)</li>
+                            <li>Amorfo/líquido: picos amortiguados, $g(r) \to 1$ rápidamente</li>
+                            <li>Gas ideal: $g(r) = 1$ para todo $r$</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">El <strong>factor de estructura</strong> $S(k) = \mathcal{F}\{h(r)\}$ se mide en experimentos de scattering (rayos X, neutrones).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: Teselación de Voronoi -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teselación de Voronoi</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u2/img-048.png" alt="Red de Voronoi y Delaunay" style="max-width:100%; border-radius:4px;">
+                </div>
+                <div style="font-size:0.8em;">
+                    <ul style="line-height:1.8;">
+                        <li><strong>Celda de Voronoi:</strong> región del espacio más cercana a un punto dado que a cualquier otro punto del conjunto (polígonos blancos).</li>
+                        <li>La red recíproca se llama <strong>red de Delaunay</strong> (red negra).</li>
+                        <li>Para esferas y discos, cada grano está contenido en su celda.</li>
+                        <li>Los vecinos de Voronoi pueden o no estar en contacto.</li>
+                        <li>La distribución de volúmenes de Voronoi parece seguir una <strong>ley universal</strong> (empaquetamientos densos y sistemas de baja densidad).</li>
+                    </ul>
+                    <p class="credit" style="margin-top:0.5em;">T. Aste et al. (varios artículos)</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.7em; margin-top:0.5em;">
+                <p><strong>Aplicaciones:</strong> asignar un volumen local a cada grano para calcular $\phi_{\text{local}}$; identificar defectos cristalinos; segmentar imágenes experimentales. Implementación: Voro++ (http://math.lbl.gov/voro++/)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14b: Dinámica de compactación -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Dinámica de compactación</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <p><strong>Experimento de Chicago</strong> (Knight et al., 1995): al someter una columna granular a vibraciones verticales repetidas, la compacidad aumenta logarítmicamente:</p>
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \[\phi(t) = \phi_\infty - \frac{\Delta\phi}{1 + B\ln(1 + t/\tau)}\]
+                    </div>
+                    <p style="margin-top:0.3em;">donde \(\phi_\infty\) es la compacidad asintótica, \(\Delta\phi\) la amplitud de relajación, \(\tau\) un tiempo característico y \(B\) una constante adimensional.</p>
+                    <p style="margin-top:0.5em;"><strong>Observaciones clave:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>La relajación es <strong>irreversible</strong>: cambiar la amplitud de vibración no devuelve al estado inicial</li>
+                        <li><strong>Efectos de memoria:</strong> la historia de excitación afecta el estado final</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.72em;">
+                    <p><strong>Compactación por presión</strong> — ley de Heckel:</p>
+                    <div class="eq-box">
+                        \[\ln\!\left(\frac{1}{1 - \phi}\right) = aP + b\]
+                    </div>
+                    <p style="margin-top:0.5em;">Ampliamente usada en farmacéutica y metalurgia de polvos para caracterizar la compresibilidad.</p>
+                    <div class="highlight-box" style="margin-top:0.8em;">
+                        <p><strong>La compactación logarítmica es universal en medios granulares</strong> — análoga a la densificación de sedimentos geológicos bajo su propio peso a lo largo del tiempo geológico.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre &amp; Pouliquen, <em>Granular Media</em> (2013), §3.1.4, p.65–70. Knight et al., <em>Phys. Rev. E</em> 51 (1995), 3957.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: Exp. 3 - Estructura local (numérico) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 3: Estructura local de medios granulares</h2>
+            <p style="font-size:0.85em;"><em>Experiencia numérica: de packing aleatorio a jamming</em></p>
+            <div class="two-col">
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <p><strong>Objetivos:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Generar empaquetamientos aleatorios de discos en 2D (RSA y compresión)</li>
+                            <li>Calcular la teselación de Voronoi a partir de los centros</li>
+                            <li>Analizar $g(r)$ y el número de coordinación $z$</li>
+                            <li>Comprender la transición de jamming</li>
+                            <li>Comparar empaquetamientos ordenados vs. desordenados con $\psi_6$</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.75em; margin-top:0.5em;">
+                        <p><strong>Herramientas:</strong> Python (NumPy, SciPy, Matplotlib); Notebook 05_Packing_Voronoi.ipynb</p>
+                    </div>
+                </div>
+                <div style="font-size:0.75em;">
+                    <p><strong>Valores clave en 2D:</strong></p>
+                    <table>
+                        <thead><tr><th>Configuración</th><th>$\phi$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Random Loose Packing (RLP)</td><td>$\approx 0.82$</td></tr>
+                            <tr><td>Random Close Packing (RCP)</td><td>$\approx 0.84$</td></tr>
+                            <tr><td>Hexagonal (HCP)</td><td>$\frac{\pi}{2\sqrt{3}} \approx 0.9069$</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top:0.5em;"><strong>Jamming:</strong> transición de un estado "suelto" (sin rigidez) a un estado "jammed" (rígido), a un $\phi_J$ crítico donde $z$ alcanza el valor isostático.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 16: Bibliografía -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.9); padding:1.2em 2em; margin:0 -2em;">
+            <h2>Bibliografía</h2>
+            <ul style="font-size:0.6em; line-height:2.2;">
+                <li>J. Duran, <em>Sands, Powders, and Grains</em> &mdash; Cap. 2</li>
+                <li>B. Andreotti, Y. Forterre, O. Pouliquen, <em>Granular Media: Between Fluid and Solid</em> &mdash; Cap. 2</li>
+                <li>J.G. Berryman. "Random close packing of hard spheres and disks". <em>Phys. Rev. A</em> 27 (1983), 1053&ndash;1061.</li>
+                <li>S. Torquato, T.M. Truskett, P.G. Debenedetti. "Is Random Close Packing of Spheres Well Defined?" <em>Phys. Rev. Lett.</em> 84 (2000), 2064&ndash;2067.</li>
+                <li>G.Y. Onoda, E.G. Liniger. "Random loose packings of uniform spheres and the dilatancy onset". <em>Phys. Rev. Lett.</em> 64 (1990), 2727&ndash;2730.</li>
+                <li>D. Bi, J. Zhang, B. Chakraborty, R.P. Behringer. "Jamming by shear". <em>Nature</em> 480 (2011), 355.</li>
+                <li>M. Palombo et al. "Structural disorder and anomalous diffusion in random packing of spheres". <em>Scientific Reports</em> 3 (2013), 2631.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE 17: Próxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Próxima clase</h2>
+            <p>Clase 3: <strong>Descripción estructural II</strong></p>
+            <ul style="line-height:2;">
+                <li>Descarga de silos y efecto Janssen</li>
+                <li>Ley de Beverloo</li>
+                <li>Jamming y transición de atasco</li>
+                <li>Efecto nueces de Brasil</li>
+                <li>Avalanchas y flujo granular</li>
+            </ul>
+            <br>
+            <div class="highlight-box" style="font-size:0.8em;">
+                <p><strong>Preparar:</strong> J. Duran, <em>Sands, Powders, and Grains</em> &mdash; Cap. 2 (continuación); Andreotti et al., <em>Granular Media</em> &mdash; Cap. 2</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

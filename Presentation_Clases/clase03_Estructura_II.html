@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3 - Descripción Estructural II</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .red-box { background: rgba(139,94,107,0.08); border: 2px solid var(--color-mauve); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 3 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                DESCRIPCION ESTRUCTURAL II:<br>DESCARGA, JAMMING Y SEGREGACION
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan de la clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Descarga de silos y efecto Janssen</li>
+                <li>Ley de Beverloo</li>
+                <li>Jamming y transicion de atasco</li>
+                <li>Efecto nueces de Brasil</li>
+                <li>Avalanchas y flujo de deslizamientos</li>
+                <li>Experimentos 1 y 2</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Efecto Janssen - Fenomenologia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Efecto Janssen: presion en silos</h2>
+            <div class="two-col">
+                <div>
+                    <img src="../Course_Argentine/media/extracted_u3/img-000.png" alt="Efecto Janssen: silo y saturacion" style="max-height:420px; border-radius:4px;">
+                </div>
+                <div style="font-size:0.7em;">
+                    <p>En un fluido, la presion crece linealmente con la profundidad (ley de Pascal):</p>
+                    <div class="eq-box">
+                        \(P_{\text{fluido}}(z) = \rho g z\)
+                    </div>
+                    <p style="margin-top:0.5em;">En un silo granular, la fuerza en la base <strong>satura</strong>:</p>
+                    <ul style="line-height:1.8;">
+                        <li>\(F < Mg\) : la balanza mide menos que el peso total.</li>
+                        <li>La <strong>friccion con las paredes</strong> redirige parte del peso hacia los costados del silo.</li>
+                        <li>La forma de llenado cambia la saturacion.</li>
+                        <li>La columna tiene que estar en friccion <em>movilizada</em> para que se observe la saturacion.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footnote">Janssen, H. A. (1895). Versuche uber Getreidedruck in Silozellen. <em>Z. Ver. Dtsch. Ing.</em> 39, 1045.</div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Modelo de Janssen - Derivacion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de Janssen</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <p>Balance de fuerzas sobre una rebanada de espesor \(dz\) en un silo cilindrico de radio \(R\):</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\pi R^2 \sigma_{zz}(z+dz) - \pi R^2 \sigma_{zz}(z) - \rho g\pi R^2 dz + \sigma_{rz}(R)\,2\pi R\,dz = 0\)
+                    </div>
+                    <p style="margin-top:0.4em;"><strong>Hipotesis:</strong></p>
+                    <ul style="line-height:1.6;">
+                        <li>Friccion completamente movilizada: \(\sigma_{rz}(R) = \mu_s \sigma_n(R)\)</li>
+                        <li>Relacion constitutiva: \(\sigma_n = K\,\sigma_{zz}\) (redireccion de fuerzas)</li>
+                    </ul>
+                    <p style="margin-top:0.4em;">Ecuacion diferencial resultante:</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\dfrac{\partial\sigma_{zz}}{\partial z} = \rho g - \dfrac{2\mu_s K}{R}\,\sigma_{zz}(z)\)
+                    </div>
+                    <p>con \(\sigma_{zz}(z=0)=0\). La solucion es:</p>
+                    <div class="red-box" style="font-size:1.1em;">
+                        \(\sigma_{zz}(z) = \dfrac{\rho g R}{2\mu_s K}\left[1 - \exp\!\left(\dfrac{-2\mu_s K\,z}{R}\right)\right]\)
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Course_Argentine/media/extracted_u3/img-030.png" alt="Silo Janssen y curva de saturacion" style="max-height:520px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Janssen - Parametros y longitud caracteristica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Janssen: parametros clave</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p>Reescribiendo la solucion de Janssen:</p>
+                    <div class="red-box" style="font-size:1.2em;">
+                        \(P(z) = P_{\text{sat}}\!\left(1 - e^{-z/\lambda}\right)\)
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Presion de saturacion:</strong></p>
+                        <p style="text-align:center; font-size:1.1em;">\(P_{\text{sat}} = \dfrac{\rho g R}{2\mu_s K} = \dfrac{\rho g D}{4\mu_s K}\)</p>
+                        <p style="margin-top:0.3em;"><strong>Longitud caracteristica:</strong></p>
+                        <p style="text-align:center; font-size:1.1em;">\(\lambda = \dfrac{R}{2\mu_s K} = \dfrac{D}{4\mu_s K}\)</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Para \(z \gg \lambda\), la presion se vuelve <strong>independiente de la altura</strong>.</p>
+                    <p style="margin-top:0.3em;">Experimentalmente, la masa aparente de saturacion es proporcional a \(R^3\), consistente con \(\sigma_{zz} \to \frac{\rho g R}{2\mu_s K}\).</p>
+                </div>
+                <div style="font-size:0.65em;">
+                    <table>
+                        <tr><th>Parametro</th><th>Descripcion</th><th>Valor tipico</th></tr>
+                        <tr><td>\(K\)</td><td>Coeficiente de Janssen (redireccion)</td><td>0.5 -- 0.8</td></tr>
+                        <tr><td>\(\mu_s\)</td><td>Coeficiente de friccion grano-pared</td><td>0.3 -- 0.6</td></tr>
+                        <tr><td>\(\lambda\)</td><td>Longitud caracteristica</td><td>5 -- 15 cm</td></tr>
+                        <tr><td>\(D\)</td><td>Diametro del silo</td><td>4 -- 6 cm (lab)</td></tr>
+                    </table>
+                    <div class="highlight-box red" style="margin-top:1em;">
+                        <p><strong>Diferencia fundamental:</strong></p>
+                        <p>Fluido: \(P = \rho g h\) (crece linealmente)</p>
+                        <p>Granular: \(P \to P_{\text{sat}}\) (satura exponencialmente)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Ley de Beverloo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Descarga granular: ley de Beverloo</h2>
+            <div class="two-col">
+                <div>
+                    <img src="../Course_Argentine/media/extracted_u6b/img-018.jpg" alt="Free fall arch - descarga granular" style="max-height:280px; border-radius:4px;">
+                    <img src="../Course_Argentine/media/extracted_u6b/img-015.jpg" alt="Silos conico y cilindrico" style="max-height:220px; border-radius:4px; margin-top:0.3em;">
+                </div>
+                <div style="font-size:0.6em;">
+                    <p>El caudal masico \(W\) en silos es <strong>constante</strong> e <strong>independiente de la altura de llenado</strong> (a diferencia de la ley de Torricelli para fluidos).</p>
+                    <p style="margin-top:0.3em;">Esto es consecuencia directa del efecto Janssen: la presion en el fondo satura.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Concepto de "free fall arch":</strong></p>
+                        <p>La velocidad de salida se fija por la caida libre sobre el diametro de apertura:</p>
+                        <p style="text-align:center; font-size:1.1em;">\(v = \sqrt{g\,D_0}\)</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Beverloo, Leniger y Van de Velde (1961) midieron \(W^{2/5}\) vs. \(D_0\) y obtuvieron una recta:</p>
+                    <div class="red-box" style="font-size:1.2em; margin-top:0.3em;">
+                        \(W = C\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+                    </div>
+                    <p style="margin-top:0.3em;">\(C \approx 0.58\), \(k \approx 1.4\), \(D_0\) = apertura, \(d\) = diametro de grano</p>
+                </div>
+            </div>
+            <div class="footnote">
+                Beverloo, Leniger &amp; Van de Velde, <em>Chem. Eng. Sci.</em> 15, 1961.
+                Hagen G.H.L., <em>Poggendorffs Ann. Phys. Chem.</em> 46, 423 (1839).
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Beverloo - Detalles -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ley de Beverloo: detalles</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \(W = C\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+                    </div>
+                    <p style="margin-top:0.5em;">El termino \(kd\) se asocia a <strong>efectos de borde</strong>: zona anular cerca del orificio donde la densidad de particulas es menor (efecto de "anillo vacio").</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Condiciones de validez:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>\(W\) no depende de \(H\) si \(H > 2D_0\)</li>
+                            <li>\(W\) no depende de \(D\) (diametro del silo) si \(D > 2{,}5\,D_0\)</li>
+                            <li>Valida para \(400\,\mu\text{m} < d < D_0/6\)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Caso 2D</strong> (ranura): el exponente cambia de 5/2 a 3/2</p>
+                        <p style="text-align:center;">\(W \propto \sqrt{g}\,(D_0 - kd)^{3/2}\)</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="../Course_Argentine/media/extracted_u6b/img-026.jpg" alt="Grafico Beverloo W^{2/5} vs D_0" style="max-height:250px; border-radius:4px;">
+                    <p style="font-size:0.5em; color:#666; margin-top:0.3em;">Silo conico (a) y cilindrico (b): zona de estancamiento y orificio \(D_0\).</p>
+                    <img src="../Course_Argentine/media/extracted_u6b/img-027.jpg" alt="Beverloo datos experimentales" style="max-height:220px; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+            <div class="footnote">
+                Brown &amp; Richards, <em>Principles of Powder Mechanics</em>, Pergamon, 1970.
+                Nedderman, <em>Statics and Kinematics of Granular Materials</em>, CUP, 1992.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Dilatancia de Reynolds -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Dilatancia de Reynolds (1885)</h2>
+            <div class="two-col">
+                <div style="font-size:0.7em;">
+                    <p>Un empaquetamiento denso <strong>debe dilatarse</strong> antes de poder deformarse por cizalla: los granos necesitan "trepar" unos sobre otros para moverse.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Comportamiento bajo cizalla:</strong></p>
+                        <ul style="line-height:2.0;">
+                            <li><strong>Empaquetamiento denso</strong> (\(\phi > \phi_c\)): dilata bajo cizalla &rarr; el volumen <em>aumenta</em></li>
+                            <li><strong>Empaquetamiento suelto</strong> (\(\phi < \phi_c\)): se contrae bajo cizalla &rarr; el volumen <em>disminuye</em></li>
+                            <li><strong>Estado crítico</strong> (\(\phi = \phi_c\)): deformación a volumen constante</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Ejemplo cotidiano:</strong> arena mojada en la playa parece "secarse" cuando la pisas — la dilatancia crea vacíos que succionan el agua de la superficie.</p>
+                </div>
+                <div style="font-size:0.7em;">
+                    <!-- SVG: Simple dilatancy illustration -->
+                    <svg viewBox="0 0 360 260" style="max-width:100%; max-height:250px;">
+                        <!-- Before shear: 2 rows of circles -->
+                        <text x="80" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5556">Antes</text>
+                        <!-- Bottom row -->
+                        <circle cx="30" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="76" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="122" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <!-- Top row (nested) -->
+                        <circle cx="53" cy="56" r="22" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <circle cx="99" cy="56" r="22" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <!-- After shear: shifted, lifted -->
+                        <text x="270" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#8b5e6b">Después</text>
+                        <!-- Bottom row -->
+                        <circle cx="210" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="256" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="302" cy="100" r="22" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="2"/>
+                        <!-- Top row (shifted right and UP) -->
+                        <circle cx="248" cy="46" r="22" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <circle cx="294" cy="46" r="22" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <!-- Arrow showing shear -->
+                        <line x1="230" y1="25" x2="290" y2="25" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowDil)"/>
+                        <defs>
+                            <marker id="arrowDil" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                        <!-- Height markers -->
+                        <line x1="145" y1="34" x2="145" y2="122" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="330" y1="24" x2="330" y2="122" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="145" y="145" text-anchor="middle" font-size="11" fill="#888">h</text>
+                        <text x="330" y="145" text-anchor="middle" font-size="11" fill="#888">h + \u0394h</text>
+                    </svg>
+                    <p style="font-size:0.8em; margin-top:0.3em; text-align:center;">La cizalla obliga a la capa superior a "escalar" sobre la inferior, aumentando la altura.</p>
+                    <div class="eq-box" style="margin-top:0.5em; font-size:0.95em;">
+                        La dilatancia es el mecanismo por el cual la fricción a nivel de grano produce resistencia macroscópica al cizallamiento.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Duran, <em>Sands, Powders, and Grains</em> (1999), §3.1.3, p.63–67; Andreotti et al. (2013), §4.2.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Modelo geométrico de dilatancia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Modelo geométrico de dilatancia</h2>
+            <div class="two-col">
+                <div style="font-size:0.7em;">
+                    <p><strong>Modelo de capas paralelas:</strong></p>
+                    <p style="margin-top:0.3em;">Dos filas de discos entre paredes. Bajo cizalla, la fila superior se desplaza y debe montar sobre la fila inferior.</p>
+                    <!-- SVG: Parallelogram model with dilatancy angle -->
+                    <svg viewBox="0 0 320 220" style="max-width:100%; max-height:210px;">
+                        <!-- Bottom row fixed -->
+                        <circle cx="40" cy="170" r="28" fill="rgba(107,154,154,0.25)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="100" cy="170" r="28" fill="rgba(107,154,154,0.25)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="160" cy="170" r="28" fill="rgba(107,154,154,0.25)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="220" cy="170" r="28" fill="rgba(107,154,154,0.25)" stroke="#6b9a9a" stroke-width="2"/>
+                        <circle cx="280" cy="170" r="28" fill="rgba(107,154,154,0.25)" stroke="#6b9a9a" stroke-width="2"/>
+                        <!-- Top row shifted -->
+                        <circle cx="55" cy="105" r="28" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <circle cx="115" cy="105" r="28" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <circle cx="175" cy="105" r="28" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <circle cx="235" cy="105" r="28" fill="rgba(196,160,160,0.3)" stroke="#c4a0a0" stroke-width="2"/>
+                        <!-- Dilatancy angle -->
+                        <line x1="100" y1="170" x2="140" y2="170" stroke="#3a5556" stroke-width="1.5"/>
+                        <line x1="100" y1="170" x2="125" y2="120" stroke="#8b5e6b" stroke-width="2"/>
+                        <path d="M 120,170 A 22,22 0 0,0 113,150" fill="none" stroke="#8b5e6b" stroke-width="1.5"/>
+                        <text x="132" y="158" font-size="14" font-weight="bold" fill="#8b5e6b">\u03c8</text>
+                        <!-- Shear arrow -->
+                        <line x1="20" y1="80" x2="80" y2="80" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowPsi)"/>
+                        <text x="50" y="72" text-anchor="middle" font-size="12" fill="#c0392b">cizalla</text>
+                        <defs>
+                            <marker id="arrowPsi" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <p style="font-size:0.85em; margin-top:0.3em;">El ángulo \(\psi\) = <strong>ángulo de dilatancia</strong>: mide cuánto se expande el material bajo cizalla.</p>
+                </div>
+                <div style="font-size:0.7em;">
+                    <h3 style="font-size:0.9em;">Consecuencias</h3>
+                    <ul style="line-height:2.0;">
+                        <li><strong>Empaquetamiento denso:</strong> \(\psi > 0\) (dilata, luego alcanza el estado crítico)</li>
+                        <li><strong>Estado crítico:</strong> \(\psi = 0\) (volumen constante bajo deformación)</li>
+                    </ul>
+                    <p style="margin-top:0.5em;">Relación entre fricción microscópica y macroscópica:</p>
+                    <div class="eq-box" style="font-size:1.05em;">
+                        \[\tan(\delta_{\text{macro}}) = \tan(\delta_{\text{micro}}) + \tan(\psi)\]
+                    </div>
+                    <p style="margin-top:0.3em;">En el estado crítico (\(\psi = 0\)):</p>
+                    <div class="eq-box">
+                        \[\delta_{\text{macro}} = \delta_{\text{micro}}\]
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>El ángulo de dilatancia \(\psi\) conecta la fricción microscópica con la resistencia macroscópica del material granular.</strong></p>
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre &amp; Pouliquen, <em>Granular Media</em> (2013), §4.2, eq. 4.2.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Jamming -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Jamming: transicion de atasco</h2>
+            <div class="two-col">
+                <div style="font-size:0.62em;">
+                    <p>Cuando la apertura \(D_0\) se reduce, el flujo puede detenerse por formacion de <strong>arcos estables</strong> de particulas sobre el orificio.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Relacion critica \(D_0/d\):</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Para \(D_0/d > 5\): flujo continuo (generalmente)</li>
+                            <li>Para \(D_0/d \sim 3\text{--}5\): flujo intermitente, atascos esporadicos</li>
+                            <li>Para \(D_0/d < 3\): atasco permanente (arcos estables)</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">La probabilidad de atasco \(J(D_0/d)\) se mide repitiendo la descarga muchas veces para cada apertura.</p>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Diagrama de jamming (Liu-Nagel, 1998):</strong></p>
+                        <p>Tres ejes controlan la transicion flujo/atasco:</p>
+                        <ul>
+                            <li>\(1/\phi\) (inverso de la densidad)</li>
+                            <li>Esfuerzo de corte \(\sigma\)</li>
+                            <li>Temperatura (o agitacion)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- Jamming diagram (Liu-Nagel) recreated as SVG -->
+                    <svg viewBox="0 0 400 380" style="max-width:100%; max-height:380px;">
+                        <!-- Axes -->
+                        <line x1="200" y1="350" x2="200" y2="30" stroke="#3a5556" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="200" y1="350" x2="380" y2="290" stroke="#3a5556" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="200" y1="350" x2="40" y2="290" stroke="#3a5556" stroke-width="2" marker-end="url(#arrow)"/>
+                        <defs>
+                            <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#3a5556"/>
+                            </marker>
+                        </defs>
+                        <!-- Labels -->
+                        <text x="200" y="20" text-anchor="middle" font-size="16" font-weight="bold" fill="#3a5556">1/\u03c6</text>
+                        <text x="390" y="295" text-anchor="start" font-size="16" font-weight="bold" fill="#3a5556">\u03c3</text>
+                        <text x="15" y="285" text-anchor="start" font-size="16" font-weight="bold" fill="#3a5556">T</text>
+                        <!-- Jammed region (shaded surface) -->
+                        <polygon points="200,120 130,270 270,270" fill="rgba(107,154,154,0.25)" stroke="var(--color-teal)" stroke-width="2"/>
+                        <!-- Point J -->
+                        <circle cx="200" cy="310" r="6" fill="#8b5e6b"/>
+                        <text x="215" y="315" font-size="14" font-weight="bold" fill="#8b5e6b">J</text>
+                        <!-- JAMMED label -->
+                        <text x="200" y="210" text-anchor="middle" font-size="18" font-weight="bold" fill="#3a5556">JAMMED</text>
+                        <text x="200" y="230" text-anchor="middle" font-size="13" fill="#666">(atascado)</text>
+                        <!-- UNJAMMED label -->
+                        <text x="320" y="200" text-anchor="middle" font-size="14" fill="#8b5e6b">UNJAMMED</text>
+                    </svg>
+                    <p style="font-size:0.4em; color:#888;">Diagrama de jamming de Liu &amp; Nagel (1998).<br>
+                    El punto J marca la transicion de atasco.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Jamming - Formacion de arcos y flujo en reloj de arena -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Formacion de arcos y flujo intermitente</h2>
+            <div class="two-col">
+                <div>
+                    <img src="../Course_Argentine/media/extracted_u6b/img-009.jpg" alt="Descarga granular a traves de orificio" style="max-height:350px; border-radius:4px;">
+                    <p style="font-size:0.45em; color:#666;">Caudal constante: granos descargando a traves de un orificio.</p>
+                </div>
+                <div style="font-size:0.6em;">
+                    <p>Los arcos son estructuras autoestabilizantes donde cada grano se sostiene mutuamente por friccion y geometria.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Reloj de arena con granos finos (\(d < 300\,\mu\)m):</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>\(d < 40\,\mu\)m: no hay flujo (cohesion)</li>
+                            <li>\(40 < d < 300\,\mu\)m: flujo <strong>intermitente</strong> -- periodo constante</li>
+                            <li>\(d > 300\,\mu\)m: flujo <strong>continuo</strong> -- caudal constante</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">En el regimen intermitente, el gradiente de presion del aire atrapado entre camaras estabiliza los arcos temporalmente:</p>
+                    <ul style="line-height:1.6;">
+                        <li><strong>Fase activa:</strong> caen granos, aumenta \(P\) abajo, se detiene el flujo</li>
+                        <li><strong>Fase inactiva:</strong> el aire se equilibra, se reinicia el flujo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footnote">
+                Wu X-l. <em>et al</em>, PRL 71, 1363 (1993); Le Pennec T. <em>et al</em>, PRE 53, 2257 (1996);
+                To, Lai &amp; Pak, PRL 86, 71 (2001).
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Efecto nueces de Brasil -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Efecto nueces de Brasil</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <p>Cuando se agita una mezcla de granos de diferentes tamanos, los <strong>granos grandes suben</strong> a la superficie.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Mecanismos propuestos:</strong></p>
+                        <ol style="line-height:2;">
+                            <li><strong>Percolacion geometrica:</strong> los granos pequenos caen en los huecos debajo de los grandes durante la agitacion.</li>
+                            <li><strong>Conveccion granular:</strong> celdas convectivas (arriba al centro, abajo por las paredes) arrastran los grandes hacia arriba, pero no pueden bajar por los canales estrechos de las paredes.</li>
+                            <li><strong>Condensacion:</strong> efecto de presion reducida debajo de los granos grandes.</li>
+                        </ol>
+                    </div>
+                    <p style="margin-top:0.3em; color:var(--color-mauve);"><strong>Nota:</strong> agitar un medio granular <em>segrega</em> en vez de mezclar -- lo opuesto a un liquido.</p>
+                </div>
+                <div style="text-align:center;">
+                    <iframe width="480" height="270" src="https://www.youtube.com/embed/D0OMbX-rHhc?start=129&end=141&mute=1" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                    <p class="credit"><a href="https://www.youtube.com/watch?v=D0OMbX-rHhc" target="_blank">QuantumFracture, 2022</a></p>
+                    <iframe width="480" height="270" src="https://www.youtube.com/embed/UmZg-9mfkLs" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-top:0.5em;"></iframe>
+                    <p class="credit">Segregacion acero/vidrio/malta -- T. Gallot, 2021</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Avalanchas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Avalanchas y flujo de deslizamientos</h2>
+            <div class="two-col">
+                <div style="font-size:0.62em;">
+                    <p>Una pila granular tiene un <strong>angulo maximo de estabilidad</strong> \(\theta_{\max}\). Cuando se supera, se produce una avalancha hasta que el angulo se reduce a \(\theta_{\min}\).</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Dos angulos criticos:</strong></p>
+                        <ul style="line-height:2;">
+                            <li>\(\theta_{\text{start}}\) (= \(\theta_{\max}\)): angulo de inicio de la avalancha</li>
+                            <li>\(\theta_{\text{stop}}\) (= \(\theta_{\min}\)): angulo de reposo final</li>
+                        </ul>
+                        <p style="margin-top:0.3em;">\(\Delta\theta = \theta_{\text{start}} - \theta_{\text{stop}} \approx 3°\text{--}5°\) para arena tipica.</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Regimenes en un tambor rotatorio (velocidad \(\omega\)):</p>
+                    <ul style="line-height:1.8;">
+                        <li><strong>\(\omega\) baja:</strong> avalanchas intermitentes (quasi-periodicas)</li>
+                        <li><strong>\(\omega\) alta:</strong> flujo continuo sobre la superficie libre</li>
+                        <li>La transicion presenta <strong>histeresis</strong></li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: Pila de arena con angulos -->
+                    <svg viewBox="0 0 400 300" style="max-width:100%; max-height:280px;">
+                        <!-- Base -->
+                        <line x1="30" y1="250" x2="370" y2="250" stroke="#3a5556" stroke-width="2"/>
+                        <!-- Pile (before avalanche) -->
+                        <polygon points="60,250 200,90 340,250" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="2" stroke-dasharray="6,3"/>
+                        <!-- Pile (after avalanche) -->
+                        <polygon points="50,250 200,120 350,250" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="2"/>
+                        <!-- Angle start -->
+                        <path d="M 300,250 A 50,50 0 0,1 270,213" fill="none" stroke="#8b5e6b" stroke-width="1.5"/>
+                        <text x="310" y="225" font-size="13" fill="#8b5e6b" font-weight="bold">\u03b8<tspan font-size="10" dy="3">start</tspan></text>
+                        <!-- Angle stop -->
+                        <path d="M 310,250 A 60,60 0 0,1 285,218" fill="none" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <text x="325" y="240" font-size="13" fill="#6b9a9a" font-weight="bold">\u03b8<tspan font-size="10" dy="3">stop</tspan></text>
+                        <!-- Avalanche arrows -->
+                        <line x1="240" y1="130" x2="290" y2="200" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowR)"/>
+                        <line x1="260" y1="140" x2="310" y2="210" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowR)"/>
+                        <defs>
+                            <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                        <text x="300" y="155" font-size="14" fill="#c0392b" font-weight="bold">avalancha</text>
+                        <!-- Labels -->
+                        <text x="130" y="175" font-size="12" fill="#8b5e6b" font-style="italic">antes</text>
+                        <text x="120" y="200" font-size="12" fill="#6b9a9a" font-style="italic">despues</text>
+                    </svg>
+                    <p style="font-size:0.45em; color:#888;">Histéresis: \(\theta_{\text{start}} > \theta_{\text{stop}}\).<br>Valores tipicos: arena ~35 y ~30.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: Analogia geofisica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Analogia: avalanchas granulares y deslizamientos de tierra</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <div class="highlight-box">
+                        <p><strong>Laboratorio:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Tambor rotatorio con arena</li>
+                            <li>Avalanchas intermitentes controladas</li>
+                            <li>\(\theta_{\text{start}} - \theta_{\text{stop}} \approx 3°\text{--}5°\)</li>
+                            <li>Escala: centimetros, segundos</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Geofisica:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Deslizamientos de ladera</li>
+                            <li>Flujos de escombros (debris flows)</li>
+                            <li>Caidas de acantilados</li>
+                            <li>Escala: metros a kilometros, riesgo natural</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">La fisica es la misma: competencia entre gravedad y friccion interna.</p>
+                    <p>El criterio de Mohr-Coulomb gobierna ambos casos:</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\tau = c + \sigma_n \tan\phi\)
+                    </div>
+                </div>
+                <div style="font-size:0.6em;">
+                    <p>Factores que desestabilizan una ladera:</p>
+                    <ul style="line-height:2;">
+                        <li><strong>Agua:</strong> presion de poro reduce la friccion efectiva</li>
+                        <li><strong>Sismos:</strong> aceleracion puede superar el umbral de estabilidad</li>
+                        <li><strong>Erosion:</strong> cambio de la geometria de la pendiente</li>
+                        <li><strong>Sobrecarga:</strong> deposicion de material nuevo</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>El agua es critica:</strong></p>
+                        <p>Un poco de agua estabiliza (puentes capilares, castillos de arena).</p>
+                        <p>Mucha agua desestabiliza (presion de poro, licuefaccion).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: Exp. 1 - Janssen -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 1: Efecto Janssen en columna granular</h2>
+            <p><em>Saturacion de presion y friccion con las paredes en silos</em></p>
+            <div class="two-col">
+                <div style="font-size:0.58em;">
+                    <p><strong>Objetivo:</strong> Demostrar que la presion en el fondo de una columna granular satura con la altura, a diferencia de la presion hidrostatica.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Materiales:</strong></p>
+                        <ul style="line-height:1.6;">
+                            <li>Tubo transparente (acrilico, \(D = 4\text{--}6\) cm, \(L = 40\text{--}60\) cm)</li>
+                            <li>Arena o esferas de vidrio (varios tamanos)</li>
+                            <li>Balanza digital (\(\pm\,0.1\) g)</li>
+                            <li>Regla milimetrada</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Procedimiento:</strong></p>
+                        <ol style="line-height:1.6;">
+                            <li>Colocar el tubo vertical sobre la balanza. Tarar.</li>
+                            <li>Llenar arena en incrementos de 2 cm. Registrar \(M_{\text{total}}\) y \(M_{\text{aparente}}\) para cada altura.</li>
+                            <li>Graficar \(M_{\text{aparente}}\) vs. \(h\). Comparar con la prediccion lineal.</li>
+                            <li>Ajustar el modelo de Janssen: extraer \(\lambda\) y \(K\mu\).</li>
+                            <li>Repetir con diferente \(D\) para verificar \(\lambda \propto D\).</li>
+                        </ol>
+                    </div>
+                </div>
+                <div style="font-size:0.58em;">
+                    <p><strong>Resultados esperados:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Desviacion de \(P = \rho g h\) lineal para \(h > 2D\)</li>
+                        <li>Saturacion del peso aparente para \(h > 5D\)</li>
+                        <li>\(\lambda\) tipico: 5--15 cm para \(D \approx 4\text{--}6\) cm</li>
+                        <li>Producto \(K\mu\) tipicamente 0.2--0.5</li>
+                    </ul>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        <p>\(M_{\text{ap}}(h) = M_{\text{sat}}\left(1 - e^{-h/\lambda}\right)\)</p>
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Demo impactante:</strong> Llenar un tubo estrecho, insertar un tarugo como piston e intentar empujarlo. La friccion Janssen genera una fuerza enorme!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 14: Exp. 2 - Beverloo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 2: Flujo en reloj de arena y ley de Beverloo</h2>
+            <p><em>Descarga granular a traves de un orificio</em></p>
+            <div class="two-col">
+                <div style="font-size:0.58em;">
+                    <p><strong>Objetivo:</strong> Medir el caudal masico de granos a traves de un orificio, verificar la ley de Beverloo y demostrar que el caudal es independiente de la altura de llenado.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Materiales:</strong></p>
+                        <ul style="line-height:1.6;">
+                            <li>Contenedores cilindricos con placas de orificio intercambiables</li>
+                            <li>Orificios: \(D_0 = 5, 10, 15, 20, 25\) mm</li>
+                            <li>Arena o esferas de vidrio (\(d = 1\text{--}3\) mm)</li>
+                            <li>Balanza digital + cronometro (o registro continuo)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Procedimiento:</strong></p>
+                        <ol style="line-height:1.6;">
+                            <li>Fijar un orificio \(D_0\). Llenar el contenedor. Abrir y medir \(M(t)\).</li>
+                            <li>Calcular \(W = \Delta M / \Delta t\). Verificar que es constante.</li>
+                            <li>Repetir para cada \(D_0\). Graficar \(W^{2/5}\) vs. \(D_0\): esperar una recta.</li>
+                            <li>Verificar independencia de \(H\): medir \(W\) para varias alturas de llenado.</li>
+                            <li>Encontrar \(D_0\) critico donde ocurre atasco (\(D_0 \approx 5d\)).</li>
+                        </ol>
+                    </div>
+                </div>
+                <div style="font-size:0.58em;">
+                    <p><strong>Resultados esperados:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Caudal constante, independiente de \(H\)</li>
+                        <li>\(W^{2/5}\) lineal en \(D_0\), con intercepcion a \(D_0 = kd\)</li>
+                        <li>\(C \approx 0.58\), \(k \approx 1.4\)</li>
+                    </ul>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        <p>\(W = C\,\rho_b\,\sqrt{g}\,(D_0 - kd)^{5/2}\)</p>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Comparacion con fluidos:</strong></p>
+                        <p>Torricelli: \(Q_{\text{fluido}} = A\sqrt{2gH}\) (depende de \(H\))</p>
+                        <p>Beverloo: \(W_{\text{granular}} \propto (D_0-kd)^{5/2}\) (no depende de \(H\))</p>
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Conexion con Exp. 1:</strong> La independencia de \(H\) es una consecuencia directa del efecto Janssen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 15: Proxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Proxima clase</h2>
+            <p>Clase 4: <strong>Cadenas de fuerzas y redes de contacto</strong></p>
+            <ul style="line-height:2;">
+                <li>Distribucion de fuerzas en medios granulares</li>
+                <li>Redes de contacto</li>
+                <li>Cadenas de fuerza</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografia: Andreotti et al., <em>Granular Media</em> -- Cap. 3
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

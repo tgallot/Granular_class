@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9 - Stick-Slip</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 9 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                STICK-SLIP Y FALLAS<br>GEOLÓGICAS EN LABORATORIO
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Fenómeno de stick-slip</li>
+                <li>Modelo masa-resorte</li>
+                <li>Inestabilidad de fricción</li>
+                <li>Simulación de fallas: fault gouge</li>
+                <li>Distribución de magnitudes de eventos</li>
+                <li>Exp. 8: Movimiento Stick-Slip</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Fenómeno stick-slip -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fenómeno de stick-slip</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.85em;">Un bloque sobre una superficie rugosa, conectado a un resorte tirado a velocidad constante \(V\):</p>
+                    <!-- Simple schematic -->
+                    <div style="background:#f8f8f8; border:1px solid #ddd; border-radius:8px; padding:0.8em; font-family:monospace; font-size:0.7em; text-align:center; margin:0.5em 0;">
+                        <span style="color:var(--color-dark);">V →</span>&ensp;
+                        <span style="color:#888;">~~~~</span>&ensp;
+                        <span style="background:var(--color-dark); color:white; padding:2px 12px;">bloque m</span><br>
+                        <span style="font-size:0.8em; color:#888;">resorte k &emsp;&emsp; superficie rugosa μ</span>
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Stick:</strong> fuerza crece linealmente (carga elástica).<br>
+                        <strong>Slip:</strong> caída súbita de fuerza (deslizamiento rápido).
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;">
+                        Señal de fuerza en diente de sierra: \(F(t)\) oscila entre \(\mu_s mg\) y \(\mu_d mg\).
+                    </p>
+                </div>
+                <div>
+                    <p style="font-size:0.85em; font-weight:700;">Ejemplos cotidianos:</p>
+                    <ul style="font-size:0.78em; line-height:1.8;">
+                        <li>Puerta que chirría</li>
+                        <li>Arco de violín sobre cuerdas</li>
+                        <li>Tiza sobre pizarrón</li>
+                        <li>Frenos de automóvil</li>
+                    </ul>
+                    <div class="highlight-box red" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>En geofísica:</strong> los terremotos son eventos de stick-slip en fallas geológicas. La corteza terrestre se carga elásticamente (stick) y se desliza súbitamente (slip).
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Scholz, <em>The Mechanics of Earthquakes and Faulting</em> (2019), Cap. 2.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Modelo masa-resorte -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo masa-resorte para stick-slip</h2>
+            <p style="font-size:0.85em;">Bloque de masa \(m\) sobre superficie con coeficiente de fricción \(\mu(v)\), resorte de rigidez \(k\) tirado a velocidad \(V\):</p>
+            <div class="eq-box" style="font-size:1.1em; margin:0.5em 0;">
+                \( m\,\ddot{x} = k(Vt - x) - \mu(v)\,mg \)
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Fase stick</strong> (\(\dot{x} = 0\)):<br>
+                        La fuerza del resorte crece linealmente:<br>
+                        \( F = k(Vt - x_0) \)<br>
+                        hasta que \(F > \mu_s\,mg\) (fricción estática superada).
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Fase slip</strong> (\(\dot{x} > 0\)):<br>
+                        Fricción dinámica \(\mu_d < \mu_s\) → fuerza neta acelera el bloque.<br>
+                        El bloque se detiene cuando la fuerza del resorte cae por debajo de \(\mu_d\,mg\).
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.78em; margin-top:0.3em; text-align:center;">
+                <strong>Amplitud:</strong> \(\Delta F = (\mu_s - \mu_d)\,mg\) &emsp;
+                <strong>Período:</strong> \(T \approx \Delta F / (kV)\) &emsp;
+                El stick-slip requiere \(\mu_s > \mu_d\).
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Condición de inestabilidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Condición de inestabilidad</h2>
+            <p style="font-size:0.85em;">El sistema es inestable (stick-slip) cuando la fricción <strong>decrece</strong> con la velocidad (<em>velocity weakening</em>): \(d\mu/dv < 0\).</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Rigidez crítica:</strong></p>
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \( k_c = -mg\,\left.\dfrac{d\mu}{dv}\right|_{v=V} \)
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>\(k < k_c\):</strong> stick-slip (sistema blando, oscilaciones periódicas).
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>\(k > k_c\):</strong> deslizamiento estable (sistema rígido, sin oscilaciones).
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Interpretación física:</strong></p>
+                    <ul style="font-size:0.78em; line-height:1.8;">
+                        <li>Sistemas <strong>blandos</strong> (resorte débil): inestables, exhiben stick-slip.</li>
+                        <li>Sistemas <strong>rígidos</strong> (resorte fuerte): estables, deslizamiento continuo.</li>
+                        <li>Aumentar \(V\) generalmente estabiliza el sistema.</li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>Analogía geofísica:</strong> la rigidez de la corteza terrestre y la velocidad de la placa determinan si una falla produce terremotos (stick-slip) o creep asísmico.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Rice &amp; Ruina, J. Appl. Mech. 50, 343 (1983).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Modelo de Burridge-Knopoff -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Modelo de Burridge-Knopoff (1967)</h2>
+            <p style="font-size:0.85em;">Extensión del bloque único a una <strong>cadena de \(N\) bloques</strong> acoplados elásticamente:</p>
+            <div class="eq-box" style="font-size:1.05em; margin:0.5em 0;">
+                \( m\,\ddot{X}_j = K(X_{j+1} - 2X_j + X_{j-1}) - k_p(X_j - vt) - F\!\left(\dot{X}_j\right) \)
+            </div>
+            <!-- Diagram -->
+            <div style="background:#f8f8f8; border:1px solid #ddd; border-radius:8px; padding:0.6em; font-family:monospace; font-size:0.65em; text-align:center; margin:0.3em 0;">
+                <span style="color:var(--color-dark);">v &rarr;</span>&ensp;
+                <span style="color:#888;">~~</span><span style="background:var(--color-dark); color:white; padding:1px 8px;">m</span><span style="color:#888;">~~</span><span style="background:var(--color-dark); color:white; padding:1px 8px;">m</span><span style="color:#888;">~~</span><span style="background:var(--color-dark); color:white; padding:1px 8px;">m</span><span style="color:#888;">~~</span><span style="background:var(--color-dark); color:white; padding:1px 8px;">m</span><span style="color:#888;">~~</span><br>
+                <span style="font-size:0.85em; color:#888;">|k<sub>p</sub>&ensp;&ensp;|k<sub>p</sub>&ensp;&ensp;|k<sub>p</sub>&ensp;&ensp;|k<sub>p</sub>&ensp;&ensp; &larr; resortes a la placa</span><br>
+                <span style="font-size:0.85em; color:#888;">K = acoplamiento inter-bloques &emsp; F(v) = fricción</span>
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <ul style="font-size:0.75em; line-height:1.7;">
+                        <li>\(K\) = acoplamiento entre asperidades (rigidez de la corteza)</li>
+                        <li>\(k_p\) = acoplamiento con la placa tectónica</li>
+                        <li>\(v\) = velocidad de la placa</li>
+                        <li>\(F(v)\) = fricción velocity-dependent</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>Resultado clave:</strong> produce dinámica compleja incluyendo stick-slip caótico Y distribuciones de tamaño de eventos en ley de potencia &rarr; explica naturalmente la ley de Gutenberg-Richter.
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.78em; margin-top:0.3em;">
+                El modelo BK es el paradigma fundamental para modelar terremotos: la fricción <em>velocity-weakening</em> + acoplamiento elástico produce sismicidad compleja.
+            </div>
+            <p class="credit">Burridge &amp; Knopoff, Bull. Seismol. Soc. Am. 57, 341 (1967); Duran (1999), &sect;4.2.2, p.145.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Formas de F(v) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Fricción dinámica: formas de \(F(v)\)</h2>
+            <p style="font-size:0.85em;">La clave del stick-slip es la forma de \(F(v)\). Cuatro formas observadas:</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>1. Decreciente monotónica</strong> (velocity weakening clásica):<br>
+                        \(F\) decrece tras el pico estático &rarr; stick-slip, terremotos.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>2. Forma de U</strong> (Heslot et al. 1994):<br>
+                        Weakening luego strengthening &rarr; stick-slip + estabilización a alta velocidad.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>3. Forma de V invertida</strong> (Carlson &amp; Langer 1989):<br>
+                        Strengthening luego weakening &rarr; fatiga de contacto.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>4. Forma de N</strong> (Barenblatt et al. 1981):<br>
+                        Comportamiento no-monótono complejo.
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Conexión con rate-and-state:</strong></p>
+                    <p style="font-size:0.78em;">En estado estacionario, la ley rate-and-state da:</p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        \( \mu_{ss} = \mu_0 + (a - b)\ln\!\left(\dfrac{V}{V_0}\right) \)
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.3em;">
+                        \(a - b < 0\) &rarr; velocity weakening &rarr; F tipo 1 &rarr; <strong>TERREMOTOS</strong>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.75em;">
+                        \(a - b > 0\) &rarr; velocity strengthening &rarr; deslizamiento asísmico (creep)
+                    </div>
+                    <div style="background:rgba(139,94,107,0.12); border-left:4px solid var(--color-mauve); padding:0.5em 1em; margin:0.5em 0; font-size:0.78em;">
+                        <strong>La forma de \(F(v)\) determina si una falla produce terremotos (\(a-b < 0\)) o desliza de forma estable (\(a-b > 0\)).</strong>
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Duran (1999), &sect;4.2.2, p.145-147, Fig. 93; Heslot et al. (1994); Carlson &amp; Langer (1989).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Fault gouge -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Simulación de fallas: fault gouge</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.85em;">Las fallas reales contienen roca fragmentada llamada <strong>gouge</strong> (material granular).</p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Análogo de laboratorio:</strong><br>
+                        Capa granular (bolitas de vidrio, arena de cuarzo) entre dos superficies rugosas (papel de lija).
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;"><strong>Parámetros:</strong></p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>\(N\): fuerza normal</li>
+                        <li>\(V\): velocidad de cizallamiento</li>
+                        <li>\(h\): espesor de la capa granular</li>
+                        <li>\(d\): tamaño de los granos</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Dinámica del gouge:</strong>
+                        <ul style="line-height:1.6;">
+                            <li>Cadenas de fuerza se forman y rompen</li>
+                            <li>Cizallamiento → dilatancia + compactación</li>
+                            <li>Eventos de stick-slip discretos</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>Insight clave:</strong> la naturaleza <em>granular</em> del gouge de falla controla la dinámica de los terremotos. La mecánica de granos gobierna la mecánica de fallas.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Marone, Ann. Rev. Earth Planet. Sci. 26, 643 (1998); Daniels &amp; Hayman, J. Geophys. Res. 113, B11411 (2008).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Distribución de eventos -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Distribución de magnitudes de eventos</h2>
+            <p style="font-size:0.85em;">En experimentos de stick-slip, cada evento tiene una magnitud (caída de fuerza \(\Delta F\) o energía liberada).</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        \( P(\Delta F) \propto \Delta F^{-\beta} \)
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;">Análoga a la ley de Gutenberg-Richter:</p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        \( \log_{10} N = a - bM \)
+                    </div>
+                    <table style="font-size:0.6em; margin-top:0.5em;">
+                        <thead><tr><th></th><th>Laboratorio</th><th>Campo</th></tr></thead>
+                        <tbody>
+                            <tr><td>Escala</td><td>mm – cm</td><td>m – km</td></tr>
+                            <tr><td>Valor \(b\)</td><td>0.5 – 1.5</td><td>~1</td></tr>
+                            <tr><td>Tiempo slip</td><td>ms</td><td>s – min</td></tr>
+                            <tr><td>Recurrencia</td><td>s – min</td><td>años – siglos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Universalidad:</strong> las mismas leyes estadísticas se observan en ~10 órdenes de magnitud, del laboratorio al campo.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Criticalidad auto-organizada (SOC):</strong><br>
+                        Bak, Tang &amp; Wiesenfeld (1987): sistemas que se organizan espontáneamente en un estado crítico sin necesidad de ajuste fino de parámetros. El «sandpile model» reproduce leyes de potencia.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Gutenberg &amp; Richter (1944); Bak et al., Phys. Rev. Lett. 59, 381 (1987).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Rate-and-state friction -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Rate-and-state friction</h2>
+            <p style="font-size:0.85em;">Ley empírica de fricción que captura la dependencia en velocidad y el envejecimiento (healing):</p>
+            <div class="eq-box" style="font-size:1.1em; margin:0.5em 0;">
+                \( \mu = \mu_0 + a\ln\!\left(\dfrac{v}{v_0}\right) + b\ln\!\left(\dfrac{v_0\,\theta}{D_c}\right) \)
+            </div>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.78em;"><strong>Leyes de evolución del estado \(\theta\):</strong></p>
+                    <div class="eq-box" style="font-size:0.85em;">
+                        <strong>Aging:</strong> \(\dot{\theta} = 1 - \dfrac{v\,\theta}{D_c}\)
+                    </div>
+                    <div class="eq-box" style="font-size:0.85em;">
+                        <strong>Slip:</strong> \(\dot{\theta} = -\dfrac{v\,\theta}{D_c}\ln\!\left(\dfrac{v\,\theta}{D_c}\right)\)
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.78em;"><strong>Parámetros:</strong></p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>\(a\): efecto directo de velocidad (instantáneo)</li>
+                        <li>\(b\): efecto de evolución (retardado, vía \(\theta\))</li>
+                        <li>\(D_c\): distancia crítica de slip (~μm a mm)</li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>\(a - b < 0\):</strong> velocity weakening → <strong>inestable</strong> (sismogénico)
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>\(a - b > 0\):</strong> velocity strengthening → <strong>estable</strong> (creep asísmico)
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Dieterich, J. Geophys. Res. 84, 2161 (1979); Ruina, J. Geophys. Res. 88, 10359 (1983); Marone (1998).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Exp. 8 -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 8: Movimiento Stick-Slip</h2>
+            <p style="font-size:0.85em;"><em>Oscilaciones periódicas por inestabilidad de fricción</em></p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Montaje:</strong>
+                        <ul style="line-height:1.6;">
+                            <li>Bloque sobre superficie rugosa (lija)</li>
+                            <li>Hilo enrollado en tambor giratorio a velocidad constante \(V\)</li>
+                            <li>Sensor de fuerza (dinamómetro o celda de carga)</li>
+                            <li>Sensor de posición (regla/cámara)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Protocolo:</strong>
+                        <ul style="line-height:1.6;">
+                            <li>Variar velocidad de arrastre \(V\)</li>
+                            <li>Variar carga normal (masas sobre el bloque)</li>
+                            <li>Variar rugosidad de las superficies</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Mediciones y análisis:</strong>
+                        <ul style="line-height:1.6;">
+                            <li>Registrar \(F(t)\): serie temporal de fuerza</li>
+                            <li>Verificar que \(\mu_s > \mu_d\)</li>
+                            <li>Medir período \(T\) y amplitud \(\Delta F\)</li>
+                            <li>Encontrar velocidad crítica para transición a deslizamiento estable</li>
+                            <li>Comparar con predicciones del modelo masa-resorte</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>Extensión:</strong> Agregar capa granular (fault gouge) entre las superficies y comparar la estadística de eventos con las leyes de Gutenberg-Richter.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Próxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Próxima clase</h2>
+            <p>Clase 10: <strong>Ondas en medios granulares I</strong></p>
+            <ul style="line-height:2;">
+                <li>Propagación de ondas no lineales</li>
+                <li>Medio efectivo</li>
+                <li>Cadena de Nesterenko: solitones</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografía: Nesterenko, <em>Dynamics of Heterogeneous Materials</em> — Cap. 1-2
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

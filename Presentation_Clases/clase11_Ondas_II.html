@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 - Ondas en Medios Granulares II</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 11 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:1.8em; color:var(--color-title); line-height:1.1; margin:0;">
+                ONDAS EN MEDIOS GRANULARES II:<br>TEORIA DE BIOT
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Medios porosos saturados</li>
+                <li>Teoria de Biot: hipotesis y ecuaciones</li>
+                <li>Ondas rapidas y ondas lentas</li>
+                <li>Atenuacion y dispersion</li>
+                <li>Aplicaciones geofisicas</li>
+                <li>Metodos geofisicos de campo</li>
+                <li>Exp. 9: Propagacion de ondas a escala macroscopica</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Medios porosos saturados -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Medios porosos saturados</h2>
+            <p>Un suelo granular saturado es un sistema bifasico:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Esqueleto solido</strong>
+                        <ul style="line-height:1.8; font-size:0.85em;">
+                            <li>Red de granos en contacto</li>
+                            <li>Modulo de drenaje $K_d$ (compresibilidad del esqueleto)</li>
+                            <li>Modulo de cizalla $G$ (solo el solido resiste al corte)</li>
+                            <li>Densidad del solido $\rho_s$</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red">
+                        <strong>Fluido intersticial</strong>
+                        <ul style="line-height:1.8; font-size:0.85em;">
+                            <li>Llena los poros (agua, aceite, gas)</li>
+                            <li>Modulo de compresibilidad $K_f$</li>
+                            <li>Viscosidad dinamica $\eta$</li>
+                            <li>Densidad $\rho_f$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <p><strong>Parametros clave del medio poroso:</strong></p>
+                    <div class="eq-box" style="font-size:0.9em;">
+                        <strong>Porosidad:</strong> $\phi = \dfrac{V_\text{poros}}{V_\text{total}}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.9em; margin-top:0.3em;">
+                        <strong>Permeabilidad:</strong> $\kappa$ &ensp;[m$^2$]<br>
+                        (Ley de Darcy: $\mathbf{q} = -\dfrac{\kappa}{\eta}\nabla p$)
+                    </div>
+                    <div class="eq-box" style="font-size:0.9em; margin-top:0.3em;">
+                        <strong>Tortuosidad:</strong> $\alpha_\infty = \left(\dfrac{L_\text{real}}{L_\text{recto}}\right)^2 \geq 1$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">
+                        Valores tipicos para arena: $\phi \approx 0.3\text{--}0.4$, $\kappa \approx 10^{-11}\text{--}10^{-10}$ m$^2$, $\alpha_\infty \approx 1.5\text{--}3$.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Principio de Terzaghi -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Principio de tensión efectiva de Terzaghi</h2>
+            <p style="font-size:0.85em;">Los granos solo «sienten» el esfuerzo total menos la presión de poro:</p>
+            <div class="eq-box" style="font-size:1.2em; margin:0.5em 0;">
+                $\sigma'_{ij} = \sigma_{ij} + p_f\,\delta_{ij}$
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.78em;">
+                        $\sigma'$ = tensión efectiva sobre los granos<br>
+                        $\sigma$ = tensión total<br>
+                        $p_f$ = presión del fluido intersticial
+                    </p>
+                    <p style="font-size:0.85em; margin-top:0.5em;"><strong>Ecuación de consolidación (Terzaghi):</strong></p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\dfrac{\partial p_f}{\partial t} = D_v\,\dfrac{\partial^2 p_f}{\partial z^2}$
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;">
+                        Ecuación de difusión para la disipación de la presión de poro.<br>
+                        $D_v$ = coeficiente de consolidación (depende de permeabilidad y compresibilidad).
+                    </p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>El principio de Terzaghi es la base de la mecánica de suelos:</strong> el esqueleto granular solo responde a la tensión efectiva $\sigma' = \sigma + p_f$.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>Conexión con Biot:</strong> la onda lenta P2 es esencialmente un frente de consolidación propagándose a altas frecuencias. A baja frecuencia ($f \ll f_c$), la onda P2 se vuelve difusiva — recuperando la ecuación de Terzaghi.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Terzaghi (1925); Andreotti et al. (2013), &sect;7.3.1, p.295-296</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Teoria de Biot - hipotesis -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teoria de Biot (1956): hipotesis</h2>
+            <p>Biot formulo una teoria de propagacion de ondas en medios porosos saturados:</p>
+            <div class="highlight-box" style="margin-top:0.5em;">
+                <strong>Hipotesis fundamentales:</strong>
+                <ol style="line-height:1.8; font-size:0.85em;">
+                    <li>El esqueleto solido es elastico, isotropo y homogeneo a la escala macroscopica.</li>
+                    <li>Los poros estan completamente saturados por un fluido.</li>
+                    <li>Las longitudes de onda son mucho mayores que el tamano de los poros ($\lambda \gg d_\text{poro}$).</li>
+                    <li>Las deformaciones son pequenas (teoria lineal).</li>
+                    <li>El acoplamiento solido-fluido es viscoso (Darcy).</li>
+                </ol>
+            </div>
+            <p style="margin-top:0.8em;"><strong>Variables del problema:</strong></p>
+            <div class="two-col" style="font-size:0.85em;">
+                <div class="eq-box">
+                    $\mathbf{u}$ = desplazamiento del esqueleto solido
+                </div>
+                <div class="eq-box">
+                    $\mathbf{U}$ = desplazamiento del fluido
+                </div>
+            </div>
+            <p style="font-size:0.8em; margin-top:0.5em;">
+                El desplazamiento relativo fluido-solido es: $\mathbf{w} = \phi(\mathbf{U} - \mathbf{u})$.
+            </p>
+            <p class="credit">Biot, M. A., JASA 28, 168-178 (1956); JASA 28, 179-191 (1956)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Ecuaciones de Biot -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ecuaciones de Biot</h2>
+            <p>Las ecuaciones de movimiento acopladas se escriben:</p>
+            <div class="eq-box" style="margin:0.5em 0; font-size:0.95em;">
+                $\rho\,\ddot{\mathbf{u}} + \rho_f\,\ddot{\mathbf{w}} = \nabla\cdot\boldsymbol{\sigma}$
+            </div>
+            <div class="eq-box" style="margin:0.5em 0; font-size:0.95em;">
+                $\rho_f\,\ddot{\mathbf{u}} + \dfrac{\alpha_\infty \rho_f}{\phi}\,\ddot{\mathbf{w}} + \dfrac{\eta}{\kappa}\,\dot{\mathbf{w}} = -\nabla p$
+            </div>
+            <p style="margin-top:0.5em;">con las relaciones constitutivas:</p>
+            <div class="two-col" style="font-size:0.85em; margin-top:0.3em;">
+                <div class="eq-box">
+                    $\boldsymbol{\sigma} = \left[(K_d + \tfrac{4}{3}G)\nabla\cdot\mathbf{u} + \alpha M\nabla\cdot\mathbf{w}\right]\mathbf{I} + 2G\,\boldsymbol{\varepsilon}_\text{dev}$
+                </div>
+                <div class="eq-box">
+                    $p = -\alpha M\nabla\cdot\mathbf{u} - M\nabla\cdot\mathbf{w}$
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top:0.8em; font-size:0.85em;">
+                <strong>Parametros de Biot:</strong><br>
+                $\alpha = 1 - K_d/K_s$ &ensp;(coeficiente de Biot-Willis, $0 \leq \alpha \leq 1$)<br>
+                $M = \left(\dfrac{\alpha - \phi}{K_s} + \dfrac{\phi}{K_f}\right)^{-1}$ &ensp;(modulo de Biot)
+            </div>
+            <p style="font-size:0.7em; margin-top:0.3em;">
+                $\rho = (1-\phi)\rho_s + \phi\rho_f$ es la densidad total; $K_s$ es el modulo del grano solido.
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Ondas P rapidas y lentas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Tres tipos de ondas</h2>
+            <p>La resolucion de las ecuaciones de Biot para ondas planas da <strong>tres modos</strong>:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box" style="text-align:center;">
+                        <strong>Onda P1 (rapida)</strong><br>
+                        <span style="font-size:1.1em;">$v_{P1} = \sqrt{\dfrac{K_d + \frac{4}{3}G + \alpha^2 M}{\rho - \rho_f^2/(\alpha_\infty\rho_f/\phi)}}$</span><br><br>
+                        Solido y fluido se mueven <strong>en fase</strong>.<br>
+                        Tipicamente $v_{P1} \approx 1500\text{--}5000$ m/s.
+                    </div>
+                    <div class="highlight-box" style="text-align:center; margin-top:0.5em;">
+                        <strong>Onda S</strong><br>
+                        <span style="font-size:1.1em;">$v_S = \sqrt{\dfrac{G}{\rho - \rho_f^2/(\alpha_\infty\rho_f/\phi)}}$</span><br><br>
+                        Solo el esqueleto se deforma en cizalla.<br>
+                        El fluido no soporta corte.
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="text-align:center;">
+                        <strong>Onda P2 (lenta) &mdash; Onda de Biot</strong><br>
+                        Solido y fluido se mueven <strong>en contrafase</strong>.<br><br>
+                        Fuertemente atenuada a baja frecuencia.<br>
+                        Tipicamente $v_{P2} \approx 100\text{--}1000$ m/s.<br><br>
+                        <em>Predicha por Biot en 1956,<br>
+                        observada experimentalmente<br>
+                        por Plona (1980).</em>
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em; font-size:0.85em; text-align:center;">
+                        <strong>Analogia:</strong> La onda P2 es analoga al <em>segundo sonido</em>
+                        en superfluidos (He-II), donde la temperatura oscila en contrafase
+                        con la densidad.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Biot (1956); Plona, Appl. Phys. Lett. 36, 259 (1980)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Atenuacion y frecuencia de Biot -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Atenuacion y dispersion</h2>
+            <p>El acoplamiento viscoso entre solido y fluido introduce una <strong>frecuencia caracteristica</strong>:</p>
+            <div class="eq-box" style="margin:0.8em 0; font-size:1.2em;">
+                $f_c = \dfrac{\phi\,\eta}{2\pi\,\alpha_\infty\,\rho_f\,\kappa}$
+            </div>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Baja frecuencia ($f \ll f_c$):</strong>
+                        <ul style="line-height:1.8; font-size:0.85em;">
+                            <li>Regimen visqueux (Poiseuille)</li>
+                            <li>Fluido y solido se mueven <em>ensemble</em></li>
+                            <li>Onda P2 es <strong>difusiva</strong> (no se propaga)</li>
+                            <li>Atenuacion de P1 y S debil</li>
+                            <li>$Q^{-1} \propto f$ (factor de calidad)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Alta frecuencia ($f \gg f_c$):</strong>
+                        <ul style="line-height:1.8; font-size:0.85em;">
+                            <li>Regimen inercial</li>
+                            <li>Fluido y solido oscilan independientemente</li>
+                            <li>Onda P2 se <strong>propaga</strong> (observable)</li>
+                            <li>Atenuacion de P1 y S por friction viscosa</li>
+                            <li>$Q^{-1} \propto f^{-1/2}$ (capa limite)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size:0.8em; margin-top:0.5em;">
+                <strong>Ejemplo:</strong> Para arena saturada ($\phi = 0.38$, $\kappa = 10^{-11}$ m$^2$, $\eta = 10^{-3}$ Pa$\cdot$s):
+                $f_c \approx 10^4$ Hz. En sismica ($f \sim 10\text{--}100$ Hz) se esta siempre en el regimen de baja frecuencia.
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Aplicaciones geofisicas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicaciones geofisicas</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Prospeccion sismica</strong>
+                        <ul style="font-size:0.8em; line-height:1.8;">
+                            <li>Deteccion de acuiferos: $v_P$ aumenta bruscamente en la zona saturada</li>
+                            <li>Deteccion de hidrocarburos: gas reduce $v_P$ notablemente</li>
+                            <li>Caracterizacion de reservorios: porosidad, permeabilidad</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red">
+                        <strong>Licuefaccion</strong>
+                        <ul style="font-size:0.8em; line-height:1.8;">
+                            <li>Suelo saturado no cohesivo bajo carga ciclica</li>
+                            <li>Presion de poro aumenta $\to$ esfuerzo efectivo $\to 0$</li>
+                            <li>El suelo pierde toda su rigidez</li>
+                            <li>Condicion: $\sigma' = \sigma - p \to 0$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box">
+                        <strong>Ingenieria geotecnica</strong>
+                        <ul style="font-size:0.8em; line-height:1.8;">
+                            <li>Caracterizacion de suelos para fundaciones</li>
+                            <li>Evaluacion del riesgo sismico</li>
+                            <li>Perfiles de $v_S$ para clasificar suelos (Eurocode 8, NEHRP)</li>
+                            <li>$v_{S,30}$: velocidad promedio en los primeros 30 m</li>
+                        </ul>
+                    </div>
+                    <table style="font-size:0.6em; margin-top:0.5em;">
+                        <thead><tr><th>Clase</th><th>$v_{S,30}$ (m/s)</th><th>Descripcion</th></tr></thead>
+                        <tbody>
+                            <tr><td>A</td><td>&gt; 800</td><td>Roca</td></tr>
+                            <tr><td>B</td><td>360 - 800</td><td>Suelo firme</td></tr>
+                            <tr><td>C</td><td>180 - 360</td><td>Suelo blando</td></tr>
+                            <tr><td>D</td><td>&lt; 180</td><td>Suelo muy blando</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Licuefacción -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Licuefacción: mecanismo físico detallado</h2>
+            <p style="font-size:0.85em;">Mecanismo paso a paso:</p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <ol style="margin:0.2em 0; line-height:1.7;">
+                            <li><strong>Empaquetamiento suelto saturado</strong> bajo vibración (sismo)</li>
+                            <li>Tendencia a compactarse &rarr; <strong>reduce volumen de poros</strong></li>
+                            <li>Si la vibración es rápida respecto al drenaje ($t_\text{vibración} \ll t_\text{consolidación} = L^2/D_v$):<br>
+                                &rarr; el fluido <strong>NO puede escapar</strong> &rarr; presión de poro $p_f$ <strong>AUMENTA</strong></li>
+                            <li>Cuando $p_f \to \sigma_\text{total}$: tensión efectiva $\sigma' \to 0$</li>
+                            <li>Los granos <strong>pierden contacto</strong> &rarr; el medio se comporta como una <strong>suspensión densa</strong></li>
+                        </ol>
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;"><strong>Condiciones:</strong> suelo suelto + saturado + vibración rápida + mal drenaje</p>
+                </div>
+                <div>
+                    <div class="eq-box" style="font-size:1.0em; margin-top:0.3em;">
+                        Licuefacción: $\sigma' = \sigma - p_f \to 0$<br>
+                        cuando $p_f \to \sigma$
+                    </div>
+                    <div style="background:rgba(139,94,107,0.12); border-left:4px solid var(--color-mauve); padding:0.5em 1em; margin:0.5em 0; font-size:0.78em;">
+                        <strong>Consecuencias:</strong> hundimiento de edificios, deslizamientos submarinos, tsunamis — Niigata 1964, Christchurch 2011.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.3em;">
+                        <strong>Escala temporal:</strong><br>
+                        $t_\text{consolidación} = L^2/D_v$<br>
+                        Si $L = 10$ m, $D_v = 10^{-3}$ m$^2$/s:<br>
+                        $t_\text{consolidación} \approx 10^5$ s &asymp; 1 día<br>
+                        Mucho más lento que un sismo (~10-30 s).
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Andreotti et al. (2013), &sect;7.3.2, p.297-300</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Metodos geofisicos -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Metodos geofisicos de campo</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Sismica de refraccion</strong>
+                        <ul style="font-size:0.8em; line-height:1.6;">
+                            <li>Fuente impulsiva + linea de geofonos</li>
+                            <li>Primeras llegadas: $t(x)$ da las velocidades de cada capa</li>
+                            <li>Ley de Snell: $\sin\theta_c = v_1/v_2$</li>
+                            <li>Limitacion: no detecta capas lentas bajo capas rapidas</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red">
+                        <strong>Sismica de reflexion</strong>
+                        <ul style="font-size:0.8em; line-height:1.6;">
+                            <li>Reflexiones en interfaces de impedancia</li>
+                            <li>$Z = \rho\,v$ (impedancia acustica)</li>
+                            <li>$R = \dfrac{Z_2 - Z_1}{Z_2 + Z_1}$ (coeficiente de reflexion)</li>
+                            <li>Resolucion vertical $\sim \lambda/4$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box">
+                        <strong>MASW</strong> (Multichannel Analysis of Surface Waves)
+                        <ul style="font-size:0.8em; line-height:1.6;">
+                            <li>Ondas de Rayleigh: $v_R \approx 0.92\,v_S$</li>
+                            <li>Dispersion: $v_R(\omega)$ depende del perfil de $v_S(z)$</li>
+                            <li>Inversion del perfil de velocidades</li>
+                            <li>No invasivo, rapido, economico</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red">
+                        <strong>Crosshole / Downhole</strong>
+                        <ul style="font-size:0.8em; line-height:1.6;">
+                            <li>Medida directa de $v_P$ y $v_S$ en profundidad</li>
+                            <li>Crosshole: fuente y receptor en pozos separados</li>
+                            <li>Downhole: fuente en superficie, receptor en pozo</li>
+                            <li>Alta resolucion pero costoso (requiere sondeos)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Exp. 9 -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 9: Propagacion de ondas a escala macroscopica</h2>
+            <p><em>Metodos geofisicos aplicados en el campus</em></p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Montaje:</strong>
+                        <ul style="font-size:0.85em; line-height:1.8;">
+                            <li>Linea de geofonos (verticales, 4.5 Hz)</li>
+                            <li>Fuente: golpe de martillo en placa metalica</li>
+                            <li>Adquisicion: sismografo multicanal</li>
+                            <li>Espaciamiento entre geofonos: 1-2 m</li>
+                            <li>Longitud del perfil: 20-50 m</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Analisis:</strong>
+                        <ul style="font-size:0.85em; line-height:1.8;">
+                            <li>Tiempos de primera llegada $\to$ perfil de $v_P$</li>
+                            <li>Dispersion de ondas de superficie $\to$ perfil de $v_S$</li>
+                            <li>Cociente $v_P/v_S \to$ coeficiente de Poisson $\nu$</li>
+                            <li>Deteccion de la napa freatica (salto en $v_P$)</li>
+                        </ul>
+                    </div>
+                    <div class="eq-box" style="margin-top:0.5em; font-size:0.85em;">
+                        $\nu = \dfrac{(v_P/v_S)^2 - 2}{2(v_P/v_S)^2 - 2}$
+                    </div>
+                </div>
+            </div>
+            <p style="font-size:0.8em; margin-top:0.5em; text-align:center;">
+                Objetivo: obtener un perfil geotecnico somero del terreno usando metodos no invasivos.
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Resumen -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen: Teoria de Biot</h2>
+            <table style="font-size:0.7em; margin-top:0.5em;">
+                <thead>
+                    <tr><th>Onda</th><th>Movimiento</th><th>Velocidad tipica</th><th>Atenuacion</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>P1 (rapida)</strong></td><td>Solido y fluido en fase</td><td>1500 - 5000 m/s</td><td>Debil</td></tr>
+                    <tr><td><strong>P2 (lenta, Biot)</strong></td><td>Solido y fluido en contrafase</td><td>100 - 1000 m/s</td><td>Muy fuerte ($f < f_c$)</td></tr>
+                    <tr><td><strong>S</strong></td><td>Cizalla del esqueleto</td><td>100 - 2500 m/s</td><td>Debil</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box" style="margin-top:0.8em; text-align:center;">
+                <strong>Frecuencia de Biot:</strong> $f_c = \dfrac{\phi\,\eta}{2\pi\,\alpha_\infty\,\rho_f\,\kappa}$
+                separa el regimen viscoso ($f \ll f_c$, onda P2 difusiva) del regimen inercial ($f \gg f_c$, onda P2 propagativa).
+            </div>
+            <div class="highlight-box red" style="margin-top:0.5em; text-align:center; font-size:0.9em;">
+                La teoria de Biot constituye el marco fundamental para la interpretacion
+                de las mediciones sismicas en suelos y sedimentos saturados.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: Proxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Proxima clase</h2>
+            <p>Clase 12: <strong>Fisica de terremotos</strong></p>
+            <ul style="line-height:2;">
+                <li>Tectonica de placas y fallas</li>
+                <li>Escala de Richter y magnitud de momento</li>
+                <li>Ciclo sismico</li>
+                <li>Leyes estadisticas: Gutenberg-Richter, Omori</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografia: Scholz, <em>The Mechanics of Earthquakes and Faulting</em> (2019);
+                Andreotti et al., <em>Granular Media</em> &mdash; Cap. 8
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

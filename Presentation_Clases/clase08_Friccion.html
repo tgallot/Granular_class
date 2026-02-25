@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8 - Fricción Granular</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 8 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                FRICCION GRANULAR:<br>COULOMB-AMONTONS
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Las tres leyes de la friccion solida</li>
+                <li>Friccion estatica vs dinamica</li>
+                <li>Por que la friccion no depende del area?</li>
+                <li>Friccion en medios granulares</li>
+                <li>Concepto de healing</li>
+                <li>Exp. 7: Leyes de friccion de Coulomb</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Tres leyes de friccion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Las tres leyes de la friccion solida</h2>
+            <div style="margin-top:0.5em;">
+                <div class="highlight-box" style="font-size:0.85em;">
+                    <strong>1a Ley (da Vinci ~1500, Amontons 1699):</strong><br>
+                    La fuerza de friccion $T$ es <strong>proporcional a la carga normal</strong> $P$:
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$T = \mu\, P$</p>
+                </div>
+                <div class="highlight-box" style="font-size:0.85em;">
+                    <strong>2a Ley (Amontons 1699):</strong><br>
+                    La fuerza de friccion es <strong>independiente del area de contacto aparente</strong>.
+                </div>
+                <div class="highlight-box red" style="font-size:0.85em;">
+                    <strong>3a Ley (Coulomb 1773, Euler):</strong><br>
+                    La friccion <strong>estatica</strong> ($\mu_s$) es mayor que la friccion <strong>dinamica</strong> ($\mu_d$):
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$\mu_s > \mu_d$</p>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Cap. 2, Sec. 2.2.1</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Friccion estatica vs dinamica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Friccion estatica vs dinamica</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;">Cuando se aplica una fuerza horizontal creciente a un bloque sobre una superficie:</p>
+                    <ol style="font-size:0.8em; line-height:1.8;">
+                        <li>$T < \mu_s P$: el bloque <strong>no se mueve</strong></li>
+                        <li>$T = \mu_s P$: umbral de deslizamiento</li>
+                        <li>Al deslizar, la friccion cae a $\mu_d P$</li>
+                    </ol>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $\mu_s > \mu_d$<br>
+                        <span style="font-size:0.75em;">Tipicamente $\mu_s / \mu_d \approx 1.1 - 1.5$</span>
+                    </div>
+                    <table style="font-size:0.6em; margin-top:0.5em;">
+                        <thead><tr><th>Materiales</th><th>$\mu_s$</th><th>$\mu_d$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Madera / madera</td><td>0.3 - 0.5</td><td>0.2 - 0.4</td></tr>
+                            <tr><td>Vidrio / vidrio</td><td>0.4</td><td>0.3</td></tr>
+                            <tr><td>Metal / metal</td><td>0.7 - 1.0</td><td>0.5 - 0.8</td></tr>
+                            <tr><td>Roca / roca</td><td>0.6 - 0.7</td><td>0.4 - 0.6</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 340 280" style="width:95%;">
+                        <defs><marker id="arr1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Axes -->
+                        <line x1="40" y1="240" x2="320" y2="240" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+                        <line x1="40" y1="240" x2="40" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+                        <text x="180" y="270" text-anchor="middle" font-size="13" fill="#333">Desplazamiento</text>
+                        <text x="15" y="130" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,15,130)">Fuerza T</text>
+                        <!-- Static regime: rising -->
+                        <line x1="45" y1="235" x2="100" y2="80" stroke="var(--color-teal)" stroke-width="3"/>
+                        <!-- Peak -->
+                        <circle cx="100" cy="80" r="5" fill="#c0392b"/>
+                        <!-- Drop -->
+                        <line x1="100" y1="80" x2="105" y2="130" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4,2"/>
+                        <!-- Dynamic regime: constant -->
+                        <line x1="105" y1="130" x2="300" y2="130" stroke="var(--color-mauve)" stroke-width="3"/>
+                        <!-- Labels -->
+                        <line x1="40" y1="80" x2="95" y2="80" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="30" y="76" text-anchor="end" font-size="12" fill="var(--color-teal)" font-weight="bold">$\mu_s P$</text>
+                        <line x1="40" y1="130" x2="100" y2="130" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="30" y="126" text-anchor="end" font-size="12" fill="var(--color-mauve)" font-weight="bold">$\mu_d P$</text>
+                        <!-- Zone labels -->
+                        <text x="65" y="200" text-anchor="middle" font-size="12" fill="var(--color-teal)" font-weight="bold">estatico</text>
+                        <text x="200" y="165" text-anchor="middle" font-size="12" fill="var(--color-mauve)" font-weight="bold">dinamico</text>
+                        <!-- Vertical annotation -->
+                        <line x1="110" y1="80" x2="110" y2="130" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="107" y1="80" x2="113" y2="80" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="107" y1="130" x2="113" y2="130" stroke="#c0392b" stroke-width="1.5"/>
+                        <text x="125" y="110" font-size="11" fill="#c0392b" font-weight="bold">$\Delta\mu \cdot P$</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Por que no depende del area? -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Por que la friccion no depende del area?</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;">Las superficies reales tienen <strong>rugosidades</strong> a escala microscopica.</p>
+                    <p style="font-size:0.85em;">El contacto real ocurre solo en las <strong>cimas de las asperezas</strong> (Bowden y Tabor, 1950).</p>
+                    <p style="font-size:0.85em;">El area de contacto <em>real</em> $S_r$ es mucho menor que el area <em>aparente</em> $S_a$:</p>
+                    <div class="eq-box">
+                        $S_r \ll S_a$<br>
+                        $S_r \propto P$ &nbsp;(proporcional a la carga)
+                    </div>
+                    <p style="font-size:0.85em;">Duplicar el area aparente no cambia nada: el numero de contactos se redistribuye.</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Modelo de Bowden-Tabor:</strong> Cada aspereza se deforma plasticamente bajo la presion de contacto $p_c$. Si hay $n$ asperezas: $P = n \cdot p_c \cdot a$, y $T = n \cdot \tau_s \cdot a$, donde $\tau_s$ es la tension de cizallamiento. Entonces:
+                        <p style="text-align:center; margin:0.3em 0;">$\mu = \dfrac{T}{P} = \dfrac{\tau_s}{p_c}$ &nbsp; (independiente de $n$ y de $S_a$)</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 280" style="width:85%;">
+                        <!-- Upper surface -->
+                        <path d="M20,100 L40,80 L55,95 L70,70 L90,90 L105,75 L120,95 L140,65 L160,90 L175,80 L195,95 L210,70 L230,85 L250,75 L270,95 L280,85" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Lower surface -->
+                        <path d="M20,110 L35,130 L55,105 L75,125 L90,108 L110,130 L130,105 L145,120 L165,108 L185,125 L200,105 L220,130 L240,110 L260,125 L280,115" stroke="#2c3e50" stroke-width="2.5" fill="none"/>
+                        <!-- Contact points -->
+                        <circle cx="55" cy="100" r="5" fill="#e67e22" opacity="0.8"/>
+                        <circle cx="130" cy="105" r="5" fill="#e67e22" opacity="0.8"/>
+                        <circle cx="200" cy="105" r="5" fill="#e67e22" opacity="0.8"/>
+                        <!-- Labels -->
+                        <text x="150" y="45" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">Superficie A</text>
+                        <text x="150" y="170" text-anchor="middle" font-size="14" fill="#2c3e50" font-weight="bold">Superficie B</text>
+                        <text x="55" y="80" text-anchor="middle" font-size="11" fill="#e67e22">contacto</text>
+                        <!-- Arrow P -->
+                        <line x1="150" y1="15" x2="150" y2="55" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="165" y="30" font-size="14" fill="#333" font-weight="bold">P</text>
+                        <!-- Arrow F -->
+                        <line x1="280" y1="100" x2="310" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <text x="300" y="92" font-size="14" fill="#333" font-weight="bold">T</text>
+                        <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Real area -->
+                        <text x="150" y="210" text-anchor="middle" font-size="13" fill="#e67e22">Area real S<tspan baseline-shift="sub" font-size="10">r</tspan> = puntos naranjas</text>
+                        <text x="150" y="235" text-anchor="middle" font-size="13" fill="#888">Area aparente S<tspan baseline-shift="sub" font-size="10">a</tspan> = toda la linea</text>
+                    </svg>
+                    <p class="credit">Bowden, F.P. &amp; Tabor, D. <em>The Friction and Lubrication of Solids</em>. Oxford, 1950.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Friccion en medios granulares -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Friccion en medios granulares</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Experimento de Dawes: dos cajas llenas de granos, una sobre la otra. Se aplica una carga $P$ y una fuerza lateral $T$.</p>
+                    <p style="font-size:0.85em; margin-top:0.3em;"><strong>Resultado sorprendente:</strong></p>
+                    <div class="eq-box" style="font-size:1.3em;">
+                        $T = \mu_s\, P$
+                    </div>
+                    <ul style="font-size:0.8em; line-height:1.8; margin-top:0.3em;">
+                        <li>$T$ proporcional a $P$ &nbsp; (1a ley)</li>
+                        <li>$T$ independiente del area &nbsp; (2a ley)</li>
+                        <li>$\mu_s \approx 0.7$ (similar a solidos)</li>
+                        <li>Para cohesivos: $T = \mu_s P + C$</li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.3em;">
+                        <strong>Reologia $\mu(I)$:</strong> Para flujo granular denso, la friccion efectiva depende del <em>numero inercial</em> $I = \dot\gamma d / \sqrt{P/\rho}$:
+                        <p style="text-align:center; margin:0.3em 0;">$\mu(I) = \mu_s + \dfrac{\mu_2 - \mu_s}{I_0 / I + 1}$</p>
+                    </div>
+                </div>
+                <div>
+                    <svg viewBox="0 0 300 250" style="width:90%;">
+                        <defs><marker id="arr3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Lower box -->
+                        <rect x="50" y="140" width="200" height="60" fill="#ddd" stroke="#333" stroke-width="1.5" rx="2"/>
+                        <!-- Grains in lower box -->
+                        <circle cx="80" cy="170" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="100" cy="165" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="120" cy="172" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="140" cy="168" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="160" cy="173" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="180" cy="166" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="200" cy="170" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="220" cy="168" r="8" fill="var(--color-teal)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <!-- Upper box -->
+                        <rect x="50" y="80" width="200" height="60" fill="#eee" stroke="#333" stroke-width="1.5" rx="2"/>
+                        <!-- Grains in upper box -->
+                        <circle cx="80" cy="110" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="100" cy="105" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="120" cy="112" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="140" cy="108" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="160" cy="113" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="180" cy="106" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="200" cy="110" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <circle cx="220" cy="108" r="8" fill="var(--color-mauve)" opacity="0.5" stroke="#333" stroke-width="0.5"/>
+                        <!-- P arrow -->
+                        <line x1="150" y1="25" x2="150" y2="75" stroke="#333" stroke-width="2.5" marker-end="url(#arr3)"/>
+                        <text x="160" y="45" font-size="16" fill="#333" font-weight="bold">P</text>
+                        <!-- F arrow -->
+                        <line x1="255" y1="110" x2="295" y2="110" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arr3)"/>
+                        <text x="280" y="102" font-size="16" fill="#c0392b" font-weight="bold">T</text>
+                        <!-- Ground -->
+                        <line x1="30" y1="200" x2="270" y2="200" stroke="#333" stroke-width="2"/>
+                        <!-- Label -->
+                        <text x="150" y="230" text-anchor="middle" font-size="12" fill="#888">Dispositivo tipo Dawes</text>
+                    </svg>
+                    <div class="highlight-box red" style="font-size:0.75em; margin-top:0.3em;">
+                        <strong>Dilatancia (Reynolds, 1885):</strong> Un medio granular denso <em>se expande</em> antes de fluir. Los granos deben "subir" unos sobre otros para poder deslizarse.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Las leyes de friccion de solidos se aplican tambien a los medios granulares. Andreotti, Forterre, Pouliquen, <em>Granular Media</em>, Cap. 2.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Numero inercial y reologia mu(I) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Numero inercial y reologia $\mu(I)$</h2>
+            <p style="font-size:0.65em;">Para granos rigidos, el <strong>unico</strong> numero adimensional que controla el flujo es:</p>
+            <div class="eq-box" style="font-size:1.1em; margin:0.3em 0;">
+                $I = \dfrac{\dot\gamma\, d}{\sqrt{P / \rho_p}}$
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Interpretacion fisica:</p>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Tiempo microscopico:</strong><br>
+                        $t_{\text{micro}} = \dfrac{d}{\sqrt{P/\rho_p}}$<br>
+                        Tiempo que tarda un grano en caer en su propio hueco bajo presion $P$.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Tiempo macroscopico:</strong><br>
+                        $t_{\text{macro}} = \dfrac{1}{\dot\gamma}$<br>
+                        Tiempo de deformacion macroscopica impuesto por el flujo.
+                    </div>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $I = \dfrac{t_{\text{micro}}}{t_{\text{macro}}}$
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Tres regimenes de flujo:</p>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>$I \to 0$:</strong> regimen <strong>cuasi-estatico</strong><br>
+                        Solido granular. Deformacion lenta, reorganizacion rapida.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em;">
+                        <strong>$I \sim 0.01 - 0.1$:</strong> <strong>flujo denso</strong><br>
+                        Liquido granular. Regimen de la reologia $\mu(I)$.
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.6em;">
+                        <strong>$I \gg 1$:</strong> <strong>flujo diluido</strong><br>
+                        Gas granular. Teoria cinetica aplicable.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre, Pouliquen, <em>Granular Media</em> (2013), §6.2, p.220-226.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Leyes constitutivas mu(I) y phi(I) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Leyes constitutivas $\mu(I)$ y $\phi(I)$</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Dos relaciones constitutivas:</p>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $\tau = \mu(I)\cdot P$
+                    </div>
+                    <div class="red-box" style="font-size:0.7em;">
+                        $\mu(I) = \mu_1 + \dfrac{\mu_2 - \mu_1}{I_0 / I + 1}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $\phi(I) = \phi_c - (\phi_c - \phi_m)\cdot I$
+                    </div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555; margin-top:0.4em;">Valores tipicos (esferas de vidrio, 3D):</p>
+                    <table style="font-size:0.55em; margin-top:0.2em;">
+                        <thead><tr><th>Parametro</th><th>Valor</th></tr></thead>
+                        <tbody>
+                            <tr><td>$\mu_1 = \tan(21°)$</td><td>$\approx 0.38$</td></tr>
+                            <tr><td>$\mu_2 = \tan(33°)$</td><td>$\approx 0.65$</td></tr>
+                            <tr><td>$I_0$</td><td>$0.3$</td></tr>
+                            <tr><td>$\phi_c$</td><td>$0.60$</td></tr>
+                            <tr><td>$\phi_m$</td><td>$0.40$</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Perfil de Bagnold (plano inclinado):</p>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $u(z) \sim z^{3/2}$
+                    </div>
+                    <p style="font-size:0.55em; color:#555;">Perfil de velocidad caracteristico de la reologia $\mu(I)$, diferente al perfil lineal newtoniano.</p>
+                    <div class="eq-box" style="font-size:0.6em; margin-top:0.5em;">
+                        La reologia $\mu(I)$ <strong>unifica</strong> el comportamiento granular: reduce a Mohr-Coulomb ($I\to 0$), explica flujos en tambor, plano inclinado y silos.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.6em; margin-top:0.5em;">
+                        La <strong>viscosidad efectiva</strong> es:<br>
+                        $\eta_{\text{eff}} = \dfrac{\mu(I)\cdot P}{|\dot\gamma|}$<br><br>
+                        Un fluido <strong>no-newtoniano</strong> con viscosidad dependiente de la presion.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre, Pouliquen, <em>Granular Media</em> (2013), §6.2, eq. 6.7-6.9, p.226-227.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Healing -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Healing: dependencia temporal de la friccion</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">El coeficiente de friccion estatica <strong>no es constante</strong>: aumenta con el tiempo de contacto estacionario $t_w$ (tiempo de espera).</p>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $\mu_s(t_w) = \mu_0 + A \ln\!\left(\frac{t_w}{t^*}\right)$
+                    </div>
+                    <p style="font-size:0.8em; margin-top:0.5em;"><strong>Mecanismo:</strong></p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>Las asperezas en contacto sufren <strong>fluencia plastica</strong> (creep)</li>
+                        <li>El area de contacto real $S_r$ crece logaritmicamente con el tiempo</li>
+                        <li>Mayor $S_r$ requiere mayor fuerza para iniciar el deslizamiento</li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.5em;">
+                        <strong>Valores tipicos:</strong> $A \approx 0.005 - 0.015$ para rocas; $\mu_0 \approx 0.6 - 0.7$
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 250" style="width:95%;">
+                        <defs><marker id="arr4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Axes -->
+                        <line x1="40" y1="210" x2="285" y2="210" stroke="#333" stroke-width="2" marker-end="url(#arr4)"/>
+                        <line x1="40" y1="210" x2="40" y2="25" stroke="#333" stroke-width="2" marker-end="url(#arr4)"/>
+                        <text x="165" y="240" text-anchor="middle" font-size="13" fill="#333">ln(t<tspan baseline-shift="sub" font-size="10">w</tspan>)</text>
+                        <text x="18" y="120" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,18,120)">$\mu_s$</text>
+                        <!-- Log curve (approximately linear in log scale) -->
+                        <line x1="50" y1="175" x2="270" y2="70" stroke="var(--color-teal)" stroke-width="3"/>
+                        <!-- Data points -->
+                        <circle cx="70" cy="168" r="4" fill="var(--color-teal)"/>
+                        <circle cx="100" cy="155" r="4" fill="var(--color-teal)"/>
+                        <circle cx="130" cy="143" r="4" fill="var(--color-teal)"/>
+                        <circle cx="160" cy="128" r="4" fill="var(--color-teal)"/>
+                        <circle cx="190" cy="112" r="4" fill="var(--color-teal)"/>
+                        <circle cx="220" cy="96" r="4" fill="var(--color-teal)"/>
+                        <circle cx="250" cy="80" r="4" fill="var(--color-teal)"/>
+                        <!-- Slope label -->
+                        <text x="200" y="55" font-size="13" fill="var(--color-teal)" font-weight="bold">pendiente = A</text>
+                        <!-- mu_0 line -->
+                        <line x1="40" y1="175" x2="65" y2="175" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+                        <text x="32" y="178" text-anchor="end" font-size="11" fill="#888">$\mu_0$</text>
+                    </svg>
+                    <p style="font-size:0.7em; color:#666; margin-top:0.5em;">
+                        <strong>Consecuencia sismica:</strong><br>
+                        Cuanto mas tiempo permanece bloqueada una falla, mayor es la friccion estatica, y mayor sera la caida de tension al deslizarse &rarr; <strong>terremotos mas grandes</strong>.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Dieterich, J. (1972). <em>J. Geophys. Res.</em>, 77, 3690. Rabinowicz, E. (1951). <em>J. Appl. Phys.</em>, 22, 1373.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Analogia con fallas geologicas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Analogia: friccion granular y fallas geologicas</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Las zonas de falla contienen una capa de <strong>gouge</strong> (material granular triturado). La mecanica de la falla esta gobernada por la friccion de este medio granular.</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Ciclo sismico y friccion:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li><strong>Carga:</strong> la placa tectonica aplica esfuerzo de cizallamiento</li>
+                            <li><strong>Healing:</strong> $\mu_s$ crece logaritmicamente durante la fase intersismica</li>
+                            <li><strong>Ruptura:</strong> $T$ alcanza $\mu_s P$ &rarr; deslizamiento subito</li>
+                            <li><strong>Caida de friccion:</strong> $\mu_s \to \mu_d$ &rarr; terremoto</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em;">
+                        <strong>Ley de Byerlee (1978):</strong><br>
+                        Para la mayoria de las rocas, independientemente del tipo: $\mu \approx 0.6 - 0.85$.
+                        Es el equivalente geologico de la ley de Coulomb.
+                    </div>
+                </div>
+                <div>
+                    <svg viewBox="0 0 400 250" style="width:100%; max-width:380px;">
+                        <line x1="50" y1="220" x2="380" y2="220" stroke="#333" stroke-width="2"/>
+                        <line x1="50" y1="220" x2="50" y2="20" stroke="#333" stroke-width="2"/>
+                        <text x="210" y="248" text-anchor="middle" font-size="14" fill="#333">tiempo</text>
+                        <text x="15" y="120" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90,15,120)">desplazamiento</text>
+                        <line x1="60" y1="200" x2="360" y2="40" stroke="#6b9a9a" stroke-width="2.5" stroke-dasharray="8,4"/>
+                        <text x="280" y="65" font-size="12" fill="#6b9a9a">manto</text>
+                        <polyline points="60,200 140,200 145,160 220,160 225,110 310,110 315,60 360,60"
+                                  stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <text x="320" y="80" font-size="12" fill="#c0392b">corteza</text>
+                        <text x="100" y="195" font-size="11" fill="#888">cargando</text>
+                        <text x="145" y="152" font-size="11" fill="#c0392b" font-weight="bold">sismo</text>
+                        <text x="225" y="102" font-size="11" fill="#c0392b" font-weight="bold">sismo</text>
+                    </svg>
+                    <div class="two-col" style="margin-top:0.3em; font-size:0.75em;">
+                        <div class="highlight-box" style="text-align:center;">
+                            <strong>Carga:</strong> 10 - 1000 anios
+                        </div>
+                        <div class="highlight-box red" style="text-align:center;">
+                            <strong>Ruptura:</strong> 1 - 60 segundos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Video banco de friccion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Banco de friccion: terremotos a escala de laboratorio</h2>
+            <p style="font-size:0.8em;">Existe una conexion entre la fisica de eventos a escala de laboratorio
+            y los procesos a escala terrestre?</p>
+            <div class="two-col" style="font-size:0.75em;">
+                <div>
+                    <div class="highlight-box">
+                        <strong>Laboratorio</strong><br>
+                        9.214 puntos por cm$^2$<br>
+                        $-11 < M_w < -7$
+                    </div>
+                    <p class="credit">Latour et al., 2011, 2013; Aichele et al., 2019, 2020, 2023</p>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Uruguay, Atlantida</strong><br>
+                        18 estaciones en 176.215 km$^2$<br>
+                        $M_w = 4.5$
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:0.3em;">
+                <iframe width="960" height="400" src="https://www.youtube.com/embed/qXsVcxyzz3I?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Exp. 7 -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Exp. 7: Leyes de friccion de Coulomb</h2>
+            <p><em>Verificacion de las leyes de friccion de Amontons-Coulomb</em></p>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;"><strong>Objetivo:</strong> Verificar las tres leyes: (1) $T \propto P$, (2) independencia del area, (3) $\mu_s > \mu_d$.</p>
+                    <p style="font-size:0.8em;"><strong>Montaje:</strong></p>
+                    <ul style="font-size:0.75em; line-height:1.6;">
+                        <li>Bloques de madera/acrilico de diferentes tamanos (misma masa)</li>
+                        <li>Pesas calibradas (50 g a 1 kg)</li>
+                        <li>Dinamometro de resorte (0-10 N)</li>
+                        <li>Superficie plana (madera, metal, vidrio, papel de lija)</li>
+                    </ul>
+                    <p style="font-size:0.8em; margin-top:0.3em;"><strong>Protocolo:</strong></p>
+                    <ol style="font-size:0.75em; line-height:1.6;">
+                        <li>Colocar bloque, conectar dinamometro</li>
+                        <li>Anadir pesas ($P = Mg$)</li>
+                        <li>Tirar a velocidad constante: medir $T$ &rarr; $\mu_d$</li>
+                        <li>Repetir para 5-7 cargas. Graficar $T$ vs. $P$</li>
+                        <li>Para $\mu_s$: aumentar traccion gradualmente hasta movimiento</li>
+                        <li>Repetir con el bloque sobre diferentes caras (verificar 2a ley)</li>
+                    </ol>
+                </div>
+                <div>
+                    <svg viewBox="0 0 300 160" style="width:100%;">
+                        <defs><marker id="arr5" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Surface -->
+                        <rect x="20" y="100" width="260" height="10" fill="#ddd" stroke="#999" stroke-width="1"/>
+                        <line x1="20" y1="110" x2="35" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="50" y1="110" x2="65" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="80" y1="110" x2="95" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="110" y1="110" x2="125" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="140" y1="110" x2="155" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="170" y1="110" x2="185" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="200" y1="110" x2="215" y2="125" stroke="#999" stroke-width="1"/>
+                        <line x1="230" y1="110" x2="245" y2="125" stroke="#999" stroke-width="1"/>
+                        <!-- Block -->
+                        <rect x="70" y="60" width="100" height="40" rx="3" fill="var(--color-teal)" stroke="#333" stroke-width="1.5"/>
+                        <text x="120" y="85" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                        <!-- Weight -->
+                        <rect x="95" y="30" width="50" height="30" rx="2" fill="var(--color-mauve)" stroke="#333" stroke-width="1"/>
+                        <text x="120" y="50" text-anchor="middle" font-size="11" fill="white" font-weight="bold">P</text>
+                        <!-- N arrow -->
+                        <line x1="120" y1="12" x2="120" y2="28" stroke="#333" stroke-width="2" marker-end="url(#arr5)"/>
+                        <text x="132" y="20" font-size="12" fill="#333" font-weight="bold">N</text>
+                        <!-- T arrow -->
+                        <line x1="170" y1="80" x2="220" y2="80" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arr5)"/>
+                        <text x="230" y="84" font-size="14" fill="#c0392b" font-weight="bold">T = $\mu$P</text>
+                    </svg>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.5em;">
+                        <strong>Resultados esperados:</strong>
+                        <ul style="line-height:1.6;">
+                            <li>Relacion lineal $T$ vs. $P$</li>
+                            <li>Misma pendiente para diferentes caras del bloque</li>
+                            <li>$\mu_s > \mu_d$ (tipicamente 10-20%)</li>
+                            <li>Valores tipicos: madera/madera $\approx 0.3-0.5$, vidrio/vidrio $\approx 0.4$</li>
+                        </ul>
+                    </div>
+                    <p class="credit">Ref: Duran, Cap. 2, Sec. 2.2.1, Fig. 14</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Proxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Proxima clase</h2>
+            <p>Clase 9: <strong>Stick-slip y fallas geologicas en laboratorio</strong></p>
+            <ul style="line-height:2;">
+                <li>Fenomeno de stick-slip</li>
+                <li>Modelo masa-resorte e inestabilidad de friccion</li>
+                <li>Simulacion de fallas en laboratorio</li>
+                <li>Distribucion de magnitudes y ley de Gutenberg-Richter</li>
+                <li>Friccion rate-and-state (Dieterich-Ruina)</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografia: Duran, <em>Sands, Powders, and Grains</em> -- Cap. 2, Sec. 2.2.1<br>
+                Scholz, <em>The Mechanics of Earthquakes and Faulting</em> -- Cap. 2
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>

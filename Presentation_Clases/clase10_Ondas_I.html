@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 10 - Ondas en Medios Granulares I</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 10 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:1.8em; color:var(--color-title); line-height:1.1; margin:0;">
+                ONDAS EN MEDIOS GRANULARES I:<br>MEDIO EFECTIVO NO LINEAL
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Ondas en solidos: repaso</li>
+                <li>Particularidades de los medios granulares</li>
+                <li>Cadena de Nesterenko: ecuacion de movimiento</li>
+                <li>Solitones en cadenas granulares</li>
+                <li>Medio efectivo no lineal</li>
+                <li>Velocidad del sonido en funcion de la presion</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Ondas en solidos -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ondas en solidos: repaso</h2>
+            <p>En un solido elastico isotropo, la ecuacion de movimiento se escribe:</p>
+            <div class="eq-box">
+                $\rho \,\dfrac{\partial^2 \mathbf{u}}{\partial t^2} = \left(K + \dfrac{4G}{3}\right)\nabla(\nabla\cdot\mathbf{u}) - G\,\nabla\times(\nabla\times\mathbf{u})$
+            </div>
+            <p style="margin-top:0.8em;">Esto da lugar a dos tipos de ondas de cuerpo:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div class="highlight-box" style="text-align:center;">
+                    <strong>Ondas P</strong> (longitudinales)<br>
+                    <span style="font-size:1.3em;">$v_P = \sqrt{\dfrac{K + \frac{4}{3}G}{\rho}}$</span><br><br>
+                    Compresion-dilatacion<br>
+                    $\nabla \times \mathbf{u} = 0$
+                </div>
+                <div class="highlight-box red" style="text-align:center;">
+                    <strong>Ondas S</strong> (transversales)<br>
+                    <span style="font-size:1.3em;">$v_S = \sqrt{\dfrac{G}{\rho}}$</span><br><br>
+                    Cizallamiento<br>
+                    $\nabla \cdot \mathbf{u} = 0$
+                </div>
+            </div>
+            <p style="font-size:0.7em; margin-top:0.5em;">
+                $K$ = modulo de compresibilidad, $G$ = modulo de cizalladura, $\rho$ = densidad.
+                Siempre $v_P > v_S$ (ya que $K > 0$).
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: Particularidades granulares -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Particularidades de los medios granulares</h2>
+            <p>Los medios granulares se comportan de manera muy diferente a los solidos continuos:</p>
+            <div class="highlight-box" style="margin-top:0.8em;">
+                <strong>1. Contacto no lineal (Hertz):</strong>
+                La fuerza entre dos esferas es $F = k\,\delta^{3/2}$, donde $\delta$ es la interpenetracion.
+                El modulo efectivo depende de la deformacion.
+            </div>
+            <div class="highlight-box red" style="margin-top:0.5em;">
+                <strong>2. Ausencia de tension:</strong>
+                Los granos no pueden <em>tirar</em> unos de otros. La fuerza de contacto es solo compresiva:
+                $F = k\,[\delta]_+^{3/2}$, donde $[x]_+ = \max(x,0)$.
+            </div>
+            <div class="highlight-box" style="margin-top:0.5em;">
+                <strong>3. Dependencia con la presion de confinamiento:</strong>
+                Los modulos elasticos efectivos del medio ($K_\text{eff}$, $G_\text{eff}$) dependen de la presion aplicada $P$, ya que la rigidez de cada contacto depende de la fuerza normal.
+            </div>
+            <p style="margin-top:0.5em; font-size:0.75em;">
+                Consecuencia: la velocidad del sonido en un granular <strong>depende de la amplitud</strong> de la onda
+                y de la <strong>presion de confinamiento</strong>. No hay regimen lineal trivial.
+            </p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Contacto de Hertz - detalle -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Recordatorio: contacto de Hertz</h2>
+            <p>Dos esferas elasticas de radio $R$ y modulo de Young $E$, coeficiente de Poisson $\nu$:</p>
+            <div class="eq-box" style="margin:0.8em 0;">
+                $F = \dfrac{4}{3}\,E^*\,\sqrt{R^*}\;\delta^{3/2}$
+            </div>
+            <div class="two-col" style="font-size:0.85em;">
+                <div>
+                    <p><strong>Modulo efectivo:</strong></p>
+                    <p style="text-align:center;">$\dfrac{1}{E^*} = \dfrac{1-\nu_1^2}{E_1} + \dfrac{1-\nu_2^2}{E_2}$</p>
+                    <p style="margin-top:0.5em;"><strong>Radio efectivo:</strong></p>
+                    <p style="text-align:center;">$\dfrac{1}{R^*} = \dfrac{1}{R_1} + \dfrac{1}{R_2}$</p>
+                </div>
+                <div>
+                    <p>Para esferas identicas ($R_1 = R_2 = R$):</p>
+                    <p style="text-align:center; margin-top:0.5em;">$R^* = \dfrac{R}{2}$</p>
+                    <p style="text-align:center; margin-top:0.5em;">$E^* = \dfrac{E}{2(1-\nu^2)}$</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Rigidez no lineal:</strong><br>
+                        $k_\text{eff} = \dfrac{dF}{d\delta} = \dfrac{3}{2}\,\dfrac{4}{3}E^*\sqrt{R^*}\;\delta^{1/2}$<br>
+                        La rigidez <em>crece</em> con la compresion.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: Cadena de Nesterenko -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cadena de Nesterenko: ecuacion de movimiento</h2>
+            <p>Cadena 1D de esferas identicas de masa $m$ y radio $R$, en contacto hertziano:</p>
+            <div class="eq-box" style="margin:0.8em 0; font-size:1.1em;">
+                $m\,\ddot{u}_n = A\left[\left(u_{n-1} - u_n\right)_+^{3/2} - \left(u_n - u_{n+1}\right)_+^{3/2}\right]$
+            </div>
+            <p>donde $u_n$ es el desplazamiento del grano $n$ respecto a su posicion de equilibrio, y:</p>
+            <div class="eq-box" style="margin:0.5em 0;">
+                $A = \dfrac{E\sqrt{2R}}{3(1-\nu^2)}$
+            </div>
+            <div class="highlight-box red" style="margin-top:0.8em;">
+                <strong>Propiedades clave:</strong>
+                <ul style="margin:0.3em 0; line-height:1.8;">
+                    <li>No linealidad esencial: el exponente $3/2$ impide la linearizacion alrededor de $\delta=0$.</li>
+                    <li>Unilateralidad: $[x]_+ = \max(x,0)$ &mdash; los granos pueden separarse.</li>
+                    <li>Sin pre-compresion: el sistema es <em>sonico vacuum</em> (velocidad del sonido lineal = 0).</li>
+                </ul>
+            </div>
+            <p class="credit">Nesterenko, V. F. <em>Dynamics of Heterogeneous Materials</em>, Springer (2001), Cap. 1</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Solitones -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Solitones en cadenas granulares</h2>
+            <p>Nesterenko (1983) demostro que la cadena hertziana admite soluciones solitonicas.</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p><strong>Aproximacion continua:</strong> si $u_n(t) \to u(x,t)$ con $x = na$:</p>
+                    <div class="eq-box" style="font-size:0.85em;">
+                        $u_{tt} = c_0^2\left[-\left(-u_x\right)^{3/2}\right]_x + \dfrac{a^2}{12}\left[-\left(-u_x\right)^{3/2}\right]_{xxx}$
+                    </div>
+                    <p style="margin-top:0.5em;">El soliton de Nesterenko tiene el perfil:</p>
+                    <div class="eq-box" style="font-size:0.9em;">
+                        $\xi_n = \left(\dfrac{5V^2}{4c_0^2}\right)^{2}\cos^4\!\left(\frac{\sqrt{10}}{5a}\,(x - Vt)\right)$
+                    </div>
+                    <p style="font-size:0.75em;">donde $\xi_n = u_{n-1} - u_n$ es la compresion relativa.</p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Ancho espacial:</strong> $\sim 5$ diametros de grano.<br>
+                        Independiente de la amplitud.
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Relacion velocidad-amplitud:</strong>
+                        <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$V \propto F_m^{1/6}$</p>
+                        (supersonica respecto al sonido lineal)
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Caso con pre-compresion $F_0$:</strong><br>
+                        Si $F_0 > 0$, existe un regimen lineal con:<br>
+                        $c_0 = \sqrt{\frac{3}{2}\frac{A^{2/3}F_0^{1/3}}{m/(2R)}}$
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Nesterenko (1983); Coste et al., Phys. Rev. E 56, 6104 (1997)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Resultados experimentales solitones -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Verificacion experimental: Coste et al. (1997)</h2>
+            <div class="two-col">
+                <div>
+                    <p>Experimento con cadena de esferas de acero inoxidable:</p>
+                    <ul style="line-height:1.8; font-size:0.85em;">
+                        <li>Esferas de 8 mm de diametro</li>
+                        <li>Sensores piezoelectricos embebidos</li>
+                        <li>Impacto con una esfera adicional</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.8em;">
+                        <strong>Resultados clave:</strong>
+                        <ul style="margin:0.3em 0; line-height:1.6;">
+                            <li>Pulso solitario con ancho $\approx 5$ granos</li>
+                            <li>Verificacion de $V \propto F_m^{1/6}$</li>
+                            <li>Sin dispersion: el pulso se mantiene</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red">
+                        <strong>Daraio et al., Nature (2005):</strong>
+                        <p style="font-size:0.85em; margin-top:0.3em;">
+                            Demostraron transmision acustica sintonizable usando
+                            cadenas granulares con pre-compresion variable.
+                        </p>
+                        <ul style="font-size:0.8em; line-height:1.6; margin-top:0.3em;">
+                            <li>Cadenas de esferas de acero y PTFE</li>
+                            <li>Control de la pre-compresion estatica</li>
+                            <li>Transicion de solitones a ondas acusticas lineales</li>
+                            <li>Aplicaciones: filtros acusticos, proteccion contra impactos</li>
+                        </ul>
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">
+                        La velocidad del soliton medida coincide con la prediccion teorica con menos del 5% de error.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Coste et al., Phys. Rev. E 56, 6104 (1997); Daraio et al., Phys. Rev. Lett. 96, 058002 (2006)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Relacion de dispersion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Régimen lineal: relación de dispersión</h2>
+            <p style="font-size:0.85em;">Para perturbaciones de pequeña amplitud alrededor de una cadena pre-comprimida:</p>
+            <div class="eq-box" style="font-size:1.2em; margin:0.5em 0;">
+                $\omega = \dfrac{2c_0}{d}\left|\sin\!\left(\dfrac{kd}{2}\right)\right|$
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Frecuencia de corte:</strong></p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\omega_\text{max} = \dfrac{2c_0}{d}$
+                    </div>
+                    <p style="font-size:0.78em; margin-top:0.3em;">No hay propagación por encima de esta frecuencia.</p>
+                    <p style="font-size:0.85em; margin-top:0.3em;"><strong>Límite continuo</strong> ($kd \ll 1$):</p>
+                    <div class="eq-box" style="font-size:1.0em;">
+                        $\omega \approx c_0 \cdot k$
+                    </div>
+                    <p style="font-size:0.78em;">Sin dispersión (medio continuo homogéneo).</p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Consecuencia física:</strong> un empaquetamiento granular actúa como un <strong>filtro pasa-bajos</strong> para ondas acústicas.
+                    </div>
+                    <div class="eq-box" style="font-size:0.85em; margin-top:0.5em;">
+                        La frecuencia de corte $\omega_\text{max} = 2c_0/d$ implica que ondas con $\lambda < 2d$ no pueden propagarse — la microestructura filtra las altas frecuencias.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>Conexión:</strong> los solitones (no lineales, sin dispersión) y las ondas lineales (dispersivas) son dos límites de la misma cadena.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Andreotti et al., <em>Granular Media</em> (2013), &sect;3.5.4, eq. 3.64, p.106</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Señal coherente y coda -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Propagación en medio desordenado: coherente + coda</h2>
+            <p style="font-size:0.85em;">Cuando un pulso acústico corto viaja a través de un empaquetamiento granular desordenado, la señal recibida tiene <strong>dos partes</strong>:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>1. Señal coherente (balística):</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Primer arribo</li>
+                            <li>Forma <strong>reproducible</strong> entre distintas configuraciones</li>
+                            <li>Corresponde al medio efectivo</li>
+                            <li>Se auto-promedia (sobrevive al promediar sobre configuraciones)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>2. Coda (speckle):</strong>
+                        <ul style="margin:0.3em 0; line-height:1.7;">
+                            <li>Llegadas tardías de ondas múltiplemente dispersadas</li>
+                            <li>Depende de la <strong>configuración específica</strong> de granos</li>
+                            <li>Se cancela al promediar sobre configuraciones</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                La separación coherente/coda es análoga a la sismología: la onda directa (medio efectivo) llega primero, seguida de la coda por scattering múltiple.
+            </div>
+            <p style="font-size:0.78em; margin-top:0.3em;">
+                Así funciona la teoría de medio efectivo <strong>en la práctica</strong>: describe solamente el arribo coherente. La coda contiene información sobre el desorden a escala del grano.
+            </p>
+            <p class="credit">Andreotti et al. (2013), &sect;3.5.4, p.106-107, Fig. 3.26; Jia et al., Phys. Rev. Lett. 82, 1863 (1999)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Medio efectivo no lineal -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teoria de medio efectivo no lineal</h2>
+            <p>En un empaquetamiento 3D bajo presion de confinamiento $P$:</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p><strong>Teoria de Hertz-Mindlin:</strong></p>
+                    <p style="font-size:0.85em;">Cada contacto tiene rigidez normal $k_n$ y tangencial $k_t$:</p>
+                    <div class="eq-box" style="font-size:0.85em;">
+                        $k_n = \dfrac{2E^*\sqrt{R^*\delta_0}}{1} = \left(\frac{3}{2}A\right)^{2/3}F_0^{1/3}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.85em; margin-top:0.3em;">
+                        $k_t = \dfrac{2(1-\nu)}{2-\nu}\,k_n$
+                    </div>
+                    <p style="font-size:0.8em; margin-top:0.5em;">
+                        La fuerza sobre cada grano es $F_0 \propto P / (Z\phi)$, donde
+                        $Z$ es el numero de coordinacion y $\phi$ la fraccion de empaquetamiento.
+                    </p>
+                </div>
+                <div>
+                    <p><strong>Modulos efectivos:</strong></p>
+                    <div class="eq-box" style="font-size:0.85em;">
+                        $K_\text{eff} = \dfrac{Z\phi}{12\pi R}\,k_n$
+                    </div>
+                    <div class="eq-box" style="font-size:0.85em; margin-top:0.3em;">
+                        $G_\text{eff} = \dfrac{Z\phi}{20\pi R}\left(k_n + \frac{3}{2}k_t\right)$
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Prediccion (Hertz):</strong>
+                        <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$v_s \propto P^{1/6}$</p>
+                        ya que $k_n \propto \delta_0^{1/2} \propto F_0^{1/3} \propto P^{1/3}$<br>
+                        y $v_s \propto \sqrt{K_\text{eff}/\rho} \propto k_n^{1/2} \propto P^{1/6}$.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Digby, J. Appl. Mech. 48, 803 (1981); Walton, J. Mech. Phys. Solids 35, 213 (1987)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: Velocidad vs presion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Velocidad del sonido vs. presion</h2>
+            <div class="two-col">
+                <div>
+                    <p><strong>Prediccion teorica (Hertz-Mindlin):</strong></p>
+                    <div class="eq-box" style="font-size:1.1em;">
+                        $v_s \propto P^{1/6} \approx P^{0.167}$
+                    </div>
+                    <p style="margin-top:0.8em;"><strong>Observaciones experimentales:</strong></p>
+                    <div class="eq-box" style="font-size:1.1em; border-color: var(--color-mauve);">
+                        $v_s \propto P^{1/4} \approx P^{0.25}$
+                    </div>
+                    <p style="margin-top:0.8em; font-size:0.85em;">
+                        El desacuerdo es sistematico y robusto: el exponente medido es
+                        siempre mayor que $1/6$.
+                    </p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="margin-top:0.3em;">
+                        <strong>Posibles explicaciones:</strong>
+                        <ul style="line-height:1.8; font-size:0.85em;">
+                            <li><strong>Numero de coordinacion $Z(P)$:</strong>
+                                $Z$ crece con $P$, lo que contribuye a aumentar el exponente efectivo.</li>
+                            <li><strong>Heterogeneidad de las fuerzas:</strong>
+                                la distribucion de fuerzas de contacto no es uniforme.</li>
+                            <li><strong>Rugosidad de los granos:</strong>
+                                micro-asperezas cambian la ley de contacto a bajas fuerzas.</li>
+                            <li><strong>Rearreglos de la red:</strong>
+                                a baja presion, nuevos contactos se forman.</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em; font-size:0.85em;">
+                        Makse et al. (2004) mostraron que incluyendo $Z(P)$ en la EMT se obtiene
+                        $v_s \propto P^{1/4}$, en acuerdo con las mediciones.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Jia et al., Phys. Rev. Lett. 82, 1863 (1999); Makse et al., Phys. Rev. E 70, 061302 (2004)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: Resultados Daraio -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resultados experimentales: Daraio et al.</h2>
+            <p><strong>Transmision acustica sintonizable</strong> (Phys. Rev. Lett. 2006)</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Principio:</strong></p>
+                    <ul style="font-size:0.8em; line-height:1.8;">
+                        <li>Cadena granular 1D con pre-compresion estatica $F_0$</li>
+                        <li>Impacto genera un pulso</li>
+                        <li>Si $F_0 = 0$: soliton de Nesterenko (altamente no lineal)</li>
+                        <li>Si $F_0 \gg F_\text{impacto}$: onda acustica lineal</li>
+                        <li>Transicion continua entre los dos regimenes</li>
+                    </ul>
+                    <div class="eq-box" style="margin-top:0.5em; font-size:0.85em;">
+                        Parametro de no-linealidad: $\varepsilon = \dfrac{F_\text{dyn}}{F_0}$<br><br>
+                        $\varepsilon \gg 1$: soliton &emsp; $\varepsilon \ll 1$: lineal
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Aplicaciones:</strong></p>
+                    <div class="highlight-box">
+                        <strong>Proteccion contra impactos:</strong><br>
+                        Los solitones granulares pueden atrapar y redistribuir
+                        la energia de un impacto mecanico.
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Ensayo no destructivo (NDE):</strong><br>
+                        Sensibilidad del soliton a la rigidez del medio: deteccion
+                        de defectos, caracterizacion de materiales.
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Lentes acusticas:</strong><br>
+                        Cadenas con gradiente de pre-compresion permiten
+                        focalizar energia mecanica.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Daraio et al., Phys. Rev. Lett. 96, 058002 (2006); Sen et al., Phys. Rep. 462, 21 (2008)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: Resumen y tabla -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen: ondas en granulares vs. solidos</h2>
+            <table style="font-size:0.7em; margin-top:0.5em;">
+                <thead>
+                    <tr><th>Propiedad</th><th>Solido continuo</th><th>Medio granular</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ley de contacto</td><td>Lineal (ley de Hooke)</td><td>No lineal ($F \propto \delta^{3/2}$)</td></tr>
+                    <tr><td>Tension</td><td>Soporta tension y compresion</td><td>Solo compresion ($[x]_+$)</td></tr>
+                    <tr><td>Velocidad del sonido</td><td>Constante</td><td>$v_s \propto P^{1/6}$ a $P^{1/4}$</td></tr>
+                    <tr><td>Dispersion</td><td>Debil</td><td>Fuerte (no linealidad)</td></tr>
+                    <tr><td>Ondas no lineales</td><td>Solitones (KdV, etc.)</td><td>Soliton de Nesterenko ($\sim 5$ granos)</td></tr>
+                    <tr><td>Dependencia amplitud</td><td>$v$ independiente de $A$</td><td>$V \propto F_m^{1/6}$</td></tr>
+                    <tr><td>Regimen lineal</td><td>Siempre (peq. amplitudes)</td><td>Solo si $F_0 > 0$ (pre-compresion)</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box" style="margin-top:0.8em; text-align:center;">
+                <strong>Conclusion:</strong> La propagacion de ondas en medios granulares es <em>fundamentalmente diferente</em>
+                de la propagacion en solidos continuos, debido a la no-linealidad del contacto y la ausencia de tension.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 13: Proxima clase -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Proxima clase</h2>
+            <p>Clase 11: <strong>Ondas en medios granulares II: teoria de Biot</strong></p>
+            <ul style="line-height:2;">
+                <li>Medios porosos saturados</li>
+                <li>Teoria de Biot: ecuaciones acopladas solido-fluido</li>
+                <li>Ondas lentas y rapidas</li>
+                <li>Aplicaciones geofisicas</li>
+            </ul>
+            <br>
+            <p style="color:#888;">
+                Bibliografia: Nesterenko, <em>Dynamics of Heterogeneous Materials</em> &mdash; Cap. 1;
+                Andreotti et al., <em>Granular Media</em> &mdash; Cap. 8;
+                Biot, JASA 28, 168 (1956)
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
