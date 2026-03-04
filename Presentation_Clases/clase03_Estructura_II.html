@@ -355,11 +355,11 @@
                 </div>
                 <div style="font-size:0.7em;">
                     <h3 style="font-size:0.9em;">Consecuencias</h3>
-                    <ul style="line-height:2.0;">
+                    <ul style="line-height:1.6;">
                         <li><strong>Empaquetamiento denso:</strong> \(\psi > 0\) (dilata, luego alcanza el estado crítico)</li>
                         <li><strong>Estado crítico:</strong> \(\psi = 0\) (volumen constante bajo deformación)</li>
                     </ul>
-                    <p style="margin-top:0.5em;">Relación entre fricción microscópica y macroscópica:</p>
+                    <p style="margin-top:0.3em;">Relación entre fricción microscópica y macroscópica:</p>
                     <div class="eq-box" style="font-size:1.05em;">
                         \[\tan(\delta_{\text{macro}}) = \tan(\delta_{\text{micro}}) + \tan(\psi)\]
                     </div>
@@ -367,7 +367,7 @@
                     <div class="eq-box">
                         \[\delta_{\text{macro}} = \delta_{\text{micro}}\]
                     </div>
-                    <div class="highlight-box" style="margin-top:0.5em;">
+                    <div class="highlight-box" style="margin-top:0.2em;">
                         <p><strong>El ángulo de dilatancia \(\psi\) conecta la fricción microscópica con la resistencia macroscópica del material granular.</strong></p>
                     </div>
                 </div>
@@ -493,9 +493,9 @@
                     <p style="margin-top:0.3em; color:var(--color-mauve);"><strong>Nota:</strong> agitar un medio granular <em>segrega</em> en vez de mezclar -- lo opuesto a un liquido.</p>
                 </div>
                 <div style="text-align:center;">
-                    <iframe width="480" height="270" src="https://www.youtube.com/embed/D0OMbX-rHhc?start=129&end=141&mute=1" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                    <iframe width="480" height="270" data-src="https://www.youtube.com/embed/D0OMbX-rHhc?start=129&end=141&mute=1" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
                     <p class="credit"><a href="https://www.youtube.com/watch?v=D0OMbX-rHhc" target="_blank">QuantumFracture, 2022</a></p>
-                    <iframe width="480" height="270" src="https://www.youtube.com/embed/UmZg-9mfkLs" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-top:0.5em;"></iframe>
+                    <iframe width="480" height="270" data-src="https://www.youtube.com/embed/UmZg-9mfkLs" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-top:0.5em;"></iframe>
                     <p class="credit">Segregacion acero/vidrio/malta -- T. Gallot, 2021</p>
                 </div>
             </div>
@@ -741,6 +741,7 @@
         transition: 'slide',
         width: 1600,
         height: 900,
+        preloadIframes: false,
         math: {
             mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
             config: 'TeX-AMS_HTML-full'

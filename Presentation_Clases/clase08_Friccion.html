@@ -513,7 +513,7 @@
                 </div>
             </div>
             <div style="text-align:center; margin-top:0.3em;">
-                <iframe width="960" height="400" src="https://www.youtube.com/embed/qXsVcxyzz3I?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                <iframe width="960" height="400" data-src="https://www.youtube.com/embed/qXsVcxyzz3I?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
             </div>
         </div>
     </section>
@@ -618,6 +618,7 @@
 <script>
     Reveal.initialize({
         hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        preloadIframes: false,
         math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
         plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
     });

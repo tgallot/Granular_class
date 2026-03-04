@@ -804,7 +804,7 @@
                     </div>
                 </div>
                 <div style="text-align:center;">
-                    <iframe width="500" height="500" src="https://www.youtube.com/embed/hV6ljLDOVrc?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                    <iframe width="500" height="500" data-src="https://www.youtube.com/embed/hV6ljLDOVrc?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
                     <p class="credit"><a href="https://www.youtube.com/watch?v=hV6ljLDOVrc" target="_blank">Richters Finger, Force Chains in Granular Matter</a></p>
                 </div>
             </div>
@@ -870,6 +870,7 @@
         transition: 'slide',
         width: 1600,
         height: 900,
+        preloadIframes: false,
         math: {
             mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
             config: 'TeX-AMS_HTML-full'
