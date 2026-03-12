@@ -16,13 +16,13 @@
         .reveal .slides section { text-align: left; }
         .reveal .slide-number { font-size: 14px; }
         .reveal .slides section[data-background-color] { padding-left: 15%; }
-        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .credit { font-size: 0.55em; color: #999; font-style: italic; }
         .reveal .two-col { display: flex; gap: 1.5em; }
         .reveal .two-col > div { flex: 1; }
         .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
         .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
         .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
-        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal .footnote { font-size: 0.55em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
         .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
         .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
@@ -73,7 +73,10 @@
         </div>
     </section>
 
-    <!-- SLIDE 3: Distribución heterogénea de fuerzas -->
+    <!-- SLIDE 3: Distribución heterogénea de fuerzas (vertical stack) -->
+    <section>
+
+    <!-- 3a: Resultado principal -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
@@ -81,7 +84,7 @@
             <h2>Distribución heterogénea de fuerzas</h2>
             <div class="two-col">
                 <div>
-                    <img src="../Course_Argentine/media/extracted_u3/img-006.png" alt="Cilindro carbónico y distribución P(f)" style="max-height:350px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-006.png" alt="Cilindro carbónico y distribución P(f)" style="max-height:350px;">
                     <p class="credit">Cilindro de papel carbónico: la fuerza sobre cada grano se mide por la impresión dejada.</p>
                 </div>
                 <div style="font-size:0.7em;">
@@ -99,10 +102,191 @@
                     </div>
                 </div>
             </div>
+            <p style="text-align:center; font-size:0.5em; color:#888; margin-top:0.3em;">&#x25BC; Derivación (Liu et al., Science 1995)</p>
         </div>
     </section>
 
-    <!-- SLIDE 4: Modelo q de Liu et al. -->
+    <!-- 3b: Experimento de Liu et al. (1995) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Experimento: papel carbónico (Liu et al., 1995)</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Dispositivo experimental:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Contenedor cilíndrico (90 mm diámetro, 75 mm alto)</li>
+                        <li>Esferas de vidrio Pyrex ($r = 3{,}5$ mm) en fluido de índice adaptado (glicerol + agua)</li>
+                        <li><strong>Papel carbónico</strong> en la base del contenedor</li>
+                        <li>Fuerza aplicada: $F = 310$ N sobre la superficie superior</li>
+                        <li>El área de la marca $\propto$ fuerza ejercida por cada grano</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Resultado clave:</strong> la distribución de fuerzas en la base es exponencial:
+                    </div>
+                    <div class="eq-box" style="font-size:1.1em; margin-top:0.3em;">
+                        \[ P(f) = C\,e^{-\beta f} \]
+                    </div>
+                    <p style="margin-top:0.3em;">Ajuste: $\beta = 0{,}64\;\text{N}^{-1}$ (total), $\beta = 1{,}02\;\text{N}^{-1}$ (centro)</p>
+                </div>
+                <div style="font-size:0.6em;">
+                    <div style="text-align:center; background:#f8f8f8; border-radius:8px; padding:0.8em;">
+                        <p style="font-weight:700; color:var(--color-dark); margin-bottom:0.5em;">Esquema del experimento</p>
+                        <svg viewBox="0 0 320 360" style="width:100%; max-width:300px;">
+                            <!-- Container -->
+                            <rect x="60" y="40" width="200" height="220" rx="5" fill="none" stroke="#3a5556" stroke-width="3"/>
+                            <!-- Piston -->
+                            <rect x="65" y="20" width="190" height="25" rx="3" fill="#8b5e6b" opacity="0.7"/>
+                            <text x="160" y="38" text-anchor="middle" font-size="12" fill="white" font-family="Inter" font-weight="700">Pistón (310 N)</text>
+                            <!-- Arrow down -->
+                            <line x1="160" y1="5" x2="160" y2="18" stroke="#c0392b" stroke-width="3" marker-end="url(#arrowDown)"/>
+                            <text x="175" y="14" font-size="11" fill="#c0392b" font-family="Inter" font-weight="700">F</text>
+                            <!-- Beads -->
+                            <circle cx="110" cy="80" r="15" fill="#6b9a9a" opacity="0.5" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="145" cy="75" r="15" fill="#6b9a9a" opacity="0.5" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="180" cy="82" r="15" fill="#6b9a9a" opacity="0.5" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="215" cy="78" r="15" fill="#6b9a9a" opacity="0.5" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="95" cy="115" r="15" fill="#6b9a9a" opacity="0.4" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="130" cy="110" r="15" fill="#6b9a9a" opacity="0.4" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="165" cy="115" r="15" fill="#6b9a9a" opacity="0.4" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="200" cy="112" r="15" fill="#6b9a9a" opacity="0.4" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="230" cy="108" r="15" fill="#6b9a9a" opacity="0.4" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="110" cy="148" r="15" fill="#6b9a9a" opacity="0.35" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="145" cy="145" r="15" fill="#6b9a9a" opacity="0.35" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="180" cy="150" r="15" fill="#6b9a9a" opacity="0.35" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="215" cy="147" r="15" fill="#6b9a9a" opacity="0.35" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="95" cy="183" r="15" fill="#6b9a9a" opacity="0.3" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="130" cy="180" r="15" fill="#6b9a9a" opacity="0.3" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="165" cy="185" r="15" fill="#6b9a9a" opacity="0.3" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="200" cy="182" r="15" fill="#6b9a9a" opacity="0.3" stroke="#3a5556" stroke-width="1"/>
+                            <circle cx="230" cy="178" r="15" fill="#6b9a9a" opacity="0.3" stroke="#3a5556" stroke-width="1"/>
+                            <!-- Bottom beads touching carbon paper -->
+                            <circle cx="110" cy="218" r="15" fill="#6b9a9a" opacity="0.6" stroke="#3a5556" stroke-width="1.5"/>
+                            <circle cx="145" cy="215" r="15" fill="#6b9a9a" opacity="0.6" stroke="#3a5556" stroke-width="1.5"/>
+                            <circle cx="180" cy="220" r="15" fill="#6b9a9a" opacity="0.6" stroke="#3a5556" stroke-width="1.5"/>
+                            <circle cx="215" cy="217" r="15" fill="#6b9a9a" opacity="0.6" stroke="#3a5556" stroke-width="1.5"/>
+                            <!-- Carbon paper -->
+                            <rect x="60" y="260" width="200" height="12" fill="#333" opacity="0.85"/>
+                            <text x="160" y="269" text-anchor="middle" font-size="9" fill="white" font-family="Inter">Papel carbónico</text>
+                            <!-- Marks on paper -->
+                            <circle cx="110" cy="282" r="8" fill="#333" opacity="0.7"/>
+                            <circle cx="145" cy="282" r="4" fill="#333" opacity="0.5"/>
+                            <circle cx="180" cy="282" r="10" fill="#333" opacity="0.8"/>
+                            <circle cx="215" cy="282" r="5" fill="#333" opacity="0.6"/>
+                            <text x="160" y="305" text-anchor="middle" font-size="10" fill="#666" font-family="Inter">Marcas ∝ fuerza</text>
+                            <!-- Label -->
+                            <text x="280" y="150" font-size="10" fill="#3a5556" font-family="Inter" transform="rotate(90,280,150)">D ≥ 5 capas</text>
+                            <defs><marker id="arrowDown" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 0 L 5 10 z" fill="#c0392b"/></marker></defs>
+                        </svg>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        Para $\tilde{f} = f/\langle f \rangle$ (fuerza normalizada), $P(\tilde{f})$ se vuelve <strong>independiente de la profundidad</strong> cuando $D \geq 5$ capas.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Liu, Nagel, Schecter, Coppersmith, Majumdar, Narayan &amp; Witten, <em>Science</em> <strong>269</strong>, 513 (1995)</p>
+        </div>
+    </section>
+
+    <!-- 3c: Modelo q — definición y ecuaciones -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Modelo q: ecuación estocástica</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Red regular:</strong> cada grano en la capa $D$, sitio $i$, soporta fuerza $f(D,i)$. Transmite fracciones aleatorias $q_{ji}$ a $N$ granos de la capa inferior.</p>
+                    <div class="eq-box" style="font-size:1.0em; margin:0.5em 0;">
+                        <p style="font-size:0.7em; color:#666; margin-bottom:0.2em;">Ecuación estocástica:</p>
+                        \[ f(D+1,\,j) = 1 + \sum_{i} q_{ji}(D)\;f(D,i) \]
+                    </div>
+                    <p style="margin-top:0.3em;"><strong>Vínculo:</strong> todo el peso se transmite</p>
+                    <div class="eq-box" style="font-size:1.0em; margin:0.3em 0;">
+                        \[ \sum_{j=1}^{N} q_{ij} = 1 \]
+                    </div>
+                    <p style="margin-top:0.3em;"><strong>Distribución de las fracciones:</strong></p>
+                    <div class="eq-box" style="font-size:0.9em; margin:0.3em 0;">
+                        \[ \rho(q_{i1},\ldots,q_{iN}) = \left[\prod_{j} f(q_{ij})\right]\;\delta\!\left(\sum_{j} q_{ij} - 1\right) \]
+                    </div>
+                    <p style="margin-top:0.3em;">para alguna función $f(x)$. El caso <strong>"uniforme"</strong> corresponde a $f(q_{ij}) = \text{cte}$.</p>
+                </div>
+                <div style="font-size:0.65em;">
+                    <p><strong>Aproximación de campo medio:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Las fuerzas $f$ en sitios vecinos de una misma capa están correlacionados</li>
+                        <li>Campo medio: <strong>ignorar las correlaciones</strong> entre vecinos</li>
+                        <li>Para $f(q) = \text{cte}$, el campo medio es <strong>exacto</strong> para todo $N$</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Propiedad clave:</strong> para <em>cualquier</em> distribución $f(q)$, el campo medio predice que asintóticamente:
+                        \[ P(\tilde{f}) \sim \tilde{f}^{\,N-1}\,e^{-N\tilde{f}} \quad \text{para } \tilde{f} \gg 1 \]
+                        La cola exponencial es <strong>universal</strong>.
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Conexión con el TCL:</strong> la fuerza sobre un grano profundo es la suma de muchas contribuciones aleatorias. Por el <strong>teorema central del límite</strong>, la distribución converge a una forma universal independiente de $f(q)$.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Liu et al., <em>Science</em> <strong>269</strong>, 513 (1995), Eqs. 2–4</p>
+        </div>
+    </section>
+
+    <!-- 3d: Solución exacta campo medio -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Solución exacta: distribución $P(\tilde{f})$</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p>Para la distribución <strong>uniforme</strong> $f(q) = \text{cte}$, con fuerza normalizada $\tilde{f} = f/\langle f \rangle$, la solución exacta del campo medio cuando $D \to \infty$ es:</p>
+                    <div class="eq-box" style="font-size:1.1em; margin:0.5em 0; padding:0.6em;">
+                        \[ \boxed{P(\tilde{f}) = \frac{N^N}{(N-1)!}\;\tilde{f}^{\,N-1}\;e^{-N\tilde{f}}} \]
+                    </div>
+                    <p style="margin-top:0.3em;">Esta es una <strong>distribución Gamma</strong> de parámetros $(N, N)$.</p>
+                    <table style="margin-top:0.5em; font-size:0.95em;">
+                        <tr><th>Red</th><th>$N$</th><th>$P(\tilde{f})$</th></tr>
+                        <tr><td>Triangular 2D</td><td>2</td><td>$4\tilde{f}\,e^{-2\tilde{f}}$</td></tr>
+                        <tr><td>FCC 3D</td><td>3</td><td>$\frac{27}{2}\tilde{f}^2\,e^{-3\tilde{f}}$</td></tr>
+                        <tr><td>Genérico</td><td>$N$</td><td>$\frac{N^N}{(N-1)!}\,\tilde{f}^{N-1}\,e^{-N\tilde{f}}$</td></tr>
+                    </table>
+                    <p style="margin-top:0.5em;"><strong>Verificación:</strong> $\int_0^\infty P(\tilde{f})\,d\tilde{f} = 1$ y $\int_0^\infty \tilde{f}\,P(\tilde{f})\,d\tilde{f} = 1$ (normalización).</p>
+                </div>
+                <div style="font-size:0.65em;">
+                    <p><strong>Pasos de la derivación:</strong></p>
+                    <ol style="line-height:2.0;">
+                        <li>Escribir $f(D+1,j) = 1 + \sum_i q_{ji}\,f(D,i)$</li>
+                        <li>En campo medio, cada $q_{ji}\,f(D,i)$ es una variable aleatoria independiente</li>
+                        <li>$P(\tilde{f})$ satisface una ecuación de convolución iterada</li>
+                        <li>Para $f(q)=\text{cte}$, la transformada de Laplace se factoriza:
+                        $\hat{P}(s) \propto \left(\frac{N}{s+N}\right)^N$</li>
+                        <li>La anti-transformada da la <strong>distribución Gamma</strong></li>
+                    </ol>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Resultado central:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li>$\tilde{f} \ll 1$: $P(\tilde{f}) \sim \tilde{f}^{\,N-1}$ (plateau o cero según $N$)</li>
+                            <li>$\tilde{f} \gg 1$: $P(\tilde{f}) \sim e^{-N\tilde{f}}$ (cola exponencial)</li>
+                            <li>Máximo en $\tilde{f} = (N-1)/N$ (cerca de $\langle \tilde{f} \rangle = 1$)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        El acuerdo con simulaciones de esferas y con el experimento de papel carbónico es <strong>excelente</strong>, sin parámetros ajustables.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Liu et al., <em>Science</em> <strong>269</strong>, 513 (1995), Eq. 5 &amp; Fig. 3</p>
+        </div>
+    </section>
+
+    </section><!-- end vertical stack -->
+
+    <!-- SLIDE 4: Modelo q de Liu et al. (vertical stack) -->
+    <section>
+
+    <!-- 4a: Modelo q -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% auto"
              data-background-position="left center">
@@ -155,10 +339,60 @@
                     <p class="credit" style="margin-top:0.5em;">Andreotti et al., <em>Granular Media</em> (2013), §3.2.2, p.73–76</p>
                 </div>
             </div>
+            <p style="text-align:center; font-size:0.5em; color:#888; margin-top:0.3em;">&#x25BC; Práctico asociado</p>
         </div>
     </section>
 
-    <!-- SLIDE 5: Cadenas de fuerza - observación -->
+    <!-- 4b: Práctico del modelo q -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Práctico: Modelo q de Liu et al.</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Objetivo:</strong> explorar analítica y numéricamente el modelo q para comprender el origen de la distribución exponencial de fuerzas en medios granulares.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Estructura del práctico (6 preguntas):</strong>
+                        <ol style="line-height:2.0; margin-top:0.3em;">
+                            <li><strong>Campo medio:</strong> derivar la ecuación de convolución para $P(f)$</li>
+                            <li><strong>Transformada de Laplace:</strong> resolver la ecuación para $q$ uniforme</li>
+                            <li><strong>Distribución Gamma:</strong> obtener $P(\tilde{f}) = \frac{N^N}{(N-1)!}\tilde{f}^{N-1}e^{-N\tilde{f}}$</li>
+                            <li><strong>Casos particulares:</strong> calcular $P(\tilde{f})$ para $N=2$ y $N=3$</li>
+                            <li><strong>Simulación numérica:</strong> implementar el modelo q en Python, comparar con la solución analítica</li>
+                            <li><strong>Más allá del campo medio:</strong> discutir los efectos de correlaciones</li>
+                        </ol>
+                    </div>
+                </div>
+                <div style="font-size:0.65em;">
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Conceptos clave del práctico:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li>Conexión entre el modelo q y el <strong>teorema central del límite</strong></li>
+                            <li>Universalidad de la cola exponencial</li>
+                            <li>Rol de la coordinación $N$ en la forma de $P(f)$</li>
+                            <li>Comparación teoría / simulación / experimento</li>
+                        </ul>
+                    </div>
+                    <div class="eq-box" style="margin-top:0.5em; font-size:0.95em;">
+                        <p style="margin-bottom:0.3em;"><strong>Resultado principal a demostrar:</strong></p>
+                        \[ P(\tilde{f}) = \frac{N^N}{(N-1)!}\;\tilde{f}^{\,N-1}\;e^{-N\tilde{f}} \]
+                    </div>
+                    <p style="margin-top:0.8em; font-size:1.1em; color:var(--color-dark); font-weight:700;">
+                        Ver: <em>Practico_Modelo_q_Liu.pdf</em> en Actividades
+                    </p>
+                    <p class="credit" style="margin-top:0.3em;">Basado en Liu et al., <em>Science</em> 269, 513 (1995)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- end Modelo q vertical stack -->
+
+    <!-- SLIDE 5: Cadenas de fuerza - observación (vertical stack) -->
+    <section>
+
+    <!-- 5a: Video y observación -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
@@ -179,12 +413,75 @@
                     </div>
                 </div>
                 <div style="text-align:center;">
-                    <iframe width="500" height="420" data-src="https://www.youtube.com/embed/hV6ljLDOVrc?mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                    <iframe width="500" height="420" src="https://www.youtube-nocookie.com/embed/hV6ljLDOVrc?mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="Force Chains in Granular Matter" style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
                     <p class="credit"><a href="https://www.youtube.com/watch?v=hV6ljLDOVrc" target="_blank">Richters Finger, Force Chains in Granular Matter</a></p>
+                </div>
+            </div>
+            <p style="text-align:center; font-size:0.5em; color:#888; margin-top:0.3em;">&#x25BC; Cuantificación de la distribución de fuerzas</p>
+        </div>
+    </section>
+
+    <!-- 5b: Cuantificación de P(f) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Distribución de fuerzas: cuantificación</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Forma universal</strong> de $P(f/\langle f\rangle)$:</p>
+                    <div style="text-align:center; margin:0.5em 0;">
+                        <svg viewBox="0 0 420 280" style="width:100%; max-width:400px; background:#fafafa; border-radius:8px;">
+                            <!-- Axes -->
+                            <line x1="60" y1="240" x2="390" y2="240" stroke="#333" stroke-width="2"/>
+                            <line x1="60" y1="240" x2="60" y2="20" stroke="#333" stroke-width="2"/>
+                            <!-- Axis labels -->
+                            <text x="225" y="270" text-anchor="middle" font-size="14" fill="#333" font-family="Inter">f / ⟨f⟩</text>
+                            <text x="25" y="130" text-anchor="middle" font-size="14" fill="#333" font-family="Inter" transform="rotate(-90,25,130)">P(f/⟨f⟩)</text>
+                            <!-- Tick marks -->
+                            <line x1="170" y1="240" x2="170" y2="245" stroke="#333" stroke-width="1.5"/>
+                            <text x="170" y="258" text-anchor="middle" font-size="12" fill="#333" font-family="Inter">1</text>
+                            <line x1="280" y1="240" x2="280" y2="245" stroke="#333" stroke-width="1.5"/>
+                            <text x="280" y="258" text-anchor="middle" font-size="12" fill="#333" font-family="Inter">2</text>
+                            <!-- Distribution curve -->
+                            <path d="M 65,220 Q 90,180 120,100 Q 140,55 170,50 Q 200,55 230,90 Q 270,150 310,195 Q 340,220 380,235" fill="none" stroke="#3a5556" stroke-width="3"/>
+                            <!-- Shaded region: power-law -->
+                            <path d="M 65,240 L 65,220 Q 90,180 120,100 Q 140,55 170,50 L 170,240 Z" fill="#6b9a9a" opacity="0.2"/>
+                            <!-- Shaded region: exponential -->
+                            <path d="M 170,240 L 170,50 Q 200,55 230,90 Q 270,150 310,195 Q 340,220 380,235 L 380,240 Z" fill="#8b5e6b" opacity="0.15"/>
+                            <!-- Annotations -->
+                            <text x="115" y="175" text-anchor="middle" font-size="12" fill="#3a5556" font-family="Inter" font-weight="700">~f&#x1D45;</text>
+                            <text x="290" y="165" text-anchor="middle" font-size="12" fill="#8b5e6b" font-family="Inter" font-weight="700">~exp(-&#x3B2;f)</text>
+                            <!-- Vertical line at f=<f> -->
+                            <line x1="170" y1="48" x2="170" y2="240" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+                            <text x="172" y="40" font-size="11" fill="#666" font-family="Inter">⟨f⟩</text>
+                        </svg>
+                    </div>
+                    <p style="margin-top:0.3em;">Dos regímenes separados por $f = \langle f \rangle$:</p>
+                    <ul style="line-height:1.8;">
+                        <li>$f < \langle f\rangle$: power-law $P \sim (f/\langle f\rangle)^\alpha$</li>
+                        <li>$f > \langle f\rangle$: cola exponencial $P \sim e^{-\beta f/\langle f\rangle}$</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.65em;">
+                    <p><strong>Datos cuantitativos</strong> (experimentos + simulaciones):</p>
+                    <table style="font-size:0.95em; margin:0.5em 0;">
+                        <tr><th>Magnitud</th><th>Valor típico</th></tr>
+                        <tr><td>$f_{\max}/f_{\min}$</td><td>$\sim 10^3 - 10^4$</td></tr>
+                        <tr><td>Contactos con $f > \langle f\rangle$</td><td>$\sim 30\%$</td></tr>
+                        <tr><td>Carga soportada por $f > \langle f\rangle$</td><td>$\sim 70\%$</td></tr>
+                        <tr><td>Exponente $\beta$ (cola)</td><td>$1.0 - 1.5$</td></tr>
+                    </table>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Consecuencia geofísica:</strong> la enorme heterogeneidad de fuerzas implica que las propiedades mecánicas (módulos elásticos, resistencia al corte) de un suelo granular <strong>no pueden deducirse</strong> del contacto individual promedio: dependen de la estructura completa de la red de fuerzas.
+                    </div>
+                    <p class="footnote">Mueth, Jaeger &amp; Nagel, <em>Phys. Rev. E</em> <strong>57</strong>, 3164 (1998); Majmudar &amp; Behringer, <em>Nature</em> <strong>435</strong>, 1079 (2005)</p>
                 </div>
             </div>
         </div>
     </section>
+
+    </section><!-- end Cadenas de fuerza observación vertical stack -->
 
     <!-- SLIDE 5: Cadenas de fuerza - propiedades -->
     <section data-background-image="media/bg_dark.png"
@@ -208,14 +505,17 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-041.jpg" alt="Celda biaxial fotoelástica" style="max-height:450px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-041.jpg" alt="Celda biaxial fotoelástica" style="max-height:450px; border-radius:4px;">
                     <p class="credit">Discos fotoelásticos en celda biaxial (Kramár et al., Physica D, 2014)</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SLIDE 6: Redes de contacto -->
+    <!-- SLIDE 6: Redes de contacto (vertical stack) -->
+    <section>
+
+    <!-- 6a: Introducción -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
@@ -239,7 +539,7 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-042.jpg" alt="Topología de redes de contacto" style="max-height:350px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-042.jpg" alt="Topología de redes de contacto" style="max-height:350px; border-radius:4px;">
                     <p class="credit">Kramár et al., Physica D (2014)</p>
                     <p style="font-size:0.5em; margin-top:0.3em;">
                         (a) Red coloreada por fuerza,
@@ -249,10 +549,82 @@
                     </p>
                 </div>
             </div>
+            <p style="text-align:center; font-size:0.5em; color:#888; margin-top:0.3em;">&#x25BC; Complejos simpliciales y análisis de persistencia</p>
         </div>
     </section>
 
-    <!-- SLIDE 7: Tensor de Cauchy - definición -->
+    <!-- 6b: Complejos simpliciales y números de Betti -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Complejos simpliciales y números de Betti</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Jerarquía de simplices:</strong></p>
+                    <table style="font-size:1.0em; margin:0.5em 0;">
+                        <tr><th>Simplice</th><th>Dimensión</th><th>Interpretación física</th></tr>
+                        <tr><td>0-simplice</td><td>punto</td><td>Grano individual</td></tr>
+                        <tr><td>1-simplice</td><td>arista</td><td>Contacto entre dos granos</td></tr>
+                        <tr><td>2-simplice</td><td>triángulo</td><td>Trío de granos mutuamente en contacto</td></tr>
+                    </table>
+                    <p style="margin-top:0.5em;">Un <strong>complejo simplicial</strong> $\mathcal{K}$ se construye a partir del grafo de contactos filtrado por un umbral de fuerza $\theta$: solo se incluyen contactos con $f \geq \theta$.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Números de Betti</strong> &mdash; invariantes topológicos de $\mathcal{K}$:
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li>$\beta_0$ = componentes conexas (clusters de granos conectados)</li>
+                            <li>$\beta_1$ = lazos independientes (agujeros en la red)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Interpretación:</strong> $\beta_0$ alto = red fragmentada (muchos clusters aislados). $\beta_1$ alto = red con muchos lazos cerrados = estructura mecánicamente redundante.
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-042.jpg" alt="Red de contactos y simplices" style="max-height:400px; border-radius:4px;">
+                    <p class="credit">Kramár et al., Physica D (2014): (b) complejos simpliciales construidos a partir del grafo de contactos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6c: Análisis de persistencia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Análisis de persistencia (homología persistente)</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Idea:</strong> variar el umbral $\theta$ de fuerza y rastrear el nacimiento y la muerte de las características topológicas ($\beta_0$, $\beta_1$).</p>
+                    <ul style="line-height:1.8; margin-top:0.3em;">
+                        <li><strong>birth($b$):</strong> valor de $\theta$ donde aparece una componente conexa o un lazo</li>
+                        <li><strong>death($d$):</strong> valor de $\theta$ donde desaparece (se fusiona o se llena)</li>
+                        <li><strong>Persistencia:</strong> $|d - b|$ &mdash; cuanto mayor, más robusta es la estructura</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Diagrama de persistencia:</strong> cada característica topológica se representa como un punto $(b, d)$. Los puntos <em>lejos de la diagonal</em> $b=d$ corresponden a cadenas de fuerza robustas; los cercanos a la diagonal son ruido topológico.
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <strong>Aplicación:</strong> al comprimir un empaquetamiento fotoelástico, el diagrama de persistencia revela la <strong>reorganización topológica</strong> de la red de fuerzas &mdash; transiciones abruptas en $\beta_0$ y $\beta_1$ coinciden con eventos de reacomodo.
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-043.png" alt="Barcode de persistencia" style="max-height:250px; border-radius:4px;">
+                    <p class="credit">Barcode: cada barra horizontal = vida de una componente topológica (Kramár et al., 2014)</p>
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-046.png" alt="Diagrama de persistencia" style="max-height:250px; border-radius:4px; margin-top:0.5em;">
+                    <p class="credit">Diagrama de persistencia: puntos lejos de la diagonal = cadenas robustas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- end Redes de contacto vertical stack -->
+
+    <!-- SLIDE 7: Tensor de Cauchy (vertical stack) -->
+    <section>
+
+    <!-- 7a: Resumen del tensor -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
@@ -273,50 +645,153 @@
                     <p style="margin-top:0.3em;">Equilibrio: $\sigma_{ij} = \sigma_{ji}$ (tensor simétrico)</p>
                 </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-008.png" alt="Cubo y elemento de superficie" style="max-height:250px; border-radius:4px;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-012.png" alt="Cubo con componentes sigma_ij" style="max-height:250px; border-radius:4px; margin-top:0.3em;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-008.png" alt="Cubo y elemento de superficie" style="max-height:320px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-012.png" alt="Cubo con componentes sigma_ij" style="max-height:320px; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+            <p style="text-align:center; font-size:0.5em; color:#888; margin-top:0.3em;">&#x25BC; Derivación completa del lema de Cauchy</p>
+        </div>
+    </section>
+
+    <!-- 7b: Principio de Cauchy y vector de tracción -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Principio de Cauchy y vector de tracción</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Postulado de Cauchy (1823):</strong></p>
+                    <p>En cada punto de un cuerpo continuo y para cada superficie orientada con normal $\boldsymbol{n}$, existe un <strong>vector de tracción</strong>:</p>
+                    <div class="eq-box" style="font-size:1.1em; margin:0.5em 0;">
+                        \[ \boldsymbol{T}^{(\boldsymbol{n})} = \frac{d\boldsymbol{F}}{ds} \]
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Componentes:</strong></p>
+                    <ul style="line-height:2.0;">
+                        <li>Componente <strong>normal</strong>: $\sigma = \boldsymbol{T}^{(\boldsymbol{n})}\cdot\boldsymbol{n} = F^n/A$</li>
+                        <li>Componente <strong>tangencial</strong>: $\tau = |\boldsymbol{T}^{(\boldsymbol{n})} - \sigma\,\boldsymbol{n}| = F^t/A$</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Lema de Cauchy:</strong> $-\boldsymbol{T}^{(\boldsymbol{n})} = \boldsymbol{T}^{(-\boldsymbol{n})}$<br>
+                        Los vectores de tracción sobre caras opuestas de una superficie son iguales y opuestos (3ra ley de Newton aplicada a una "rodaja" infinitamente delgada del continuo).
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-008.png" alt="Elemento de superficie y vector de tracción" style="max-height:400px; border-radius:4px;">
+                    <p class="credit">Elemento de superficie $ds$ con normal $\boldsymbol{n}$ y vector de tracción $\boldsymbol{T}^{(\boldsymbol{n})}$</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SLIDE 8: Tensor de Cauchy - propiedades -->
+    <!-- 7c: Tetraedro de Cauchy -->
     <section data-background-image="media/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
         <div style="padding-left:10%;">
-            <h2>Tensor de Cauchy: propiedades</h2>
+            <h2 style="font-size:1.1em;">Tetraedro de Cauchy: balance de fuerzas</h2>
             <div class="two-col">
-                <div style="font-size:0.65em;">
-                    <p><strong>Demostración (tetraedro de Cauchy):</strong></p>
-                    <p>$\boldsymbol{T}^{(\boldsymbol{n})}dA + \boldsymbol{T}^{(-\boldsymbol{e}_1)}dA_1 + \boldsymbol{T}^{(-\boldsymbol{e}_2)}dA_2 + \boldsymbol{T}^{(-\boldsymbol{e}_3)}dA_3 = dm\,\boldsymbol{a}$</p>
-                    <p>Si $dm \to 0$:</p>
-                    <div class="eq-box">
-                        $\boldsymbol{T}^{(\boldsymbol{n})} = \boldsymbol{T}^{(\boldsymbol{e}_1)}n_1 + \boldsymbol{T}^{(\boldsymbol{e}_2)}n_2 + \boldsymbol{T}^{(\boldsymbol{e}_3)}n_3$
-                    </div>
-                    <p style="margin-top:0.5em;"><strong>Equilibrio de traslación:</strong></p>
-                    <div class="eq-box">
-                        $\sigma_{ji,j} + F_i = 0$
-                    </div>
-                    <p style="margin-top:0.5em;"><strong>Equilibrio de rotación</strong> $\Rightarrow$ simetría:</p>
-                    <div class="eq-box">
-                        $\sigma_{12} = \sigma_{21}$
-                    </div>
-                </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-010.png" alt="Tetraedro de Cauchy" style="max-height:250px; border-radius:4px;">
-                    <div style="font-size:0.6em; margin-top:0.5em;">
-                        <p><strong>Tensor principal:</strong></p>
-                        <p>$[\sigma]$ se diagonaliza en ejes principales con autovalores $\sigma_1, \sigma_2, \sigma_3$.</p>
-                        <p style="margin-top:0.3em;">Invariantes:</p>
-                        <p>$I_1 = \text{Tr}([\sigma])$</p>
-                        <p>$I_2 = \sigma_1\sigma_2 + \sigma_2\sigma_3 + \sigma_3\sigma_1$</p>
-                        <p>$I_3 = \det([\sigma])$</p>
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-010.png" alt="Tetraedro de Cauchy" style="max-height:350px; border-radius:4px;">
+                    <p class="credit">Tetraedro de Cauchy con cara oblicua de normal $\boldsymbol{n}$</p>
+                </div>
+                <div style="font-size:0.65em;">
+                    <p><strong>2da ley de Newton</strong> sobre el tetraedro (4 caras):</p>
+                    <div class="eq-box" style="font-size:0.95em; margin:0.3em 0;">
+                        $\boldsymbol{T}^{(\boldsymbol{n})}dA + \boldsymbol{T}^{(-\boldsymbol{e}_1)}dA_1 + \boldsymbol{T}^{(-\boldsymbol{e}_2)}dA_2 + \boldsymbol{T}^{(-\boldsymbol{e}_3)}dA_3 = dm\,\boldsymbol{a}$
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Relación geométrica</strong> entre las áreas:</p>
+                    <div class="eq-box" style="font-size:1.0em; margin:0.3em 0;">
+                        $dA_i = n_i \cdot dA$
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Paso al límite:</strong> cuando el tetraedro se contrae ($dm \to 0$, las fuerzas de volumen son $\propto dV$ mientras que las de superficie son $\propto dA$), el término inercial desaparece:</p>
+                    <div class="eq-box" style="font-size:1.1em; margin:0.5em 0; padding:0.6em;">
+                        \[ \boxed{\boldsymbol{T}^{(\boldsymbol{n})} = \sum_{i=1}^{3}\boldsymbol{T}^{(\boldsymbol{e}_i)}\,n_i} \]
+                    </div>
+                    <div class="highlight-box">
+                        $\boldsymbol{T}^{(\boldsymbol{n})}$ sobre <em>cualquier</em> plano se obtiene a partir de los $\boldsymbol{T}$ sobre los tres planos coordenados. Es una relación <strong>lineal</strong> en $\boldsymbol{n}$.
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- 7d: Derivación T = [σ]n -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Derivación: $\boldsymbol{T}^{(\boldsymbol{n})} = [\sigma]\,\boldsymbol{n}$</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Descomposición</strong> de cada $\boldsymbol{T}^{(\boldsymbol{e}_i)}$ en componentes:</p>
+                    <div class="eq-box" style="font-size:0.95em; margin:0.3em 0;">
+                        $\boldsymbol{T}^{(\boldsymbol{e}_i)} = \sigma_{i1}\,\boldsymbol{e}_1 + \sigma_{i2}\,\boldsymbol{e}_2 + \sigma_{i3}\,\boldsymbol{e}_3$
+                    </div>
+                    <p style="margin-top:0.5em;">Sustituyendo en $\boldsymbol{T}^{(\boldsymbol{n})} = \sum_i \boldsymbol{T}^{(\boldsymbol{e}_i)}n_i$:</p>
+                    <div class="eq-box" style="font-size:1.1em; margin:0.5em 0; padding:0.6em;">
+                        \[ \boxed{T_j = \sigma_{ij}\,n_i} \]
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Tensiones normal y tangencial</strong> sobre el plano de normal $\boldsymbol{n}$:</p>
+                    <ul style="line-height:1.8;">
+                        <li>$\sigma_n = \boldsymbol{T}\cdot\boldsymbol{n} = \sigma_{ij}\,n_i\,n_j$</li>
+                        <li>$\tau_n = |\boldsymbol{T} - \sigma_n\boldsymbol{n}| = \sqrt{|\boldsymbol{T}|^2 - \sigma_n^2}$</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-012.png" alt="Componentes del tensor de esfuerzos" style="max-height:350px; border-radius:4px;">
+                    <p class="credit">Componentes $\sigma_{ij}$: el primer índice indica la cara, el segundo la dirección de la fuerza.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7e: Ecuaciones de equilibrio -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Ecuaciones de equilibrio</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Equilibrio de traslación</strong> (volumen arbitrario $V$ con superficie $S$):</p>
+                    <div class="eq-box" style="font-size:0.95em; margin:0.3em 0;">
+                        $\oint_S \boldsymbol{T}^{(\boldsymbol{n})}\,ds + \int_V \boldsymbol{F}\,dV = \boldsymbol{0}$
+                    </div>
+                    <p style="margin-top:0.3em;">Usando $T_j = \sigma_{ij}n_i$ y el teorema de Gauss ($\oint_S \sigma_{ij}n_i\,ds = \int_V \sigma_{ij,i}\,dV$):</p>
+                    <div class="eq-box" style="font-size:1.2em; margin:0.5em 0; padding:0.6em;">
+                        \[ \boxed{\sigma_{ji,j} + F_i = 0} \]
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Equilibrio de rotación</strong> (momentos respecto a un punto):</p>
+                    <p>$\oint_S \boldsymbol{r}\times\boldsymbol{T}\,ds + \int_V \boldsymbol{r}\times\boldsymbol{F}\,dV = \boldsymbol{0}$</p>
+                    <p style="margin-top:0.3em;">Esto implica:</p>
+                    <div class="eq-box" style="font-size:1.2em; margin:0.5em 0; padding:0.6em;">
+                        \[ \boxed{\sigma_{ij} = \sigma_{ji}} \]
+                    </div>
+                </div>
+                <div style="font-size:0.65em;">
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Consecuencia:</strong> el tensor de esfuerzos es <strong>simétrico</strong>.<br>
+                        En 3D: 6 componentes independientes (no 9).<br>
+                        En 2D: 3 componentes ($\sigma_{xx}$, $\sigma_{yy}$, $\sigma_{xy}$).
+                    </div>
+                    <div style="margin-top:1em;">
+                        <p><strong>Tensor principal:</strong></p>
+                        <p>$[\sigma]$ se diagonaliza en ejes principales con autovalores $\sigma_1, \sigma_2, \sigma_3$.</p>
+                        <p style="margin-top:0.3em;">Invariantes:</p>
+                        <p>$I_1 = \text{Tr}([\sigma])$ &nbsp; (presión)</p>
+                        <p>$I_2 = \sigma_1\sigma_2 + \sigma_2\sigma_3 + \sigma_3\sigma_1$</p>
+                        <p>$I_3 = \det([\sigma])$</p>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.8em;">
+                        <strong>Nota:</strong> en materiales con microestructura (e.g. milieux de Cosserat), la simetría $\sigma_{ij}=\sigma_{ji}$ no se cumple: existen <em>couples de contrainte</em> adicionales.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- end Cauchy vertical stack -->
 
     <!-- SLIDE 9: Tensor de deformación -->
     <section data-background-image="media/bg_dark.png"
@@ -379,7 +854,7 @@
                     <p style="margin-top:0.5em;">Estas son las ecuaciones paramétricas de un <strong>círculo</strong> de radio $\frac{\sigma_1-\sigma_2}{2}$ con centro en $\left(\frac{\sigma_1+\sigma_2}{2},\,0\right)$.</p>
                 </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-018.png" alt="Ejes principales y ángulo theta" style="max-height:250px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-018.png" alt="Ejes principales y ángulo theta" style="max-height:250px; border-radius:4px;">
                     <div style="font-size:0.6em; margin-top:0.5em;">
                         <p>En $(x,y)$:</p>
                         <p>$[\sigma] = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} \\ \sigma_{yx} & \sigma_{yy}\end{bmatrix}$</p>
@@ -399,7 +874,7 @@
             <h2>Círculo de Mohr: construcción gráfica</h2>
             <div class="two-col">
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-022.png" alt="Diagrama de Mohr" style="max-height:420px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-022.png" alt="Diagrama de Mohr" style="max-height:420px; border-radius:4px;">
                 </div>
                 <div style="font-size:0.65em;">
                     <p><strong>Lectura del diagrama:</strong></p>
@@ -440,7 +915,7 @@
                     </ul>
                 </div>
                 <div style="text-align:center;">
-                    <img src="../Course_Argentine/media/extracted_u3/img-039.png" alt="Branch vectors entre partículas" style="max-height:350px; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u3/img-039.png" alt="Branch vectors entre partículas" style="max-height:350px; border-radius:4px;">
                     <p class="credit">Claudin, Cap. 14, en Mehta, <em>Granular Physics</em>, Cambridge U. Press (2007)</p>
                 </div>
             </div>
