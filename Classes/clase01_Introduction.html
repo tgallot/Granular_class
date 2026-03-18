@@ -43,13 +43,21 @@
             margin: 0.5em 0;
         }
         .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box {
+            background: rgba(107,154,154,0.08);
+            border: 1px solid var(--color-teal);
+            border-radius: 8px;
+            padding: 0.5em 1em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
         .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
         .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
         .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
         .reveal table tr:nth-child(even) { background: #f7f7f7; }
         .reveal img { max-height: 550px; }
-        html { background: #1a1a1a; }
     </style>
 </head>
 <body>
@@ -120,27 +128,7 @@
              data-background-position="left">
         <div style="padding-left:10%;">
             <h2>Cronograma</h2>
-            <table style="font-size:0.5em;">
-                <thead><tr><th>Semana</th><th>Módulo</th><th>Teórico</th><th>Actividad</th><th>Entrega</th></tr></thead>
-                <tbody>
-                    <tr><td>17/03</td><td>M1</td><td>Intro + Descripción estructural 1</td><td>Experimento ángulo reposo</td><td></td></tr>
-                    <tr><td>24/03</td><td>M1</td><td>Descripción estructural 2</td><td>Experimento Beverloo, Janssen</td><td></td></tr>
-                    <tr><td>31/03</td><td colspan="4" style="text-align:center;"><em>Semana de turismo</em></td></tr>
-                    <tr><td>07/04</td><td>M1</td><td>Exp numérico</td><td>Análisis de datos</td><td></td></tr>
-                    <tr><td>14/04</td><td>M2</td><td>Cadena de fuerza 1/2</td><td>Ley de Hertz</td><td>M1</td></tr>
-                    <tr><td>21/04</td><td>M2</td><td>Cadena de fuerza 2/3</td><td>Coeficiente de restitución</td><td></td></tr>
-                    <tr><td>28/04</td><td>M2</td><td>Cadena de fuerza 3/4</td><td>Fotoelasticidad</td><td></td></tr>
-                    <tr><td>05/05</td><td>M3</td><td>Teórico</td><td>Fricción</td><td>M2</td></tr>
-                    <tr><td>12/05</td><td>M3</td><td></td><td>Stick-slip</td><td></td></tr>
-                    <tr><td>19/05</td><td>M4</td><td>Modelos efectivos M4 (1/2)</td><td>Experimento sísmica</td><td>M3</td></tr>
-                    <tr><td>26/05</td><td>M4</td><td>M4 (2/3)</td><td>Análisis datos CIN / Grenoble</td><td></td></tr>
-                    <tr><td>02/06</td><td>M4</td><td>M4 (3/4)</td><td>Análisis datos CIN / Grenoble</td><td></td></tr>
-                    <tr><td>09/06</td><td>proyecto</td><td>Lectura de artículos</td><td></td><td>M4</td></tr>
-                    <tr><td>16/06</td><td>proyecto</td><td></td><td></td><td></td></tr>
-                    <tr><td>23/06</td><td>defensa</td><td></td><td></td><td>compilado</td></tr>
-                    <tr><td>30/06</td><td>defensa</td><td></td><td></td><td></td></tr>
-                </tbody>
-            </table>
+            <img src="../cronograma.png" alt="Cronograma" style="max-height:500px;">
         </div>
     </section>
 
@@ -166,7 +154,9 @@
         </div>
     </section>
 
-    <!-- SLIDE: MATERIALES GRANULARES -->
+    <!-- SLIDE 5: MATERIALES GRANULARES (vertical stack) -->
+    <section>
+
     <section data-background-image="media/bg/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
@@ -192,6 +182,180 @@
             </div>
         </div>
     </section>
+
+    <!-- SLIDE 5a: RESUMEN FUERZAS DE CONTACTO POR ESCALA -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fuerzas de contacto según la escala</h2>
+            <p style="font-size:0.75em;">La física dominante cambia radicalmente con el tamaño de las partículas:</p>
+            <div style="display:flex; gap:0.8em; margin-top:0.5em; font-size:0.65em;">
+                <!-- Columna 1: Polvos -->
+                <div style="flex:1; border:2px solid var(--color-teal); border-radius:8px; padding:0.6em;">
+                    <h3 style="font-size:1.1em; color:var(--color-teal); margin:0 0 0.3em;">$d &lt; 100\,\mu$m</h3>
+                    <p style="font-weight:700;">Polvos</p>
+                    <ul style="line-height:1.8;">
+                        <li>Agitación térmica (browniana)</li>
+                        <li>Van der Waals</li>
+                        <li>Fuerzas capilares</li>
+                        <li>Cargas electrostáticas</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.4em; font-size:0.95em;">
+                        Comportamiento <strong>cohesivo</strong>
+                    </div>
+                </div>
+                <!-- Columna 2: Intermedio -->
+                <div style="flex:1; border:2px solid #e67e22; border-radius:8px; padding:0.6em;">
+                    <h3 style="font-size:1.1em; color:#e67e22; margin:0 0 0.3em;">$100\,\mu$m – $1\,$mm</h3>
+                    <p style="font-weight:700;">Arenas finas / polvos gruesos</p>
+                    <ul style="line-height:1.8;">
+                        <li>Arrastre viscoso del aire</li>
+                        <li>Arrastre turbulento</li>
+                        <li>Humedad residual</li>
+                        <li>Fricción (incipiente)</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.4em; font-size:0.95em;">
+                        Régimen de <strong>transición</strong>
+                    </div>
+                </div>
+                <!-- Columna 3: Granular -->
+                <div style="flex:1; border:2px solid #e74c3c; border-radius:8px; padding:0.6em;">
+                    <h3 style="font-size:1.1em; color:#e74c3c; margin:0 0 0.3em;">$d &gt; 1\,$mm</h3>
+                    <p style="font-weight:700;">Granos</p>
+                    <ul style="line-height:1.8;">
+                        <li>Fricción sólida (Coulomb)</li>
+                        <li>Colisiones inelásticas</li>
+                        <li>Gravedad dominante</li>
+                        <li>Stick-slip</li>
+                    </ul>
+                    <div class="highlight-box red" style="margin-top:0.4em; font-size:0.95em;">
+                        <strong>Granular seco</strong> → este curso
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Cap. 2</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5b: ESCALA COLOIDAL — POLVOS (d < 100 μm) -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Escala coloidal: $d &lt; 100\,\mu\text{m}$ — Polvos</h2>
+            <div class="two-col">
+                <div style="font-size:0.7em;">
+                    <p><strong>Agitación térmica:</strong> para $d \sim 1\,\mu$m, la energía cinética térmica $k_B T$ es comparable a la energía potencial gravitatoria $mgd$. El movimiento browniano puede mover las partículas.</p>
+
+                    <p style="margin-top:0.5em;"><strong>Fuerzas de Van der Waals:</strong> atracción entre dipolos inducidos a distancias nanométricas. Dominante para partículas muy finas en contacto íntimo.</p>
+
+                    <p style="margin-top:0.5em;"><strong>Fuerzas capilares (humedad):</strong> un puente líquido entre dos esferas genera una fuerza de atracción:</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $F_c = \pi \gamma_{lv} r_2 \left(1 + \dfrac{r_2}{r_1}\right)$
+                    </div>
+                    <p>donde $\gamma_{lv}$ es la tensión superficial y $r_1$, $r_2$ los radios del menisco.</p>
+
+                    <p style="margin-top:0.5em;"><strong>Cargas electrostáticas:</strong> la fricción o las colisiones generan cargas superficiales ($\sim 4 \times 10^{-8}$ C/cm²) que producen interacciones de largo alcance.</p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.7em;">
+                        <p><strong>Radio crítico capilar:</strong></p>
+                        <div class="eq-box" style="margin:0.3em 0;">
+                            $R \approx \sqrt{\dfrac{4\alpha\,\gamma_{lv}}{g\,\rho_b}}$
+                        </div>
+                        <p>Para esferas de vidrio en agua: $R \sim 1$ mm ($\alpha = 1$), pero basta una humedad modesta ($\alpha = 0.01$) para que $R \sim 100\,\mu$m.</p>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.7em; margin-top:0.5em;">
+                        <p><strong>Consecuencia:</strong> los polvos finos son <em>cohesivos</em> — se aglomeran, forman grumos, y se adhieren a las paredes. Su comportamiento es radicalmente diferente al de los granos.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Sec. 2.1, p.24–26</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5c: ESCALA INTERMEDIA — POLVOS GRUESOS (100 μm – 1 mm) -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Escala intermedia: $100\,\mu\text{m} &lt; d &lt; 1\,\text{mm}$</h2>
+            <div class="two-col">
+                <div style="font-size:0.7em;">
+                    <p><strong>Arrastre aerodinámico:</strong> una partícula de radio $R$ moviéndose a velocidad $v$ en un fluido de viscosidad $\eta$ experimenta una fuerza de arrastre. Se define el parámetro:</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $R_l \approx \dfrac{\rho_b}{\eta}\,R\,v$
+                    </div>
+                    <p>Si $R_l \gg 1$: régimen granular seco (fricción domina).<br>
+                    Si $R_l \lesssim 10$: la viscosidad del aire <strong>no es despreciable</strong>.</p>
+
+                    <p style="margin-top:0.5em;"><strong>Ejemplo:</strong></p>
+                    <ul style="line-height:1.6;">
+                        <li>Arena de sílice, $d = 1$ mm, $v = 1$ cm/s: $R_l \sim 10^4$ → granular seco</li>
+                        <li>Polvo de licopodio, $d = 10\,\mu$m: $R_l$ disminuye proporcionalmente → el aire importa</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.7em;">
+                    <p><strong>Arrastre turbulento:</strong> a velocidades más altas, la fuerza depende del cuadrado de la velocidad:</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $F_t = k_t \dfrac{\rho_0\,v^2}{2}\,S$
+                    </div>
+                    <p>con $k_t \approx 0.24$ para una esfera.</p>
+
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Zona de transición:</strong> en esta escala compiten simultáneamente:</p>
+                        <ul style="line-height:1.6;">
+                            <li>Fuerzas capilares (humedad residual)</li>
+                            <li>Arrastre viscoso del aire</li>
+                            <li>Fricción sólida (incipiente)</li>
+                        </ul>
+                        <p style="margin-top:0.3em;">El comportamiento depende fuertemente de las condiciones experimentales.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Sec. 2.1, p.20–23</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5d: ESCALA GRANULAR (d > 1 mm) -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Escala granular: $d &gt; 1\,\text{mm}$ — Granos</h2>
+            <div class="two-col">
+                <div style="font-size:0.7em;">
+                    <p><strong>Fricción sólida (leyes de Coulomb):</strong></p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $T = \mu\,P$
+                    </div>
+                    <ul style="line-height:1.6;">
+                        <li>La fuerza tangencial $T$ es proporcional a la carga normal $P$</li>
+                        <li>Independiente del área de contacto aparente</li>
+                        <li>$\mu_s$ (estática) $\geq$ $\mu_d$ (dinámica): $\mu \approx 0.7$ (rocas), $\approx 1$ (metales)</li>
+                    </ul>
+                    <p style="margin-top:0.5em;"><strong>Origen microscópico:</strong> las asperezas de la superficie ($\sim 1\,\mu$m) se deforman plásticamente bajo la carga normal. El coeficiente $\mu_s = s/p$ donde $s$ y $p$ son constantes del material.</p>
+                </div>
+                <div style="font-size:0.7em;">
+                    <p><strong>Colisiones inelásticas:</strong></p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $\begin{bmatrix} u_1 \\ u_2 \end{bmatrix} = \begin{bmatrix} \frac{1-\varepsilon}{2} & \frac{1+\varepsilon}{2} \\ \frac{1+\varepsilon}{2} & \frac{1-\varepsilon}{2} \end{bmatrix} \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}$
+                    </div>
+                    <p>$\varepsilon$: coeficiente de restitución ($0 \leq \varepsilon \leq 1$). Disipación por ondas acústicas internas y deformación permanente.</p>
+
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Aproximación "granular seco":</strong></p>
+                        <p>Para $d &gt; 1$ mm en aire: $R_l \sim 10^4$, $R_t \sim 10^3$.</p>
+                        <p>La gravedad domina, las interacciones se reducen a <strong>fricción + colisiones</strong>. Es el régimen que estudiaremos en este curso.</p>
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Sec. 2.2, p.27–35</p>
+        </div>
+    </section>
+
+    </section><!-- end vertical stack -->
 
     <!-- SLIDE: TEMPERATURA EQUIVALENTE -->
     <section data-background-image="media/bg/bg_dark.png"
@@ -302,15 +466,59 @@
         </div>
     </section>
 
-    <!-- SLIDE 10: SEGREGACION -->
+    <!-- SLIDE 10: ¿SÓLIDOS? ¿LÍQUIDOS? ¿GASES? -->
     <section data-background-image="media/bg/bg_dark.png"
              data-background-size="13% 100%"
              data-background-position="left">
         <div style="padding-left:10%;">
             <h2>¿Sólidos? ¿Líquidos? ¿Gases?</h2>
-            <p>Segregación: competencia entre densidad (pesado abajo) y tamaño (pequeño abajo)</p>
+            <p style="font-size:0.7em; margin-bottom:0.5em;"><em>"Depending on the way it is handled, a granular material can behave like a solid, a liquid or a gas"</em> — Jaeger, Nagel &amp; Behringer (1996)</p>
+            <div style="display:flex; gap:1em; align-items:center;">
+                <!-- Foto Figure 1.4 -->
+                <div style="flex:0 0 38%; text-align:center;">
+                    <img src="media/clase01/fig1_4_three_states.png" alt="Coexistencia sólido-líquido-gas en una pila granular" style="max-width:100%; max-height:420px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                    <p class="credit" style="margin-top:0.3em;">AFP, <em>Granular Media</em> (2013), Fig. 1.4</p>
+                </div>
+                <!-- 3 columnas -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:0.5em; font-size:0.55em;">
+                    <div style="border:2px solid var(--color-teal); border-radius:8px; padding:0.5em;">
+                        <h3 style="font-size:1.1em; color:var(--color-teal); margin:0 0 0.2em;">Sólido</h3>
+                        <span>Pila estática, silos, arcos, cadenas de fuerza</span>
+                        <div class="highlight-box" style="margin-top:0.3em; padding:0.3em 0.5em;">
+                            <strong>Física:</strong> fricción de Coulomb, umbral de cedencia $\tau = \mu\,\sigma$
+                        </div>
+                    </div>
+                    <div style="border:2px solid #e67e22; border-radius:8px; padding:0.5em;">
+                        <h3 style="font-size:1.1em; color:#e67e22; margin:0 0 0.2em;">Líquido</h3>
+                        <span>Reloj de arena, avalanchas, flujo en tambor, ondas de superficie</span>
+                        <div class="highlight-box" style="margin-top:0.3em; padding:0.3em 0.5em;">
+                            <strong>Física:</strong> viscoplástico, número inercial $I$, reología $\mu(I)$
+                        </div>
+                    </div>
+                    <div style="border:2px solid #e74c3c; border-radius:8px; padding:0.5em;">
+                        <h3 style="font-size:1.1em; color:#e74c3c; margin:0 0 0.2em;">Gas</h3>
+                        <span>Granos vibrados, anillos de Saturno, flujos piroclásticos, saltación</span>
+                        <div class="highlight-box red" style="margin-top:0.3em; padding:0.3em 0.5em;">
+                            <strong>Física:</strong> colisional, $T_g = \langle\delta v^2\rangle$, disipación inelástica
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.6em; margin-top:0.4em;">
+                <strong>Coexistencia:</strong> en una pila con flujo superficial, las tres fases coexisten — el bulk es sólido, la capa que fluye es líquida, y los granos eyectados en la cima son gas.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10b: SEGREGACIÓN -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Segregación</h2>
+            <p>Competencia entre densidad (pesado abajo) y tamaño (pequeño abajo)</p>
             <div style="text-align:center;">
-                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/bOlzzoDG5og?start=7" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/bOlzzoDG5og?start=7&amp;end=20" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
             </div>
         </div>
     </section>
@@ -322,8 +530,21 @@
         <div style="padding-left:10%;">
             <h2>¿Flujo o arco?</h2>
             <div style="text-align:center;">
-                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/Nicn4genhf4?start=30" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/Nicn4genhf4?start=30&amp;end=37" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
                 <p class="credit"><a href="https://www.youtube.com/watch?v=Nicn4genhf4" target="_blank">Nicn4genhf4</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: ATASCO DE HARINA -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Atasco de harina</h2>
+            <p style="font-size:0.85em;">Un ejemplo cotidiano de <strong>jamming</strong>: la harina forma arcos cohesivos que bloquean el flujo.</p>
+            <div style="text-align:center;">
+                <iframe width="405" height="720" data-src="https://www.youtube.com/embed/yYZwPGjTO90" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
             </div>
         </div>
     </section>
@@ -334,9 +555,9 @@
              data-background-position="left">
         <div style="padding-left:10%;">
             <h2>Ciclo sísmico: acumulación de estrés</h2>
-            <div class="two-col" style="align-items:center;">
+            <div class="two-col">
                 <div>
-                    <svg viewBox="0 0 260 260" style="width:220px; min-width:220px; display:block; margin:0 auto;">
+                    <svg viewBox="0 0 260 260" style="width:200px; min-width:200px; display:block; margin:0 auto;">
                         <circle cx="130" cy="130" r="125" fill="#c0392b"/>
                         <circle cx="130" cy="130" r="95" fill="#e67e22"/>
                         <circle cx="130" cy="130" r="55" fill="#f1c40f"/>
@@ -358,10 +579,10 @@
                     </div>
                 </div>
                 <div style="text-align:center;">
-                    <img src="media/clase01/stickslip.png" alt="Desplazamiento vs tiempo — stick-slip" style="max-width:100%; max-height:550px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    <img src="media/clase01/stickslip.png" alt="Desplazamiento vs tiempo — stick-slip" style="max-width:100%; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                 </div>
             </div>
-            <div style="font-size:0.7em; margin-top:0.3em;">
+            <div style="font-size:0.7em; margin-top:0.2em;">
                 <p>El manto fluye continuamente y de forma asísmica. La falla no desliza: está <strong>trancada por la fricción</strong>. El estrés se acumula hasta que la falla se desliza → <strong style="color:#c0392b;">terremoto</strong>.</p>
                 <div style="display:flex; gap:1em; margin-top:0.3em;">
                     <div class="highlight-box" style="flex:1; text-align:center;">
@@ -371,9 +592,21 @@
                         <strong>Ruptura:</strong> 1 – 60 segundos
                     </div>
                 </div>
-                <div class="highlight-box" style="margin-top:0.3em; font-size:0.9em;">
-                    <p style="margin:0;"><strong>Profundidad:</strong> Superficiales &lt; 70 km (~75%) | Intermedios 70–300 km | Profundos 300–700 km (máx. ~720 km)</p>
+                <div class="highlight-box" style="margin-top:0.3em; font-size:0.85em;">
+                    <p><strong>Profundidad de los terremotos:</strong> Superficiales: &lt; 70 km (mayoría, ~75%) | Intermedios: 70–300 km | Profundos: 300–700 km (máx. ~720 km)</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: VIDEO TERREMOTO -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Un terremoto en vivo</h2>
+            <div style="text-align:center;">
+                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/77ubC4bcgRM" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
             </div>
         </div>
     </section>
@@ -383,9 +616,9 @@
              data-background-size="13% 100%"
              data-background-position="left">
         <div style="padding-left:10%;">
-            <h2>Escala de Richter</h2>
+            <h2 style="margin-bottom:0.2em;">Escala de Richter</h2>
             <div style="text-align:center;">
-                <img src="media/clase01/ritcher.png" alt="Escala de Richter" style="max-width:100%; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <img src="media/clase01/ritcher.png" alt="Escala de Richter — magnitud, frecuencia y eventos" style="max-height:720px; max-width:95%; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
             </div>
         </div>
     </section>
@@ -395,7 +628,7 @@
              data-background-size="13% 100%"
              data-background-position="left">
         <div style="padding-left:10%;">
-            <h2>Terremotos a escala de laboratorio</h2>
+            <h2>Banco de fricción: terremotos a escala de laboratorio</h2>
             <p style="font-size:0.8em;">¿Existe una conexión entre la física de eventos a escala de laboratorio
             y los procesos a escala terrestre?</p>
             <div class="two-col" style="font-size:0.75em;">
@@ -436,6 +669,19 @@
         </div>
     </section>
 
+    <!-- SLIDE 16: CADENAS DE FUERZA (video) -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cadenas de fuerza</h2>
+            <div style="text-align:center;">
+                <iframe width="1200" height="675" data-src="https://www.youtube.com/embed/R7g6wdmYB78?start=107&amp;end=110&amp;mute=1" frameborder="0" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                <p class="credit"><a href="https://www.youtube.com/watch?v=R7g6wdmYB78" target="_blank">Cadenas de fuerza en medios granulares</a> (1:47–1:50)</p>
+            </div>
+        </div>
+    </section>
+
     <!-- SLIDE: HISTORIA -->
     <section data-background-image="media/bg/bg_dark.png"
              data-background-size="13% 100%"
@@ -443,7 +689,7 @@
         <div style="padding-left:10%;">
             <h2>Breve historia: física granular y sismología</h2>
             <div style="display:flex; gap:0.8em;">
-                <div style="flex:1.2;">
+                <div style="flex:1;">
                     <h3 style="font-size:0.65em; color:var(--color-teal); margin-bottom:0.2em;">Física granular</h3>
                     <table style="font-size:0.45em;">
                         <thead><tr><th>Época</th><th>Autor</th><th>Contribución</th></tr></thead>
@@ -472,16 +718,38 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="flex:0.8; display:flex; flex-direction:column; justify-content:center; gap:0.5em;">
+                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:0.5em;">
                     <div style="text-align:center;">
-                        <img src="media/clase01/sapo.jpg" alt="Sismoscopio de Zhang Heng" style="max-width:100%; max-height:280px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <img src="media/clase01/sapo.jpg" alt="Sismoscopio de Zhang Heng" style="max-width:100%; max-height:320px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                     </div>
                     <div style="text-align:center;">
-                        <img src="media/clase01/sismo.png" alt="Primer sismograma" style="max-width:100%; max-height:280px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                        <img src="media/clase01/sismo.png" alt="Primer sismograma" style="max-width:100%; max-height:320px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
                     </div>
                 </div>
             </div>
             <p class="credit" style="margin-top:0.3em;">Duran, <em>Sands, Powders, and Grains</em> (2000); Agnew, <em>History of Seismology</em> (2002)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 19: RIPPLES -->
+    <section data-background-image="media/bg/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ripples: Tierra y Marte</h2>
+            <div class="two-col" style="align-items:center; gap:1em;">
+                <div style="text-align:center;">
+                    <img src="media/clase01/mars_ripples_curiosity.jpg" alt="Ripples en duna marciana — Curiosity, 2015" style="max-width:100%; max-height:550px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    <p class="credit">Curiosity rover, Namib Dune, Marte (2015). NASA/JPL-Caltech/MSSS</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/clase01/mars_dune_hirise.jpg" alt="Duna y ripples en Marte — HiRISE" style="max-width:100%; max-height:550px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                    <p class="credit">HiRISE, Mars Reconnaissance Orbiter. NASA/JPL-Caltech/U. of Arizona</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.65em; margin-top:0.4em;">
+                <strong>Misma física, otro planeta:</strong> los ripples marcianos de ~3 m de longitud de onda no tienen análogo terrestre — resultado de la baja densidad atmosférica y gravedad reducida.
+            </div>
         </div>
     </section>
 
@@ -517,9 +785,7 @@
         slideNumber: true,
         transition: 'slide',
         width: 1600,
-        height: 1000,
-        margin: 0.04,
-        center: false,
+        height: 900,
         preloadIframes: false,
         math: {
             mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
