@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2 - Descripción Estructural</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-teal: #6b9a9a;
+            --color-dark: #3a5556;
+            --color-mauve: #8b5e6b;
+            --color-rose: #c4a0a0;
+            --color-title: #5a3344;
+        }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .red-box { background: rgba(139,94,107,0.08); border: 2px solid var(--color-mauve); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!-- TÍTULO                                                        -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 2 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                DESCRIPCIÓN ESTRUCTURAL:<br>COMPACIDAD, COORDINACIÓN,<br>DESCARGA Y JAMMING
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PARTE I — COMPACIDAD Y COORDINACIÓN (ex clase02)              -->
+    <!-- ============================================================ -->
+
+    <!-- Ángulo de reposo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ángulo de reposo</h2>
+            <div class="two-col">
+                <div>
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-002.png" alt="Métodos de medición del ángulo de reposo" style="max-width:100%; border-radius:4px;">
+                    <p class="credit">Métodos de medición del ángulo de reposo</p>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.5em;">
+                        <p>Materiales secos: $17° \leq \alpha \leq 42°$</p>
+                        <p>Materiales cohesivos: $45° \leq \alpha \leq 90°$</p>
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Depende de: forma de los granos, rugosidad superficial, humedad, distribución de tamaños.</p>
+                </div>
+                <div>
+                    <div style="font-size:0.7em;">
+                        <p><strong>Métodos de medición:</strong></p>
+                        <ul style="line-height:1.6;">
+                            <li><strong>Vertido (piling):</strong> se vierte material desde una altura fija y se mide el ángulo del cono formado.</li>
+                            <li><strong>Drenaje (draining):</strong> se deja salir el material por la base de un cilindro; el ángulo del cráter resultante es $\alpha$.</li>
+                            <li><strong>Inclinación (tilting):</strong> se inclina gradualmente un recipiente hasta que los granos comienzan a deslizar.</li>
+                            <li><strong>Tambor rotatorio:</strong> se rota un cilindro parcialmente lleno a baja velocidad y se mide el ángulo de la superficie libre.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avalanchas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Avalanchas y flujo de deslizamientos</h2>
+            <div class="two-col">
+                <div style="font-size:0.62em;">
+                    <p>Una pila granular tiene un <strong>ángulo máximo de estabilidad</strong> \(\theta_{\max}\). Cuando se supera, se produce una avalancha hasta que el ángulo se reduce a \(\theta_{\min}\).</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Dos ángulos críticos:</strong></p>
+                        <ul style="line-height:2;">
+                            <li>\(\theta_{\text{start}}\) (= \(\theta_{\max}\)): ángulo de inicio de la avalancha</li>
+                            <li>\(\theta_{\text{stop}}\) (= \(\theta_{\min}\)): ángulo de reposo final</li>
+                        </ul>
+                        <p style="margin-top:0.3em;">\(\Delta\theta = \theta_{\text{start}} - \theta_{\text{stop}} \approx 3°\text{-}5°\) para arena típica.</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Regímenes en un tambor rotatorio (velocidad \(\omega\)):</p>
+                    <ul style="line-height:1.8;">
+                        <li><strong>\(\omega\) baja:</strong> avalanchas intermitentes (cuasi-periódicas)</li>
+                        <li><strong>\(\omega\) alta:</strong> flujo continuo sobre la superficie libre</li>
+                        <li>La transición presenta <strong>histéresis</strong></li>
+                    </ul>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 400 300" style="max-width:100%; max-height:280px;">
+                        <line x1="20" y1="250" x2="380" y2="250" stroke="#3a5556" stroke-width="2"/>
+                        <polygon points="50,250 200,145 350,250" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="2" stroke-dasharray="6,3"/>
+                        <polygon points="40,250 200,157 360,250" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="2"/>
+                        <path d="M 310,250 A 55,55 0 0,1 290,222" fill="none" stroke="#8b5e6b" stroke-width="2"/>
+                        <text x="320" y="235" font-size="13" fill="#8b5e6b" font-weight="bold">θ<tspan font-size="9" dy="3">start</tspan></text>
+                        <path d="M 320,250 A 65,65 0 0,1 303,227" fill="none" stroke="#6b9a9a" stroke-width="2"/>
+                        <text x="335" y="248" font-size="13" fill="#6b9a9a" font-weight="bold">θ<tspan font-size="9" dy="3">stop</tspan></text>
+                        <line x1="250" y1="170" x2="300" y2="220" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowAv)"/>
+                        <line x1="270" y1="175" x2="320" y2="225" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowAv)"/>
+                        <defs>
+                            <marker id="arrowAv" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                        <text x="310" y="185" font-size="14" fill="#c0392b" font-weight="bold">avalancha</text>
+                        <text x="130" y="195" font-size="12" fill="#8b5e6b" font-style="italic">antes (θ_start ≈ 35°)</text>
+                        <text x="120" y="215" font-size="12" fill="#6b9a9a" font-style="italic">después (θ_stop ≈ 30°)</text>
+                    </svg>
+                    <p style="font-size:0.45em; color:#888;">Histéresis: \(\theta_{\text{start}} > \theta_{\text{stop}}\).<br>Valores típicos para arena: ~35° y ~30°.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analogía geofísica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Analogía: avalanchas granulares y deslizamientos de tierra</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <div class="highlight-box">
+                        <p><strong>Laboratorio:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Tambor rotatorio con arena</li>
+                            <li>Avalanchas intermitentes controladas</li>
+                            <li>\(\theta_{\text{start}} - \theta_{\text{stop}} \approx 3°\text{-}5°\)</li>
+                            <li>Escala: centímetros, segundos</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Geofísica:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Deslizamientos de ladera</li>
+                            <li>Flujos de escombros (debris flows)</li>
+                            <li>Caídas de acantilados</li>
+                            <li>Escala: metros a kilómetros, riesgo natural</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">La física es la misma: competencia entre gravedad y fricción interna.</p>
+                    <p>El criterio de Mohr-Coulomb gobierna ambos casos:</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\tau = c + \sigma_n \tan\phi\)
+                    </div>
+                </div>
+                <div style="font-size:0.6em;">
+                    <p>Factores que desestabilizan una ladera:</p>
+                    <ul style="line-height:2;">
+                        <li><strong>Agua:</strong> presión de poro reduce la fricción efectiva</li>
+                        <li><strong>Sismos:</strong> aceleración puede superar el umbral de estabilidad</li>
+                        <li><strong>Erosión:</strong> cambio de la geometría de la pendiente</li>
+                        <li><strong>Sobrecarga:</strong> deposición de material nuevo</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>El agua es crítica:</strong></p>
+                        <p>Un poco de agua estabiliza (puentes capilares, castillos de arena).</p>
+                        <p>Mucha agua desestabiliza (presión de poro, licuefacción).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Densidad aparente y compacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Densidad aparente y fracción de empaquetamiento</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.75em;">Compacidad, fracción de volumen ocupado,
+                    packing fraction, volume fraction: $\phi$, $c$, $\eta$</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $\phi = \dfrac{\text{volumen real de las partículas}}{\text{volumen aparente de la muestra}}$
+                    </div>
+                    <p style="font-size:0.75em;">No confundir con la <strong>densidad numérica</strong>:</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $\rho = \dfrac{N}{V}$
+                    </div>
+                    <p style="font-size:0.75em;">Si todas las partículas son iguales ($v_g$: volumen de una partícula):</p>
+                    <div class="eq-box" style="margin:0.3em 0;">
+                        $\phi = \dfrac{N v_g}{V} = \rho \, v_g$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.3em;"><strong>Porosidad:</strong> $\epsilon = 1 - \phi$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-004.png" alt="Ilustraciones de empaquetamiento" style="max-width:50%; border-radius:4px;">
+                    <img src="figuras/bulk-tapped-density.png" alt="Bulk density vs tapped density" style="max-width:50%; border-radius:4px; margin-top:0.5em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empaquetamientos regulares 2D -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos regulares en 2D</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.85em;">Empaquetamiento cuadrado</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{cuadrado}} = \dfrac{\pi}{4} \approx 0.785$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Celda unitaria: cuadrado de lado $2R$, contiene 1 disco.</p>
+                    <h3 style="font-size:0.85em; margin-top:0.8em;">Empaquetamiento hexagonal</h3>
+                    <div class="eq-box">
+                        $\phi_{\text{hex}} = \dfrac{\pi}{2\sqrt{3}} \approx 0.9069$
+                    </div>
+                    <p style="font-size:0.75em; margin-top:0.5em;">Es el empaquetamiento más denso posible en 2D (Thue, 1892).</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="figuras/empa.jpg" alt="Empaquetamientos cuadrado y hexagonal con celdas unitarias" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em; margin-top:0.3em;">Izquierda: cuadrado ($z=4$) &nbsp;|&nbsp; Derecha: hexagonal ($z=6$)</p>
+                    <p style="font-size:0.7em; margin-top:0.5em;">Límite 2D: $\displaystyle 0 &lt; c &lt; \frac{\pi\sqrt{3}}{6} \approx 0.91$ (hexagonal)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Empaquetamientos regulares 3D -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Empaquetamientos regulares en 3D</h2>
+            <div class="two-col">
+                <div>
+                    <table style="font-size:0.8em;">
+                        <thead>
+                            <tr><th>Estructura</th><th>$\phi$</th><th>$z$</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Cúbica simple (SC)</td><td>$\dfrac{\pi}{6} \approx 0.524$</td><td>6</td></tr>
+                            <tr><td>BCC</td><td>$\dfrac{\pi\sqrt{3}}{8} \approx 0.680$</td><td>8</td></tr>
+                            <tr><td>FCC / HCP</td><td>$\dfrac{\pi}{3\sqrt{2}} \approx 0.740$</td><td>12</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="highlight-box" style="margin-top:0.8em; font-size:0.8em;">
+                        <p><strong>Conjetura de Kepler (1611):</strong> El empaquetamiento más denso de esferas idénticas en 3D es $\phi = \frac{\pi}{3\sqrt{2}} \approx 0.7405$, alcanzado por FCC y HCP.</p>
+                        <p style="margin-top:0.3em;">Demostrado por T. Hales (1998, publicado 2005).</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-006.jpg" alt="Empaquetamiento de esferas" style="max-width:75%; border-radius:4px;">
+                    <img src="figuras/cell.png" alt="Celdas unitarias 3D" style="max-width:75%; border-radius:4px; margin-top:0.5em;">
+                    <p style="font-size:0.7em; margin-top:0.5em;">Límite 3D: $\displaystyle 0 &lt; \phi &lt; \frac{\pi}{3\sqrt{2}} \approx 0.74$</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compacidad — medición -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Compacidad &mdash; medición</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8em; font-size:0.7em;">
+                <div style="text-align:center;">
+                    <p><strong>Geometría básica</strong></p>
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-015.png" alt="Geometría básica" style="max-width:80%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <p><strong>Fotografía</strong><br>$\phi = \dfrac{N_{\text{black pixels}}}{N_{\text{pixels}}}$</p>
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-019.png" alt="Foto procesada" style="max-width:80%; border-radius:4px;">
+                </div>
+                <div style="text-align:center;">
+                    <p><strong>Geometría probabilística</strong><br>$\phi = \dfrac{N_{\text{hits}}}{N_{\text{shots}}}$</p>
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-017.png" alt="Geometría probabilística" style="max-width:80%; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Métodos de medición de la compacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Métodos de medición de la compacidad</h2>
+            <div class="two-col">
+                <div style="font-size:0.72em;">
+                    <h3 style="font-size:0.95em;">Métodos directos</h3>
+                    <ul style="line-height:2.0;">
+                        <li><strong>Pesaje:</strong> \(\phi = M / (\rho_g V)\) — simple pero requiere conocer \(V\) con precisión</li>
+                        <li><strong>Análisis de imagen 2D:</strong> binarización y conteo de píxeles (limitado a la superficie)</li>
+                        <li><strong>Tomografía de capacitancia eléctrica:</strong> mide la permitividad local, no invasiva</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.72em;">
+                    <h3 style="font-size:0.95em;">Métodos no invasivos 3D</h3>
+                    <ul style="line-height:2.0;">
+                        <li><strong>Absorción de rayos gamma:</strong> ley de Beer-Lambert \(I = I_0 \, e^{-\mu \rho \ell}\)</li>
+                        <li><strong>Tomografía de rayos X (micro-CT):</strong> resolución ~\(\mu\)m, reconstrucción 3D completa</li>
+                        <li><strong>Resonancia magnética nuclear (RMN/MRI):</strong> ideal para granos en fluido</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-box" style="font-size:0.8em; margin-top:0.8em;">
+                <p><strong>Rayos X y gamma son los métodos estándar en geofísica de campo y laboratorio</strong> — permiten medir \(\phi\) de forma no destructiva en muestras opacas y a diferentes profundidades.</p>
+            </div>
+            <p class="footnote">Andreotti, Forterre &amp; Pouliquen, <em>Granular Media</em> (2013), §3.1, Box p.60–61.</p>
+        </div>
+    </section>
+
+    <!-- Número de coordinación -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de coordinación $z$</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.8em;">El <strong>número de coordinación</strong> $z$ cuenta los vecinos más cercanos (primera capa) de una partícula.</p>
+                    <p style="font-size:0.8em; margin-top:0.5em;">El <strong>número de contacto</strong> cuenta solamente los vecinos que están en contacto mecánico real.</p>
+                    <p style="font-size:0.8em; margin-top:0.5em;">Si los granos son convexos:</p>
+                    <div class="eq-box">
+                        $\langle z \rangle = 2\,\dfrac{\text{número total de contactos}}{\text{número de partículas}}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.8em;">
+                        <p><strong>Valores máximos</strong> (monodisperso):</p>
+                        <p>Esferas (3D): $z_{\max} = 12$ &nbsp; | &nbsp; Discos (2D): $z_{\max} = 6$</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-025.png" alt="Número de coordinación" style="max-width:90%; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-029.png" alt="Número de contacto" style="max-width:90%; border-radius:4px; margin-top:0.3em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Isostacidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto &mdash; isostacidad</h2>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.8em;">Deposición secuencial</h3>
+                    <p style="font-size:0.75em;">(cualquier forma convexa, partículas rígidas)</p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>2D: $\langle z \rangle = 2\frac{2N}{N} = 4$ (cada grano suma 2 contactos)</li>
+                        <li>3D: $\langle z \rangle = 2\frac{3N}{N} = 6$ (cada grano suma 3 contactos)</li>
+                    </ul>
+
+                    <h3 style="font-size:0.8em; margin-top:0.8em;">Isostático</h3>
+                    <p style="font-size:0.75em;">(contactos puntuales: ligaduras = fuerzas)</p>
+                    <ul style="font-size:0.7em; line-height:1.8;">
+                        <li><strong>2D:</strong> $3N$ ligaduras, $2N_c$ fuerzas &rarr; $N_c = \frac{3N}{2}$ &rarr; $\langle z \rangle = 3$</li>
+                        <li><strong>3D:</strong> $6N$ ligaduras, $3N_c$ fuerzas &rarr; $N_c = 2N$ &rarr; $\langle z \rangle = 4$</li>
+                    </ul>
+
+                    <p style="font-size:0.75em; margin-top:0.5em;"><strong>Valores experimentales</strong> (confocal):<br>
+                    $\phi = 0.4 \to \langle z \rangle = 4$; &nbsp; $\phi = 0.65 \to \langle z \rangle = 8$</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-033.png" alt="Esferas empaquetadas" style="max-width:70%; border-radius:4px;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-035.png" alt="Deposición secuencial" style="max-width:70%; border-radius:4px; margin-top:0.5em;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Número de contacto — medición -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Número de contacto &mdash; medición</h2>
+            <ul style="font-size:0.8em; line-height:2.0;">
+                <li>El número de contacto es difícil de medir: es difícil distinguir contactos reales de "casi-contactos".</li>
+                <li>En simulaciones se requiere guardar posiciones con altísima precisión. Es mejor distinguir por las fuerzas.</li>
+                <li>Métodos experimentales: pintura, oxidación, trazadores fluorescentes, partículas fotoelásticas, puentes líquidos, conductividad.</li>
+            </ul>
+            <div style="display:flex; gap:1em; justify-content:center; margin-top:0.5em;">
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-037.jpg" alt="Behringer fotoelásticas" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Behringer (fotoelásticas)</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="../Material/Course_Argentine/media/extracted_u2/img-038.jpg" alt="Kudroli" style="max-width:100%; border-radius:4px;">
+                    <p style="font-size:0.65em;">Kudroli</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PARTE II — DESCARGA, JAMMING Y VORONOI (ex clase03)           -->
+    <!-- ============================================================ -->
+
+    <!-- Efecto Janssen - Fenomenología -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Efecto Janssen: presión en silos</h2>
+            <div class="two-col">
+                <div style="text-align:center;">
+                    <!-- SVG: Comparación cilindro agua vs cilindro granos -->
+                    <svg viewBox="0 0 400 380" style="max-width:100%; max-height:380px;">
+                        <!-- Cilindro con agua -->
+                        <text x="100" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#3a5556">Fluido</text>
+                        <rect x="40" y="30" width="8" height="280" fill="#3a5556" rx="2"/>
+                        <rect x="152" y="30" width="8" height="280" fill="#3a5556" rx="2"/>
+                        <rect x="40" y="302" width="120" height="8" fill="#3a5556" rx="2"/>
+                        <defs>
+                            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(100,180,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(30,90,200,0.7)"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="48" y="50" width="104" height="252" fill="url(#waterGrad)" rx="2"/>
+                        <line x1="20" y1="80" x2="46" y2="80" stroke="#2980b9" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+                        <line x1="12" y1="160" x2="46" y2="160" stroke="#2980b9" stroke-width="2" marker-end="url(#arrowBlue)"/>
+                        <line x1="4" y1="240" x2="46" y2="240" stroke="#2980b9" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+                        <line x1="0" y1="300" x2="46" y2="300" stroke="#2980b9" stroke-width="3" marker-end="url(#arrowBlue)"/>
+                        <defs>
+                            <marker id="arrowBlue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                                <polygon points="0 0, 7 2.5, 0 5" fill="#2980b9"/>
+                            </marker>
+                        </defs>
+                        <rect x="55" y="316" width="90" height="12" fill="#bbb" rx="3"/>
+                        <text x="100" y="348" text-anchor="middle" font-size="12" fill="#2980b9" font-weight="bold">F = Mg</text>
+                        <text x="100" y="370" text-anchor="middle" font-size="11" fill="#888">P = ρgz</text>
+                        <!-- Cilindro con granos -->
+                        <text x="300" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#3a5556">Granular</text>
+                        <rect x="240" y="30" width="8" height="280" fill="#3a5556" rx="2"/>
+                        <rect x="352" y="30" width="8" height="280" fill="#3a5556" rx="2"/>
+                        <rect x="240" y="302" width="120" height="8" fill="#3a5556" rx="2"/>
+                        <circle cx="270" cy="60" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="295" cy="55" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="320" cy="58" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="340" cy="63" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="260" cy="80" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="283" cy="78" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="308" cy="76" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="333" cy="80" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="350" cy="82" r="10" fill="rgba(196,160,160,0.4)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="270" cy="100" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="295" cy="98" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="320" cy="96" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="345" cy="100" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="258" cy="120" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="283" cy="118" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="308" cy="116" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="333" cy="118" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="352" cy="122" r="10" fill="rgba(196,160,160,0.35)" stroke="#8b5e6b" stroke-width="1"/>
+                        <text x="300" y="180" text-anchor="middle" font-size="24" fill="#8b5e6b">⋮</text>
+                        <circle cx="268" cy="220" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="293" cy="218" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="318" cy="220" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="343" cy="222" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="260" cy="240" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="285" cy="238" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="310" cy="240" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="335" cy="238" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="350" cy="242" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="270" cy="260" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="295" cy="258" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="320" cy="260" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="345" cy="262" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="258" cy="280" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="283" cy="278" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="308" cy="280" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="333" cy="278" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <circle cx="352" cy="282" r="10" fill="rgba(196,160,160,0.3)" stroke="#8b5e6b" stroke-width="1"/>
+                        <line x1="245" y1="140" x2="245" y2="100" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)"/>
+                        <line x1="355" y1="140" x2="355" y2="100" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)"/>
+                        <line x1="245" y1="260" x2="245" y2="220" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)"/>
+                        <line x1="355" y1="260" x2="355" y2="220" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)"/>
+                        <text x="230" y="165" text-anchor="end" font-size="10" fill="#c0392b" font-style="italic">fricción</text>
+                        <defs>
+                            <marker id="arrowRed" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+                                <polygon points="0 0, 7 2.5, 0 5" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                        <rect x="255" y="316" width="90" height="12" fill="#bbb" rx="3"/>
+                        <text x="300" y="348" text-anchor="middle" font-size="12" fill="#8b5e6b" font-weight="bold">F &lt; Mg</text>
+                        <text x="300" y="370" text-anchor="middle" font-size="11" fill="#888">P → P_sat</text>
+                    </svg>
+                </div>
+                <div style="font-size:0.7em;">
+                    <p>En un fluido, la presión crece linealmente con la profundidad (ley de Pascal):</p>
+                    <div class="eq-box">
+                        \(P_{\text{fluido}}(z) = \rho g z\)
+                    </div>
+                    <p style="margin-top:0.5em;">En un silo granular, la fuerza en la base <strong>satura</strong>:</p>
+                    <ul style="line-height:1.8;">
+                        <li>\(F < Mg\) : la balanza mide menos que el peso total.</li>
+                        <li>La <strong>fricción con las paredes</strong> redirige parte del peso hacia los costados del silo.</li>
+                        <li>La forma de llenado cambia la saturación.</li>
+                        <li>La columna tiene que estar en fricción <em>movilizada</em> para que se observe la saturación.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footnote">Janssen, H. A. (1895). Versuche über Getreidedruck in Silozellen. <em>Z. Ver. Dtsch. Ing.</em> 39, 1045.</div>
+        </div>
+    </section>
+
+    <!-- Modelo de Janssen -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de Janssen</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <p>Balance de fuerzas sobre una rebanada de espesor \(dz\) en un silo cilíndrico de radio \(R\):</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\pi R^2 \sigma_{zz}(z+dz) - \pi R^2 \sigma_{zz}(z) - \rho g\pi R^2 dz + \sigma_{rz}(R)\,2\pi R\,dz = 0\)
+                    </div>
+                    <p style="margin-top:0.4em;"><strong>Hipótesis:</strong></p>
+                    <ul style="line-height:1.6;">
+                        <li>Fricción completamente movilizada: \(\sigma_{rz}(R) = \mu_s \sigma_n(R)\)</li>
+                        <li>Relación constitutiva: \(\sigma_n = K\,\sigma_{zz}\) (redirección de fuerzas)</li>
+                    </ul>
+                    <p style="margin-top:0.4em;">Ecuación diferencial resultante:</p>
+                    <div class="eq-box" style="font-size:0.95em;">
+                        \(\dfrac{\partial\sigma_{zz}}{\partial z} = \rho g - \dfrac{2\mu_s K}{R}\,\sigma_{zz}(z)\)
+                    </div>
+                    <p>con \(\sigma_{zz}(z=0)=0\). La solución es:</p>
+                    <div class="red-box" style="font-size:1.1em;">
+                        \(\sigma_{zz}(z) = \dfrac{\rho g R}{2\mu_s K}\left[1 - \exp\!\left(\dfrac{-2\mu_s K\,z}{R}\right)\right]\)
+                    </div>
+                </div>
+                <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:0.5em;">
+                    <img src="figuras/jannsen.png" alt="Diagrama de balance de fuerzas de Janssen" style="max-height:250px; border-radius:4px;">
+                    <img src="figuras/janssen_curva.png" alt="Curva de saturación de Janssen" style="max-height:250px; border-radius:4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Janssen: parámetros clave -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Janssen: parámetros clave</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p>Reescribiendo la solución de Janssen:</p>
+                    <div class="red-box" style="font-size:1.2em;">
+                        \(P(z) = P_{\text{sat}}\!\left(1 - e^{-z/\lambda}\right)\)
+                    </div>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Presión de saturación:</strong></p>
+                        <p style="text-align:center; font-size:1.1em;">\(P_{\text{sat}} = \dfrac{\rho g R}{2\mu_s K} = \dfrac{\rho g D}{4\mu_s K}\)</p>
+                        <p style="margin-top:0.3em;"><strong>Longitud característica:</strong></p>
+                        <p style="text-align:center; font-size:1.1em;">\(\lambda = \dfrac{R}{2\mu_s K} = \dfrac{D}{4\mu_s K}\)</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Para \(z \gg \lambda\), la presión se vuelve <strong>independiente de la altura</strong>.</p>
+                    <p style="margin-top:0.3em;">Experimentalmente, la masa aparente de saturación es proporcional a \(R^3\), consistente con \(\sigma_{zz} \to \frac{\rho g R}{2\mu_s K}\).</p>
+                </div>
+                <div style="font-size:0.65em;">
+                    <table>
+                        <tr><th>Parámetro</th><th>Descripción</th><th>Valor típico</th></tr>
+                        <tr><td>\(K\)</td><td>Coeficiente de Janssen (redirección)</td><td>0.5 - 0.8</td></tr>
+                        <tr><td>\(\mu_s\)</td><td>Coeficiente de fricción grano-pared</td><td>0.3 - 0.6</td></tr>
+                        <tr><td>\(\lambda\)</td><td>Longitud característica</td><td>5 - 15 cm</td></tr>
+                        <tr><td>\(D\)</td><td>Diámetro del silo</td><td>4 - 6 cm (lab)</td></tr>
+                    </table>
+                    <div class="highlight-box red" style="margin-top:1em;">
+                        <p><strong>Diferencia fundamental:</strong></p>
+                        <p>Fluido: \(P = \rho g h\) (crece linealmente)</p>
+                        <p>Granular: \(P \to P_{\text{sat}}\) (satura exponencialmente)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ley de Beverloo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Descarga granular: ley de Beverloo</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <p>El caudal másico \(W\) en silos es <strong>constante</strong> e <strong>independiente de la altura de llenado</strong> (a diferencia de la ley de Torricelli para fluidos).</p>
+                    <p style="margin-top:0.3em;">Esto es consecuencia directa del efecto Janssen: la presión en el fondo satura.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Concepto de "free fall arch":</strong></p>
+                        <p>La velocidad de salida se fija por la caída libre sobre el diámetro de apertura:</p>
+                        <p style="text-align:center; font-size:1.1em;">\(v = \sqrt{g\,D_0}\)</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Beverloo, Leniger y Van de Velde (1961) midieron \(W^{2/5}\) vs. \(D_0\) y obtuvieron una recta:</p>
+                    <div class="red-box" style="font-size:1.2em; margin-top:0.3em;">
+                        \(W = C\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+                    </div>
+                    <p style="margin-top:0.3em;">\(C \approx 0.58\), \(k \approx 1.4\), \(D_0\) = apertura, \(d\) = diámetro de grano</p>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:0.5em;">
+                    <img src="figuras/beverloo.jpg" alt="Descarga granular - Beverloo" style="max-height:380px; border-radius:4px;">
+                    <img src="figuras/beverloo_curva.png" alt="Curva de Beverloo" style="max-height:320px; border-radius:4px;">
+                </div>
+            </div>
+            <div class="footnote">
+                Beverloo, Leniger &amp; Van de Velde, <em>Chem. Eng. Sci.</em> 15, 1961.
+                Hagen G.H.L., <em>Poggendorffs Ann. Phys. Chem.</em> 46, 423 (1839).
+            </div>
+        </div>
+    </section>
+
+    <!-- Beverloo detalles -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ley de Beverloo: detalles</h2>
+            <div class="two-col">
+                <div style="font-size:0.6em;">
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \(W = C\,\rho_b\,\sqrt{g}\,(D_0 - k\,d)^{5/2}\)
+                    </div>
+                    <p style="margin-top:0.5em;">El término \(kd\) se asocia a <strong>efectos de borde</strong>: zona anular cerca del orificio donde la densidad de partículas es menor (efecto de "anillo vacío").</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Condiciones de validez:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>\(W\) no depende de \(H\) si \(H > 2D_0\)</li>
+                            <li>\(W\) no depende de \(D\) (diámetro del silo) si \(D > 2{,}5\,D_0\)</li>
+                            <li>Válida para \(400\,\mu\text{m} < d < D_0/6\)</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Caso 2D</strong> (ranura): el exponente cambia de 5/2 a 3/2</p>
+                        <p style="text-align:center;">\(W \propto \sqrt{g}\,(D_0 - kd)^{3/2}\)</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="figuras/beverloo_curva.png" alt="Curva de Beverloo - datos experimentales" style="max-height:480px; border-radius:4px;">
+                </div>
+            </div>
+            <div class="footnote">
+                Brown &amp; Richards, <em>Principles of Powder Mechanics</em>, Pergamon, 1970.
+                Nedderman, <em>Statics and Kinematics of Granular Materials</em>, CUP, 1992.
+            </div>
+        </div>
+    </section>
+
+    <!-- Jamming -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Jamming: transición de atasco</h2>
+            <div class="two-col">
+                <div style="font-size:0.62em;">
+                    <p>Cuando la apertura \(D_0\) se reduce, el flujo puede detenerse por formación de <strong>arcos estables</strong> de partículas sobre el orificio.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Relación crítica \(D_0/d\):</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Para \(D_0/d > 5\): flujo continuo (generalmente)</li>
+                            <li>Para \(D_0/d \sim 3\text{-}5\): flujo intermitente, atascos esporádicos</li>
+                            <li>Para \(D_0/d < 3\): atasco permanente (arcos estables)</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:0.5em;">La probabilidad de atasco \(J(D_0/d)\) se mide repitiendo la descarga muchas veces para cada apertura.</p>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Diagrama de jamming (Liu-Nagel, 1998):</strong></p>
+                        <p>Tres ejes controlan la transición flujo/atasco:</p>
+                        <ul>
+                            <li>\(1/\phi\) (inverso de la densidad)</li>
+                            <li>Esfuerzo de corte \(\sigma\)</li>
+                            <li>Temperatura (o agitación)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <img src="figuras/jamming.png" alt="Diagrama de jamming" style="max-height:420px; border-radius:4px;">
+                    <p style="font-size:0.4em; color:#888;">Diagrama de jamming de Liu &amp; Nagel (1998).<br>
+                    El punto J marca la transición de atasco.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formación de arcos -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Formación de arcos y flujo intermitente</h2>
+            <div class="two-col">
+                <div>
+                    <p style="font-size:0.6em;">Los arcos son estructuras autoestabilizantes donde cada grano se sostiene mutuamente por fricción y geometría.</p>
+                    <svg viewBox="0 0 360 250" style="max-width:100%; max-height:210px;">
+                        <rect x="20" y="10" width="15" height="240" fill="#3a5556" rx="2"/>
+                        <rect x="325" y="10" width="15" height="240" fill="#3a5556" rx="2"/>
+                        <rect x="20" y="210" width="80" height="15" fill="#3a5556" rx="2"/>
+                        <rect x="260" y="210" width="80" height="15" fill="#3a5556" rx="2"/>
+                        <circle cx="110" cy="200" r="14" fill="rgba(196,160,160,0.5)" stroke="#8b5e6b" stroke-width="2"/>
+                        <circle cx="140" cy="190" r="14" fill="rgba(196,160,160,0.5)" stroke="#8b5e6b" stroke-width="2"/>
+                        <circle cx="180" cy="185" r="14" fill="rgba(196,160,160,0.5)" stroke="#8b5e6b" stroke-width="2"/>
+                        <circle cx="220" cy="190" r="14" fill="rgba(196,160,160,0.5)" stroke="#8b5e6b" stroke-width="2"/>
+                        <circle cx="250" cy="200" r="14" fill="rgba(196,160,160,0.5)" stroke="#8b5e6b" stroke-width="2"/>
+                        <circle cx="125" cy="165" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="160" cy="160" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="200" cy="158" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="235" cy="162" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="90" cy="170" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="270" cy="170" r="14" fill="rgba(107,154,154,0.3)" stroke="#6b9a9a" stroke-width="1.5"/>
+                        <circle cx="110" cy="135" r="14" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="1"/>
+                        <circle cx="145" cy="130" r="14" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="1"/>
+                        <circle cx="180" cy="128" r="14" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="1"/>
+                        <circle cx="215" cy="130" r="14" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="1"/>
+                        <circle cx="250" cy="135" r="14" fill="rgba(107,154,154,0.2)" stroke="#6b9a9a" stroke-width="1"/>
+                        <text x="180" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="#8b5e6b">arco de partículas</text>
+                        <line x1="100" y1="225" x2="260" y2="225" stroke="#c0392b" stroke-width="1.5" marker-start="url(#arrowL)" marker-end="url(#arrowR2)"/>
+                        <text x="180" y="222" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="bold">D₀</text>
+                        <defs>
+                            <marker id="arrowL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                                <polygon points="8 0, 0 3, 8 6" fill="#c0392b"/>
+                            </marker>
+                            <marker id="arrowR2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <div style="margin-top:0.3em; text-align:center;">
+                        <iframe width="420" height="236" data-src="https://www.youtube.com/embed/lWSJwZhqoQw" frameborder="0" allow="autoplay" allowfullscreen style="border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></iframe>
+                        <p class="credit">Jamming y formación de arcos en un silo</p>
+                    </div>
+                </div>
+                <div style="font-size:0.6em;">
+                    <div class="highlight-box" style="margin-top:0.3em;">
+                        <p><strong>Efecto de la forma y tamaño:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li><strong>Relación \(D_0/d\):</strong> cuanto menor es la relación, mayor la probabilidad de atasco.</li>
+                            <li><strong>Forma del orificio:</strong> un orificio circular se atasca más fácilmente que una ranura del mismo ancho.</li>
+                            <li><strong>Forma de los granos:</strong> partículas no esféricas (alargadas, angulares) forman arcos más fácilmente.</li>
+                            <li><strong>Fricción:</strong> mayor fricción entre granos estabiliza los arcos.</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Reloj de arena con granos finos (\(d < 300\,\mu\)m):</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>\(d < 40\,\mu\)m: no hay flujo (cohesión)</li>
+                            <li>\(40 < d < 300\,\mu\)m: flujo <strong>intermitente</strong></li>
+                            <li>\(d > 300\,\mu\)m: flujo <strong>continuo</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footnote">
+                To, Lai &amp; Pak, PRL 86, 71 (2001);
+                Wu X-l. <em>et al</em>, PRL 71, 1363 (1993);
+                Le Pennec T. <em>et al</em>, PRE 53, 2257 (1996).
+            </div>
+        </div>
+    </section>
+
+    <!-- Teselación de Voronoi -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Teselación de Voronoi</h2>
+            <div class="two-col">
+                <div>
+                    <div style="text-align:center;">
+                        <img src="../Material/Course_Argentine/media/extracted_u2/img-048.png" alt="Red de Voronoi y Delaunay" style="max-width:100%; border-radius:4px;">
+                    </div>
+                    <div style="font-size:0.65em; margin-top:0.3em;">
+                        <p><span style="color:red;">&#9679;</span> <strong>Puntos rojos:</strong> centros de las partículas</p>
+                        <p><strong>Polígonos blancos:</strong> celdas de Voronoi</p>
+                        <p><span style="color:black;">&#9644;</span> <strong>Red negra:</strong> red de Delaunay</p>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.3em; font-size:0.55em;">
+                        <p><strong>Construcción:</strong> dado un conjunto de puntos, para cada punto $i$ se define su celda como $\{x : |x - x_i| \leq |x - x_j|, \forall j \neq i\}$. Lo implementaremos numéricamente en el próximo experimento.</p>
+                    </div>
+                </div>
+                <div style="font-size:0.75em;">
+                    <ul style="line-height:1.8;">
+                        <li><strong>Celda de Voronoi:</strong> región del espacio más cercana a un punto dado que a cualquier otro punto del conjunto.</li>
+                        <li>La red recíproca se llama <strong>red de Delaunay</strong>: conecta puntos cuyas celdas de Voronoi comparten una arista.</li>
+                        <li>Para esferas y discos, cada grano está contenido en su celda.</li>
+                    </ul>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <p><strong>Aplicaciones de las celdas de Voronoi:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li><strong>Densidad local:</strong> $\phi_{\text{local}} = v_g / V_{\text{Voronoi}}$</li>
+                            <li><strong>Transición de jamming:</strong> identificar regiones localmente densas/sueltas y la heterogeneidad espacial de $\phi$</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true,
+        slideNumber: true,
+        transition: 'slide',
+        width: 1600,
+        height: 900,
+        preloadIframes: false,
+        math: {
+            mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+            config: 'TeX-AMS_HTML-full'
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
