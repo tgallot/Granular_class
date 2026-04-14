@@ -1090,9 +1090,10 @@
                     <div class="eq-box" style="font-size:0.95em; margin:0.3em 0;">
                         $\oint_S \boldsymbol{T}^{(\boldsymbol{n})}\,ds + \int_V \boldsymbol{F}\,dV = \boldsymbol{0}$
                     </div>
-                    <p style="margin-top:0.3em;">Usando $T_j = \sigma_{ij}n_i$ y el teorema de Gauss:</p>
-                    <div class="eq-box" style="font-size:1.0em; margin:0.25em 0; padding:0.2em;">
-                        \[ \boxed{\sum_j \frac{\partial \sigma_{ji}}{\partial x_j} + F_i = 0} \]
+                    <p style="margin-top:0.3em;">Usando $T_j = \sigma_{ij}n_i$ y el teorema de Gauss: </p>( $\oint_S \phi\,ds=\int_V \sum_j \frac{\partial \phi{j}}{\partial x_j} \,dV)$, </p> en cada dirección $i$ tenemos: </p>
+                         $ \sum_j \frac{\partial \sigma_{ji}}{\partial x_j} + F_i = 0 $
+<div class="eq-box" style="font-size:1.0em; margin:0.25em 0; padding:0.2em;">
+                        \[ \boxed{\sum_j \partial \sigma_{ji},_j + F_i = 0} \]
                     </div>
                     <div class="highlight-box" style="margin-top:0.2em;">
                         <strong>Interpretación:</strong> en ausencia de aceleración, los esfuerzos internos equilibran exactamente las fuerzas de cuerpo en cada punto del material.
@@ -1857,7 +1858,7 @@
                         \[ \mathrm{d}l'^{\,2} - \mathrm{d}l^2 = \mathrm{d}x'^{\,2}_i - \mathrm{d}x^2_i \]
                     </div>
                     <div class="highlight-box" style="margin-top:0.5em; font-size:0.95em;">
-                        La deformación se mide por el cambio en la <strong>distancia</strong> entre puntos vecinos, no por el desplazamiento absoluto (que puede ser una simple traslación).
+                        La sumatoria sobre \(i\) es implicita. La deformación se mide por el cambio en la <strong>distancia</strong> entre puntos vecinos, no por el desplazamiento absoluto (que puede ser una simple traslación).
                     </div>
                 </div>
                 <div>
@@ -1920,11 +1921,11 @@
             <h2>Derivación del tensor de deformación</h2>
             <div class="two-col">
                 <div style="font-size:0.6em;">
-                    <p><strong>3. Álgebra.</strong> Como \(\mathrm{d}l'^{\,2} = (\mathrm{d}x_i + \mathrm{d}u_i)^2\) y \(\mathrm{d}u_i = \dfrac{\partial u_i}{\partial x_k}\,\mathrm{d}x_k\):</p>
+                    <p><strong>3. Álgebra.</strong> Como \(\mathrm{d}l'^{\,2} = (\mathrm{d}x_i + \mathrm{d}u_i)^2\) y \(\mathrm{d}u_i = \dfrac{\partial u_i}{\partial x_k}\,\mathrm{d}x_k\), (somación sobre k):</p>
                     <div class="eq-box" style="margin:0.0em 0; font-size:0.9em;">
                         \[ \mathrm{d}l'^{\,2} = \mathrm{d}l^2 + 2\,\frac{\partial u_i}{\partial x_k}\,\mathrm{d}x_i\,\mathrm{d}x_k + \frac{\partial u_i}{\partial x_k}\,\frac{\partial u_i}{\partial x_l}\,\mathrm{d}x_k\,\mathrm{d}x_l \]
                     </div>
-                    <p style="margin-top:0.1em;">Es decir:</p>
+                    <p style="margin-top:0.1em;">Sumando sobre \(i\), \(k\) y \(l\). Es decir:</p>
                     <div class="eq-box" style="margin:0.0em 0; font-size:0.9em; border-color: var(--color-teal); border-width:2px;">
                         \[ \mathrm{d}l'^{\,2} - \mathrm{d}l^2 = 2\,\varepsilon_{ik}\,\mathrm{d}x_i\,\mathrm{d}x_k \]
                     </div>
@@ -1944,14 +1945,14 @@
                     </div>
                     <p style="margin-top:0.0em;">Definiendo el versor \(n_i = \mathrm{d}x_i / \mathrm{d}l\), la <strong>elongación relativa</strong> en la dirección \(\hat{\mathbf{n}}\) es:</p>
                     <div class="eq-box" style="margin:0.0em 0; font-size:0.9em; border-color: var(--color-teal); border-width:2px;">
-                        \[ \boxed{\;\frac{\mathrm{d}l' - \mathrm{d}l}{\mathrm{d}l} = \varepsilon_{ik}\,n_i\,n_k\;} \]
+                        \[ \boxed{\;\frac{\Delta L}{L} =\frac{\mathrm{d}l' - \mathrm{d}l}{\mathrm{d}l} = \varepsilon_{ik}\,n_i\,n_k\;} \]
                     </div>
                     <div class="highlight-box" style="margin-top:0.0em; font-size:0.9em;">
-                        <strong>Ejemplo:</strong> a lo largo de \(x_1\): \(\hat{\mathbf{n}} = (1,0,0)\) → \(\Delta l / l = \varepsilon_{11}\)<br>
-                        A lo largo de \(x_2\): \(\hat{\mathbf{n}} = (0,1,0)\) → \(\Delta l / l = \varepsilon_{22}\)<br>
+                        <strong>Ejemplo:</strong> a lo largo de \(x_1\): \(\hat{\mathbf{n}} = (1,0,0)\) → \(\Delta L / L = \varepsilon_{11}\)<br>
+                        A lo largo de \(x_2\): \(\hat{\mathbf{n}} = (0,1,0)\) → \(\Delta L / L = \varepsilon_{22}\)<br>
                         Las componentes diagonales son directamente las <strong>elongaciones relativas</strong> a lo largo de los ejes.
                     </div>
-                    <p class="credit" style="margin-top:0.3em;">Landau &amp; Lifshitz, <em>Theory of Elasticity</em>, 3<sup>a</sup> ed. (1986), §1</p>
+                    <p class="credit" style="margin-top:0.3em;">ver las versiones en coordenadas cilindricas y polares en Landau &amp; Lifshitz, <em>Theory of Elasticity</em>, 3<sup>a</sup> ed. (1986), §1</p>
                 </div>
             </div>
         </div>
@@ -2058,7 +2059,7 @@
                         </tbody>
                     </table>
                     <div class="highlight-box" style="margin-top:1em;">
-                        Un material elástico lineal general (triclínico) tiene <strong>21 constantes elásticas</strong> independientes.
+                        Un material elástico lineal general tiene <strong>21 constantes elásticas</strong> independientes.
                     </div>
                 </div>
             </div>
