@@ -813,7 +813,7 @@
              data-background-position="left">
         <div style="padding-left:10%;">
             <h2 style="font-size:1.15em;">Distribucion de presion \(p(r)\)</h2>
-            <p style="font-size:0.55em;">La presion local es proporcional a la compresion volumetrica: \(p(r) \propto \Delta V / V\).</p>
+            <p style="font-size:0.55em;">Si la presion es homogénea, la presion local es proporcional a la compresion volumetrica: \(p(r) \propto \Delta V / V\).</p>
 
             <p style="font-size:0.55em; margin-top:0.3em;">Volumen comprimido en un anillo de radio \(r\):</p>
             <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
@@ -822,15 +822,16 @@
 
             <p style="font-size:0.55em; margin-top:0.3em;">Tomando el cociente entre un punto arbitrario \(r\) y el centro \(r=0\):</p>
             <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
-                $$\dfrac{p^{2}(r)}{p_{0}^{2}} = \dfrac{\delta'(r)^{2}}{\delta^{2}}$$
+                $$\dfrac{p(r)}{p_{0}} = \dfrac{\delta'(r)}{\delta}$$
             </div>
 
             <div class="fragment" data-fragment-index="1">
-                <p style="font-size:0.55em; margin-top:0.3em;">Usando \(\dfrac{\delta'(r)}{\delta} = 1 - \dfrac{r^{2}}{a^{2}}\):</p>
-                <div class="red-box" style="font-size:0.6em; margin:0.15em 0; padding:0.3em 0.6em;">
+                <p style="font-size:0.55em; margin-top:0em;">Usando \(\dfrac{\delta'(r)}{\delta} = 1 - \dfrac{r^{2}}{a^{2}}\), la solución para una distribución homogenea de presión en el vólumens:     \(\quad p(r) = p_{0}\,\left(1 - \dfrac{r^{2}}{a^{2}}\right).\)</p>
+                <p style="font-size:0.55em; margin-top:0em;">La solución de Boussinesq para obtener una deformación cuadratica (en $r$) es un poco distinta:</p>
+                <div class="red-box" style="font-size:0.6em; margin:0.0em 0;">
                     $$p(r) = p_{0}\,\sqrt{1 - \dfrac{r^{2}}{a^{2}}}$$
                 </div>
-                <p style="font-size:0.45em; color:#555; margin-top:0.15em;">Distribucion <strong>semi-eliptica</strong> de Hertz (maximo en el centro, 0 en el borde). Con \(p_0 = \dfrac{2\,E^{*}\,a}{\pi\,R^{*}}\).</p>
+
             </div>
         </div>
     </section>
@@ -1068,7 +1069,7 @@
                     <div class="fragment" data-fragment-index="3">
                         <p><strong>Combinando 1 + 2 + 3</strong> &rarr; <strong>ecuacion de Navier</strong>:</p>
                         <div class="highlight-box" style="font-size:1.0em; margin:0.2em 0;">
-                            $$(\lambda + \mu)\,u_{j,ji} + \mu\,u_{i,jj} + f_i = 0$$
+                            $$(\lambda + 2\mu)\,u_{j,ji} + \mu\,u_{i,jj} + f_i = 0$$
                         </div>
                         <p style="margin-top:0.2em;">O en forma vectorial:</p>
                         <div class="eq-box" style="font-size:1.0em; margin:0.2em 0;">
@@ -1379,7 +1380,7 @@
                         </div>
 
                         <div class="fragment" data-fragment-index="2">
-                            <p style="font-size:0.45em;"><strong>4.</strong> Decormación calculada a partir de la expresión $p(r)$ :</p>
+                            <p style="font-size:0.45em;"><strong>4.</strong> En las siguientes slides, caclulamos la deformación calculada a partir de la expresión $p(r)$ :</p>
                             <div class="highlight-box" style="font-size:0.5em; padding:0.2em 0.5em; margin:0.05em 0;">
                                $$u_z(r) = \frac{\pi p_0}{4 E^* a}\left(2a^2 - r^2\right) $$
                             </div>
