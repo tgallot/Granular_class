@@ -1,0 +1,2217 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4 - Mecánica de Contacto: Ley de Hertz</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .highlight-box.orange { border-left-color: #e67e22; }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal .red-box { background: rgba(139,94,107,0.08); border: 2px solid var(--color-mauve); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+        .reveal .footnote { font-size: 0.4em; color: #888; margin-top: 1.5em; border-top: 1px solid #ddd; padding-top: 0.3em; }
+        /* Flowchart styles */
+        .flowchart { display: flex; flex-direction: column; align-items: center; gap: 0; font-size: 0.6em; }
+        .flowchart .fc-row { display: flex; gap: 2em; justify-content: center; align-items: flex-start; }
+        .flowchart .fc-box { background: rgba(107,154,154,0.08); border: 1.5px solid var(--color-teal); border-radius: 6px; padding: 0.4em 0.8em; text-align: center; min-width: 160px; }
+        .flowchart .fc-box.root { background: rgba(107,154,154,0.15); border-width: 2px; }
+        .flowchart .fc-box.result { background: rgba(139,94,107,0.1); border: 2px solid var(--color-mauve); }
+        .flowchart .fc-arrow { font-size: 1.4em; color: var(--color-dark); line-height: 1; text-align: center; padding: 0.1em 0; }
+        .flowchart .fc-merge { display: flex; align-items: center; justify-content: center; gap: 0.5em; }
+        .flowchart .fc-merge-line { width: 80px; height: 0; border-top: 2px solid var(--color-dark); }
+        .flowchart .fc-merge-label { background: rgba(107,154,154,0.08); border: 1.5px solid var(--color-dark); border-radius: 6px; padding: 0.3em 0.8em; font-weight: 700; white-space: nowrap; }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 1: TITLE (from clase04 - keep exactly)                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 4 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                MECANICA DE CONTACTO:<br>LEY DE HERTZ
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 2: PLAN DE LA CLASE (from clase04 - updated list)      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Problema de Hertz: contacto entre dos esferas</li>
+                <li>Relacion fuerza-deformacion no lineal</li>
+                <li>Cadena de Nesterenko y solitones</li>
+                <li>Derivacion aproximada (analisis dimensional)</li>
+                <li>Derivacion exacta (Boussinesq)</li>
+                <li>Colision frontal: penetracion y duracion</li>
+                <li>Coeficiente de restitucion</li>
+                <li>Modelo de corteza blanda (de Gennes)</li>
+                <li>Extension: JKR y adhesion</li>
+            </ol>
+        </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 10: RELACION F-DELTA (from clase04 slide 8 - keep)     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Relacion fuerza-deformacion</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div style="text-align:center;">
+                    <!-- SVG graph F vs delta -->
+                    <svg viewBox="0 0 340 300" style="width:95%;">
+                        <!-- Axes -->
+                        <line x1="50" y1="260" x2="320" y2="260" stroke="#333" stroke-width="1.5"/>
+                        <line x1="50" y1="260" x2="50" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="185" y="290" text-anchor="middle" font-size="14" fill="#333">Deformacion &#x03B4;</text>
+                        <text x="20" y="140" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90,20,140)">Fuerza F</text>
+                        <!-- Hertz curve F ~ delta^{3/2} -->
+                        <path d="M50,260 C80,258 120,240 160,200 C200,150 240,80 300,30" stroke="#c0392b" stroke-width="3" fill="none"/>
+                        <!-- Linear spring (for comparison) -->
+                        <path d="M50,260 L300,70" stroke="var(--color-teal)" stroke-width="2" stroke-dasharray="8,4" fill="none"/>
+                        <!-- Labels -->
+                        <text x="280" y="22" font-size="12" fill="#c0392b" font-weight="bold">Hertz: &#x03B4;&#xB3;&#x2F;&#x00B2;</text>
+                        <text x="265" y="60" font-size="12" fill="var(--color-teal)">Lineal: &#x03B4;</text>
+                        <!-- Tangent slope indicator -->
+                        <text x="180" y="220" font-size="11" fill="#888">rigidez creciente</text>
+                        <path d="M175,225 C190,210 195,200 200,185" stroke="#888" stroke-width="1" fill="none" marker-end="url(#arr6b)"/>
+                        <defs><marker id="arr6b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#888"/></marker></defs>
+                    </svg>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.65em;">
+                        <strong>Comparacion con un resorte lineal:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li>Resorte: $F = k\delta$ (lineal)</li>
+                            <li>Hertz: $F = k\delta^{3/2}$ (no lineal)</li>
+                        </ul>
+                        <p style="margin-top:0.3em;">La no-linealidad tiene consecuencias profundas para la propagacion de ondas en medios granulares.</p>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.65em; margin-top:0.5em;">
+                        <strong>Rigidez del contacto:</strong><br>
+                        $K(\delta) = \dfrac{dF}{d\delta} = \dfrac{3}{2}\,k\,\delta^{1/2}$
+                        <p style="margin-top:0.3em;">La rigidez es <em>nula</em> al inicio del contacto ($\delta = 0$) y crece con la compresion.</p>
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.65em; margin-top:0.5em;">
+                        <strong>Ondas solitarias:</strong><br>
+                        La no-linealidad del contacto de Hertz permite la propagacion de <strong>ondas solitarias</strong> en cadenas de esferas (Nesterenko, 1983).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Paso 1 - Geometria del radio de contacto -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Paso 1: Geometria del contacto</h2>
+            <div class="two-col" style="margin-top:0.1em;">
+                <div>
+                    <p style="font-size:0.55em;">Del triangulo \(OAB\), Pitagoras:</p>
+                    <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                        <span class="fragment" data-fragment-index="1">$$a^2 + (R - \delta)^2 = R^2$$</span>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.55em;">Expandiendo:</p>
+                        <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                            $$a^2 = 2R\delta - \delta^2$$
+                        </div>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="3">
+                        <p style="font-size:0.55em;">Como \(\delta \ll R\):</p>
+                        <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                            $$a^2 \approx 2R\,\delta$$
+                        </div>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="4">
+                        <p style="font-size:0.55em;">Para dos esferas, \(R \to R^*\):</p>
+                        <div class="highlight-box" style="font-size:0.7em; text-align:center; padding:0.3em 0.6em;">
+                            $$\boxed{a = \sqrt{R^*\,\delta}}$$
+                        </div>
+                        <p style="font-size:0.45em; color:#555; margin-top:0.1em;">Resultado puramente geometrico.</p>
+                    </div>
+                </div>
+                <div>
+                    <div style="text-align:center;">
+                        <svg viewBox="0 0 320 250" style="width:78%;">
+                            <defs>
+                                <marker id="arr3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                                </marker>
+                            </defs>
+                            <circle cx="140" cy="75" r="110" fill="rgba(107,154,154,0.05)" stroke="var(--color-teal)" stroke-width="2.5"/>
+                            <!-- Surface at y=170 -->
+                            <rect x="20" y="170" width="280" height="5" rx="2" fill="#ddd" stroke="#999" stroke-width="1"/>
+                            <text x="155" y="200" text-anchor="middle" font-size="9" fill="#888">superficie rigida (o segunda esfera)</text>
+                            <!-- O -->
+                            <circle cx="140" cy="75" r="3.5" fill="var(--color-teal)"/>
+                            <text x="147" y="71" font-size="14" font-style="italic" fill="var(--color-teal)" font-weight="bold">O</text>
+                            <!-- B -->
+                            <circle cx="140" cy="170" r="3.5" fill="#555"/>
+                            <text x="122" y="167" font-size="14" font-style="italic" fill="#555" font-weight="bold">B</text>
+                            <!-- A -->
+                            <circle cx="195" cy="170" r="3.5" fill="#e67e22"/>
+                            <text x="201" y="167" font-size="14" font-style="italic" fill="#e67e22" font-weight="bold">A</text>
+                            <!-- OB -->
+                            <line x1="140" y1="75" x2="140" y2="170" stroke="#555" stroke-width="2"/>
+                            <!-- BA -->
+                            <line x1="140" y1="170" x2="195" y2="170" stroke="#e67e22" stroke-width="2.5"/>
+                            <!-- OA = R -->
+                            <line x1="140" y1="75" x2="195" y2="170" stroke="var(--color-teal)" stroke-width="2" stroke-dasharray="6,3"/>
+                            <!-- Right angle -->
+                            <polyline points="149,170 149,161 140,161" fill="none" stroke="#555" stroke-width="1.2"/>
+                            <!-- R -->
+                            <text x="175" y="118" font-size="16" font-style="italic" fill="var(--color-teal)" font-weight="bold">R</text>
+                            <!-- R-delta -->
+                            <text x="93" y="125" font-size="13" font-style="italic" fill="#555" font-weight="bold">R&#x2212;&#x03B4;</text>
+                            <!-- a -->
+                            <text x="163" y="166" font-size="16" font-style="italic" fill="#e67e22" font-weight="bold">a</text>
+                            <!-- delta -->
+                            <line x1="140" y1="170" x2="140" y2="185" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <line x1="133" y1="185" x2="147" y2="185" stroke="#c0392b" stroke-width="2"/>
+                            <line x1="50" y1="170" x2="50" y2="185" stroke="#c0392b" stroke-width="2.5"/>
+                            <line x1="43" y1="170" x2="57" y2="170" stroke="#c0392b" stroke-width="2"/>
+                            <line x1="43" y1="185" x2="57" y2="185" stroke="#c0392b" stroke-width="2"/>
+                            <text x="28" y="182" font-size="16" font-style="italic" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- ============================================================ -->
+    <!-- SLIDE 4: LEY DE HERTZ (from clase04 slide 4 - keep exactly)  -->
+    <!--   + sub-slide 4a: propiedades from Hertz_demo slide 7        -->
+    <!-- ============================================================ -->
+    <section>
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Ley de fuerza de Hertz</h2>
+            <p style="font-size:0.7em;">La fuerza normal entre dos esferas en contacto elastico es:</p>
+            <div class="red-box" style="font-size:1.1em; margin:0.5em 0;">
+                $F = k \;\delta^{3/2}$
+            </div>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.65em; font-weight:700; color:#555;">Con el coeficiente de Hertz $k$:</p>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        $k = \dfrac{4}{3}\,E^*\sqrt{R^*}$
+                    </div>
+                                       <p style="font-size:0.6em; margin-top:0.3em;">Energia elastica almacenada en un contacto de Hertz:</p>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        $\Delta E_e = W_e =\int_0^\delta F\,d\delta' = \dfrac{2}{5}\,k\,\delta^{5/2}$
+                    </div>
+                    <p style="font-size:0.6em; margin-top:0.3em;">Energia elastica almacenada en un resorte ($F=K\delta$):</p>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        $\Delta E_e = W_e = \int_0^\delta F\,d\delta' =K\,\dfrac{\delta^{2}}{2}\,$
+                    </div>
+                  
+
+
+
+                </div>
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Para esferas identicas ($R_1 = R_2 = R$):</p>
+                    <div class="eq-box" style="font-size:0.6em;">
+                        $k = \dfrac{4\sqrt{2}}{15}\,\dfrac{E}{1-\nu^2}\,\sqrt{R}$
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Propiedad fundamental:</strong><br>
+                        La ley de Hertz es <em>no lineal</em>: exponente $3/2$.<br>
+                        La rigidez $dF/d\delta = \tfrac{3}{2}k\sqrt{\delta}$ <strong>aumenta</strong> con la deformacion.
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Hipotesis:</strong>
+                        <ul style="margin:0.2em 0 0; line-height:1.6;">
+                            <li>Materiales elasticos, isotropos</li>
+                            <li>Deformaciones pequenas ($\delta \ll R$)</li>
+                            <li>Sin friccion en el contacto</li>
+                            <li>Superficies lisas (sin asperezas)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-slide 4a: Propiedades p(r), K(delta), graph (from Hertz_demo slide 7) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Ley de Hertz: propiedades</h2>
+
+            <div class="red-box" style="font-size:0.9em; margin:0.2em 0;">
+                $$F = \frac{4}{3}\,E^*\sqrt{R^*}\;\delta^{3/2}$$
+            </div>
+
+            <div class="two-col" style="margin-top:0.2em;">
+                <div>
+                    <p style="font-size:0.55em; font-weight:700; color:#555;">Rigidez del contacto:</p>
+                    <div class="highlight-box" style="font-size:0.58em; padding:0.3em 0.8em;">
+                        $$K(\delta) = \frac{dF}{d\delta} = 2\,E^*\sqrt{R^*}\;\delta^{1/2}$$
+                        <p style="margin-top:0.1em;">La rigidez <strong>crece</strong> con la compresion.</p>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: F vs delta comparing linear and Hertz -->
+                    <svg viewBox="0 0 360 300" style="width:95%;">
+                        <!-- Axes -->
+                        <line x1="55" y1="260" x2="340" y2="260" stroke="#333" stroke-width="1.5"/>
+                        <line x1="55" y1="260" x2="55" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <!-- Axis labels -->
+                        <text x="200" y="290" text-anchor="middle" font-size="14" fill="#333">Deformacion &#x03B4;</text>
+                        <text x="22" y="140" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90,22,140)">Fuerza F</text>
+
+                        <!-- Linear spring: F = k*delta (dashed gray) -->
+                        <path d="M55,260 L320,60" stroke="#999" stroke-width="2" stroke-dasharray="10,5" fill="none"/>
+                        <text x="275" y="48" font-size="13" fill="#999">Lineal: \(F = k\delta\)</text>
+
+                        <!-- Hertz curve: F ~ delta^{3/2} (solid teal, thicker) -->
+                        <path d="M55,260 Q100,258 140,248 Q180,230 210,200 Q240,160 270,105 Q300,45 320,15"
+                              stroke="var(--color-teal)" stroke-width="3.5" fill="none"/>
+                        <text x="280" y="120" font-size="13" fill="var(--color-teal)" font-weight="bold">Hertz: \(F \propto \delta^{3/2}\)</text>
+
+                        <!-- Annotation: softer at small delta -->
+                        <text x="115" y="235" font-size="11" fill="#e67e22" font-style="italic">mas blanda</text>
+                        <path d="M115,238 C120,245 125,250 130,252" stroke="#e67e22" stroke-width="1" fill="none"
+                              marker-end="url(#arr6c)"/>
+
+                        <!-- Annotation: stiffer at large delta -->
+                        <text x="230" y="50" font-size="11" fill="#e67e22" font-style="italic">mas rigida</text>
+                        <path d="M255,52 C265,55 275,60 280,70" stroke="#e67e22" stroke-width="1" fill="none"
+                              marker-end="url(#arr6c)"/>
+
+                        <!-- Crossing point marker -->
+                        <circle cx="210" cy="160" r="4" fill="#e67e22"/>
+                        <text x="220" y="175" font-size="11" fill="#e67e22">cruce</text>
+
+                        <defs>
+                            <marker id="arr6c" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-slide 4b: Derivacion de p(r) por construccion incremental -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Derivacion de p(r): construccion incremental</h2>
+
+            <div class="two-col" style="margin-top:0.15em;">
+                <div>
+                    <p style="font-size:0.5em;"><strong>Idea:</strong> construir el contacto de Hertz empujando la esfera progresivamente. En cada paso, la zona de contacto crece de \(a'\) a \(a'+da'\). Ese incremento equivale a un <strong>punch plano</strong> circular de radio \(a'\).</p>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="font-size:0.5em; font-weight:700; color:#555;">Dato: presion de un punch plano</p>
+                        <p style="font-size:0.48em;">Un disco rigido de radio \(a'\) hundido \(d\delta'\) en un semi-espacio elastico ejerce:</p>
+                        <div class="eq-box" style="font-size:0.55em; margin:0.1em 0; padding:0.25em 0.6em;">
+                            $$dp(r) = \frac{E^*}{\pi}\,\frac{d\delta'}{\sqrt{a'^2 - r^2}}, \quad r < a'$$
+                        </div>
+                        <p style="font-size:0.42em; color:#888;">(resultado clasico de Boussinesq, 1885 -- la singularidad en \(r=a'\) es integrable)</p>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.5em; font-weight:700; color:#555;">Cambio de variable</p>
+                        <p style="font-size:0.48em;">De la geometria: \(a'^2 = R^*\delta'\), entonces \(2a'\,da' = R^*\,d\delta'\):</p>
+                        <div class="eq-box" style="font-size:0.55em; margin:0.1em 0; padding:0.25em 0.6em;">
+                            $$d\delta' = \frac{2\,a'}{R^*}\,da'$$
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: construccion incremental -->
+                    <svg viewBox="0 0 280 260" style="width:90%;">
+                        <!-- Eje vertical (superficie) -->
+                        <line x1="140" y1="30" x2="140" y2="250" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Superficie del semi-espacio -->
+                        <line x1="20" y1="120" x2="260" y2="120" stroke="#333" stroke-width="2"/>
+                        <text x="200" y="115" font-size="8" fill="#888">superficie</text>
+
+                        <!-- Esfera (arco) descendiendo -->
+                        <path d="M60,120 Q100,50 140,35 Q180,50 220,120" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <text x="148" y="42" font-size="10" fill="var(--color-teal)" font-weight="bold" font-style="italic">R</text>
+
+                        <!-- Zona de contacto actual a' (sombreada) -->
+                        <rect x="95" y="120" width="90" height="6" rx="1" fill="rgba(107,154,154,0.3)" stroke="var(--color-teal)" stroke-width="1"/>
+                        <text x="140" y="140" text-anchor="middle" font-size="10" fill="var(--color-teal)" font-weight="bold" font-style="italic">a'</text>
+
+                        <!-- Nuevo anillo da' -->
+                        <rect x="85" y="120" width="10" height="6" fill="rgba(192,57,43,0.4)" stroke="#c0392b" stroke-width="1"/>
+                        <rect x="185" y="120" width="10" height="6" fill="rgba(192,57,43,0.4)" stroke="#c0392b" stroke-width="1"/>
+                        <text x="80" y="140" text-anchor="middle" font-size="8" fill="#c0392b" font-weight="bold">da'</text>
+                        <text x="200" y="140" text-anchor="middle" font-size="8" fill="#c0392b" font-weight="bold">da'</text>
+
+                        <!-- Fleche delta' -->
+                        <line x1="30" y1="120" x2="30" y2="85" stroke="#e67e22" stroke-width="1.5"/>
+                        <polygon points="30,85 27,92 33,92" fill="#e67e22"/>
+                        <polygon points="30,120 27,113 33,113" fill="#e67e22"/>
+                        <text x="18" y="105" font-size="9" fill="#e67e22" font-style="italic" font-weight="bold">&#x03B4;'</text>
+
+                        <!-- Profil de pression (semi-elliptic) en dessous -->
+                        <text x="140" y="165" text-anchor="middle" font-size="9" fill="#555" font-weight="bold">Presion acumulada p(r):</text>
+                        <path d="M60,245 Q80,230 100,210 Q120,190 140,185 Q160,190 180,210 Q200,230 220,245" fill="rgba(107,154,154,0.15)" stroke="var(--color-teal)" stroke-width="2"/>
+                        <line x1="55" y1="245" x2="225" y2="245" stroke="#333" stroke-width="1"/>
+                        <text x="140" y="258" text-anchor="middle" font-size="9" fill="#555" font-style="italic">r</text>
+                        <text x="143" y="195" font-size="9" fill="var(--color-teal)" font-style="italic">p&#x2080;</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <p style="font-size:0.5em; font-weight:700; color:#555;">Superposicion de todos los incrementos</p>
+                <p style="font-size:0.48em;">La presion total en \(r\) es la suma de todos los punches de radio \(a' \geq r\):</p>
+                <div class="eq-box" style="font-size:0.55em; margin:0.1em 0; padding:0.3em 0.6em;">
+                    $$p(r) = \int_{a'=r}^{a}\frac{E^*}{\pi}\,\frac{1}{\sqrt{a'^2-r^2}}\;\frac{2\,a'}{R^*}\,da'
+                    \;=\; \frac{2E^*}{\pi R^*}\!\int_{r}^{a}\!\frac{a'\,da'}{\sqrt{a'^2-r^2}}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="4">
+                <p style="font-size:0.48em;">Cambio \(u = a'^2 - r^2\), \(du = 2a'\,da'\):</p>
+                <div class="highlight-box" style="font-size:0.55em; padding:0.3em 0.6em; margin:0.1em 0;">
+                    $$p(r) = \frac{2E^*}{\pi R^*}\;\frac{1}{2}\!\int_0^{a^2-r^2}\!\frac{du}{\sqrt{u}}
+                    \;=\; \frac{2E^*}{\pi R^*}\,\sqrt{a^2 - r^2}$$
+                </div>
+                <div class="highlight-box red" style="font-size:0.58em; padding:0.3em 0.8em; margin:0.15em 0;">
+                    $$\boxed{\;p(r) = p_0\,\sqrt{1 - \frac{r^2}{a^2}}\;} \qquad \text{con}\;\; p_0 = \frac{2\,E^*\,a}{\pi\,R^*}$$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- cierre stack vertical slide 4 -->
+    
+    <!-- ============================================================ -->
+    <!-- SLIDE 3: PROBLEMA DE HERTZ (from Hertz_demo slide 2)         -->
+    <!--   vertical stack with sub-slides R* and E*                   -->
+    <!-- ============================================================ -->
+    <section>
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Parametros generales</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">Dos esferas elasticas de radios \(R_1\) y \(R_2\), modulos de Young \(E_1\), \(E_2\) y coeficientes de Poisson \(\nu_1\), \(\nu_2\), se comprimen con una fuerza \(F\), produciendo una interpenetracion \(\delta\).</p>
+
+                    <p style="font-size:0.65em; font-weight:700; color:#555; margin-top:0.5em;">Radio efectivo:</p>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $$\frac{1}{R^*} = \frac{1}{R_1} + \frac{1}{R_2}$$
+                    </div>
+
+                    <p style="font-size:0.65em; font-weight:700; color:#555; margin-top:0.5em;">Modulo efectivo:</p>
+                    <div class="eq-box" style="font-size:0.7em;">
+                        $$\frac{1}{E^*} = \frac{1-\nu_1^2}{E_1} + \frac{1-\nu_2^2}{E_2}$$
+                    </div>
+
+                    <div class="highlight-box" style="font-size:0.6em; margin-top:0.5em;">
+                        Para esferas identicas: \(R^* = R/2\),&ensp; \(E^* = E/[2(1-\nu^2)]\)
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: two spheres with annotations -->
+                    <svg viewBox="0 -25 440 410" style="width:95%;">
+                        <defs>
+                            <marker id="arr1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                            </marker>
+                            <marker id="arr1b" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b"/>
+                            </marker>
+                            <marker id="arr1bt" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="10 0, 0 3.5, 10 7" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Undeformed positions (dashed ghost circles) -->
+                        <circle cx="170" cy="100" r="100" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="6,4"/>
+                        <circle cx="170" cy="260" r="100" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="6,4"/>
+                        <text x="62" y="-5" font-size="11" fill="#999" font-style="italic">posicion sin deformar</text>
+
+                        <!-- Solid spheres in tangential contact (F=0, delta=0) -->
+                        <circle cx="170" cy="80" r="100" fill="none" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <circle cx="170" cy="280" r="100" fill="none" stroke="var(--color-mauve)" stroke-width="2.5"/>
+
+                        <!-- Overlap shading (contact zone) -->
+                        <path d="M120,180 A100,100 0 0,1 220,180 A100,100 0 0,1 120,180" fill="rgba(107,154,154,0.2)" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+
+                        <!-- Contact plane (dashed horizontal) -->
+                        <line x1="105" y1="180" x2="235" y2="180" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+                        <text x="238" y="183" font-size="10" fill="#888">plano de contacto</text>
+
+                        <!-- Centers -->
+                        <circle cx="170" cy="80" r="3.5" fill="var(--color-teal)"/>
+                        <text x="178" y="77" font-size="14" font-style="italic" fill="var(--color-teal)" font-weight="bold">O&#x2081;</text>
+                        <circle cx="170" cy="280" r="3.5" fill="var(--color-mauve)"/>
+                        <text x="178" y="290" font-size="14" font-style="italic" fill="var(--color-mauve)" font-weight="bold">O&#x2082;</text>
+
+                        <!-- R1: radius line from O1 to sphere edge (upward) -->
+                        <line x1="170" y1="80" x2="170" y2="-20" stroke="var(--color-teal)" stroke-width="1.5"/>
+                        <text x="176" y="25" font-size="15" font-style="italic" fill="var(--color-teal)" font-weight="bold">R&#x2081;</text>
+
+                        <!-- R2: radius line from O2 to sphere edge (downward) -->
+                        <line x1="170" y1="280" x2="170" y2="380" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <text x="176" y="340" font-size="15" font-style="italic" fill="var(--color-mauve)" font-weight="bold">R&#x2082;</text>
+
+                        <!-- === delta: total interpenetration === -->
+                        <line x1="50" y1="100" x2="50" y2="260" stroke="#c0392b" stroke-width="2.5" marker-start="url(#arr1bt)" marker-end="url(#arr1b)"/>
+                        <rect x="28" y="168" width="44" height="22" rx="3" fill="white" stroke="#c0392b" stroke-width="1"/>
+                        <text x="50" y="184" text-anchor="middle" font-size="18" font-style="italic" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+                        <!-- Dashed lines from ghost centers to delta arrow -->
+                        <line x1="50" y1="100" x2="170" y2="100" stroke="#bbb" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="50" y1="260" x2="170" y2="260" stroke="#bbb" stroke-width="1" stroke-dasharray="3,3"/>
+
+                        <!-- === a: contact radius === -->
+                        <line x1="170" y1="180" x2="220" y2="180" stroke="#e67e22" stroke-width="2.5"/>
+                        <circle cx="170" cy="180" r="2.5" fill="#e67e22"/>
+                        <circle cx="220" cy="180" r="2.5" fill="#e67e22"/>
+                        <text x="195" y="174" text-anchor="middle" font-size="17" font-style="italic" fill="#e67e22" font-weight="bold">a</text>
+
+                        <!-- Force arrows -->
+                        <line x1="170" y1="-15" x2="170" y2="10" stroke="#333" stroke-width="2.5" marker-end="url(#arr1)"/>
+                        <text x="180" y="-3" font-size="15" font-style="italic" fill="#333" font-weight="bold">F</text>
+                        <line x1="170" y1="375" x2="170" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#arr1)"/>
+                        <text x="180" y="373" font-size="15" font-style="italic" fill="#333" font-weight="bold">F</text>
+                    </svg>
+                    <!-- Legend below SVG -->
+                    <div style="font-size:0.5em; color:#666; line-height:1.5; text-align:left; margin-top:0.2em;">
+                        <span style="color:#c0392b; font-weight:700;">\(\delta\)</span> = interpenetracion (acercamiento de centros) &emsp;
+                        <span style="color:#e67e22; font-weight:700;">\(a\)</span> = radio de la zona de contacto &emsp;
+                        <span style="color:var(--color-teal); font-weight:700;">\(R\)</span> = radio de la esfera
+                    </div>
+                </div>
+            </div>
+            <p style="font-size:0.4em; color:#999; text-align:center; margin-top:0.2em;">&#x25BC; ¿De donde vienen R* y E*? &#x25BC;</p>
+        </div>
+    </section>
+
+    <!-- Sub-slide 3a: De donde viene R* -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">¿De donde viene R*?</h2>
+            <div class="two-col" style="margin-top:0.1em;">
+                <div>
+                    <p style="font-size:0.5em;">Dos esferas de radios \(R_1\) y \(R_2\) se tocan en un punto. A distancia \(r\) del contacto, cada superficie se aleja del <strong>plano tangente comun</strong>:</p>
+
+                    <div class="eq-box" style="font-size:0.5em; margin:0.1em 0; padding:0.3em 0.6em;">
+                        $$h_1 \approx \frac{a^2}{2R_1} \qquad h_2\approx \frac{a^2}{2R_2}$$
+                    </div>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="font-size:0.5em;">El gap total entre las dos superficies:</p>
+                        <div class="highlight-box" style="font-size:0.5em; padding:0.3em 0.6em; margin:0.1em 0;">
+                            $$h = h_1 + h_2 = \frac{a^2}{2}\!\left(\frac{1}{R_1}+\frac{1}{R_2}\right) = \frac{a^2}{2R^*}$$
+                        </div>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.48em; margin-top:0.15em;"><strong>Casos particulares:</strong></p>
+                        <ul style="font-size:0.45em; line-height:1.6; margin-left:1em;">
+                            <li>Esfera + plano (\(R_2\!\to\!\infty\)): &ensp;\(R^* = R_1\)</li>
+                            <li>Esferas iguales: &ensp;\(R^* = R/2\)</li>
+                            <li>Esfera en cavidad (\(R_2 < 0\)): &ensp;\(1/R^* = 1/R_1 - 1/|R_2|\)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: dos esferas, plano tangente, gaps h1 y h2 -->
+                    <svg viewBox="0 0 260 230" style="width:88%;">
+                        <defs>
+                            <marker id="arrR2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Esfera 1 (arriba, teal) -->
+                        <circle cx="130" cy="45" r="65" fill="rgba(107,154,154,0.05)" stroke="var(--color-teal)" stroke-width="2"/>
+                        <text x="85" y="30" font-size="12" fill="var(--color-teal)" font-weight="bold" font-style="italic">R&#x2081;</text>
+
+                        <!-- Esfera 2 (abajo, mauve) -->
+                        <circle cx="130" cy="175" r="65" fill="rgba(139,94,107,0.05)" stroke="var(--color-mauve)" stroke-width="2"/>
+                        <text x="85" y="195" font-size="12" fill="var(--color-mauve)" font-weight="bold" font-style="italic">R&#x2082;</text>
+
+                        <!-- Plano tangente comun (punteado) -->
+                        <line x1="20" y1="110" x2="245" y2="110" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <text x="180" y="105" font-size="7" fill="#aaa">plano tangente</text>
+
+                        <!-- Punto de contacto -->
+                        <circle cx="130" cy="110" r="3" fill="#e67e22"/>
+
+                        <!-- Triangulo rectangulo para Pitagoras: R1^2 = a^2 + (R1-h1)^2 -->
+                        <!-- O1(130,45), M(130,87), P(180,87) — angulo recto en M -->
+                        <circle cx="130" cy="45" r="2.5" fill="var(--color-teal)"/>
+                        <text x="118" y="42" font-size="10" font-style="italic" fill="var(--color-teal)" font-weight="bold">O&#x2081;</text>
+                        <!-- Cateto vertical: O1 a M (= R1 - h1) -->
+                        <line x1="130" y1="45" x2="130" y2="87" stroke="var(--color-teal)" stroke-width="1.2" stroke-dasharray="4,2"/>
+                        <!-- Cateto horizontal: M a P (= r) -->
+                        <line x1="130" y1="87" x2="180" y2="87" stroke="var(--color-teal)" stroke-width="1.2" stroke-dasharray="4,2"/>
+                        <!-- Hipotenusa: O1 a P (= R1) -->
+                        <line x1="130" y1="45" x2="180" y2="87" stroke="var(--color-teal)" stroke-width="1.8"/>
+                        <text x="158" y="58" font-size="10" font-style="italic" fill="var(--color-teal)" font-weight="bold">R&#x2081;</text>
+                        <!-- Marque angle droit en M(130,87) -->
+                        <polyline points="138,87 138,79 130,79" fill="none" stroke="var(--color-teal)" stroke-width="1"/>
+
+                        <!-- h1(r) a r=50 (x=180): esfera1 y=45+sqrt(65^2-50^2)=45+41.5=86.5 -->
+                        <line x1="180" y1="87" x2="180" y2="110" stroke="var(--color-teal)" stroke-width="2.5" stroke-dasharray="3,2"/>
+                        <text x="185" y="103" font-size="10" font-style="italic" fill="var(--color-teal)" font-weight="bold">h&#x2081;</text>
+
+                        <!-- h2(r) a r=50 (x=180): esfera2 y=175-41.5=133.5 -->
+                        <line x1="180" y1="110" x2="180" y2="134" stroke="var(--color-mauve)" stroke-width="2.5" stroke-dasharray="3,2"/>
+                        <text x="185" y="127" font-size="10" font-style="italic" fill="var(--color-mauve)" font-weight="bold">h&#x2082;</text>
+
+                        <!-- r flecha -->
+                        <line x1="130" y1="98" x2="178" y2="98" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrR2)"/>
+                        <text x="150" y="94" font-size="11" font-style="italic" fill="#e67e22" font-weight="bold">a</text>
+
+                        <!-- Resumen -->
+                        <text x="20" y="218" font-size="9" fill="#555">h = h&#x2081; + h&#x2082; = a&#xB2;/(2R*)</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-slide 3b: De donde viene E* (Boussinesq version) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">¿De donde viene E*?</h2>
+
+            <p style="font-size:0.5em;">La presion \(p(\mathbf{r})\) en el contacto deforma <strong>ambas</strong> superficies. Cada cuerpo se hunde proporcionalmente a su compliance elastica:</p>
+
+            <div class="two-col" style="margin-top:0.15em;">
+                <div>
+                    <div class="eq-box" style="font-size:0.5em; padding:0.3em 0.5em; margin:0.1em 0; border-left:4px solid var(--color-teal);">
+                        $$u_{z,1} \propto \frac{1\!-\!\nu_1^2}{\pi\,E_1}$$
+                    </div>
+                </div>
+                <div>
+                    <div class="eq-box" style="font-size:0.5em; padding:0.3em 0.5em; margin:0.1em 0; border-left:4px solid var(--color-mauve);">
+                        $$u_{z,2} \propto \frac{1\!-\!\nu_2^2}{\pi\,E_2}$$
+                    </div>
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="1">
+                <p style="font-size:0.48em; margin-top:0.2em;">La deformacion total es la suma:</p>
+                <div class="highlight-box" style="font-size:0.52em; padding:0.3em 0.6em; margin:0.1em 0;">
+                    $$u_z = u_{z,1} + u_{z,2} \propto  \frac{1}{\pi\,E^*}$$
+                    <span style="font-size:0.85em;">con&ensp;\(\displaystyle\frac{1}{E^*} = \frac{1\!-\!\nu_1^2}{E_1} + \frac{1\!-\!\nu_2^2}{E_2}\)</span>
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <div class="highlight-box" style="font-size:0.45em; padding:0.25em 0.5em; margin:0.15em 0; border-left:4px solid #e67e22; background:rgba(226,118,34,0.08);">
+                    Esta integral (solucion de <strong>Boussinesq, 1885</strong>) da el hundimiento de un semi-espacio elastico bajo una carga. <em>La derivaremos en detalle mas adelante.</em>
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <div class="highlight-box" style="font-size:0.45em; padding:0.25em 0.5em; margin:0.1em 0;">
+                    <strong>Casos particulares:</strong><br>
+                    Plano rigido (\(E_2\!\to\!\infty\)): \(E^* = \frac{E_1}{1-\nu_1^2}\) &mdash; solo se deforma la esfera<br>
+                    Iguales: \(E^* = \frac{E}{2(1-\nu^2)}\)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- cierre stack vertical slide 3 -->
+
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 7: DERIVACION APROXIMADA (from Hertz_demo slides 3-5)  -->
+    <!--   vertical stack: Geometria, Presion x Area, Energetico      -->
+    <!-- ============================================================ -->
+    <section>
+    
+
+    <!-- Paso 1b (sub-slide 5/1) - Perfil de interpenetracion delta'(r) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.05em;">Perfil de interpenetracion \(\delta'(r)\)</h2>
+            <p style="font-size:0.45em;">Punto \(P\) sobre la esfera a distancia horizontal \(r\) del eje \(OB\); sea \(M\) el pie de perpendicular de \(P\) al eje. La interpenetracion local \(\delta'(r)\) satisface \(\delta'(0)=\delta\), \(\delta'(a)=0\).</p>
+
+            <div class="two-col" style="margin-top:0.1em;">
+                <div>
+                    <p style="font-size:0.45em;">Pitagoras en triangulo rectangulo \(OMP\):</p>
+                    <div class="eq-box" style="font-size:0.5em; margin:0.1em 0;">
+                        $$r^2 + \bigl(R - \delta + \delta'(r)\bigr)^2 = R^2$$
+                    </div>
+                    <p style="font-size:0.4em; color:#555; margin-top:-0.1em;">(caso particular \(\delta'(a)=0\): se recupera Paso 1, \(a^2 = 2R\delta\)).</p>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="font-size:0.45em; margin-top:0.2em;">Expandiendo, con \(\delta, r \ll R\) (terminos cuadraticos despreciables):</p>
+                        <div class="eq-box" style="font-size:0.5em; margin:0.1em 0;">
+                            $$r^2 \approx 2R\,\bigl(\delta - \delta'(r)\bigr)$$
+                        </div>
+                        <div class="eq-box" style="font-size:0.5em; margin:0.1em 0;">
+                            $$\delta'(r) = \delta - \dfrac{r^2}{2R}$$
+                        </div>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.45em; margin-top:0.2em;">Del Paso 1, \(a^2 = 2R\delta \Rightarrow \dfrac{1}{2R}=\dfrac{\delta}{a^2}\), luego:</p>
+                        <div class="eq-box" style="font-size:0.5em; margin:0.1em 0;">
+                            $$\delta'(r) = \delta\,\dfrac{a^2 - r^2}{a^2}$$
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div style="text-align:center; margin-top:0;">
+                        <svg viewBox="0 0 380 290" style="width:88%; vertical-align:top;">
+                            <defs>
+                                <marker id="arr5b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Sphere -->
+                            <circle cx="190" cy="60" r="175" fill="rgba(107,154,154,0.06)" stroke="var(--color-teal)" stroke-width="2.5"/>
+
+                            <!-- Rigid surface (plane) -->
+                            <rect x="20" y="200" width="340" height="6" rx="2" fill="#ddd" stroke="#999" stroke-width="1"/>
+                            <text x="190" y="280" text-anchor="middle" font-size="11" fill="#888">superficie rigida</text>
+
+                            <!-- O (center of sphere) -->
+                            <circle cx="190" cy="60" r="4" fill="var(--color-teal)"/>
+                            <text x="198" y="56" font-size="15" fill="var(--color-teal)" font-weight="bold" font-style="italic">O</text>
+
+                            <!-- Axis OB (vertical, dashed) -->
+                            <line x1="190" y1="60" x2="190" y2="242" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+
+                            <!-- OP = R (dashed slant) -->
+                            <line x1="190" y1="60" x2="245" y2="226" stroke="var(--color-teal)" stroke-width="1.8" stroke-dasharray="6,3"/>
+                            <text x="232" y="150" font-size="14" font-style="italic" fill="var(--color-teal)" font-weight="bold">R</text>
+
+                            <!-- B (on plane, axis) -->
+                            <circle cx="190" cy="200" r="4" fill="#555"/>
+                            <text x="172" y="196" font-size="14" font-style="italic" fill="#555" font-weight="bold">B</text>
+
+                            <!-- A' (right edge of contact, sphere meets plane) -->
+                            <circle cx="295" cy="200" r="4" fill="#e67e22"/>
+                            <text x="301" y="196" font-size="14" font-style="italic" fill="#e67e22" font-weight="bold">A</text>
+
+                            <!-- P on sphere -->
+                            <circle cx="245" cy="226" r="4.5" fill="#c0392b"/>
+                            <text x="253" y="232" font-size="14" font-style="italic" fill="#c0392b" font-weight="bold">P</text>
+
+                            <!-- M (foot of perpendicular on axis) -->
+                            <circle cx="190" cy="226" r="3" fill="#555"/>
+                            <text x="172" y="232" font-size="12" font-style="italic" fill="#555">M</text>
+
+                            <!-- MP = r (horizontal) -->
+                            <line x1="190" y1="226" x2="245" y2="226" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="212" y="221" font-size="14" font-style="italic" fill="#2c3e50" font-weight="bold">r</text>
+
+                            <!-- Right angle at M -->
+                            <polyline points="200,226 200,218 190,218" fill="none" stroke="#555" stroke-width="1"/>
+
+                            <!-- delta'(r): arrow from plane down to P at x=245 -->
+                            <line x1="245" y1="200" x2="245" y2="222" stroke="#c0392b" stroke-width="2.2" marker-end="url(#arr5b)"/>
+                            <line x1="236" y1="200" x2="254" y2="200" stroke="#c0392b" stroke-width="1.5"/>
+                            <text x="255" y="215" font-size="13" font-style="italic" fill="#c0392b" font-weight="bold">&#x03B4;'(r)</text>
+
+                            <!-- delta: on left side, from plane down to virtual sphere bottom at y=235 -->
+                            <line x1="55" y1="200" x2="55" y2="235" stroke="#c0392b" stroke-width="2.5"/>
+                            <line x1="48" y1="200" x2="62" y2="200" stroke="#c0392b" stroke-width="2"/>
+                            <line x1="48" y1="235" x2="62" y2="235" stroke="#c0392b" stroke-width="2"/>
+                            <text x="32" y="223" font-size="16" font-style="italic" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+
+                            <!-- a: between B and A' -->
+                            <line x1="190" y1="258" x2="295" y2="258" stroke="#e67e22" stroke-width="1.8"/>
+                            <line x1="190" y1="253" x2="190" y2="263" stroke="#e67e22" stroke-width="1.8"/>
+                            <line x1="295" y1="253" x2="295" y2="263" stroke="#e67e22" stroke-width="1.8"/>
+                            <text x="238" y="254" text-anchor="middle" font-size="14" font-style="italic" fill="#e67e22" font-weight="bold">a</text>
+                        </svg>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="3" style="margin-top:0.1em;">
+                        <div class="red-box" style="font-size:0.6em; margin:0.1em 0; padding:0.3em 0.6em;">
+                            $$\dfrac{\delta'(r)}{\delta} = 1 - \left(\dfrac{r}{a}\right)^{\!2}$$
+                        </div>
+                        <div class="red-box" style="font-size:0.6em; margin:0.15em 0; padding:0.3em 0.6em;">
+                            $$\dfrac{\delta}{\delta'(r)} = \dfrac{a^2}{a^2 - r^2}$$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paso 1c (sub-slide 5/2) - Distribucion de presion p(r) -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.15em;">Distribucion de presion \(p(r)\)</h2>
+            <p style="font-size:0.55em;">La presion local es proporcional a la compresion volumetrica: \(p(r) \propto \Delta V / V\).</p>
+
+            <p style="font-size:0.55em; margin-top:0.3em;">Volumen comprimido en un anillo de radio \(r\):</p>
+            <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                $$\Delta V = \delta'(r)\,\pi\,dr^{2}$$
+            </div>
+
+            <p style="font-size:0.55em; margin-top:0.3em;">Tomando el cociente entre un punto arbitrario \(r\) y el centro \(r=0\):</p>
+            <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                $$\dfrac{p^{2}(r)}{p_{0}^{2}} = \dfrac{\delta'(r)^{2}}{\delta^{2}}$$
+            </div>
+
+            <div class="fragment" data-fragment-index="1">
+                <p style="font-size:0.55em; margin-top:0.3em;">Usando \(\dfrac{\delta'(r)}{\delta} = 1 - \dfrac{r^{2}}{a^{2}}\):</p>
+                <div class="red-box" style="font-size:0.6em; margin:0.15em 0; padding:0.3em 0.6em;">
+                    $$p(r) = p_{0}\,\sqrt{1 - \dfrac{r^{2}}{a^{2}}}$$
+                </div>
+                <p style="font-size:0.45em; color:#555; margin-top:0.15em;">Distribucion <strong>semi-eliptica</strong> de Hertz (maximo en el centro, 0 en el borde). Con \(p_0 = \dfrac{2\,E^{*}\,a}{\pi\,R^{*}}\).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-slide 5/3 - Fuerza total: integracion de p(r) sobre el disco -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Fuerza total: integracion de \(p(r)\) sobre el disco</h2>
+            <p style="font-size:0.5em;">La fuerza normal es la integral de la presion sobre el area de contacto (anillos de radio \(r\), ancho \(dr\), area \(2\pi r\,dr\)):</p>
+
+            <div class="eq-box" style="font-size:0.55em; margin:0.15em 0;">
+                $$F = \int_0^a p(r)\cdot 2\pi r\,dr = 2\pi p_0 \int_0^a r\,\sqrt{1 - \dfrac{r^2}{a^2}}\,dr$$
+            </div>
+
+            <div class="fragment" data-fragment-index="1">
+                <p style="font-size:0.5em; margin-top:0.25em;">Cambio de variable \(u = 1 - r^2/a^2\;\Rightarrow\; r\,dr = -\tfrac{a^2}{2}\,du\) (\(u:1\to 0\)):</p>
+                <div class="eq-box" style="font-size:0.55em; margin:0.15em 0;">
+                    $$F = 2\pi p_0 \cdot \tfrac{a^2}{2}\int_0^1 u^{1/2}\,du = \pi a^2 p_0 \cdot \tfrac{2}{3}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <div class="red-box" style="font-size:0.75em; margin:0.2em 0; padding:0.3em 0.6em;">
+                    $$F = \tfrac{2}{3}\,\pi a^{2}\,p_{0}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <div class="highlight-box" style="font-size:0.5em; margin-top:0.2em; padding:0.3em 0.8em;">
+                    <strong>Dos lecturas equivalentes:</strong>
+                    <ul style="margin:0.1em 0; line-height:1.5;">
+                        <li><strong>Presion media</strong>: \(\bar p = \tfrac{2}{3}\,p_0\), luego \(F = \bar p \cdot \pi a^2\).</li>
+                        <li><strong>Volumen del semi-elipsoide</strong> de base \(\pi a^2\) y altura \(p_0\): \(V = \tfrac{2}{3}\cdot(\text{base})\cdot(\text{altura})\).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- cierre stack Paso 1 (geometria + perfil + presion + F total) -->
+
+    <!-- ============================================================ -->
+    <!-- SLIDE: DERIVACION APROXIMADA - PASO 2 (metodos 1 y 2)        -->
+    <!--   vertical stack: Paso 2a (P x A), Paso 2b (energetico)      -->
+    <!-- ============================================================ -->
+    <section>
+    <!-- Paso 2a - Metodo 1: Fuerza = Presion x Area -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Paso 2a: Fuerza = Presion &times; Area</h2>
+            <p style="font-size:0.5em;">Deformacion (Saint-Venant) y presion (Hooke): \(\;\varepsilon = \delta/a\), \(\;p = E^*\delta/a\). &ensp;Area: \(A = \pi a^2\).</p>
+
+            <div class="fragment" data-fragment-index="1">
+                <div class="eq-box" style="font-size:0.6em; margin:0.15em 0;">
+                    $$F = p \cdot A = E^*\frac{\delta}{a}\cdot \pi a^2 = \pi E^* a\,\delta \;\xrightarrow{a=\sqrt{R^*\delta}}\; \pi E^*\sqrt{R^*}\;\delta^{3/2}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <div class="red-box" style="font-size:0.8em; margin:0.15em 0;">
+                    $$\boxed{F = \pi\, E^*\sqrt{R^*}\;\delta^{3/2}} \qquad\text{(prefactor }\pi \approx 3.14\text{)}$$
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paso 2b - Metodo 2: Energia elastica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Paso 2b: Metodo energetico</h2>
+            <p style="font-size:0.48em;">Zona deformada: hemisferio de radio \(a\). Energia = densidad \(\times\) volumen:</p>
+
+            <div class="eq-box" style="font-size:0.55em; margin:0.1em 0;">
+                $$U_{\text{el}} = \underbrace{\tfrac{1}{2}E^*\varepsilon^2}_{w}\cdot\underbrace{\tfrac{2}{3}\pi a^3}_{V} = \tfrac{1}{2}E^*\tfrac{\delta^2}{a^2}\cdot\tfrac{2}{3}\pi a^3 = \tfrac{\pi}{3}E^*\delta^2 a \;\xrightarrow{a=\sqrt{R^*\delta}}\; \tfrac{\pi}{3}E^*\sqrt{R^*}\,\delta^{5/2}$$
+            </div>
+
+            <div class="fragment" data-fragment-index="1">
+                <p style="font-size:0.48em;">Fuerza \(F = dU_{\text{el}}/d\delta\):</p>
+                <div class="eq-box" style="font-size:0.55em; margin:0.1em 0;">
+                    $$F = \frac{\pi}{3}\cdot\frac{5}{2}\;E^*\sqrt{R^*}\;\delta^{3/2}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <div class="red-box" style="font-size:0.75em; margin:0.1em 0;">
+                    $$\boxed{F = \frac{5\pi}{6}\;E^*\sqrt{R^*}\;\delta^{3/2}} \qquad\text{(prefactor }\tfrac{5\pi}{6} \approx 2.62\text{)}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <div class="highlight-box" style="font-size:0.48em; padding:0.2em 0.6em; margin-top:0.1em;">
+                    <strong>Ambos metodos dan \(\delta^{3/2}\).</strong>
+                    Prefactores: metodo 1 &rarr; \(\pi \approx 3.14\), &ensp; metodo 2 &rarr; \(\frac{5\pi}{6} \approx 2.62\), &ensp; <strong>exacto</strong> (Hertz) &rarr; \(\frac{4}{3} \approx 1.33\).
+                    La diferencia: \(\varepsilon = \delta/a\) sobreestima la deformacion real (no uniforme).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section><!-- cierre stack Paso 2 (P x A + energetico) -->
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 8: DERIVACION EXACTA (from Hertz_demo slide 6)         -->
+    <!--   vertical stack with 7 sub-slides [P -> F in 8a-8d]        -->
+    <!-- ============================================================ -->
+    <section>
+    <!-- 8a: Boussinesq -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Derivacion exacta (I): solucion de Boussinesq</h2>
+            <div class="two-col" style="margin-top:0.1em;">
+                <div>
+                    <p style="font-size:0.5em;">Una fuerza puntual \(F\) [N] aplicada sobre la superficie de un semi-espacio elastico infinito produce un <strong>hundimiento</strong> \(u_z\) [m] que decae con la distancia \(r\):</p>
+                    <div class="highlight-box" style="font-size:0.6em; padding:0.3em 0.6em; margin:0.15em 0;">
+                        $$u_z(r) = \frac{1-\nu^2}{\pi E}\;\frac{F}{r}$$
+                    </div>
+                    <p style="font-size:0.48em; color:#555;">Solucion de Boussinesq (1885). Analogo al potencial electrostatico de una carga puntual: \(V = q/(4\pi\epsilon_0 r)\). Ambos decaen como \(1/r\).</p>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="font-size:0.5em; margin-top:0.2em;"><strong>Intuicion fisica:</strong></p>
+                        <ul style="font-size:0.45em; line-height:1.5; margin-left:1em;">
+                            <li>\(u_z \propto F\): material lineal (Hooke)</li>
+                            <li>\(u_z \propto 1/r\): la fuerza se reparte sobre un area \(\sim r^2\), el esfuerzo decae como \(F/r^2\), y la deformacion integrada sobre profundidad \(\sim r\) da \(F/r\)</li>
+                            <li>\(u_z \propto (1\!-\!\nu^2)/E\): compliance del material</li>
+                        </ul>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.5em; margin-top:0.2em;">Para una <strong>presion distribuida</strong> \(p(s)\) sobre un area \(A\), se superpone:</p>
+                        <div class="eq-box" style="font-size:0.55em; margin:0.1em 0;">
+                            $$u_z(\mathbf{r}) = \frac{1}{\pi E^*}\iint_A \frac{p(\mathbf{s})}{|\mathbf{r}-\mathbf{s}|}\,dA$$
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG 1: esquema fisico — carga puntual sobre semi-espacio -->
+                    <svg viewBox="0 0 300 140" style="width:88%;">
+                        <defs>
+                            <marker id="arrB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+                            </marker>
+                            <marker id="arrBr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                        </defs>
+                        <!-- Surface (sin deformar) -->
+                        <line x1="10" y1="55" x2="290" y2="55" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Hatching = solido -->
+                        <rect x="10" y="60" width="280" height="50" fill="url(#hatch)" opacity="0.15"/>
+                        <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="10" stroke="#999" stroke-width="1"/>
+                        </pattern>
+                        <!-- Deformed surface -->
+                        <path d="M10,55 Q50,55 90,56 Q120,58 135,62 Q145,68 150,75 Q155,68 165,62 Q180,58 210,56 Q250,55 290,55" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <!-- Point load F -->
+                        <line x1="150" y1="5" x2="150" y2="50" stroke="#333" stroke-width="2.5" marker-end="url(#arrB)"/>
+                        <text x="158" y="18" font-size="15" font-style="italic" font-weight="bold" fill="#333">F</text>
+                        <!-- u_z at r=0 -->
+                        <line x1="150" y1="55" x2="150" y2="75" stroke="#c0392b" stroke-width="2.5"/>
+                        <text x="155" y="71" font-size="11" font-style="italic" fill="#c0392b" font-weight="bold">u_z(0)</text>
+                        <!-- u_z at distance r -->
+                        <line x1="210" y1="55" x2="210" y2="60" stroke="#c0392b" stroke-width="2"/>
+                        <text x="215" y="63" font-size="10" font-style="italic" fill="#c0392b">u_z(r)</text>
+                        <!-- r -->
+                        <line x1="150" y1="42" x2="208" y2="42" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrB)"/>
+                        <text x="176" y="38" font-size="13" font-style="italic" fill="#e67e22" font-weight="bold">r</text>
+                        <!-- Labels -->
+                        <text x="15" y="50" font-size="9" fill="#888">superficie sin deformar</text>
+                        <text x="220" y="90" font-size="9" fill="#888">semi-espacio elastico</text>
+                    </svg>
+
+                    <!-- SVG 2: grafica u_z vs r (decaimiento 1/r) -->
+                    <svg viewBox="0 0 300 120" style="width:88%; margin-top:0.1em;">
+                        <defs>
+                            <marker id="arrG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#888"/>
+                            </marker>
+                        </defs>
+                        <!-- Axes -->
+                        <line x1="40" y1="100" x2="280" y2="100" stroke="#888" stroke-width="1.5" marker-end="url(#arrG)"/>
+                        <line x1="40" y1="100" x2="40" y2="10" stroke="#888" stroke-width="1.5" marker-end="url(#arrG)"/>
+                        <text x="285" y="103" font-size="12" font-style="italic" fill="#555">r</text>
+                        <text x="25" y="15" font-size="12" font-style="italic" fill="#555">u_z</text>
+                        <!-- 1/r curve -->
+                        <path d="M45,18 Q55,35 70,55 Q90,72 120,83 Q160,92 220,97 Q260,99 275,99" stroke="var(--color-teal)" stroke-width="3" fill="none"/>
+                        <!-- Label -->
+                        <text x="85" y="50" font-size="13" fill="var(--color-teal)" font-weight="bold" font-style="italic">u_z &#x221D; F/r</text>
+                        <!-- Vertical dashed at r=0 -->
+                        <line x1="45" y1="18" x2="45" y2="100" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="47" y="112" font-size="10" fill="#c0392b">r=0</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8a-bis: Ecuaciones fundamentales de la elasticidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Ecuaciones fundamentales</h2>
+            <div class="two-col" style="margin-top:0.1em;">
+                <div style="font-size:0.55em;">
+                    <p><strong>1. Equilibrio estatico</strong> (balance de momento):</p>
+                    <div class="eq-box" style="font-size:1.1em; margin:0.2em 0;">
+                        $$\sigma_{ij,j} + f_i = 0$$
+                    </div>
+                    <p style="font-size:0.85em; color:#555;">\(f_i\): fuerza de volumen (para carga puntual: \(f_i = F\,\delta(\mathbf{r})\,\delta_{i3}\))</p>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="margin-top:0.3em;"><strong>2. Ley de Hooke</strong> (material isotropo lineal):</p>
+                        <div class="eq-box" style="font-size:1.0em; margin:0.2em 0;">
+                            $$\sigma_{ij} = \lambda\,\varepsilon_{kk}\,\delta_{ij} + 2\mu\,\varepsilon_{ij}$$
+                        </div>
+                        <p style="font-size:0.85em; color:#555;">\(\lambda, \mu\): constantes de Lame; &ensp; \(\mu = G = \frac{E}{2(1+\nu)}\)</p>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="margin-top:0.3em;"><strong>3. Deformacion-desplazamiento</strong> (pequenas deformaciones):</p>
+                        <div class="eq-box" style="font-size:1.0em; margin:0.2em 0;">
+                            $$\varepsilon_{ij} = \tfrac{1}{2}\left(u_{i,j} + u_{j,i}\right)$$
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:0.55em;">
+                    <div class="fragment" data-fragment-index="3">
+                        <p><strong>Combinando 1 + 2 + 3</strong> &rarr; <strong>ecuacion de Navier</strong>:</p>
+                        <div class="highlight-box" style="font-size:1.0em; margin:0.2em 0;">
+                            $$(\lambda + \mu)\,u_{j,ji} + \mu\,u_{i,jj} + f_i = 0$$
+                        </div>
+                        <p style="margin-top:0.2em;">O en forma vectorial:</p>
+                        <div class="eq-box" style="font-size:1.0em; margin:0.2em 0;">
+                            $$(\lambda + 2\mu)\,\nabla(\nabla\!\cdot\!\mathbf{u}) - \mu\,\nabla\!\times\!(\nabla\!\times\!\mathbf{u}) + \mathbf{f} = 0$$
+                        </div>
+                        <div class="highlight-box red" style="margin-top:0.3em;">
+                            Una sola ecuacion vectorial en \(\mathbf{u}\) con fuente \(\mathbf{f}\).<br>
+                            Estructura similar a las ecuaciones de campo en electromagnetismo.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8a-ter: Analogia con el potencial electrostatico -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Analogia: elasticidad &harr; electrostatica</h2>
+            <div style="font-size:0.5em;">
+                <p>Con \(\mu = \frac{E}{2(1+\nu)}\), \(\lambda = \frac{E\nu}{(1+\nu)(1-2\nu)}\), y la identidad &ensp; \(\nabla\!\times\!(\nabla\!\times\!\mathbf{u}) = \nabla(\nabla\!\cdot\!\mathbf{u}) - \nabla^2\mathbf{u}\), &ensp; Navier se reescribe:</p>
+
+                    $$\nabla^2 \mathbf{u} + \frac{1}{1-2\nu}\,\nabla(\nabla\!\cdot\!\mathbf{u}) = -\frac{2(1+\nu)}{E}\,\mathbf{f}$$
+            </div>
+            <div class="two-col" style="margin-top:0.2em;">
+                <div style="font-size:0.55em;">
+                    <p><strong>Electrostatica</strong> &mdash; carga puntual \(q\):</p>
+                        $$\nabla^2 V = -\frac{1}{\epsilon_0}\;q\,\delta(\mathbf{r})$$
+
+                    <p style="margin-top:0.2em;">Solucion:</p>
+                        $$V(r) = \frac{1}{4\pi\epsilon_0}\;\frac{q}{r}$$
+
+                </div>
+                <div style="font-size:0.55em;">
+                    <p><strong>Elasticidad</strong> &mdash; fuerza puntual \(F\):</p>
+
+                        $$\underbrace{\nabla^2 \mathbf{u}}_{\text{Laplaciano}} + \underbrace{\frac{1}{1-2\nu}\,\nabla(\nabla\!\cdot\!\mathbf{u})}_{\text{acoplamiento vectorial}} = -\frac{2(1+\nu)}{E}\,F\,\delta(\mathbf{r})\,\hat{z}$$
+
+                    <p style="margin-top:0.2em;">Solucion en superficie (Boussinesq):</p>
+                         $$u_z(r) = \frac{1-\nu^2}{\pi E}\;\frac{F}{r}$$
+                </div>
+            </div>
+            <div class="fragment" data-fragment-index="1">
+                <div style="font-size:0.55em; margin-top:0.2em;">
+                    <p><strong>¿De donde sale el prefactor?</strong> &ensp; Factorizando:</p>
+
+                        $$\frac{1-\nu^2}{\pi E} = \underbrace{\frac{2(1+\nu)}{E}}_{\substack{\text{``compliance''} \\ \text{(rol de } 1/\epsilon_0\text{)}}} \;\times\; \underbrace{\frac{1}{4\pi}}_{\substack{\text{Green de} \\ \nabla^2 \text{ en 3D}}} \;\times\; \underbrace{2(1-\nu)}_{\substack{\text{semi-espacio} \\ \text{+ acoplamiento}}}$$
+
+                </div>
+                <div class="highlight-box red" style="font-size:0.55em; margin-top:0.15em;">
+                    <strong>Misma estructura:</strong> &ensp; \(\nabla^2\) + fuente puntual &ensp; \(\Rightarrow\) &ensp; solucion \(\propto 1/r\) en 3D.<br>
+                    El factor \(2\) viene del semi-espacio (como en electro: campo \(\times 2\) en un conductor). El factor \((1-\nu)\) viene del termino de acoplamiento \(\nabla(\nabla\!\cdot\!\mathbf{u})\).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8a-quater: De la analogia a la solucion de Boussinesq -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">De la analogia a la solucion de Boussinesq</h2>
+            <div style="font-size:0.55em;">
+                <p><strong>En electrostatica</strong>, la solucion para una carga puntual sobre un conductor (semi-espacio) se obtiene por el <strong>metodo de imagenes</strong>:</p>
+                <div class="eq-box" style="font-size:1.0em; margin:0.2em 0;">
+                    $$V(\mathbf{r}) = \frac{1}{4\pi\epsilon_0}\left(\frac{q}{|\mathbf{r} - \mathbf{r}_0|} - \frac{q}{|\mathbf{r} - \mathbf{r}_0'|}\right)$$
+                </div>
+
+                <div class="fragment" data-fragment-index="1">
+                    <p style="margin-top:0.3em;"><strong>En elasticidad</strong>, se hace lo mismo: la solucion de <strong>Kelvin</strong> (fuerza puntual en medio infinito) juega el rol de la carga en espacio libre. Para el semi-espacio \(z \geq 0\):</p>
+                    <div class="two-col">
+                        <div>
+                            <div class="eq-box" style="font-size:0.9em; margin:0.2em 0;">
+                                $$u_z^{\text{Bouss}} = u_z^{\text{Kelvin}}(z) + u_z^{\text{imagen}}(-z) + \text{correccion}$$
+                            </div>
+                            <p style="font-size:0.9em; color:#555; margin-top:0.2em;">La correccion extra (sin analogo en electro) viene de que \(\mathbf{u}\) es vectorial, no escalar.</p>
+                        </div>
+                        <div>
+                            <div class="highlight-box" style="font-size:0.9em;">
+                                <strong>Evaluando en la superficie</strong> \(z = 0\):<br>
+                                los tres terminos se combinan y dan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fragment" data-fragment-index="2">
+                    <div class="highlight-box red" style="font-size:1.1em; margin-top:0.3em; text-align:center; padding:0.4em;">
+                        $$\boxed{u_z(r) = \frac{1-\nu^2}{\pi E}\;\frac{F}{r}}$$
+                    </div>
+                    <p style="margin-top:0.2em; text-align:center;">donde el prefactor \(\dfrac{1-\nu^2}{\pi E}\) juega exactamente el rol de \(\dfrac{1}{4\pi\epsilon_0}\) en electrostatica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8b: Demo Boussinesq — planteamiento -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Demo Boussinesq: planteamiento</h2>
+            <div class="two-col" style="margin-top:0.1em;">
+                <div>
+                    <p style="font-size:0.48em;"><strong>Problema:</strong> fuerza puntual \(F\) en el origen de un semi-espacio elastico (\(z \geq 0\)). Hallar el desplazamiento vertical \(u_z(r)\) en la superficie.</p>
+
+                    <div class="fragment" data-fragment-index="1">
+                        <p style="font-size:0.48em; margin-top:0.2em;"><strong>Simetria:</strong> problema axisimetrico &rarr; coordenadas cilindricas \((r, \theta, z)\). Todos los campos dependen solo de \(r\) y \(z\).</p>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="2">
+                        <p style="font-size:0.48em; margin-top:0.2em;"><strong style="color:#e67e22;">Analisis dimensional:</strong> la unica longitud en el problema es \(r\) mismo. Entonces:</p>
+                        <ul style="font-size:0.45em; line-height:1.6; margin-left:1em;">
+                            <li>Esfuerzo: \(\sigma \sim F/r^2\) (fuerza / area a distancia \(r\))</li>
+                            <li>Deformacion: \(\varepsilon \sim \sigma/E \sim F/(Er^2)\)</li>
+                            <li>Desplazamiento: \(u \sim \varepsilon \cdot r \sim F/(Er)\)</li>
+                        </ul>
+                        <div class="highlight-box" style="font-size:0.5em; padding:0.2em 0.6em; margin:0.15em 0;">
+                            &rArr; La dependencia \(u_z \propto F/(Er)\) sale <strong>solo por dimensiones</strong>!
+                        </div>
+                    </div>
+
+                    <div class="fragment" data-fragment-index="3">
+                        <p style="font-size:0.48em; margin-top:0.2em;"><strong>Condiciones de contorno</strong> (determinan el prefactor numerico):</p>
+                        <ol style="font-size:0.44em; line-height:1.6; margin-left:1em;">
+                            <li>Superficie libre: \(\sigma_{zz}(r, z\!=\!0) = 0\) para \(r > 0\)</li>
+                            <li>Equilibrio: \(\displaystyle\int_{\text{hemisferio } R} \sigma_{zz}\, dA = F\) para todo \(R\)</li>
+                            <li>Regularidad: \(u \to 0\) cuando \(r \to \infty\)</li>
+                        </ol>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: esquema del problema con coordenadas -->
+                    <svg viewBox="0 0 300 200" style="width:90%;">
+                        <defs>
+                            <marker id="arrD1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+                            </marker>
+                            <marker id="arrD1r" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+                            </marker>
+                            <marker id="arrD1o" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+                            </marker>
+                            <pattern id="hatchD1" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                                <line x1="0" y1="0" x2="0" y2="10" stroke="#999" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <!-- Surface -->
+                        <line x1="10" y1="70" x2="290" y2="70" stroke="#555" stroke-width="2"/>
+                        <!-- Hatching (solid below) -->
+                        <rect x="10" y="70" width="280" height="120" fill="url(#hatchD1)" opacity="0.1"/>
+                        <!-- Point load F -->
+                        <line x1="150" y1="10" x2="150" y2="62" stroke="#333" stroke-width="2.5" marker-end="url(#arrD1)"/>
+                        <text x="158" y="22" font-size="16" font-style="italic" font-weight="bold" fill="#333">F</text>
+                        <!-- Origin dot -->
+                        <circle cx="150" cy="70" r="3" fill="#c0392b"/>
+                        <text x="155" y="65" font-size="11" fill="#c0392b" font-weight="bold">O</text>
+                        <!-- r axis -->
+                        <line x1="150" y1="82" x2="260" y2="82" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrD1o)"/>
+                        <text x="265" y="86" font-size="13" font-style="italic" fill="#e67e22" font-weight="bold">r</text>
+                        <!-- z axis (downward) -->
+                        <line x1="135" y1="70" x2="135" y2="185" stroke="var(--color-teal)" stroke-width="1.5" marker-end="url(#arrD1)"/>
+                        <text x="122" y="190" font-size="13" font-style="italic" fill="var(--color-teal)" font-weight="bold">z</text>
+                        <!-- Hemisphere dashed -->
+                        <path d="M90,70 A60,60 0 0,1 210,70" stroke="var(--color-mauve)" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+                        <text x="215" y="105" font-size="9" fill="var(--color-mauve)">hemisferio R</text>
+                        <!-- Stress arrows on hemisphere -->
+                        <line x1="115" y1="110" x2="130" y2="90" stroke="var(--color-mauve)" stroke-width="1" marker-end="url(#arrD1r)"/>
+                        <line x1="150" y1="135" x2="150" y2="110" stroke="var(--color-mauve)" stroke-width="1" marker-end="url(#arrD1r)"/>
+                        <line x1="185" y1="110" x2="170" y2="90" stroke="var(--color-mauve)" stroke-width="1" marker-end="url(#arrD1r)"/>
+                        <!-- Labels -->
+                        <text x="15" y="65" font-size="9" fill="#888">superficie libre (z = 0)</text>
+                        <text x="200" y="160" font-size="9" fill="#888">semi-espacio z &ge; 0</text>
+                        <!-- sigma ~ F/r^2 label -->
+                        <text x="15" y="130" font-size="10" fill="var(--color-mauve)" font-style="italic">&sigma; ~ F/r&sup2;</text>
+                        <text x="15" y="145" font-size="10" fill="var(--color-teal)" font-style="italic">u ~ F/(Er)</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8c: Demo Boussinesq — solucion por potencial de Kelvin -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Demo Boussinesq: solucion de Kelvin &rarr; semi-espacio</h2>
+
+            <p style="font-size:0.48em;"><strong>Estrategia:</strong> partir de la solucion de <strong>Kelvin</strong> (fuerza puntual en medio <em>infinito</em>), luego imponer la condicion de superficie libre.</p>
+
+            <div class="fragment" data-fragment-index="1">
+                <p style="font-size:0.48em; margin-top:0.15em;"><strong style="color:var(--color-teal);">Paso 1 &mdash; Solucion de Kelvin</strong> (analogo a campo de carga puntual en electro):</p>
+                <div class="eq-box" style="font-size:0.5em; margin:0.1em 0; padding:0.25em 0.6em;">
+                    $$u_z^{\text{Kelvin}} = \frac{F}{16\pi G(1-\nu)}\left[\frac{z^2}{R^3} + \frac{3-4\nu}{R}\right], \qquad R = \sqrt{r^2 + z^2}$$
+                </div>
+                <p style="font-size:0.42em; color:#555;">donde \(G = E/[2(1+\nu)]\) es el modulo de corte.</p>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <p style="font-size:0.48em; margin-top:0.15em;"><strong style="color:#e67e22;">Paso 2 &mdash; Metodo de imagenes</strong> (como cargas imagen en electro):</p>
+                <p style="font-size:0.45em;">Para el semi-espacio \(z \geq 0\), se necesita \(\sigma_{zz} = 0\) en \(z = 0\). Se agrega un termino corrector que cancela las tensiones de corte en la superficie:</p>
+                <div class="eq-box" style="font-size:0.5em; margin:0.1em 0; padding:0.25em 0.6em;">
+                    $$u_z^{\text{Bouss}} = u_z^{\text{Kelvin}}(z) + u_z^{\text{Kelvin}}(-z) + \text{correccion superficial}$$
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <p style="font-size:0.48em; margin-top:0.15em;"><strong style="color:#c0392b;">Paso 3 &mdash; Evaluacion en la superficie</strong> \((z = 0 \Rightarrow R = r)\):</p>
+                <p style="font-size:0.45em;">Tras la algebra (combinando los tres terminos), se obtiene en \(z = 0\):</p>
+                <div class="highlight-box" style="font-size:0.55em; padding:0.25em 0.6em; margin:0.1em 0;">
+                    $$\boxed{u_z(r) = \frac{(1-\nu^2)}{\pi E}\;\frac{F}{r}}$$
+                </div>
+                <p style="font-size:0.42em; color:#555; margin-top:0.05em;">El factor \((1-\nu^2)/\pi\) proviene de la combinacion exacta de la solucion de Kelvin + imagenes evaluada en \(z = 0\).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8d: Verificacion y limites de Boussinesq -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.1em;">Demo Boussinesq: verificacion y limites</h2>
+
+            <p style="font-size:0.48em;"><strong>Verificaciones del resultado</strong> \(\;u_z(r) = \frac{1-\nu^2}{\pi E}\frac{F}{r}\):</p>
+
+            <div class="fragment" data-fragment-index="1">
+                <table style="font-size:0.8em; margin:0.1em 0;">
+                    <thead>
+                        <tr><th style="width:35%;">Test</th><th>Resultado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dimensiones</strong></td>
+                            <td>\([u_z] = \frac{1}{Pa}\cdot\frac{N}{m} = \frac{m}{1} \;\checkmark\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Equilibrio</strong></td>
+                            <td>\(\displaystyle\int \sigma_{zz}\,dA = F\) en todo plano \(z = \text{cte} \;\checkmark\)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Incompresible</strong> \((\nu = 0.5)\)</td>
+                            <td>\(u_z = \frac{3F}{4\pi E r}\) &mdash; rigidez aumenta (factor \(\frac{3}{4}\))</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compresible</strong> \((\nu = 0)\)</td>
+                            <td>\(u_z = \frac{F}{\pi E r}\) &mdash; maxima compliance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fragment" data-fragment-index="2">
+                <p style="font-size:0.48em; margin-top:0.15em;"><strong style="color:#c0392b;">Divergencia en \(r = 0\):</strong></p>
+                <div class="highlight-box red" style="font-size:0.48em; padding:0.2em 0.6em; margin:0.1em 0;">
+                    \(u_z \to \infty\) cuando \(r \to 0\): carga puntual = esfuerzo infinito en el contacto.<br>
+                    &rArr; Es <strong>imposible</strong> un contacto puntual real. La fuerza debe repartirse sobre un <strong>area finita</strong> &rarr; eso es exactamente el problema de Hertz!
+                </div>
+            </div>
+
+            <div class="fragment" data-fragment-index="3">
+                <p style="font-size:0.48em; margin-top:0.15em;"><strong style="color:#e67e22;">Observacion (2D vs 3D):</strong></p>
+                <p style="font-size:0.45em;">Para una carga <em>lineal</em> (2D), el desplazamiento diverge <strong>logaritmicamente</strong>: \(u_z \propto \ln(r)\). Esto hace el problema 2D mas delicado &mdash; no existe solucion con \(u \to 0\) al infinito. En 3D, el decaimiento \(1/r\) es suficientemente rapido.</p>
+            </div>
+
+            <div class="footnote fragment" data-fragment-index="3">
+                Boussinesq, J. (1885). <em>Application des potentiels a l'etude de l'equilibre et du mouvement des solides elastiques</em>, Gauthier-Villars. &mdash; Derivacion completa en Johnson, <em>Contact Mechanics</em> (1985), Ch. 3.
+            </div>
+        </div>
+    </section>
+
+    </section><!-- cierre stack derivacion exacta (I): Boussinesq -->
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 9: DERIVACION EXACTA II (presion + demos formales)     -->
+    <!-- ============================================================ -->
+    <section>
+        <!-- 8e: distribucion de presion -->
+        <section data-background-image="media/bg_dark.png"
+                 data-background-size="13% 100%"
+                 data-background-position="left">
+            <div style="padding-left:10%;">
+                <h2 style="font-size:1.1em;">Derivacion exacta (II): distribucion de presion</h2>
+                <div class="two-col" style="margin-top:0.05em;">
+                    <div>
+                        <p style="font-size:0.45em;"><strong>1.</strong> Sin fuerza, la esfera toca el plano en <strong>un punto</strong>. A distancia \(r\), la separacion entre superficies es:</p>
+                        <div class="eq-box" style="font-size:0.5em; margin:0.05em 0; padding:0.3em 0.6em;">
+                            $$h(r) \approx \frac{r^2}{2R^*}$$
+                        </div>
+
+                        <div class="fragment" data-fragment-index="1">
+                            <p style="font-size:0.45em;"><strong>2.</strong> Con fuerza \(F\), la esfera se acerca \(\delta\), contacto en \(r \leq a\). Las superficies deben coincidir &rarr; la deformacion rellena el gap:</p>
+                            <div class="eq-box" style="font-size:0.5em; margin:0.05em 0; padding:0.3em 0.6em;">
+                                $$u_z(r) = \delta - \frac{r^2}{2R^*}$$
+                            </div>
+                        </div>
+
+                        <div class="fragment" data-fragment-index="2">
+                            <p style="font-size:0.45em;"><strong>3.</strong> Hertz: la <em>unica</em> presion que produce este \(u_z\) parabolico via Boussinesq es <strong>semi-eliptica</strong>:</p>
+                            <div class="highlight-box" style="font-size:0.5em; padding:0.2em 0.5em; margin:0.05em 0;">
+                                $$p(r) = p_0\sqrt{1 - r^2/a^2}$$
+                            </div>
+                        </div>
+
+                        <div class="fragment" data-fragment-index="2">
+                            <p style="font-size:0.45em;"><strong>4.</strong> Decormación calculada a partir de la expresión $p(r)$ :</p>
+                            <div class="highlight-box" style="font-size:0.5em; padding:0.2em 0.5em; margin:0.05em 0;">
+                               $$u_z(r) = \frac{\pi p_0}{4 E^* a}\left(2a^2 - r^2\right) $$
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="text-align:center;">
+                        <!-- SVG: antes (gap h) y despues (contacto con fuerza) -->
+                        <svg viewBox="0 0 280 210" style="width:90%;">
+                            <defs>
+                                <marker id="arrS6" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                    <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+                                </marker>
+                                <pattern id="hatchH" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                                    <line x1="0" y1="0" x2="0" y2="8" stroke="#999" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+
+                            <!-- === ARRIBA: sin fuerza — gap h(r) === -->
+                            <text x="10" y="12" font-size="10" fill="var(--color-teal)" font-weight="bold">Sin fuerza:</text>
+
+                            <!-- Esfera (circulo bien redondo) -->
+                            <circle cx="140" cy="20" r="65" fill="rgba(107,154,154,0.05)" stroke="var(--color-teal)" stroke-width="2"/>
+
+                            <!-- Plano rigido -->
+                            <line x1="10" y1="85" x2="270" y2="85" stroke="#555" stroke-width="2"/>
+                            <rect x="10" y="85" width="260" height="10" fill="url(#hatchH)" opacity="0.12"/>
+
+                            <!-- Punto de contacto unico -->
+                            <circle cx="140" cy="85" r="2.5" fill="#e67e22"/>
+                            <text x="148" y="79" font-size="8" fill="#e67e22">1 punto</text>
+
+                            <!-- h(r) a distancia r=55 -->
+                            <line x1="195" y1="55" x2="195" y2="85" stroke="var(--color-mauve)" stroke-width="2.5" stroke-dasharray="3,2"/>
+                            <text x="200" y="74" font-size="11" font-style="italic" fill="var(--color-mauve)" font-weight="bold">h(r)</text>
+
+                            <!-- r flecha -->
+                            <line x1="140" y1="48" x2="193" y2="48" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrS6)"/>
+                            <text x="163" y="44" font-size="11" font-style="italic" fill="#e67e22" font-weight="bold">r</text>
+
+                            <!-- h formula -->
+                            <text x="15" y="100" font-size="9" fill="var(--color-mauve)" font-style="italic">h(r) &#x2248; r&#xB2;/(2R*)</text>
+
+                            <!-- === ABAJO: con fuerza F (zoom contacto) === -->
+                            <text x="10" y="120" font-size="10" fill="#c0392b" font-weight="bold">Con fuerza F (zoom contacto):</text>
+
+                            <!-- Plano (linea punteada = posicion original) -->
+                            <line x1="30" y1="160" x2="250" y2="160" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,3"/>
+                            <text x="252" y="158" font-size="7" fill="#aaa">plano</text>
+
+                            <!-- Esfera empujada delta (parabola teal) -->
+                            <path d="M80,115 Q140,235 200,115" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                            <text x="202" y="123" font-size="8" fill="var(--color-teal)">esfera</text>
+
+                            <!-- Zona de interpenetracion -->
+                            <path d="M110,160 Q140,190 170,160 Z" fill="rgba(192,57,43,0.15)" stroke="none"/>
+                            <text x="120" y="182" font-size="7" fill="#c0392b" font-style="italic">deformacion</text>
+
+                            <!-- delta = interpenetracion en el centro -->
+                            <line x1="35" y1="160" x2="35" y2="175" stroke="#c0392b" stroke-width="2"/>
+                            <line x1="31" y1="160" x2="39" y2="160" stroke="#c0392b" stroke-width="1.5"/>
+                            <line x1="31" y1="175" x2="39" y2="175" stroke="#c0392b" stroke-width="1.5"/>
+                            <text x="22" y="171" font-size="10" font-style="italic" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+
+                            <!-- u_z(0) = delta en el centro -->
+                            <line x1="140" y1="160" x2="140" y2="175" stroke="#c0392b" stroke-width="2" stroke-dasharray="3,2"/>
+                            <text x="95" y="172" font-size="8" font-style="italic" fill="#c0392b">u_z(0)=&#x03B4;</text>
+
+                            <!-- u_z(r) a distancia r (menor) -->
+                            <line x1="158" y1="160" x2="158" y2="170" stroke="#c0392b" stroke-width="1.5"/>
+                            <text x="161" y="168" font-size="7" font-style="italic" fill="#c0392b">u_z(r)</text>
+
+                            <!-- Bordes de contacto: -a, +a -->
+                            <circle cx="110" cy="160" r="2" fill="#e67e22"/>
+                            <circle cx="170" cy="160" r="2" fill="#e67e22"/>
+                            <text x="102" y="155" font-size="8" font-style="italic" fill="#e67e22">&#x2212;a</text>
+                            <text x="173" y="155" font-size="8" font-style="italic" fill="#e67e22">+a</text>
+
+                            <!-- r flecha -->
+                            <line x1="140" y1="190" x2="168" y2="190" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrS6)"/>
+                            <text x="152" y="200" font-size="9" font-style="italic" fill="#e67e22" font-weight="bold">r</text>
+
+                            <!-- Resumen -->
+                            <text x="15" y="210" font-size="8" fill="#555">u_z = &#x03B4; &#x2212; r&#xB2;/(2R*) &#x2192; parabolico</text>
+                        </svg>
+                    </div>
+                </div>
+                <p style="font-size:0.4em; color:#999; text-align:center; margin-top:0.2em;">&#x25BC; Demostracion formal abajo &#x25BC;</p>
+            </div>
+        </section>
+
+        <!-- 8f: Verificacion formal — sustitucion en integral de Boussinesq -->
+        <section data-background-image="media/bg_dark.png"
+                 data-background-size="13% 100%"
+                 data-background-position="left">
+            <div style="padding-left:10%;">
+                <h2 style="font-size:1.1em;">Demo formal: sustitucion en la integral de Boussinesq</h2>
+                <p style="font-size:0.45em;">Queremos verificar que \(p(r) = p_0\sqrt{1 - r^2/a^2}\) produce un desplazamiento parabolico. Sustituimos en la integral:</p>
+
+                <div class="eq-box" style="font-size:0.5em; margin:0.1em 0; padding:0.3em 0.6em;">
+                    $$u_z(r) = \frac{1}{\pi E^*}\int_0^{2\pi}\!\!\int_0^a \frac{p_0\sqrt{1 - \rho^2/a^2}}{\sqrt{r^2 + \rho^2 - 2r\rho\cos\varphi}}\;\rho\,d\rho\,d\varphi$$
+                </div>
+
+                <div class="fragment" data-fragment-index="1">
+                    <p style="font-size:0.45em;">La integral con kernel \(1/|\mathbf{r}-\mathbf{s}|\) tiene la misma forma que un potencial gravitatorio. Hertz uso resultados de <strong>teoria del potencial</strong> para evaluarla. Para la presion semi-eliptica el resultado es:</p>
+                    <div class="eq-box" style="font-size:0.5em; margin:0.1em 0; padding:0.3em 0.6em;">
+                        $$\int_0^{2\pi}\!\!\int_0^a \frac{p_0\sqrt{1-\rho^2/a^2}}{\sqrt{r^2+\rho^2-2r\rho\cos\varphi}}\;\rho\,d\rho\,d\varphi = \frac{\pi^2 p_0}{4a}\left(2a^2 - r^2\right)$$
+                    </div>
+                </div>
+
+                <div class="fragment" data-fragment-index="2">
+                    <p style="font-size:0.45em;">Resultado de la sustitucion:</p>
+                    <div class="highlight-box" style="font-size:0.5em; padding:0.2em 0.5em; margin:0.1em 0;">
+                        $$u_z(r) = \frac{\pi p_0}{4 E^* a}\left(2a^2 - r^2\right) \quad\text{para } r \leq a$$
+                    </div>
+                    <p style="font-size:0.45em; color:#555;">El desplazamiento es efectivamente <strong>parabolico</strong> en \(r^2\), como lo exige la geometria. &#x2714;</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8g: Igualacion de coeficientes -->
+        <section data-background-image="media/bg_dark.png"
+                 data-background-size="13% 100%"
+                 data-background-position="left">
+            <div style="padding-left:10%;">
+                <h2 style="font-size:1.0em;">Demo formal: igualacion de coeficientes</h2>
+                <p style="font-size:0.5em;">Comparamos Boussinesq con la condicion geometrica:</p>
+
+                <div class="eq-box" style="font-size:0.45em; margin:0.05em 0; padding:0.2em 0.5em;">
+                    $$\underbrace{\frac{\pi p_0}{4E^*a}\left(2a^2 - r^2\right)}_{\text{Boussinesq}} = \underbrace{\delta - \frac{r^2}{2R^*}}_{\text{geometria}}$$
+                </div>
+
+                <div class="fragment" data-fragment-index="1">
+                    <p style="font-size:0.5em;">Termino \(r^0\): \(\;\frac{\pi p_0 a}{2E^*} = \delta\). &emsp; Coeficiente de \(r^2\):</p>
+                    <div class="eq-box" style="font-size:0.45em; margin:0.05em 0; padding:0.2em 0.5em;">
+                        $$\frac{\pi p_0}{4E^*a} = \frac{1}{2R^*} \;\Longrightarrow\; p_0 = \frac{2aE^*}{\pi R^*} \;\Longrightarrow\; \delta = \frac{a^2}{R^*}$$
+                    </div>
+                </div>
+
+                <div class="fragment" data-fragment-index="2">
+                    <p style="font-size:0.5em;">Fuerza: \(F = \tfrac{2}{3}\pi a^2 p_0 = \tfrac{2}{3}\pi a^2\cdot\tfrac{2aE^*}{\pi R^*} = \tfrac{4}{3}\tfrac{a^3 E^*}{R^*}\). Con \(a^2 = R^*\delta\):</p>
+                    <div class="red-box" style="font-size:0.55em; margin:0.05em 0; padding:0.2em 0.5em;">
+                        $$\boxed{F = \frac{4}{3}\frac{a^3 E^*}{R^*} = \frac{4}{3}\,E^*\sqrt{R^*}\;\delta^{3/2}} $$
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </section><!-- cierre stack derivacion exacta (II): presion -->
+
+   
+    <!-- ============================================================ -->
+    <!-- SLIDE: CADENA DE NESTERENKO                                  -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cadena de Nesterenko</h2>
+            <div class="two-col">
+                <div style="font-size:0.58em;">
+                    <p>Cadena unidimensional de esferas en contacto: modelo fundamental para la propagación de ondas en medios granulares.</p>
+                    <div class="highlight-box" style="margin-top:0.5em;">
+                        <strong>Contacto de Hertz:</strong> la fuerza entre dos esferas es no-lineal:
+                    </div>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $F = k\,\delta^{3/2}$
+                    </div>
+                    <p style="margin-top:0.3em;">donde $\delta$ es la deformación y $k$ depende de los módulos elásticos y radios.</p>
+                    <p style="margin-top:0.2em;"><strong>Consecuencias:</strong></p>
+                    <ul style="line-height:1.3;">
+                        <li>Sin precompresión: no hay velocidad del sonido lineal ($c = 0$)</li>
+                        <li>Propagación de <strong>ondas solitarias</strong> (solitones de Nesterenko)</li>
+                        <li>Ancho del solitón: $\sim 5$ diámetros de esfera (independiente de amplitud)</li>
+                        <li>Velocidad: $V_s \propto F_m^{1/6}$ (depende de la amplitud)</li>
+                    </ul>
+                </div>
+                <div style="font-size:0.6em;">
+                    <div style="text-align:center; background:#f8f8f8; border-radius:8px; padding:1em; margin-top:0.5em;">
+                        <p style="font-weight:700; color:var(--color-dark); margin-bottom:0.5em;">Cadena 1D de esferas de Hertz</p>
+                        <svg viewBox="0 0 400 120" style="width:100%; max-width:400px;">
+                            <defs><radialGradient id="ball" cx="35%" cy="35%"><stop offset="0%" style="stop-color:#9cc"/><stop offset="100%" style="stop-color:#3a5556"/></radialGradient></defs>
+                            <circle cx="50" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="100" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="150" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="200" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="250" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="300" cy="60" r="25" fill="url(#ball)"/>
+                            <circle cx="350" cy="60" r="25" fill="url(#ball)"/>
+                            <line x1="0" y1="60" x2="15" y2="60" stroke="#c0392b" stroke-width="3" marker-end="url(#arrow)"/>
+                            <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#c0392b"/></marker></defs>
+                            <text x="5" y="30" font-size="14" fill="#c0392b" font-family="Inter">F</text>
+                            <text x="50" y="105" font-size="10" fill="#666" text-anchor="middle" font-family="Inter">1</text>
+                            <text x="100" y="105" font-size="10" fill="#666" text-anchor="middle" font-family="Inter">2</text>
+                            <text x="150" y="105" font-size="10" fill="#666" text-anchor="middle" font-family="Inter">3</text>
+                            <text x="350" y="105" font-size="10" fill="#666" text-anchor="middle" font-family="Inter">N</text>
+                        </svg>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.8em;">
+                        <p><strong>Ecuación de movimiento (grano $n$):</strong></p>
+                        <p style="text-align:center; margin-top:0.3em;">$m\ddot{u}_n = k\left[\delta_0 + u_{n-1} - u_n\right]_+^{3/2} - k\left[\delta_0 + u_n - u_{n+1}\right]_+^{3/2}$</p>
+                        <p style="margin-top:0.3em;">donde $[x]_+ = \max(x,0)$ (no hay tracción entre esferas).</p>
+                    </div>
+                    <p style="margin-top:0.5em;">Referencia: Nesterenko, <em>Dynamics of Heterogeneous Materials</em>, Springer (2001).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE: SOLITON DE NESTERENKO                                 -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Solitón de Nesterenko</h2>
+            <div class="two-col">
+                <div style="font-size:0.65em;">
+                    <p><strong>Sin precompresión</strong> ($\delta_0 = 0$): el medio es "sónico vacío" (no propaga ondas lineales).</p>
+                    <p style="margin-top:0.5em;">Nesterenko (1983) demostró que la solución exacta para una cadena infinita es un pulso solitario con perfil:</p>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $\xi_n(t) \propto \cos^4\!\left(\frac{\sqrt{10}}{5}\,\frac{n - V_s t}{a}\right)$
+                    </div>
+                    <p style="margin-top:0.5em;"><strong>Propiedades:</strong></p>
+                    <ul style="line-height:1.8;">
+                        <li>Ancho fijo: $\approx 5a$ (5 diámetros)</li>
+                        <li>$V_s \propto F_m^{1/6}$: ondas más intensas viajan más rápido</li>
+                        <li>Al impactar un borde libre: la energía se refleja como un tren de solitones más pequeños</li>
+                    </ul>
+                    <p style="margin-top:0.5em;"><strong>Con precompresión</strong> ($\delta_0 > 0$): transición hacia comportamiento lineal con velocidad del sonido $c \propto \delta_0^{1/4}$.</p>
+                </div>
+                <div style="font-size:0.6em;">
+                    <div class="highlight-box">
+                        <p><strong>Aplicaciones:</strong></p>
+                        <ul style="line-height:1.8;">
+                            <li>Ensayos no destructivos (NDE)</li>
+                            <li>Protección contra impactos</li>
+                            <li>Filtros acústicos no lineales</li>
+                            <li>Detección de defectos en estructuras</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em;">
+                        <p><strong>Longitud de onda vs. amplitud:</strong></p>
+                        <p>A diferencia de las ondas lineales, el solitón granular tiene ancho <em>independiente</em> de la amplitud, pero velocidad <em>dependiente</em> de la amplitud.</p>
+                    </div>
+                    <p style="margin-top:0.8em;">Veremos más detalles en clases posteriores (Clase 4).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 11: COLISION FRONTAL (from clase04 slide 9 - keep)     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Colision frontal: penetracion y duracion</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">Dos esferas identicas de radio $R$ y masa $M$, acercandose a velocidad relativa $v$. Conservacion de energia:</p>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        $E_k=E_e \implies \frac{1}{2}m^* v^2 = \frac{2}{5}\,k\,\delta_{\max}^{5/2}$
+                    </div>
+                    <p style="font-size:0.6em;">con masa reducida $m^* = M/2$.</p>
+                    <p style="font-size:0.65em; font-weight:700; color:#555; margin-top:0.5em;">Penetracion maxima:</p>
+                    <div class="red-box" style="font-size:0.7em;">
+                        $\delta_{\max} = \left(\frac{5\,m^*\,v^2}{4\,k}\right)^{2/5}$
+                    </div>
+                    <p style="font-size:0.65em; font-weight:700; color:#555; margin-top:0.5em;">Duracion de la colision:</p>
+                    <div class="red-box" style="font-size:0.7em;">
+                        $\tau = 2.94 \left(\frac{m^{*2}}{k^2\, v}\right)^{1/5}$
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.65em;">
+                        <strong>Resultado notable:</strong> $\tau \propto v^{-1/5}$<br>
+                        La duracion depende <em>muy poco</em> de la velocidad!
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Ejemplo numerico:</strong><br>
+                        Esferas de aluminio, $d = 1.5$ mm, $v = 5$ cm/s
+                        <p style="margin:0.3em 0 0;">
+                            $E = 6 \times 10^{11}$ dyn/cm&#xB2;<br>
+                            $\nu \approx 0.3$<br>
+                            $k = 7 \times 10^{10}$ (cgs)
+                        </p>
+                        <p style="margin-top:0.4em; font-size:1.2em; text-align:center; color:#c0392b;">
+                            <strong>$\tau \approx 5\,\mu$s</strong>
+                        </p>
+                    </div>
+                    <div class="highlight-box orange" style="margin-top:0.5em; font-size:0.6em;">
+                        <strong>Limite elastico?</strong><br>
+                        $\delta_{\max} \approx 2\,\mu$m &rarr; deformacion relativa $\sim 10^{-3}$<br>
+                        Muy cerca del regimen plastico!<br>
+                        Las asperezas se deforman plasticamente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 12: COEF. RESTITUCION (from clase04 slide 10 - keep)   -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Coeficiente de restitucion</h2>
+            <p style="font-size:0.7em;">Relacion entre las velocidades relativas antes ($v_c^{(n)}$) y despues ($u_c^{(n)}$) de la colision:</p>
+            <div class="red-box" style="font-size:1.1em;">
+                $u_c^{(n)} = -\varepsilon\, v_c^{(n)}$
+            </div>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <table style="font-size:0.75em;">
+                        <thead><tr><th>Material</th><th>$\varepsilon$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Acero sobre acero</td><td>~0.65</td></tr>
+                            <tr><td>Vidrio sobre vidrio</td><td>~0.95</td></tr>
+                            <tr><td>Madera sobre madera</td><td>~0.50</td></tr>
+                            <tr><td>Plomo sobre plomo</td><td>~0.20</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size:0.6em; margin-top:0.5em; color:#555;">
+                        Energia cinetica disipada: $\Delta E_k = \tfrac{1}{2}m^* v^2(1 - \varepsilon^2)$
+                    </p>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.65em;">
+                        <strong>$\varepsilon = 1$:</strong> colision perfectamente elastica<br>
+                        <strong>$\varepsilon = 0$:</strong> colision perfectamente inelastica<br><br>
+                        <strong>Energia disipada:</strong> proporcion $(1 - \varepsilon^2)$
+                    </div>
+                    <div class="highlight-box red" style="margin-top:0.5em; font-size:0.65em;">
+                        <strong>Modelo viscoelastico:</strong><br>
+                        Para esferas viscoelasticas (Hertz + disipacion):
+                        $\varepsilon \approx 1 - c_1 \,v^{1/5} + c_2 \,v^{2/5} - \ldots$<br>
+                        El coeficiente de restitucion <em>disminuye</em> al aumentar la velocidad de impacto.
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box red" style="margin-top:0.3em; font-size:0.65em;">
+                <strong>Colision no frontal:</strong> tambien existe un coeficiente de restitucion <em>tangencial</em> $\beta$
+                que depende del angulo de impacto $\gamma$ y de si la particula rueda o desliza al separarse.
+            </div>
+            <p class="footnote" style="font-size:0.35em; color:#888; margin-top:0.4em; line-height:1.4;">
+                Kuwabara &amp; Kono, <em>Jpn. J. Appl. Phys.</em> <strong>26</strong>, 1230 (1987).&emsp;
+                Brilliantov, Spahn, Hertzsch &amp; P&ouml;schel, <em>Phys. Rev. E</em> <strong>53</strong>, 5382 (1996).&emsp;
+                P&ouml;schel &amp; Schwager, <em>Computational Granular Dynamics</em> (Springer, 2005), &sect;2.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 13: TRES MECANISMOS (from clase04 slide 11 - keep)     -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Tres mecanismos de disipacion en colisiones</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>1. Perdidas viscoelasticas</strong> (baja velocidad):<br>
+                        $1 - \varepsilon \sim v^{1/5}$<br>
+                        Regimen ya presentado: disipacion interna del material. El coeficiente de restitucion disminuye lentamente con $v$.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em;">
+                        <strong>2. Perdidas plasticas</strong> (alta velocidad):<br>
+                        $\varepsilon \sim v^{-1/4}$<br>
+                        Deformacion permanente cuando la penetracion supera el umbral plastico:<br>
+                        $\delta_{\max} > \delta_{\text{plastic}} \sim R^*\!\left(\dfrac{E^*}{H}\right)^2$<br>
+                        donde $H$ es la dureza del material.
+                    </div>
+                    <div class="highlight-box orange" style="font-size:0.6em;">
+                        <strong>3. Perdidas radiativas:</strong><br>
+                        Energia irradiada como ondas elasticas en el volumen del grano. Importante para granos grandes o impacto sobre superficies extendidas.
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.6em; font-weight:700; color:#555;">Esquema: $\varepsilon$ vs. velocidad de impacto $v$</p>
+                    <!-- SVG: e vs v schematic -->
+                    <svg viewBox="0 0 320 260" style="width:95%;">
+                        <!-- Axes -->
+                        <line x1="50" y1="230" x2="300" y2="230" stroke="#333" stroke-width="1.5"/>
+                        <line x1="50" y1="230" x2="50" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="175" y="255" text-anchor="middle" font-size="13" fill="#333">Velocidad de impacto v</text>
+                        <text x="22" y="125" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,22,125)">Coef. restitucion &#x03B5;</text>
+                        <!-- e = 1 reference line -->
+                        <line x1="50" y1="50" x2="300" y2="50" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+                        <text x="310" y="54" font-size="11" fill="#ccc">1</text>
+                        <!-- Viscoelastic regime: nearly flat, slightly decreasing -->
+                        <path d="M55,55 C80,56 110,60 140,65 C160,69 175,73 185,78" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <!-- Transition region -->
+                        <path d="M185,78 C195,83 200,90 210,105" stroke="#e67e22" stroke-width="2.5" fill="none" stroke-dasharray="4,3"/>
+                        <!-- Plastic regime: e ~ v^{-1/4} decay -->
+                        <path d="M210,105 C225,130 245,155 270,175 C285,188 295,195 300,200" stroke="var(--color-mauve)" stroke-width="2.5" fill="none"/>
+                        <!-- Labels -->
+                        <text x="95" y="48" font-size="11" fill="var(--color-teal)" font-weight="bold">viscoelastico</text>
+                        <text x="70" y="85" font-size="11" fill="var(--color-teal)">1-&#x03B5; ~ v<tspan baseline-shift="super" font-size="9">1/5</tspan></text>
+                        <text x="230" y="145" font-size="11" fill="var(--color-mauve)" font-weight="bold">plastico</text>
+                        <text x="235" y="165" font-size="11" fill="var(--color-mauve)">&#x03B5; ~ v<tspan baseline-shift="super" font-size="9">-1/4</tspan></text>
+                        <!-- Transition marker -->
+                        <line x1="195" y1="85" x2="195" y2="230" stroke="#e67e22" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="195" y="220" text-anchor="middle" font-size="10" fill="#e67e22">transicion</text>
+                    </svg>
+                    <div class="red-box" style="font-size:0.6em; margin-top:0.3em;">
+                        En geofisica, las colisiones entre bloques rocosos involucran <strong>todos</strong> los mecanismos simultaneamente.
+                    </div>
+                </div>
+            </div>
+            <p class="footnote">Andreotti, Forterre, Pouliquen, <em>Granular Media</em> (2013), §2.1.3, p.23-24.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 14: MODELO CORTEZA BLANDA (from clase04 slide 12)      -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de corteza blanda (de Gennes)</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">Las esferas reales tienen una <strong>capa superficial alterada</strong> (oxidacion, desgaste) de espesor $e$ y modulo $E_e \ll E$.</p>
+                    <div class="highlight-box" style="font-size:0.7em;">
+                        <strong>Hertz (homogeneo):</strong><br>
+                        $F \approx E\sqrt{R}\, \delta^{3/2}$<br>
+                        $\delta \propto F^{2/3}$
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.7em;">
+                        <strong>Corteza blanda ($\delta \ll e$):</strong><br>
+                        $F \approx E_e \dfrac{R}{e}\, \delta^{2}$<br>
+                        $\delta \propto F^{1/2}$
+                    </div>
+                    <p style="font-size:0.6em; margin-top:0.3em;">&rarr; La deformacion aumenta <em>mas lentamente</em> con la fuerza: queda localizada cerca del contacto.</p>
+                    <div class="highlight-box orange" style="font-size:0.6em; margin-top:0.3em;">
+                        <strong>Transicion:</strong> de $F \propto \delta^2$ (baja carga, corteza) a $F \propto \delta^{3/2}$ (alta carga, bulk).
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 300" style="width:85%;">
+                        <!-- Homogeneous sphere -->
+                        <text x="75" y="20" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">(a) Homogenea</text>
+                        <circle cx="75" cy="80" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="75" cy="180" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <!-- Contact zone a -->
+                        <ellipse cx="75" cy="130" rx="20" ry="8" fill="rgba(107,154,154,0.3)" stroke="var(--color-teal)" stroke-width="1"/>
+                        <text x="75" y="133" text-anchor="middle" font-size="11" fill="var(--color-dark)">a</text>
+                        <!-- Deformation zone -->
+                        <ellipse cx="75" cy="130" rx="30" ry="25" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <!-- delta arrow -->
+                        <line x1="128" y1="120" x2="128" y2="140" stroke="#c0392b" stroke-width="2"/>
+                        <text x="140" y="133" font-size="11" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+
+                        <!-- Soft crust sphere -->
+                        <text x="225" y="20" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">(b) Corteza blanda</text>
+                        <circle cx="225" cy="80" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="225" cy="80" r="43" fill="none" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <circle cx="225" cy="180" r="50" fill="none" stroke="var(--color-teal)" stroke-width="2"/>
+                        <circle cx="225" cy="180" r="43" fill="none" stroke="var(--color-teal)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <!-- Crust label -->
+                        <line x1="260" y1="60" x2="280" y2="45" stroke="#888" stroke-width="1"/>
+                        <text x="282" y="45" font-size="10" fill="#888">e</text>
+                        <!-- Contact zone -->
+                        <ellipse cx="225" cy="130" rx="15" ry="6" fill="rgba(139,94,107,0.3)" stroke="var(--color-mauve)" stroke-width="1"/>
+                        <!-- Deformation zone (smaller) -->
+                        <ellipse cx="225" cy="130" rx="18" ry="12" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <!-- delta arrow -->
+                        <line x1="248" y1="122" x2="248" y2="138" stroke="#c0392b" stroke-width="2"/>
+                        <text x="258" y="133" font-size="11" fill="#c0392b" font-weight="bold">&#x03B4;</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="footnote" style="font-size:0.35em; color:#888; margin-top:0.4em; line-height:1.4;">
+                de Gennes, "Static compression of a granular medium: the &lsquo;soft shell&rsquo; model", <em>Europhys. Lett.</em> <strong>35</strong>, 145 (1996).&emsp;
+                de Gennes, "Granular matter: a tentative view", <em>Rev. Mod. Phys.</em> <strong>71</strong>, S374 (1999).&emsp;
+                Andreotti, Forterre, Pouliquen, <em>Granular Media</em> (2013), &sect;2.1.3.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 15: CURVAS EXPERIMENTALES (from clase04 slide 13)       -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Curvas esfuerzo-deformacion experimentales</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.65em;">Un ensemble granular bajo compresion uniaxial muestra una relacion $\sigma$-$\varepsilon$ <strong>no lineal</strong>, que refleja la ley de Hertz a nivel de contacto.</p>
+                    <div class="highlight-box" style="font-size:0.6em;">
+                        <strong>Regimen elastico:</strong>
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li>A baja carga: zona de acomodamiento (cierre de contactos)</li>
+                            <li>La rigidez crece con la carga aplicada</li>
+                            <li>$\sigma \propto \varepsilon^{3/2}$ si los contactos son hertzianos</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.6em; margin-top:0.5em;">
+                        <strong>Histeresis:</strong><br>
+                        La curva de descarga <em>no coincide</em> con la de carga.<br>
+                        &rarr; Disipacion de energia en cada ciclo.<br>
+                        &rarr; Origen: reordenamiento de contactos, plasticidad local, friccion.
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <!-- SVG: stress-strain with hysteresis -->
+                    <svg viewBox="0 0 320 300" style="width:95%;">
+                        <!-- Axes -->
+                        <line x1="50" y1="270" x2="300" y2="270" stroke="#333" stroke-width="1.5"/>
+                        <line x1="50" y1="270" x2="50" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <text x="175" y="295" text-anchor="middle" font-size="13" fill="#333">Deformacion &#x03B5;</text>
+                        <text x="22" y="145" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,22,145)">Esfuerzo &#x03C3;</text>
+                        <!-- Loading curve -->
+                        <path d="M50,270 C70,268 100,260 140,230 C180,190 220,120 280,40" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <!-- Unloading curve (lower) -->
+                        <path d="M280,40 C240,100 200,180 160,220 C120,250 90,262 70,267 L50,270" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="8,4"/>
+                        <!-- Shaded area (hysteresis) -->
+                        <path d="M50,270 C70,268 100,260 140,230 C180,190 220,120 280,40
+                                 C240,100 200,180 160,220 C120,250 90,262 70,267 Z"
+                              fill="rgba(192,57,43,0.1)"/>
+                        <!-- Labels -->
+                        <text x="250" y="80" font-size="12" fill="var(--color-teal)" font-weight="bold">Carga</text>
+                        <text x="100" y="230" font-size="12" fill="#c0392b" font-weight="bold">Descarga</text>
+                        <!-- Delta E label -->
+                        <text x="165" y="195" font-size="14" fill="#c0392b" font-weight="bold">&#x0394;E</text>
+                    </svg>
+                    <p style="font-size:0.5em; color:#888; margin-top:0.3em;">El area entre las curvas representa la energia disipada $\Delta E$ por ciclo.</p>
+                </div>
+            </div>
+            <p class="footnote">Ver: Nesterenko, <em>Dynamics of Heterogeneous Materials</em> (2001), Cap. 1;
+                Johnson, <em>Contact Mechanics</em> (1985).</p>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 16: JKR ADHESION (from Hertz_demo slide 9)             -->
+    <!--   vertical stack with 3 sub-slides                           -->
+    <!-- ============================================================ -->
+    <section>
+
+    <!-- SLIDE 16a: Motivacion y balance de energia -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Extension: adhesion (JKR, 1971)</h2>
+
+            <p style="font-size:0.55em; color:#555; margin-top:0.2em;">
+                Hertz ignora la <strong>energia de superficie</strong>. En contactos reales &mdash; particulas pequenas, materiales blandos, superficies limpias &mdash; la adhesion es significativa.
+            </p>
+
+            <div class="fragment" style="margin-top:0.3em;">
+                <p style="font-size:0.55em; font-weight:700; color:#555;">Balance de energia de JKR:</p>
+                <div class="eq-box" style="font-size:0.6em; margin:0.2em 0;">
+                    $$U_{\text{total}} = U_{\text{elastico}} - U_{\text{superficie}} + U_{\text{mecanico}}$$
+                </div>
+            </div>
+
+            <div class="two-col fragment" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.5em; font-weight:700; color:var(--color-dark);">Termino de superficie:</p>
+                    <div class="eq-box" style="font-size:0.55em; margin:0.2em 0;">
+                        $$U_{\text{sup}} = -2\pi\gamma\,a^2$$
+                    </div>
+                    <p style="font-size:0.45em; color:#777;">
+                        \(\gamma\) = energia de superficie (J/m&sup2;). Factor 2 porque dos superficies contribuyen.
+                        El area de contacto \(\pi a^2\) libera energia \(2\gamma\) por unidad de area.
+                    </p>
+                </div>
+                <div>
+                    <p style="font-size:0.5em; font-weight:700; color:var(--color-dark);">Procedimiento:</p>
+                    <p style="font-size:0.45em; color:#777;">
+                        Se minimiza \(U_{\text{total}}\) respecto del radio de contacto \(a\):
+                    </p>
+                    <div class="eq-box" style="font-size:0.55em; margin:0.2em 0;">
+                        $$\frac{\partial U_{\text{total}}}{\partial a} = 0$$
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box fragment" style="font-size:0.55em; margin-top:0.3em; padding:0.3em 0.8em;">
+                <strong>Insight clave:</strong> incluso con \(F=0\), existe un radio de contacto finito &mdash; la adhesion mantiene las superficies unidas.
+            </div>
+
+            <p class="footnote">Johnson, Kendall &amp; Roberts, <em>Proc. R. Soc. Lond. A</em> <strong>324</strong>, 301 (1971)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 16b: Resultado JKR -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Resultado JKR</h2>
+
+            <p style="font-size:0.5em; font-weight:700; color:#555; margin-top:0.2em;">Relacion fuerza&ndash;radio de contacto:</p>
+            <div class="red-box" style="font-size:0.85em; margin:0.2em 0;">
+                $$F = \frac{4\,E^*\,a^3}{3\,R^*} - \sqrt{8\pi\gamma\,E^*\,a^3}$$
+            </div>
+            <p style="font-size:0.45em; color:#777; text-align:center; margin-top:0;">
+                Primer termino = Hertz &emsp;|&emsp; Segundo termino = correccion por adhesion
+            </p>
+
+            <div class="two-col fragment" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.5em; font-weight:700; color:var(--color-dark);">Radio de contacto:</p>
+                    <div class="eq-box" style="font-size:0.55em; margin:0.2em 0;">
+                        $$a^3 = \frac{R^*}{E^*}\!\left[F + 3\pi\gamma R^* + \sqrt{6\pi\gamma R^*F + (3\pi\gamma R^*)^2}\right]$$
+                    </div>
+
+                    <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); margin-top:0.3em;">Radio a fuerza nula:</p>
+                    <div class="eq-box" style="font-size:0.55em; margin:0.2em 0;">
+                        $$a_0^3 = \frac{6\pi\gamma\,R^{*2}}{E^*}$$
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box red" style="font-size:0.55em; padding:0.4em 0.8em;">
+                        <p style="font-weight:700; margin-bottom:0.2em;">Fuerza de pull-off:</p>
+                        <div style="text-align:center; font-size:1.1em; margin:0.2em 0;">
+                            $$F_{\text{pull-off}} = -\frac{3}{2}\,\pi\gamma\,R^*$$
+                        </div>
+                        <p style="font-size:0.85em; color:#777; margin-top:0.2em;">
+                            Independiente de \(E^*\)!<br>
+                            Solo depende de la energia de superficie \(\gamma\) y la geometria \(R^*\).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="footnote">Johnson, Kendall &amp; Roberts (1971); Maugis, <em>J. Colloid Interface Sci.</em> <strong>150</strong>, 243 (1992)</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 16c: Hertz vs JKR — comparacion -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2 style="font-size:1.2em;">Hertz vs JKR</h2>
+
+            <div class="two-col" style="margin-top:0.2em;">
+                <div style="text-align:center;">
+                    <!-- SVG: F vs a comparison -->
+                    <svg viewBox="0 0 380 310" style="width:100%;">
+                        <!-- Axes -->
+                        <line x1="60" y1="200" x2="360" y2="200" stroke="#333" stroke-width="1.5"/>
+                        <line x1="60" y1="280" x2="60" y2="20" stroke="#333" stroke-width="1.5"/>
+                        <!-- Zero force line (dashed) -->
+                        <line x1="60" y1="200" x2="360" y2="200" stroke="#aaa" stroke-width="0.5" stroke-dasharray="4,3"/>
+                        <!-- Axis labels -->
+                        <text x="210" y="305" text-anchor="middle" font-size="14" fill="#333">Radio de contacto a</text>
+                        <text x="20" y="140" text-anchor="middle" font-size="14" fill="#333" transform="rotate(-90,20,140)">Fuerza F</text>
+                        <text x="65" y="195" font-size="11" fill="#aaa">F=0</text>
+
+                        <!-- Hertz curve: F ~ a^3, starts at origin, always positive -->
+                        <path d="M60,200 Q120,198 170,185 Q220,165 260,130 Q300,80 340,25"
+                              stroke="var(--color-teal)" stroke-width="3" fill="none"/>
+                        <text x="300" y="18" font-size="12" fill="var(--color-teal)" font-weight="bold">Hertz</text>
+
+                        <!-- JKR curve: shifted, has negative region, finite a at F=0 -->
+                        <path d="M115,245 Q120,248 130,248 Q145,246 160,238 Q175,225 185,210 Q195,195 210,178 Q240,145 270,105 Q300,60 340,10"
+                              stroke="var(--color-mauve)" stroke-width="3" fill="none"/>
+                        <text x="300" y="55" font-size="12" fill="var(--color-mauve)" font-weight="bold">JKR</text>
+
+                        <!-- a_0 marker (JKR contact at F=0) -->
+                        <circle cx="185" cy="200" r="5" fill="#e67e22"/>
+                        <line x1="185" y1="200" x2="185" y2="210" stroke="#e67e22" stroke-width="1"/>
+                        <text x="175" y="225" font-size="11" fill="#e67e22" font-weight="bold">a&#x2080;</text>
+
+                        <!-- Pull-off point -->
+                        <circle cx="125" cy="248" r="5" fill="var(--color-mauve)"/>
+                        <line x1="125" y1="248" x2="125" y2="270" stroke="var(--color-mauve)" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="90" y="270" font-size="10" fill="var(--color-mauve)">pull-off</text>
+                        <text x="85" y="282" font-size="10" fill="var(--color-mauve)">F=&#x2212;&#xBE;&#x3C0;&#x3B3;R*</text>
+
+                        <!-- F_pull-off horizontal dashed line -->
+                        <line x1="60" y1="248" x2="125" y2="248" stroke="var(--color-mauve)" stroke-width="1" stroke-dasharray="4,3"/>
+
+                        <!-- Negative F region shading -->
+                        <rect x="60" y="200" width="300" height="55" fill="rgba(139,94,107,0.05)" stroke="none"/>
+                        <text x="320" y="235" font-size="10" fill="var(--color-mauve)" font-style="italic">F&lt;0</text>
+
+                        <!-- Instability arrow -->
+                        <defs>
+                            <marker id="arrJKR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                                <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+                            </marker>
+                        </defs>
+                        <path d="M130,258 C118,260 112,255 110,248" stroke="#e67e22" stroke-width="1.2" fill="none"
+                              marker-end="url(#arrJKR)"/>
+                        <text x="128" y="267" font-size="9" fill="#e67e22" font-style="italic">da/dF &#x2192; &#x221E;</text>
+                    </svg>
+                </div>
+
+                <div>
+                    <table style="font-size:0.5em; margin-top:0.3em;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="color:var(--color-teal);">Hertz</th>
+                                <th style="color:var(--color-mauve);">JKR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Adhesion</td>
+                                <td>No</td>
+                                <td>Si (\(\gamma > 0\))</td>
+                            </tr>
+                            <tr>
+                                <td>\(F\) minima</td>
+                                <td>0</td>
+                                <td>\(-\frac{3}{2}\pi\gamma R^*\)</td>
+                            </tr>
+                            <tr>
+                                <td>\(a\) cuando \(F\!=\!0\)</td>
+                                <td>0</td>
+                                <td>\(a_0 > 0\)</td>
+                            </tr>
+                            <tr>
+                                <td>Separacion</td>
+                                <td>\(F \to 0\)</td>
+                                <td>Instabilidad subita</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="highlight-box orange fragment" style="font-size:0.5em; margin-top:0.4em; padding:0.3em 0.8em;">
+                        <strong>Cuando importa JKR?</strong>
+                        <p style="margin-top:0.2em;">Parametro de Tabor:</p>
+                        <div style="text-align:center; margin:0.2em 0;">
+                            $$\mu_T = \left(\frac{R^*\,\gamma^2}{E^{*2}\,z_0^3}\right)^{1/3}$$
+                        </div>
+                        <p style="font-size:0.9em; color:#777;">
+                            \(\mu_T \gg 1\): regimen JKR<br>
+                            \(\mu_T \ll 1\): regimen DMT (fuerzas de largo alcance)<br>
+                            \(z_0 \sim 0.2\) nm = alcance intermolecular
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="footnote">Tabor, <em>J. Colloid Interface Sci.</em> <strong>58</strong>, 2 (1977); Maugis (1992)</p>
+        </div>
+    </section>
+
+    </section><!-- end vertical stack slide 16 JKR -->
+
+    <!-- ============================================================ -->
+    <!-- SLIDE 17: RESUMEN (from clase04 slide 14 - updated)          -->
+    <!-- ============================================================ -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Resumen</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        <strong>Ley de Hertz:</strong> $F = \frac{4}{3}E^*\sqrt{R^*}\,\delta^{3/2}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        <strong>Penetracion:</strong> $\delta_{\max} \propto v^{4/5}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        <strong>Duracion:</strong> $\tau \propto v^{-1/5}$
+                    </div>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        <strong>Restitucion:</strong> $\varepsilon(v) \approx 1 - c_1 v^{1/5} + \ldots$
+                    </div>
+                    <div class="eq-box" style="font-size:0.65em;">
+                        <strong>JKR:</strong> $F_{\text{pull-off}} = -\frac{3}{2}\pi\gamma R^*$
+                    </div>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.65em;">
+                        <strong>Ideas clave:</strong>
+                        <ul style="line-height:1.6; margin-top:0.2em;">
+                            <li>No-linealidad: exponente 3/2</li>
+                            <li>Rigidez creciente con carga</li>
+                            <li>Boussinesq: fundamento de la derivacion exacta</li>
+                            <li>Tres metodos de derivacion (dim., energetico, exacto)</li>
+                            <li>Corteza blanda: exponente 2 a baja carga</li>
+                            <li>Histeresis en ciclos carga-descarga</li>
+                            <li>JKR: adhesion modifica el contacto a baja carga</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr style="border:none; border-top:2px solid var(--color-teal); margin-top:0.8em;">
+            <h3 style="font-size:0.8em; margin-top:0.5em;">Proxima clase</h3>
+            <p style="font-size:0.65em;">Clase 5: <strong>Histeresis y modelado con contactos elasticos</strong></p>
+            <ul style="font-size:0.6em; line-height:1.6;">
+                <li>Histeresis en ciclos carga-descarga</li>
+                <li>Introduccion al DEM</li>
+                <li>Modelos de contacto normal y tangencial</li>
+            </ul>
+            <p style="font-size:0.55em; color:#888; margin-top:0.3em;">
+                Bibliografia: Nesterenko, <em>Dynamics of Heterogeneous Materials</em> -- Cap. 1;
+                Johnson, <em>Contact Mechanics</em> (1985)
+            </p>
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        keyboard: {
+            39: function() { var i = Reveal.getIndices(); Reveal.slide(i.h + 1, 0); },  // → saltar al proximo tema
+            37: function() { var i = Reveal.getIndices(); Reveal.slide(Math.max(i.h - 1, 0), 0); }  // ← tema anterior
+        },
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
