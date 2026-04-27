@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6 - Fricción Granular</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+        .reveal .bonus-badge {
+            position: absolute; top: 10px; right: 15px;
+            background: #f39c12; color: white; font-size: 0.4em;
+            padding: 2px 10px; border-radius: 0 0 0 8px;
+            font-weight: 700; letter-spacing: 1px; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 6 -</strong> <span style="color:#888;">GEOFISICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                FRICCIÓN GRANULAR:<br>COULOMB-AMONTONS
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Fisica,<br>Facultad de Ciencias,<br>Universidad de la Republica
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>Las tres leyes de la fricción sólida</li>
+                <li>Fricción estática vs dinámica</li>
+                <li>¿Por qué la fricción no depende del área?</li>
+                <li>Fricción en medios granulares</li>
+                <li>Concepto de healing</li>
+                <li>Cuando μ no es constante: velocity weakening</li>
+                <li>Ciclo stick-slip y analogías</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: Importancia de la fricción en geofísica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Por qué la fricción importa en geofísica?</h2>
+            <div style="text-align:center; margin-top:0.6em;">
+                <svg viewBox="0 0 700 445" style="width:82%; max-height:62vh; font-family:'Inter',sans-serif;">
+                    <!-- Top node: μ (fricción efectiva) -->
+                    <rect x="250" y="12" width="200" height="65" rx="10" fill="rgba(107,154,154,0.15)" stroke="#6b9a9a" stroke-width="2.5"/>
+                    <text x="350" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#3a5556">μ</text>
+                    <text x="350" y="62" text-anchor="middle" font-size="13" fill="#5a7a7a">(fricción efectiva)</text>
+
+                    <!-- Vertical line down from μ, horizontal branch -->
+                    <line x1="350" y1="77" x2="350" y2="105" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="175" y1="105" x2="525" y2="105" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="175" y1="105" x2="175" y2="132" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="525" y1="105" x2="525" y2="132" stroke="#6b9a9a" stroke-width="2"/>
+
+                    <!-- Estado node -->
+                    <rect x="85" y="132" width="180" height="68" rx="8" fill="rgba(107,154,154,0.12)" stroke="#6b9a9a" stroke-width="2"/>
+                    <text x="175" y="158" text-anchor="middle" font-size="16" font-weight="bold" fill="#3a5556">Estado</text>
+                    <text x="175" y="180" text-anchor="middle" font-size="13" fill="#5a7a7a">(σ, presión)</text>
+
+                    <!-- Geometría node -->
+                    <rect x="435" y="132" width="180" height="68" rx="8" fill="rgba(107,154,154,0.12)" stroke="#6b9a9a" stroke-width="2"/>
+                    <text x="525" y="158" text-anchor="middle" font-size="16" font-weight="bold" fill="#3a5556">Geometría</text>
+                    <text x="525" y="180" text-anchor="middle" font-size="13" fill="#5a7a7a">(pendiente)</text>
+
+                    <!-- Lines merging from Estado and Geometría -->
+                    <line x1="175" y1="200" x2="175" y2="225" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="525" y1="200" x2="525" y2="225" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="175" y1="225" x2="525" y2="225" stroke="#6b9a9a" stroke-width="2"/>
+                    <line x1="350" y1="225" x2="350" y2="248" stroke="#6b9a9a" stroke-width="2"/>
+
+                    <!-- μs → μd (stick → slip) node -->
+                    <rect x="205" y="248" width="290" height="72" rx="8" fill="rgba(139,94,107,0.13)" stroke="#8b5e6b" stroke-width="2.5"/>
+                    <text x="350" y="275" text-anchor="middle" font-size="17" font-weight="bold" fill="#5a3344">
+                        μ<tspan dy="5" font-size="12">s</tspan><tspan dy="-5" font-size="17"> → μ</tspan><tspan dy="5" font-size="12">d</tspan>
+                    </text>
+                    <text x="350" y="305" text-anchor="middle" font-size="13" fill="#7a4555">(stick → slip)</text>
+
+                    <!-- Line down and horizontal branch to three nodes -->
+                    <line x1="350" y1="320" x2="350" y2="345" stroke="#8b5e6b" stroke-width="2"/>
+                    <line x1="130" y1="345" x2="570" y2="345" stroke="#8b5e6b" stroke-width="2"/>
+                    <line x1="130" y1="345" x2="130" y2="368" stroke="#8b5e6b" stroke-width="2"/>
+                    <line x1="350" y1="345" x2="350" y2="368" stroke="#8b5e6b" stroke-width="2"/>
+                    <line x1="570" y1="345" x2="570" y2="368" stroke="#8b5e6b" stroke-width="2"/>
+
+                    <!-- Fallas node -->
+                    <rect x="45" y="368" width="170" height="65" rx="8" fill="rgba(192,57,43,0.08)" stroke="#c0392b" stroke-width="2"/>
+                    <text x="130" y="394" text-anchor="middle" font-size="15" font-weight="bold" fill="#8b2020">Fallas</text>
+                    <text x="130" y="416" text-anchor="middle" font-size="12" fill="#8b2020">(sismos)</text>
+
+                    <!-- Laderas node -->
+                    <rect x="265" y="368" width="170" height="65" rx="8" fill="rgba(230,126,34,0.10)" stroke="#e67e22" stroke-width="2"/>
+                    <text x="350" y="394" text-anchor="middle" font-size="15" font-weight="bold" fill="#9b5000">Laderas</text>
+                    <text x="350" y="416" text-anchor="middle" font-size="12" fill="#9b5000">(desliz.)</text>
+
+                    <!-- Granos node -->
+                    <rect x="485" y="368" width="170" height="65" rx="8" fill="rgba(107,154,154,0.12)" stroke="#6b9a9a" stroke-width="2"/>
+                    <text x="570" y="394" text-anchor="middle" font-size="15" font-weight="bold" fill="#3a5556">Granos</text>
+                    <text x="570" y="416" text-anchor="middle" font-size="12" fill="#3a5556">(avalanchas)</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SLIDE 4: Tres leyes de fricción -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Las tres leyes de la fricción sólida</h2>
+            <div style="margin-top:0.5em;">
+                <div class="highlight-box" style="font-size:0.85em;">
+                    <strong>1a y 2da Ley (da Vinci ~1500, Amontons 1699):</strong><br>
+                    La fuerza de fricción $T$ es <strong>proporcional a la carga normal</strong> $P$:
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$T = \mu\, P$</p>
+		    La fuerza de fricción es <strong>independiente del área de contacto aparente</strong>.
+                </div>
+               
+                     <img src="media/davinci.png" style="max-height:350px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"/>
+             
+                <div class="highlight-box red" style="font-size:0.85em;">
+                    <strong>3a Ley (Coulomb 1773, Euler):</strong><br>
+                    La fricción <strong>estatica</strong> ($\mu_s$) es mayor que la fricción <strong>dinámica</strong> ($\mu_d$):
+                    <p style="text-align:center; font-size:1.2em; margin:0.3em 0;">$\mu_s > \mu_d$</p>
+                </div>
+                <div style="background:rgba(230,126,34,0.08); border-left:4px solid #e67e22; padding:0.5em 1em; margin:0.5em 0; font-size:0.82em;">
+                    <em>"La fricción no es solo una propiedad del material: es una propiedad del <strong>estado del contacto</strong>."</em>
+                </div>
+            </div>
+            <p class="credit">Duran, <em>Sands, Powders, and Grains</em>, Cap. 2, Sec. 2.2.1</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: Fricción estática vs dinámica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fricción estática vs dinámica</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.85em;">Cuando se aplica una fuerza horizontal creciente a un bloque sobre una superficie:</p>
+                    <ol style="font-size:0.8em; line-height:1.8;">
+                        <li>$T < \mu_s P$: el bloque <strong>no se mueve</strong></li>
+                        <li>$T = \mu_s P$: umbral de deslizamiento</li>
+                        <li>Al deslizar, la fricción cae a $\mu_d P$</li>
+                    </ol>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $\mu_s > \mu_d$<br>
+                        <span style="font-size:0.75em;">Tipicamente $\mu_s / \mu_d \approx 1.1 - 1.5$</span>
+                    </div>
+                    <table style="font-size:0.6em; margin-top:0.5em;">
+                        <thead><tr><th>Materiales</th><th>$\mu_s$</th><th>$\mu_d$</th></tr></thead>
+                        <tbody>
+                            <tr><td>Madera / madera</td><td>0.3 - 0.5</td><td>0.2 - 0.4</td></tr>
+                            <tr><td>Vidrio / vidrio</td><td>0.4</td><td>0.3</td></tr>
+                            <tr><td>Metal / metal</td><td>0.7 - 1.0</td><td>0.5 - 0.8</td></tr>
+                            <tr><td>Roca / roca</td><td>0.6 - 0.7</td><td>0.4 - 0.6</td></tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 340 280" style="width:95%;">
+                        <defs><marker id="arr1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Axes -->
+                        <line x1="40" y1="240" x2="320" y2="240" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+                        <line x1="40" y1="240" x2="40" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arr1)"/>
+                        <text x="180" y="270" text-anchor="middle" font-size="13" fill="#333">Desplazamiento</text>
+                        <text x="15" y="130" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,15,130)">Fuerza T</text>
+                        <!-- Static regime: rising -->
+                        <line x1="45" y1="235" x2="100" y2="80" stroke="var(--color-teal)" stroke-width="3"/>
+                        <!-- Peak -->
+                        <circle cx="100" cy="80" r="5" fill="#c0392b"/>
+                        <!-- Drop -->
+                        <line x1="100" y1="80" x2="105" y2="130" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4,2"/>
+                        <!-- Dynamic regime: constant -->
+                        <line x1="105" y1="130" x2="300" y2="130" stroke="var(--color-mauve)" stroke-width="3"/>
+                        <!-- Labels -->
+                        <line x1="40" y1="80" x2="95" y2="80" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="30" y="76" text-anchor="end" font-size="12" fill="var(--color-teal)" font-weight="bold">$\mu_s P$</text>
+                        <line x1="40" y1="130" x2="100" y2="130" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="30" y="126" text-anchor="end" font-size="12" fill="var(--color-mauve)" font-weight="bold">$\mu_d P$</text>
+                        <!-- Zone labels -->
+                        <text x="65" y="200" text-anchor="middle" font-size="12" fill="var(--color-teal)" font-weight="bold">estatico</text>
+                        <text x="200" y="165" text-anchor="middle" font-size="12" fill="var(--color-mauve)" font-weight="bold">dinamico</text>
+                        <!-- Vertical annotation -->
+                        <line x1="110" y1="80" x2="110" y2="130" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="107" y1="80" x2="113" y2="80" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="107" y1="130" x2="113" y2="130" stroke="#c0392b" stroke-width="1.5"/>
+                        <text x="125" y="110" font-size="11" fill="#c0392b" font-weight="bold">$\Delta\mu \cdot P$</text>
+                    </svg>
+<p style="font-size:0.75em; color:var(--color-mauve); font-style:italic; margin-top:0.4em;">
+                        μ<sub>s</sub> &gt; μ<sub>d</sub>: esta diferencia es la semilla de toda inestabilidad de fricción.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Modelo de Bowden-Tabor -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Modelo de Bowden-Tabor</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;">Las superficies reales nunca son perfectamente lisas: el contacto ocurre solo en las <strong>cimas de las asperezas</strong>.</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Área real vs aparente:</strong><br>
+                        $S_r \ll S_a$ &nbsp; y &nbsp; $S_r \propto P$<br>
+                        <span style="font-size:0.85em;">Duplicar $S_a$ redistribuye los contactos sin cambiar $S_r$.</span>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em; margin-top:0.5em;">
+                        <strong>Deformación plástica en cada aspereza:</strong><br>
+                        Con $n$ asperezas de área $a$ cada una:<br>
+                        $P = n\,p_c\,a \;\Rightarrow\; S_r = na = P/p_c$<br>
+                        $T = n\,\tau_s\,a$
+                    </div>
+                    <div class="eq-box" style="font-size:1.15em; margin-top:0.5em;">
+                        $\mu = \dfrac{T}{P} = \dfrac{\tau_s}{p_c}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.4em;">
+                        La fricción es una <strong>propiedad material</strong> (ratio $\tau_s / p_c$),<br>independiente de la geometría macroscópica ($n$, $S_a$).
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 320 250" style="width:88%;">
+                        <defs>
+                            <marker id="arrBT" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker>
+                            <marker id="arrBTm" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="var(--color-mauve)"/></marker>
+                        </defs>
+                        <!-- Upper surface rough profile -->
+                        <path d="M15,105 L40,82 L55,97 L72,72 L90,92 L108,78 L125,97 L145,68 L162,92 L178,82 L196,98 L215,73 L232,88 L252,78 L272,97 L285,88" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+                        <!-- Upper body shaded -->
+                        <path d="M15,18 L285,18 L285,88 L272,97 L252,78 L232,88 L215,73 L196,98 L178,82 L162,92 L145,68 L125,97 L108,78 L90,92 L72,72 L55,97 L40,82 L15,105 Z" fill="rgba(192,57,43,0.06)" stroke="none"/>
+                        <!-- Lower surface rough profile -->
+                        <path d="M15,115 L32,134 L55,110 L75,128 L90,112 L112,133 L132,108 L147,124 L167,111 L185,128 L205,108 L222,132 L242,113 L262,128 L285,118" stroke="#2c3e50" stroke-width="2.5" fill="none"/>
+                        <!-- Contact points -->
+                        <circle cx="55" cy="103" r="6" fill="#e67e22" opacity="0.9"/>
+                        <circle cx="132" cy="108" r="6" fill="#e67e22" opacity="0.9"/>
+                        <circle cx="205" cy="108" r="6" fill="#e67e22" opacity="0.9"/>
+                        <!-- Local forces at contact 1: pc (normal) and τs (shear) -->
+                        <line x1="55" y1="97" x2="55" y2="68" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrBT)"/>
+                        <text x="35" y="66" text-anchor="end" font-size="12" fill="#c0392b" font-weight="bold">p_c</text>
+                        <line x1="61" y1="103" x2="92" y2="103" stroke="var(--color-mauve)" stroke-width="2.5" marker-end="url(#arrBTm)"/>
+                        <text x="97" y="107" font-size="12" fill="var(--color-mauve)" font-weight="bold">τ_s</text>
+                        <!-- Global P force (downward) -->
+                        <line x1="160" y1="18" x2="160" y2="58" stroke="#333" stroke-width="2.5" marker-end="url(#arrBT)"/>
+                        <text x="174" y="42" font-size="15" fill="#333" font-weight="bold">P</text>
+                        <!-- Global T force (rightward) -->
+                        <line x1="287" y1="103" x2="318" y2="103" stroke="#333" stroke-width="2.5" marker-end="url(#arrBT)"/>
+                        <text x="306" y="95" font-size="15" fill="#333" font-weight="bold">T</text>
+                        <!-- Dotted lines from contact points down -->
+                        <line x1="55" y1="114" x2="55" y2="162" stroke="#e67e22" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="132" y1="118" x2="132" y2="162" stroke="#e67e22" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="205" y1="118" x2="205" y2="162" stroke="#e67e22" stroke-width="1" stroke-dasharray="3,3"/>
+                        <!-- Labels -->
+                        <text x="128" y="180" text-anchor="middle" font-size="12" fill="#e67e22" font-weight="bold">S_r — contacto real</text>
+                        <text x="128" y="204" text-anchor="middle" font-size="11" fill="#aaa">S_a — superficie aparente</text>
+                    </svg>
+                    <p class="credit">Bowden, F.P. &amp; Tabor, D. <em>The Friction and Lubrication of Solids</em>. Oxford, 1950.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: ¿Por qué no depende del área? -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Por qué la fricción no depende del área?</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;">Las superficies reales tienen <strong>rugosidades</strong> a escala microscópica.</p>
+                    <p style="font-size:0.85em;">El contacto real ocurre solo en las <strong>cimas de las asperezas</strong> (Bowden y Tabor, 1950).</p>
+                    <p style="font-size:0.85em;">El área de contacto <em>real</em> $S_r$ es mucho menor que el área <em>aparente</em> $S_a$:</p>
+                    <div class="eq-box">
+                        $S_r \ll S_a$<br>
+                        $S_r \propto P$ &nbsp;(proporcional a la carga)
+                    </div>
+                    <p style="font-size:0.85em;">Duplicar el área aparente no duplica el área de contacto: el número de contactos se redistribuye.</p>
+                </div>
+                <div style="text-align:center;">
+                    <img src="media/areacontacto.png" style="max-height:800px;"/>
+                    <p class="credit">Bowden, F.P. &amp; Tabor, D. <em>The Friction and Lubrication of Solids</em>. Oxford, 1950.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: Fricción en medios granulares — tres escalas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Fricción en medios granulares: tres escalas</h2>
+            <p style="font-size:0.85em;">En un medio granular, la fricción opera a <strong>tres escalas distintas</strong> que producen comportamientos cualitativamente diferentes:</p>
+            <div style="display:flex; gap:1em; margin-top:0.2em;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong style="color:var(--color-teal);">Microscópica: contacto individual</strong><br>
+                        Cada contacto grano-grano sigue las leyes de <strong>Coulomb-Amontons</strong>:
+                        <p style="text-align:center; margin:0.3em 0; font-size:1.1em;">$T_i = \mu\, N_i$</p>
+                        La fricción entre dos granos depende del material, la rugosidad y la carga normal local. Es la misma física que un bloque sobre un plano.
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.75em;">
+                        <strong style="color:var(--color-mauve);">Mesoscópica: red de contactos</strong><br>
+                        Los granos forman una <strong>red de fuerzas</strong>. La fricción a esta escala depende de:
+                        <ul style="line-height:1.6; margin-top:0.3em;">
+                            <li>La <strong>geometría</strong> de la red de contactos</li>
+                            <li>La <strong>distribución</strong> de fuerzas normales y tangenciales</li>
+                            <li>El número de coordinación $z$</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.75em; border-left-color:#e67e22;">
+                        <strong style="color:#e67e22;">Macroscópica: comportamiento global</strong><br>
+                        A escala del medio completo, la fricción efectiva resulta de los <strong>contactos movilizados</strong>:
+                        <ul style="line-height:1.6; margin-top:0.3em;">
+                            <li>Solo una fracción de contactos esta al umbral de Coulomb</li>
+                            <li>Deslizar requiere <strong>reorganizar</strong> la red</li>
+                            <li>La dilatancia de Reynolds: el medio <em>se expande</em> antes de fluir</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="eq-box" style="font-size:0.85em; margin-top:0.5em;">
+                La fricción <strong>macroscópica</strong> $\mu_{\text{macro}}$ no es simplemente la fricción entre granos $\mu_{\text{grano}}$: depende de la estructura y de las reorganizaciones colectivas.
+            </div>
+            <p style="font-size:0.8em; color:var(--color-mauve); font-style:italic; text-align:center; margin-top:0.3em;">
+                .
+            </p>
+            <p class="credit">Andreotti, Forterre, Pouliquen, <em>Granular Media</em>, Cap. 2.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: Healing -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Healing: dependencia temporal de la friccion</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">El coeficiente de fricción estática <strong>no es constante</strong>: aumenta con el tiempo de contacto estacionario $t_w$ (tiempo de espera).</p>
+                    <div class="eq-box" style="margin-top:0.5em;">
+                        $\mu_s(t_w) = \mu_0 + A \ln\!\left(\frac{t_w}{t^*}\right)$
+                    </div>
+                    <p style="font-size:0.8em; margin-top:0.5em;"><strong>Mecanismo:</strong></p>
+                    <ul style="font-size:0.75em; line-height:1.8;">
+                        <li>Las asperezas en contacto sufren <strong>fluencia plástica</strong> (creep)</li>
+                        <li>El área de contacto real $S_r$ crece logaritmicamente con el tiempo</li>
+                        <li>Mayor $S_r$ requiere mayor fuerza para iniciar el deslizamiento</li>
+                    </ul>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.5em;">
+                        <strong>Valores tipicos:</strong> $A \approx 0.005 - 0.015$ para rocas; $\mu_0 \approx 0.6 - 0.7$
+                    </div>
+                    <p style="font-size:0.78em; color:var(--color-teal); font-style:italic; margin-top:0.3em;">
+                        "El contacto tiene memoria: cuanto más tiempo en reposo, mas difícil es iniciar el deslizamiento."
+                    </p>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 250" style="width:95%;">
+                        <defs><marker id="arr4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>
+                        <!-- Axes -->
+                        <line x1="40" y1="210" x2="285" y2="210" stroke="#333" stroke-width="2" marker-end="url(#arr4)"/>
+                        <line x1="40" y1="210" x2="40" y2="25" stroke="#333" stroke-width="2" marker-end="url(#arr4)"/>
+                        <text x="165" y="240" text-anchor="middle" font-size="13" fill="#333">ln(t<tspan baseline-shift="sub" font-size="10">w</tspan>)</text>
+                        <text x="18" y="100" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,18,100)">$\mu_s(t_w)$</text>
+                        <!-- Log curve (approximately linear in log scale) -->
+                        <line x1="50" y1="175" x2="270" y2="70" stroke="var(--color-teal)" stroke-width="3"/>
+                        <!-- Data points -->
+                        <circle cx="70" cy="168" r="4" fill="var(--color-teal)"/>
+                        <circle cx="100" cy="155" r="4" fill="var(--color-teal)"/>
+                        <circle cx="130" cy="143" r="4" fill="var(--color-teal)"/>
+                        <circle cx="160" cy="128" r="4" fill="var(--color-teal)"/>
+                        <circle cx="190" cy="112" r="4" fill="var(--color-teal)"/>
+                        <circle cx="220" cy="96" r="4" fill="var(--color-teal)"/>
+                        <circle cx="250" cy="80" r="4" fill="var(--color-teal)"/>
+                        <!-- Slope label -->
+                        <text x="200" y="55" font-size="13" fill="var(--color-teal)" font-weight="bold">pendiente = A</text>
+                        <!-- mu_0 line and label on y-axis -->
+                        <line x1="40" y1="175" x2="65" y2="175" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+                        <text x="32" y="178" text-anchor="end" font-size="12" fill="var(--color-mauve)" font-weight="bold">$\mu_0$</text>
+                        <!-- mu_0 tick mark on y-axis -->
+                        <line x1="37" y1="175" x2="43" y2="175" stroke="#333" stroke-width="1.5"/>
+                    </svg>
+                    <p style="font-size:0.7em; color:#666; margin-top:0.3em;">
+                        Se grafica $\mu_s$ (fricción estática) en función del tiempo de espera $t_w$.<br>
+                        La ordenada al origen es $\mu_0$: valor de $\mu_s$ para $t_w = t^*$.
+                    </p>
+                    <div class="highlight-box red" style="font-size:0.75em; margin-top:0.3em;">
+                        <strong>Ejemplo cotidiano de healing:</strong> una ventana que hace mucho tiempo no se abre se vuelve cada vez mas difícil de mover. Las superficies en contacto "envejecen" y la fricciín estatica aumenta.
+                    </div>
+                    <p style="font-size:0.7em; color:#666; margin-top:0.3em;">
+                        <strong>Consecuencia sismica:</strong>
+                        Cuanto más tiempo permanece bloqueada una falla, mayor es $\mu_s$, y mayor sera la caida de tensión al deslizarse &rarr; <strong>terremotos mas grandes</strong>.
+                    </p>
+                </div>
+            </div>
+            <p class="credit">Dieterich, J. (1972). <em>J. Geophys. Res.</em>, 77, 3690. Rabinowicz, E. (1951). <em>J. Appl. Phys.</em>, 22, 1373.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: Analogia con fallas geologicas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Analogia: fricción granular y fallas geológicas</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Las zonas de falla contienen una capa de <strong>gouge</strong> (material granular triturado). La mecánica de la falla está gobernada por la fricción de este medio granular.</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Ciclo sísmico y fricción:</strong>
+                        <ul style="line-height:1.8; margin-top:0.3em;">
+                            <li><strong>Carga:</strong> la placa tectónica aplica esfuerzo de cizallamiento</li>
+                            <li><strong>Healing:</strong> $\mu_s$ crece logarítmicamente durante la fase intersísmica</li>
+                            <li><strong>Ruptura:</strong> $T$ alcanza $\mu_s P$ &rarr; deslizamiento subito</li>
+                            <li><strong>Caida de fricción:</strong> $\mu_s \to \mu_d$ &rarr; terremoto</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em;">
+                        <strong>Ley de Byerlee (1978):</strong><br>
+                        Para la mayoría de las rocas, independientemente del tipo: $\mu \approx 0.6 - 0.85$.
+                        Es el equivalente geológico de la ley de Coulomb.
+                    </div>
+                </div>
+                <div>
+                    <img src="media/INTRO_stickslip.png" style="max-height:350px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"/>
+                    <div class="two-col" style="margin-top:0.3em; font-size:0.75em;">
+                        <div class="highlight-box" style="text-align:center;">
+                            <strong>Carga:</strong> 10 - 1000 años
+                        </div>
+                        <div class="highlight-box red" style="text-align:center;">
+                            <strong>Ruptura:</strong> 1 - 60 segundos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SLIDE: μ(v) — Velocity Weakening -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Cuando μ no es constante: dependencia con la velocidad</h2>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;">Las leyes de Coulomb-Amontons suponen μ constante. Pero en la práctica, la fricción puede <strong>depender de la velocidad de deslizamiento</strong>:</p>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Velocity strengthening:</strong><br>
+                        μ crece con v → sistema se autoestabiliza → deslizamiento continuo (creep asismico).
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em; margin-top:0.4em;">
+                        <strong>Velocity weakening:</strong><br>
+                        μ decrece con v → la fricción se debilita con el movimiento → posible inestabilidad → <strong>stick-slip</strong>.
+                    </div>
+                   
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 330 270" style="width:95%; font-family:'Inter',sans-serif;">
+                        <defs>
+                            <marker id="arrVW" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker>
+                        </defs>
+                        <line x1="35" y1="225" x2="310" y2="225" stroke="#333" stroke-width="2" marker-end="url(#arrVW)"/>
+                        <line x1="35" y1="225" x2="35" y2="15" stroke="#333" stroke-width="2" marker-end="url(#arrVW)"/>
+                        <text x="172" y="250" text-anchor="middle" font-size="12" fill="#333">velocidad de deslizamiento v</text>
+                        <text x="13" y="122" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,13,122)">μ(v)</text>
+                        <line x1="35" y1="125" x2="310" y2="125" stroke="#ccc" stroke-width="1" stroke-dasharray="5,4"/>
+                        <text x="315" y="128" font-size="10" fill="#bbb">μ₀</text>
+                        <!-- Velocity-strengthening curve -->
+                        <path d="M55,125 C90,120 130,108 175,95 C220,82 265,72 295,65" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <text x="248" y="57" font-size="12" fill="var(--color-teal)" font-weight="bold">strengthening</text>
+                        <text x="248" y="70" font-size="11" fill="var(--color-teal)">(estable)</text>
+                        <!-- Velocity-weakening curve -->
+                        <path d="M55,125 C90,130 130,142 175,155 C220,168 265,178 295,185" stroke="var(--color-mauve)" stroke-width="2.5" fill="none"/>
+                        <text x="248" y="192" font-size="12" fill="var(--color-mauve)" font-weight="bold">weakening</text>
+                        <text x="248" y="205" font-size="11" fill="var(--color-mauve)">(→ stick-slip)</text>
+                        <circle cx="55" cy="125" r="5" fill="#888"/>
+                        <rect x="35" y="145" width="275" height="80" fill="rgba(139,94,107,0.06)"/>
+                        <text x="172" y="218" text-anchor="middle" font-size="11" fill="var(--color-mauve)" font-style="italic">zona potencialmente inestable</text>
+                    </svg>
+                    <p style="font-size:0.72em; color:#666; margin-top:0.2em;">El sistema no oscila porque tenga inercia: oscila porque la friccion debilita con la velocidad y no puede encontrar un equilibrio estable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Ciclo stick-slip -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+           
+            <div class="two-col" style="margin-top:0.3em; align-items:center;">
+                <div style="text-align:center;">
+ <h2>El ciclo stick-slip</h2>
+            <p style="font-size:0.85em;">El stick-slip es un <strong>ciclo periódico</strong> de almacenamiento y liberación de energía elástica:</p>
+                    <svg viewBox="0 0 360 340" style="width:90%; font-family:'Inter',sans-serif;">
+                        <defs>
+                            <marker id="cyc1" markerWidth="9" markerHeight="6" refX="9" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#3a5556"/></marker>
+                            <marker id="cyc2" markerWidth="9" markerHeight="6" refX="9" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#c0392b"/></marker>
+                        </defs>
+                        <circle cx="180" cy="170" r="108" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="6,4"/>
+                        <!-- STICK (top) -->
+                        <ellipse cx="180" cy="58" rx="72" ry="36" fill="rgba(107,154,154,0.18)" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <text x="180" y="53" text-anchor="middle" font-size="15" font-weight="bold" fill="var(--color-dark)">STICK</text>
+                        <text x="180" y="69" text-anchor="middle" font-size="11" fill="#555">carga elastica</text>
+                        <!-- UMBRAL (right) -->
+                        <ellipse cx="292" cy="170" rx="56" ry="36" fill="rgba(230,126,34,0.15)" stroke="#e67e22" stroke-width="2.5"/>
+                        <text x="292" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#9b5000">UMBRAL</text>
+                        <text x="292" y="179" text-anchor="middle" font-size="10" fill="#9b5000">T → μ_s P</text>
+                        <!-- SLIP (bottom) -->
+                        <ellipse cx="180" cy="282" rx="72" ry="36" fill="rgba(192,57,43,0.13)" stroke="#c0392b" stroke-width="2.5"/>
+                        <text x="180" y="277" text-anchor="middle" font-size="15" font-weight="bold" fill="#8b2020">SLIP</text>
+                        <text x="180" y="293" text-anchor="middle" font-size="11" fill="#8b2020">deslizamiento rápido</text>
+                        <!-- RELAX (left) -->
+                        <ellipse cx="68" cy="170" rx="56" ry="36" fill="rgba(139,94,107,0.13)" stroke="var(--color-mauve)" stroke-width="2.5"/>
+                        <text x="68" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--color-title)">RELAX</text>
+                        <text x="68" y="179" text-anchor="middle" font-size="10" fill="var(--color-title)">T cae a μ_d P</text>
+                        <!-- Arrows -->
+                        <path d="M245,76 A108,108 0 0,1 285,133" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <path d="M287,207 A108,108 0 0,1 242,265" fill="none" stroke="#c0392b" stroke-width="2.5" marker-end="url(#cyc2)"/>
+                        <path d="M115,267 A108,108 0 0,1 74,206" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <path d="M74,134 A108,108 0 0,1 115,74" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <text x="180" y="168" text-anchor="middle" font-size="11" fill="#ccc" font-style="italic">ciclo</text>
+                        <text x="180" y="182" text-anchor="middle" font-size="11" fill="#ccc" font-style="italic">periódico</text>
+                    </svg>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>① Carga elástica (stick):</strong><br>
+                        El resorte se tensa. La fricción estática μ_s impide el movimiento. La energía se almacena elásticamente.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em; border-left-color:#e67e22; background:rgba(230,126,34,0.07); margin-top:0.3em;">
+                        <strong>② Umbral:</strong><br>
+                        La fuerza alcanza T = μ_s P. El sistema esta al límite del cono de Coulomb.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em; margin-top:0.3em;">
+                        <strong>③ Slip rápido:</strong><br>
+                        La fricción cae a μ_d &lt; μ_s. La energía elástica se libera como energía cinética.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em; border-left-color:var(--color-mauve); background:rgba(139,94,107,0.08); margin-top:0.3em;">
+                        <strong>④ Relajación:</strong><br>
+                        El bloque frena. La fuerza cae por debajo de μ_d P. El ciclo reinicia.
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Analogias cotidianas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Stick-slip en la vida cotidiana</h2>
+            <p style="font-size:0.85em;">El stick-slip no es un fenómeno exótico: lo escuchamos y sentimos a diario.</p>
+            <div style="display:flex; gap:1.5em; margin-top:0.7em;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <p style="margin:0; font-size:1.1em; text-align:center;"><strong>Tiza en pizarrón</strong></p>
+                        <p style="margin:0.3em 0 0; font-size:0.9em;">Sticks y slips a frecuencia audible (~200-500 Hz). El chirrido <em>es</em> el stick-slip. Cada chisquido es un evento de slip.</p>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <p style="margin:0; font-size:1.1em; text-align:center;"><strong>Arco de violín</strong></p>
+                        <p style="margin:0.3em 0 0; font-size:0.9em;">El sonido del violín <em>es</em> un stick-slip periódico. La frecuencia de la nota (440 Hz para La) es la frecuencia de los slips.</p>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.78em; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <p style="margin:0; font-size:1.1em; text-align:center;"><strong>Puerta que cruje</strong></p>
+                        <p style="margin:0.3em 0 0; font-size:0.9em;">La bisagra seca tiene velocity weakening. El crujido es la firma acústica de cada evento de slip.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="eq-box" style="margin-top:0.7em; font-size:0.85em;">
+                <strong>Lo que todos tienen en común:</strong> un elemento elástico + una interfaz con fricción weakening + carga lenta = oscilaciones de stick-slip.<br>
+                La escala cambia: de milímetros (tiza) a kilómetros (fallas). La física es la misma.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Condición de inestabilidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Condición de inestabilidad: el rol de la rigidez k</h2>
+            <p style="font-size:0.85em;">No basta con velocity weakening: el sistema también debe ser suficientemente <strong>blando</strong>.</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <div style="background:rgba(192,57,43,0.07); border:2px solid #c0392b; border-radius:8px; padding:0.8em 1.2em; font-size:0.85em; margin-bottom:0.5em;">
+                        <p style="margin:0 0 0.4em; font-weight:700; color:#8b2020;">Sistema inestable si:</p>
+                        <p style="margin:0; text-align:center; font-size:1.05em;">caída de F<sub>fric</sub> con v &nbsp;&gt;&nbsp; rigidez k</p>
+                        <p style="margin:0.4em 0 0; text-align:center; font-size:0.9em; color:#8b2020;">compiten: |dF<sub>fric</sub>/dv| vs k</p>
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>Sistema blando (k pequeño):</strong><br>
+                        No puede "resistir" la caida de fricción → el bloque acelera → stick-slip inestable.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em; margin-top:0.3em;">
+                        <strong>Sistema rígido (k grande):</strong><br>
+                        Restituye la fuerza rápidamente → el bloque frena → deslizamiento estable.
+                    </div>
+                    <div style="background:rgba(230,126,34,0.07); border-left:4px solid #e67e22; padding:0.5em 1em; margin:0.4em 0; font-size:0.8em;">
+                        <em>"No todo sistema con velocity weakening produce stick-slip: depende de la rigidez del sistema que lo carga."</em>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 300 250" style="width:90%; font-family:'Inter',sans-serif;">
+                        <defs>
+                            <marker id="arrIC2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker>
+                        </defs>
+                        <line x1="35" y1="215" x2="285" y2="215" stroke="#333" stroke-width="2" marker-end="url(#arrIC2)"/>
+                        <line x1="35" y1="215" x2="35" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrIC2)"/>
+                        <text x="160" y="235" text-anchor="middle" font-size="11" fill="#333">velocidad v</text>
+                        <text x="14" y="120" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-90,14,120)">F</text>
+                        <!-- F_friction velocity-weakening -->
+                        <path d="M50,55 C85,68 130,100 170,130 C210,160 250,180 275,192" stroke="var(--color-mauve)" stroke-width="2.5" fill="none"/>
+                        <text x="222" y="178" font-size="11" fill="var(--color-mauve)" font-weight="bold">F_fric(v)</text>
+                        <!-- Soft spring (unstable) -->
+                        <line x1="50" y1="95" x2="275" y2="185" stroke="var(--color-teal)" stroke-width="2" stroke-dasharray="8,3"/>
+                        <text x="150" y="132" font-size="10" fill="var(--color-teal)" transform="rotate(22,150,132)">k blando → inestable</text>
+                        <!-- Stiff spring (stable) -->
+                        <line x1="50" y1="180" x2="275" y2="55" stroke="#3a5556" stroke-width="2" stroke-dasharray="8,3"/>
+                        <text x="100" y="108" font-size="10" fill="#3a5556" transform="rotate(-28,100,108)">k rigido → estable</text>
+                        <text x="235" y="46" font-size="10" fill="#3a5556" font-style="italic">estable</text>
+                        <text x="160" y="210" font-size="10" fill="var(--color-teal)" font-style="italic">inestable</text>
+                    </svg>
+                    <p style="font-size:0.72em; color:#666; margin-top:0.2em;">La pendiente de k vs la pendiente de dF<sub>fric</sub>/dv determina la estabilidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Conexión experimental -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Midiendo la fricción granular</h2>
+            <p style="font-size:0.85em;">Tres técnicas permiten acceder a la mecánica interna de la fricción granular:</p>
+            <div style="display:flex; gap:1.2em; margin-top:0.6em;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.77em;">
+                        <strong>Fotoelasticidad</strong><br>
+                        Granos birrefringentes bajo luz polarizada: las franjas revelan las <strong>cadenas de fuerza</strong> en tiempo real. Se ve directamente cuales contactos estan cargados y cuales no.
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.77em;">
+                        <strong>Emisión acústica</strong><br>
+                        Cada slip emite una señal detectable. Los sensores piezoeléctricos registran la <strong>estadistica de eventos</strong>: magnitud, tasa, correlaciones temporales.
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.77em; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <strong>Celdas de fuerza</strong><br>
+                        Medición directa de la fuerza de cizalla. Se observa la <strong>senal en diente de sierra</strong> del stick-slip y se miden μ_s, μ_d, periodo, amplitud.
+                    </div>
+                </div>
+            </div>
+            <div class="eq-box" style="font-size:0.83em; margin-top:0.5em;">
+                Experimentos con <strong>gouge granular</strong> (material triturado entre bloques de roca) reproducen el ciclo stick-slip a escala controlada y permiten calibrar los modelos rate-and-state.
+            </div>
+            <p class="credit">Marone, C. (1998). <em>Ann. Rev. Earth Planet. Sci.</em> 26, 643.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Transicion → Clase 7 -->
+    <section data-background-color="#3a5556">
+      
+        <h2 style="color:white; font-size:1.8em; line-height:1.2; margin-bottom:0.6em;">De la fricción como ley<br><span style="color:#c4a0a0;">a la fricción como dinámica</span></h2>
+        <div style="display:flex; gap:2em;">
+            <div style="flex:1; background:rgba(255,255,255,0.1); border-radius:8px; padding:0.8em 1.2em;">
+                <p style="color:white; font-size:0.85em; font-weight:700; margin:0 0 0.4em;">Clase 6 — Lo que sabemos:</p>
+                <ul style="color:rgba(255,255,255,0.85); font-size:0.75em; line-height:1.9; margin:0; padding-left:1.2em;">
+                    <li>Fricción como <em>ley</em> : T = μP</li>
+                    <li>μ depende del estado del contacto</li>
+                    <li>μ_s &gt; μ_d: la semilla de la inestabilidad</li>
+                    <li>Healing: μ crece con el tiempo en reposo</li>
+                    <li>Velocity weakening: μ decrece con v</li>
+                </ul>
+            </div>
+            <div style="flex:1; background:rgba(196,160,160,0.15); border-radius:8px; padding:0.8em 1.2em;">
+                <p style="color:#c4a0a0; font-size:0.85em; font-weight:700; margin:0 0 0.4em;">Clase 7 — Lo que viene:</p>
+                <ul style="color:rgba(255,255,255,0.85); font-size:0.75em; line-height:1.9; margin:0; padding-left:1.2em;">
+                    <li>Cuando μ deja de ser constante → inestabilidad</li>
+                    <li>Modelo masa-resorte: stick-slip como dinamica</li>
+                    <li>Rigidez critica k_c</li>
+                    <li>Modelo Rate-and-State: μ(v, θ)</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top:1em; background:rgba(255,255,255,0.08); border-left:4px solid #c4a0a0; padding:0.6em 1.2em; border-radius:0 8px 8px 0;">
+            <p style="color:white; font-size:0.85em; margin:0; font-style:italic;">Cuando μ deja de ser constante, el sistema no puede encontrar un equilibrio estable. Esa inestabilidad, a escala geológica, son los terremotos.</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Takeaways -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Clase 6: ideas clave</h2>
+            <div style="margin-top:0.8em; display:flex; flex-direction:column; gap:0.7em;">
+                <div style="display:flex; align-items:flex-start; gap:1em;">
+                    <div style="font-size:2.2em; color:var(--color-teal); font-weight:900; min-width:1.2em; line-height:1; text-align:center;">1</div>
+                    <div class="highlight-box" style="flex:1; font-size:0.85em; margin:0;">
+                        <strong>La fricción no es un número fijo.</strong><br>
+                        Depende de la velocidad, del tiempo en contacto, de la presión. μ es una función del estado del sistema.
+                    </div>
+                </div>
+                <div style="display:flex; align-items:flex-start; gap:1em;">
+                    <div style="font-size:2.2em; color:var(--color-mauve); font-weight:900; min-width:1.2em; line-height:1; text-align:center;">2</div>
+                    <div class="highlight-box red" style="flex:1; font-size:0.85em; margin:0;">
+                        <strong>La fricción depende del estado del contacto, no solo del material.</strong><br>
+                        La red granular, la historia de carga y el tiempo en reposo (healing) modifican μ efectivo.
+                    </div>
+                </div>
+                <div style="display:flex; align-items:flex-start; gap:1em;">
+                    <div style="font-size:2.2em; color:#e67e22; font-weight:900; min-width:1.2em; line-height:1; text-align:center;">3</div>
+                    <div class="highlight-box" style="flex:1; font-size:0.85em; margin:0; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <strong>La fricción efectiva de un medio granular es una propiedad emergente.</strong><br>
+                        μ_macro ≠ μ_grano. Surge de la red de contactos y sus reorganizaciones colectivas.
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        preloadIframes: false,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        keyboard: {
+            39: function() { var i = Reveal.getIndices(); Reveal.slide(i.h + 1, 0); },
+            37: function() { var i = Reveal.getIndices(); Reveal.slide(Math.max(i.h - 1, 0), 0); }
+        },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ]
+    });
+</script>
+</body>
+</html>
