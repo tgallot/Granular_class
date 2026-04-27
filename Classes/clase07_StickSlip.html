@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7 - Stick-Slip</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --color-teal: #6b9a9a; --color-dark: #3a5556; --color-mauve: #8b5e6b; --color-rose: #c4a0a0; --color-title: #5a3344; }
+        .reveal, .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; font-weight: 900; color: #222; }
+        .reveal .slides section { text-align: left; }
+        .reveal .slide-number { font-size: 14px; }
+        .reveal .slides section[data-background-color] { padding-left: 15%; }
+        .reveal .credit { font-size: 0.35em; color: #999; font-style: italic; }
+        .reveal .two-col { display: flex; gap: 1.5em; }
+        .reveal .two-col > div { flex: 1; }
+        .reveal .highlight-box { background: rgba(107,154,154,0.1); border-left: 4px solid var(--color-teal); padding: 0.5em 1em; margin: 0.5em 0; }
+        .reveal .highlight-box.red { border-left-color: var(--color-mauve); }
+        .reveal .eq-box { background: rgba(107,154,154,0.08); border: 1px solid var(--color-teal); border-radius: 8px; padding: 0.5em 1em; margin: 0.5em 0; text-align: center; }
+        .reveal video { border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .reveal table { border-collapse: collapse; width: 100%; font-size: 0.65em; }
+        .reveal table th { background: var(--color-dark); color: white; padding: 6px 10px; text-align: left; }
+        .reveal table td { padding: 5px 10px; border-bottom: 1px solid #eee; }
+        .reveal table tr:nth-child(even) { background: #f7f7f7; }
+        .reveal img { max-height: 550px; }
+        .reveal .bonus-badge {
+            position: absolute; top: 10px; right: 15px;
+            background: #f39c12; color: white; font-size: 0.4em;
+            padding: 2px 10px; border-radius: 0 0 0 8px;
+            font-weight: 700; letter-spacing: 1px; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+    <!-- SLIDE 1: TITLE -->
+    <section data-background-image="media/bg_teal.png,media/bg_mauve.png"
+             data-background-size="50% 100%, 50% 100%"
+             data-background-position="left, right">
+        <div style="background:rgba(255,255,255,0.85); padding:0.8em 1.5em; margin:0 -2em;">
+            <p style="font-size:0.5em; font-weight:700; color:var(--color-dark); letter-spacing:0.05em;">
+                <strong>CLASE 7 -</strong> <span style="color:#888;">GEOFÍSICA DE MEDIOS GRANULARES</span>
+            </p>
+            <h1 style="font-size:2em; color:var(--color-title); line-height:1.1; margin:0;">
+                STICK-SLIP Y FALLAS<br>GEOLÓGICAS EN LABORATORIO
+            </h1>
+        </div>
+        <br>
+        <p style="text-align:right; font-size:0.55em; font-weight:700; color:var(--color-dark); letter-spacing:0.15em;">
+            THOMAS GALLOT,<br>CAMILA SEDOFEITO
+        </p>
+        <p style="font-size:0.42em; color:var(--color-dark); position:absolute; bottom:8%; left:5%;">
+            Instituto de Física,<br>Facultad de Ciencias,<br>Universidad de la República
+        </p>
+    </section>
+
+    <!-- SLIDE 2: Plan -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Plan de la clase</h2>
+            <ol style="line-height:2;">
+                <li>El fenómeno: qué se observa</li>
+                <li>El ciclo: carga → umbral → slip → relax</li>
+                <li>Por qué ocurre: retroalimentación positiva</li>
+                <li>Velocity weakening como eje central</li>
+                <li>El modelo más simple: masa-resorte</li>
+                <li>La competencia: rigidez vs debilitamiento</li>
+                <li>Condición de inestabilidad (rigidez critica)</li>
+                <li>Rate-and-State y Burridge-Knopoff</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SLIDE: Conexion con Clase 6 -->
+    <section data-background-color="#3a5556">
+        <p style="font-size:0.5em; font-weight:700; color:rgba(255,255,255,0.55); letter-spacing:0.12em; margin-bottom:0.4em;">PUENTE — CLASE 6 → CLASE 7</p>
+        <h2 style="color:white; font-size:1.7em; line-height:1.2; margin-bottom:0.6em;">
+            En clase 6 vimos que μ no es constante.<br>
+            <span style="color:#c4a0a0;">Hoy vemos la consecuencia dinámica.</span>
+        </h2>
+        <div style="display:flex; gap:2em;">
+            <div style="flex:1; background:rgba(255,255,255,0.1); border-radius:8px; padding:0.8em 1.2em;">
+                <p style="color:white; font-size:0.85em; font-weight:700; margin:0 0 0.4em;">Lo que sabemos (Clase 6):</p>
+                <ul style="color:rgba(255,255,255,0.85); font-size:0.75em; line-height:1.9; margin:0; padding-left:1.2em;">
+                    <li>μ depende del estado del contacto</li>
+                    <li>μ_s &gt; μ_d: fricción estática &gt; dinamica</li>
+                    <li>Healing: μ crece con el tiempo en reposo</li>
+                    <li><strong>Velocity weakening: μ decrece con v</strong></li>
+                </ul>
+            </div>
+            <div style="flex:1; background:rgba(196,160,160,0.18); border-radius:8px; padding:0.8em 1.2em;">
+                <p style="color:#c4a0a0; font-size:0.85em; font-weight:700; margin:0 0 0.4em;">La pregunta de hoy:</p>
+                <p style="color:rgba(255,255,255,0.9); font-size:0.8em; line-height:1.7; margin:0;">
+                    ¿Qué ocurre dinámicamente cuando μ decrece con la velocidad?<br><br>
+                    ¿Bajo qué condiciones un sistema de fricción se vuelve <em>inestable</em>?
+                </p>
+            </div>
+        </div>
+        <div style="margin-top:1em; background:rgba(255,255,255,0.08); border-left:4px solid #c4a0a0; padding:0.6em 1.2em; border-radius:0 8px 8px 0;">
+            <p style="color:white; font-size:0.85em; margin:0; font-style:italic;">Cuando μ deja de ser constante, el sistema puede no encontrar un estado de equilibrio estable → <strong style="color:#c4a0a0;">stick-slip</strong></p>
+        </div>
+    </section>
+
+    <!-- SLIDE: El fenómeno — qué se observa -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El fenómeno: qué se observa</h2>
+            <div class="two-col" style="margin-top:0.4em;">
+                <div>
+                    <p style="font-size:0.85em;">Cuando se carga lentamente un sistema de fricción, se observa una señal de fuerza característica:</p>
+                    <svg viewBox="0 0 380 200" style="width:98%; margin:0.3em 0; font-family:'Inter',sans-serif;">
+                        <defs>
+                            <marker id="arrST" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker>
+                        </defs>
+                        <line x1="30" y1="160" x2="365" y2="160" stroke="#333" stroke-width="2" marker-end="url(#arrST)"/>
+                        <line x1="30" y1="160" x2="30" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrST)"/>
+                        <text x="200" y="185" text-anchor="middle" font-size="13" fill="#333">tiempo</text>
+                        <text x="12" y="90" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,12,90)">F</text>
+                        <line x1="30" y1="55" x2="360" y2="55" stroke="#ccc" stroke-width="1" stroke-dasharray="5,4"/>
+                        <text x="26" y="52" text-anchor="end" font-size="11" fill="var(--color-teal)" font-weight="bold">μ_s P</text>
+                        <line x1="30" y1="105" x2="360" y2="105" stroke="#ccc" stroke-width="1" stroke-dasharray="5,4"/>
+                        <text x="26" y="102" text-anchor="end" font-size="11" fill="var(--color-mauve)" font-weight="bold">μ_d P</text>
+                        <!-- Sawtooth cycles -->
+                        <line x1="35" y1="105" x2="105" y2="55" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="105" y1="55" x2="110" y2="105" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4,2"/>
+                        <line x1="110" y1="105" x2="185" y2="55" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="185" y1="55" x2="190" y2="105" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4,2"/>
+                        <line x1="190" y1="105" x2="265" y2="55" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="265" y1="55" x2="270" y2="105" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="4,2"/>
+                        <line x1="270" y1="105" x2="345" y2="55" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <text x="70" y="40" text-anchor="middle" font-size="11" fill="var(--color-teal)" font-weight="bold">STICK</text>
+                        <text x="107" y="82" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold">SLIP</text>
+                        <line x1="355" y1="55" x2="355" y2="105" stroke="#888" stroke-width="1.5"/>
+                        <line x1="351" y1="55" x2="359" y2="55" stroke="#888" stroke-width="1.5"/>
+                        <line x1="351" y1="105" x2="359" y2="105" stroke="#888" stroke-width="1.5"/>
+                        <text x="363" y="82" font-size="11" fill="#888">Δμ·P</text>
+                    </svg>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.2em;">
+                        <strong>La señal en "diente de sierra"</strong> es la firma de un sistema que alterna entre carga lenta (stick) y liberación abrupta (slip).
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em; font-weight:700; margin-bottom:0.3em;">¿Dónde aparece?</p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Laboratorio:</strong> bloque sobre superficie rugosa, tirado a velocidad constante. Señal de fuerza reproducible.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>Terremotos:</strong> fallas geológicas cargadas por movimiento de placas. Ruptura súbita después de décadas de carga silenciosa.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <strong>Vida cotidiana:</strong> tiza en pizarrón (chirrido), arco de violín (nota musical), puerta que cruje.
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: El ciclo -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El ciclo stick-slip</h2>
+       
+            <div class="two-col" style="margin-top:0.3em; align-items:center;">
+                <div style="text-align:center;">
+		El stick-slip no es un evento único: es un <strong>proceso cíclico repetitivo</strong>. Cada ciclo tiene cuatro fases:</p>
+
+                    <svg viewBox="0 0 360 340" style="width:90%; font-family:'Inter',sans-serif;">
+                        <defs>
+                            <marker id="cyc1" markerWidth="9" markerHeight="6" refX="9" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#3a5556"/></marker>
+                            <marker id="cyc2" markerWidth="9" markerHeight="6" refX="9" refY="3" orient="auto"><polygon points="0 0, 9 3, 0 6" fill="#c0392b"/></marker>
+                        </defs>
+                        <circle cx="180" cy="170" r="108" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="6,4"/>
+                        <ellipse cx="180" cy="58" rx="72" ry="36" fill="rgba(107,154,154,0.18)" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <text x="180" y="53" text-anchor="middle" font-size="15" font-weight="bold" fill="var(--color-dark)">STICK</text>
+                        <text x="180" y="69" text-anchor="middle" font-size="11" fill="#555">carga elástica lenta</text>
+                        <ellipse cx="292" cy="170" rx="56" ry="36" fill="rgba(230,126,34,0.15)" stroke="#e67e22" stroke-width="2.5"/>
+                        <text x="292" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#9b5000">UMBRAL</text>
+                        <text x="292" y="179" text-anchor="middle" font-size="10" fill="#9b5000">T = μ_s P</text>
+                        <ellipse cx="180" cy="282" rx="72" ry="36" fill="rgba(192,57,43,0.13)" stroke="#c0392b" stroke-width="2.5"/>
+                        <text x="180" y="277" text-anchor="middle" font-size="15" font-weight="bold" fill="#8b2020">SLIP</text>
+                        <text x="180" y="293" text-anchor="middle" font-size="11" fill="#8b2020">deslizamiento rápido</text>
+                        <ellipse cx="68" cy="170" rx="56" ry="36" fill="rgba(139,94,107,0.13)" stroke="var(--color-mauve)" stroke-width="2.5"/>
+                        <text x="68" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--color-title)">RELAX</text>
+                        <text x="68" y="179" text-anchor="middle" font-size="10" fill="var(--color-title)">T cae, ciclo reinicia</text>
+                        <path d="M245,76 A108,108 0 0,1 285,133" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <path d="M287,207 A108,108 0 0,1 242,265" fill="none" stroke="#c0392b" stroke-width="2.5" marker-end="url(#cyc2)"/>
+                        <path d="M115,267 A108,108 0 0,1 74,206" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <path d="M74,134 A108,108 0 0,1 115,74" fill="none" stroke="var(--color-dark)" stroke-width="2" marker-end="url(#cyc1)"/>
+                        <text x="180" y="168" text-anchor="middle" font-size="11" fill="#ccc" font-style="italic">repeticion</text>
+                        <text x="180" y="182" text-anchor="middle" font-size="11" fill="#ccc" font-style="italic">periodica</text>
+                    </svg>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.8em;">
+                        <strong>① Carga elástica (stick):</strong><br>
+                        El sistema se carga lentamente. La fricción estática μ_s impide el movimiento. La energía se almacena.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em; border-left-color:#e67e22; background:rgba(230,126,34,0.07); margin-top:0.3em;">
+                        <strong>② Umbral:</strong><br>
+                        La fuerza alcanza T = μ_s P. El sistema está al limite del cono de Coulomb.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.8em; margin-top:0.3em;">
+                        <strong>③ Slip rápido:</strong><br>
+                        La fricción cae a μ_d &lt; μ_s. La energía almacenada se libera como energía cinética.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.8em; border-left-color:var(--color-mauve); background:rgba(139,94,107,0.08); margin-top:0.3em;">
+                        <strong>④ Relajación:</strong><br>
+                        El bloque frena. La fuerza cae por debajo de μ_d P. El ciclo reinicia.
+                    </div>
+                    <p style="font-size:0.75em; color:var(--color-mauve); font-style:italic; margin-top:0.4em; text-align:center;">
+                        No es un evento → es un proceso repetitivo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+ <!-- SLIDE: El ciclo -->
+   <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>¿Por qué ocurre? Retroalimentación positiva</h2>
+
+            <div class="two-col" style="margin-top:0.1em; align-items:center;">
+            	<div style="text-align:center;">
+              	El stick-slip ocurre porque el sistema tiene una <strong>retroalimentación positiva</strong> durante el deslizamiento: </p>
+		
+		<svg viewBox="0 0 400 380" style="width:90%; font-family:'Inter',sans-serif;">
+
+                     <defs>
+                        <marker id="arrFB" markerWidth="9" markerHeight="6" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 9 3, 0 6" fill="#c0392b"/>
+                        </marker>
+                    </defs>
+
+                    <rect x="120" y="20" width="140" height="50" rx="8"
+                          fill="rgba(192,57,43,0.12)" stroke="#c0392b" stroke-width="2"/>
+                    <text x="190" y="42" text-anchor="middle" font-size="13" font-weight="bold" fill="#8b2020">velocidad</text>
+                    <text x="190" y="58" text-anchor="middle" font-size="12" fill="#8b2020">↑ aumenta</text>
+
+                    <path d="M260,45 L310,45 L310,125" fill="none"
+                          stroke="#c0392b" stroke-width="2" marker-end="url(#arrFB)"/>
+
+                    <rect x="230" y="125" width="140" height="50" rx="8"
+                          fill="rgba(139,94,107,0.12)" stroke="var(--color-mauve)" stroke-width="2"/>
+                    <text x="300" y="147" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--color-title)">friccion</text>
+                    <text x="300" y="163" text-anchor="middle" font-size="12" fill="var(--color-title)">↓ decrece</text>
+
+                    <path d="M300,175 L300,230 L200,230" fill="none"
+                          stroke="#c0392b" stroke-width="2" marker-end="url(#arrFB)"/>
+
+                    <rect x="90" y="205" width="200" height="50" rx="8"
+                          fill="rgba(230,126,34,0.12)" stroke="#e67e22" stroke-width="2"/>
+                    <text x="190" y="226" text-anchor="middle" font-size="12" font-weight="bold" fill="#9b5000">fuerza neta</text>
+                    <text x="190" y="242" text-anchor="middle" font-size="12" fill="#9b5000">↑ acelera mas</text>
+
+                    <path d="M90,230 L40,230 L40,45 L120,45" fill="none"
+                          stroke="#c0392b" stroke-width="2" marker-end="url(#arrFB)"/>
+
+                    <text x="155" y="125" text-anchor="middle" font-size="14"
+                          fill="#c0392b" font-weight="bold" font-style="italic">ciclo</text>
+                    <text x="155" y="142" text-anchor="middle" font-size="14"
+                          fill="#c0392b" font-weight="bold" font-style="italic">inestable</text>
+
+                    <text x="290" y="38" font-size="18" fill="#c0392b" font-weight="bold">+</text>
+                    <text x="314" y="215" font-size="18" fill="#c0392b" font-weight="bold">+</text>
+                    <text x="35" y="148" font-size="18" fill="#c0392b" font-weight="bold">+</text>
+                </svg>
+            </div>
+
+            <div>
+                <div style="background:rgba(192,57,43,0.07);
+                            border:2px solid #c0392b;
+                            border-radius:8px;
+                            padding:0.8em 1.2em;
+                            font-size:0.85em;
+                            margin-bottom:0.5em;">
+
+        
+
+                <div style="background:rgba(230,126,34,0.08);
+                            border-left:4px solid #e67e22;
+                            padding:0.5em 1em;
+                            font-size:0.82em;">
+                    <em>
+                        Es inestable porque la friccion debilita con la velocidad:
+                        el movimiento se auto-alimenta.
+                    </em>
+                </div>
+
+                <div class="highlight-box" style="font-size:0.8em; margin-top:0.4em;">
+                    Si la fricción fuera constante o aumentara con v →
+                    esta retroalimentación no existiría → sistema estable.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+    <!-- SLIDE: Velocity weakening como eje -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El weakening como eje: tres casos</h2>
+            <p style="font-size:0.85em;"><strong>Todo el fenómeno depende de cómo varía μ con la velocidad.</strong></p>
+            <div style="display:flex; gap:1.2em; margin-top:0.5em;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <p style="margin:0; font-size:1.0em; font-weight:700; color:var(--color-dark); text-align:center;">μ = constante</p>
+                        <svg viewBox="0 0 180 90" style="width:100%; margin:0.3em 0;">
+                            <defs><marker id="c1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#333"/></marker></defs>
+                            <line x1="20" y1="72" x2="163" y2="72" stroke="#333" stroke-width="1.5" marker-end="url(#c1)"/>
+                            <line x1="20" y1="72" x2="20" y2="12" stroke="#333" stroke-width="1.5" marker-end="url(#c1)"/>
+                            <line x1="25" y1="44" x2="156" y2="44" stroke="var(--color-teal)" stroke-width="2.5"/>
+                            <text x="88" y="10" text-anchor="middle" font-size="10" fill="var(--color-dark)" font-weight="bold">Coulomb puro</text>
+                            <text x="88" y="85" text-anchor="middle" font-size="10" fill="#888">v</text>
+                            <text x="10" y="44" text-anchor="middle" font-size="10" fill="#888">μ</text>
+                        </svg>
+                        <p style="margin:0; font-size:0.88em;">No hay retroalimentación. <strong>No hay stick-slip.</strong></p>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.78em; border-left-color:var(--color-dark);">
+                        <p style="margin:0; font-size:1.0em; font-weight:700; color:var(--color-dark); text-align:center;">μ crece con v</p>
+                        <svg viewBox="0 0 180 90" style="width:100%; margin:0.3em 0;">
+                            <defs><marker id="c2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#333"/></marker></defs>
+                            <line x1="20" y1="72" x2="163" y2="72" stroke="#333" stroke-width="1.5" marker-end="url(#c2)"/>
+                            <line x1="20" y1="72" x2="20" y2="12" stroke="#333" stroke-width="1.5" marker-end="url(#c2)"/>
+                            <path d="M25,65 C60,58 100,38 152,20" stroke="#3a5556" stroke-width="2.5" fill="none"/>
+                            <text x="88" y="10" text-anchor="middle" font-size="10" fill="var(--color-dark)" font-weight="bold">Velocity strengthening</text>
+                            <text x="88" y="85" text-anchor="middle" font-size="10" fill="#888">v</text>
+                        </svg>
+                        <p style="margin:0; font-size:0.88em;">μ crece → fricción resiste el movimiento. <strong>Deslizamiento estable</strong> (creep asísmico).</p>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <p style="margin:0; font-size:1.0em; font-weight:700; color:var(--color-title); text-align:center;">μ decrece con v</p>
+                        <svg viewBox="0 0 180 90" style="width:100%; margin:0.3em 0;">
+                            <defs><marker id="c3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0, 7 2.5, 0 5" fill="#333"/></marker></defs>
+                            <line x1="20" y1="72" x2="163" y2="72" stroke="#333" stroke-width="1.5" marker-end="url(#c3)"/>
+                            <line x1="20" y1="72" x2="20" y2="12" stroke="#333" stroke-width="1.5" marker-end="url(#c3)"/>
+                            <path d="M25,20 C60,28 100,48 152,65" stroke="var(--color-mauve)" stroke-width="2.5" fill="none"/>
+                            <text x="88" y="10" text-anchor="middle" font-size="10" fill="var(--color-title)" font-weight="bold">Velocity weakening</text>
+                            <text x="88" y="85" text-anchor="middle" font-size="10" fill="#888">v</text>
+                        </svg>
+                        <p style="margin:0; font-size:0.88em;">μ decrece → retroalimentación positiva → <strong>posible stick-slip.</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="eq-box" style="margin-top:0.6em; font-size:0.85em;">
+                <strong>Conclusión:</strong> el stick-slip es la consecuencia directa de velocity weakening + carga elástica. Sin weakening → sin stick-slip.
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: El modelo más simple -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El modelo más simple: masa-resorte</h2>
+             <p style="font-size:0.85em;">
+            Para capturar la competencia entre elasticidad y friction weakening:
+        </p>
+
+        <div class="two-col" style="margin-top:0.4em;">
+
+            <div>
+                <p style="font-size:0.82em; margin-bottom:0.3em;">
+                    Un bloque de masa \(m\) sobre superficie con fricción \(\mu(v)\),
+                    conectado a un driver que tira con velocidad \(V\):
+                </p>
+
+                <svg viewBox="0 0 460 140" style="width:100%; max-width:460px; margin:0.3em 0;">
+                    <defs>
+                        <marker id="arrSS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+                        </marker>
+                        <pattern id="hatch1" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="#999" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- superficie -->
+                    <rect x="100" y="90" width="340" height="15" fill="url(#hatch1)"/>
+                    <line x1="100" y1="90" x2="440" y2="90" stroke="#555" stroke-width="2"/>
+
+                    <!-- bloque -->
+                    <rect x="240" y="50" width="90" height="40" rx="4"
+                          fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="285" y="75" text-anchor="middle" font-size="16" fill="white" font-weight="bold">m</text>
+
+                    <!-- resorte -->
+                    <polyline points="120,70 140,70 150,55 165,85 180,55 195,85 210,55 225,85 235,70 240,70"
+                              stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+
+                    <!-- driver -->
+                    <rect x="105" y="40" width="15" height="55"
+                          fill="#ccc" stroke="#555" stroke-width="1.5"/>
+                    <text x="112" y="35" text-anchor="middle" font-size="11" fill="#333">driver</text>
+
+                    <!-- velocidad (AHORA HACIA LA IZQUIERDA) -->
+                    <line x1="100" y1="70" x2="60" y2="70"
+                          stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrSS)"/>
+                    <text x="55" y="67" text-anchor="end"
+                          font-size="15" fill="#c0392b" font-weight="bold">V</text>
+
+                    <!-- labels -->
+                    <text x="175" y="42" text-anchor="middle" font-size="13"
+                          fill="var(--color-teal)" font-weight="bold">k</text>
+
+                    <text x="285" y="115" text-anchor="middle" font-size="12" fill="#888">
+                        superficie rugosa: μ(v)
+                    </text>
+
+                    <!-- peso -->
+                    <line x1="285" y1="30" x2="285" y2="48"
+                          stroke="#333" stroke-width="1.5" marker-end="url(#arrSS)"/>
+                    <text x="295" y="30" font-size="12" fill="#333">mg</text>
+                </svg>
+
+                <!-- ECUACION CONSISTENTE -->
+                <div class="eq-box" style="font-size:1.1em; margin:0.3em 0;">
+                    \( m\,\ddot{x} = -k(Vt + x) - \mu(\dot{x})\,mg \)
+                </div>
+
+                <div style="background:rgba(230,126,34,0.08);
+                            border-left:4px solid #e67e22;
+                            padding:0.5em 1em;
+                            font-size:0.8em;
+                            margin-top:0.3em;">
+                    <em>
+                        El driver se aleja → el resorte se estira →
+                        se acumula energía elástica → posible inestabilidad.
+                    </em>
+                </div>
+                </div>
+                <div>
+                    <table style="font-size:0.65em; margin-top:0.3em;">
+                        <thead><tr><th>Elemento</th><th>Representa</th></tr></thead>
+                        <tbody>
+                            <tr><td>Masa <em>m</em></td><td>Bloque (o aspereza de una falla)</td></tr>
+                            <tr><td>Resorte <em>k</em></td><td>Rigidez elástica del sistema de carga</td></tr>
+                            <tr><td>Velocidad <em>V</em></td><td>Tasa de carga (vel. de placa tectónica)</td></tr>
+                            <tr><td>Fricción μ(<em>v</em>)</td><td>Ley constitutiva del contacto</td></tr>
+                        </tbody>
+                    </table>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: El modelo más simple -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El modelo más simple: masa-resorte</h2>
+            <p style="font-size:0.85em;">Para capturar la competencia entre elasticidad y friction weakening en su forma mas simple:</p>
+            <div class="two-col" style="margin-top:0.4em;">
+                <div>
+                   <p style="font-size:0.82em; margin-bottom:0.3em;">
+                    Un bloque de masa \(m\) sobre superficie con fricción \(\mu(v)\),
+                    conectado a un driver que tira con velocidad \(V\):
+                </p>
+
+                <svg viewBox="0 0 460 140" style="width:100%; max-width:460px; margin:0.3em 0;">
+                    <defs>
+                        <marker id="arrSS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+                        </marker>
+                        <pattern id="hatch1" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="#999" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- superficie -->
+                    <rect x="100" y="90" width="340" height="15" fill="url(#hatch1)"/>
+                    <line x1="100" y1="90" x2="440" y2="90" stroke="#555" stroke-width="2"/>
+
+                    <!-- bloque -->
+                    <rect x="240" y="50" width="90" height="40" rx="4"
+                          fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="285" y="75" text-anchor="middle" font-size="16" fill="white" font-weight="bold">m</text>
+
+                    <!-- resorte -->
+                    <polyline points="120,70 140,70 150,55 165,85 180,55 195,85 210,55 225,85 235,70 240,70"
+                              stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+
+                    <!-- driver -->
+                    <rect x="105" y="40" width="15" height="55"
+                          fill="#ccc" stroke="#555" stroke-width="1.5"/>
+                    <text x="112" y="35" text-anchor="middle" font-size="11" fill="#333">driver</text>
+
+                    <!-- velocidad (AHORA HACIA LA IZQUIERDA) -->
+                    <line x1="100" y1="70" x2="60" y2="70"
+                          stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrSS)"/>
+                    <text x="55" y="67" text-anchor="end"
+                          font-size="15" fill="#c0392b" font-weight="bold">V</text>
+
+                    <!-- labels -->
+                    <text x="175" y="42" text-anchor="middle" font-size="13"
+                          fill="var(--color-teal)" font-weight="bold">k</text>
+
+                    <text x="285" y="115" text-anchor="middle" font-size="12" fill="#888">
+                        superficie rugosa: μ(v)
+                    </text>
+
+                    <!-- peso -->
+                    <line x1="285" y1="30" x2="285" y2="48"
+                          stroke="#333" stroke-width="1.5" marker-end="url(#arrSS)"/>
+                    <text x="295" y="30" font-size="12" fill="#333">mg</text>
+                </svg>
+
+                <!-- ECUACION CONSISTENTE -->
+                <div class="eq-box" style="font-size:1.1em; margin:0.3em 0;">
+                    \( m\,\ddot{x} = -k(Vt + x) - \mu(\dot{x})\,mg \)
+                </div>
+
+                <div style="background:rgba(230,126,34,0.08);
+                            border-left:4px solid #e67e22;
+                            padding:0.5em 1em;
+                            font-size:0.8em;
+                            margin-top:0.3em;">
+                    <em>
+                        El driver se aleja → el resorte se estira →
+                        se acumula energía elástica → posible inestabilidad.
+                    </em>
+                </div>
+            </div>
+
+            <div>
+               
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>El resorte captura la elasticidad:</strong><br>
+                        Si <em>x</em> &lt; <em>Vt</em>: el resorte se tensa → energía almacenada.<br>
+                        Si <em>x</em> = <em>Vt</em>: equilibrio.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>La fricción μ(<em>v</em>) captura el weakening:</strong><br>
+                        Si μ es constante → deslizamiento estable.<br>
+                        Si μ decrece con v → posible inestabilidad.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; text-align:center; margin-top:0.3em;">
+                        <strong>Amplitud:</strong> \(\Delta F = (\mu_s - \mu_d)\,mg\) &emsp;
+                        <strong>Período:</strong> \(T \approx \Delta F / (kV)\)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SLIDE: La competencia explícita -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>El núcleo físico: la competencia</h2>
+            <p style="font-size:0.85em;">El modelo revela <strong>dos mecanismos en competencia</strong>:</p>
+            <div style="display:flex; gap:1.5em; margin-top:0.5em; align-items:stretch;">
+                <div style="flex:1;">
+                    <div class="highlight-box" style="font-size:0.85em; height:100%; box-sizing:border-box;">
+                        <p style="margin:0; font-size:1.05em; font-weight:700; color:var(--color-dark); text-align:center;">El resorte (k)</p>
+                        <p style="margin:0.3em 0 0.2em; font-size:1em; text-align:center; font-weight:700; color:var(--color-teal);">ESTABILIZA</p>
+                        <p style="margin:0; font-size:0.85em;">Si el bloque acelera, el resorte se relaja → la fuerza disminuye → tiende a frenar el movimiento y devolver el equilibrio.</p>
+                        <p style="margin:0.5em 0 0; font-size:0.82em; font-style:italic; color:var(--color-teal);">Realimentación negativa.</p>
+                    </div>
+                </div>
+                <div style="flex:0; display:flex; align-items:center; justify-content:center; font-size:2em; color:#888; font-weight:700; min-width:2em; text-align:center;">vs</div>
+                <div style="flex:1;">
+                    <div class="highlight-box red" style="font-size:0.85em; height:100%; box-sizing:border-box;">
+                        <p style="margin:0; font-size:1.05em; font-weight:700; color:var(--color-title); text-align:center;">El weakening (dμ/dv &lt; 0)</p>
+                        <p style="margin:0.3em 0 0.2em; font-size:1em; text-align:center; font-weight:700; color:var(--color-mauve);">DESESTABILIZA</p>
+                        <p style="margin:0; font-size:0.85em;">Si el bloque acelera, la friccion cae → la fuerza de oposicion disminuye → el bloque sigue acelerando.</p>
+                        <p style="margin:0.5em 0 0; font-size:0.82em; font-style:italic; color:var(--color-mauve);">Realimentación positiva.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="background:rgba(192,57,43,0.07); border:2px solid #c0392b; border-radius:8px; padding:0.8em 1.5em; margin-top:0.7em; text-align:center; font-size:0.88em;">
+                <strong style="font-size:1.1em;"></strong><br>
+                <span style="color:#888; font-size:0.9em; margin-top:0.2em; display:block;">k grande → el resorte gana → estable.  </span>
+
+		 <span style="color:#888; font-size:0.9em; margin-top:0.2em; display:block;">k pequeño → el weakening gana → stick-slip.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Condicion de inestabilidad -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Condición de inestabilidad</h2>
+            <p style="font-size:0.85em;">El sistema es inestable (stick-slip) cuando la fricción <strong>decrece</strong> con la velocidad: \(d\mu/dv < 0\).</p>
+            <div class="two-col" style="margin-top:0.5em;">
+                <div>
+                    <p style="font-size:0.85em;"><strong>Rigidez crítica:</strong></p>
+                    <div class="eq-box" style="font-size:1.1em;">
+                        \( k_c = -mg\,\left.\dfrac{d\mu}{dv}\right|_{v=V} \)
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.5em;">
+                        <strong>\(k < k_c\):</strong> stick-slip — el weakening gana a la rigidez.
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em;">
+                        <strong>\(k > k_c\):</strong> deslizamiento estable — el resorte gana.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.4em; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <strong>Analogía geolígica:</strong> la rigidez de la corteza terrestre y la tasa de weakening determinan si una falla produce terremotos (stick-slip) o creep asísmico.
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.85em;"><strong>Interpretación gráfica:</strong></p>
+                    <svg viewBox="0 0 320 230" style="width:90%; margin-top:0.3em;">
+                        <defs><marker id="arrKc" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker></defs>
+                        <line x1="40" y1="200" x2="308" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrKc)"/>
+                        <line x1="40" y1="200" x2="40" y2="15" stroke="#333" stroke-width="2" marker-end="url(#arrKc)"/>
+                        <text x="175" y="222" text-anchor="middle" font-size="12" fill="#333">ẋ (velocidad del bloque)</text>
+                        <text x="18" y="110" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,18,110)">μ(ẋ)</text>
+                        <path d="M55,48 C90,60 128,88 168,118 C208,148 258,170 298,182" stroke="var(--color-teal)" stroke-width="3" fill="none"/>
+                        <text x="260" y="38" font-size="12" fill="var(--color-teal)" font-weight="bold">velocity weakening</text>
+                        <circle cx="168" cy="118" r="5" fill="#c0392b"/>
+                        <line x1="88" y1="80" x2="248" y2="156" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="5,3"/>
+                        <line x1="88" y1="80" x2="168" y2="80" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+                        <line x1="168" y1="80" x2="168" y2="156" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="248" y="148" font-size="11" fill="#c0392b">dμ/dẋ &lt; 0</text>
+                        <line x1="168" y1="200" x2="168" y2="123" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="173" y="214" font-size="12" fill="#888">V</text>
+                        <text x="90" y="68" font-size="11" fill="#c0392b" font-weight="bold">k_c = mg|dμ/dẋ|</text>
+                    </svg>
+                    <p class="credit">Rice &amp; Ruina, J. Appl. Mech. 50, 343 (1983).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE: Derivación de la rigidez crótica -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Derivación de la rigidez crítica</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.82em;">Perturbamos el estado estacionario de deslizamiento ($\dot{x} = V$):</p>
+                    <div class="eq-box" style="font-size:0.95em; margin:0.3em 0;">
+                        $m\ddot{x} = \underbrace{k(Vt-x)}_{F_s} - \underbrace{\mu(\dot{x})\,mg}_{F_f}$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.4em;">
+                        <strong>Rigidez del resorte (definicion):</strong><br>
+                        $F_s = k(Vt-x) \;\Rightarrow\; k = -\dfrac{\partial F_s}{\partial x}$
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em; margin-top:0.3em;">
+                        <strong>Perturbación $x \to x + \delta x$:</strong><br>
+                        $m\,\delta\ddot{x} = -k\,\delta x - \dfrac{dF_f}{dx}\,\delta x$<br><br>
+                        $m\,\delta\ddot{x} = -\!\left(k + \dfrac{dF_f}{dx}\right)\delta x$
+                    </div>
+                    <div class="eq-box" style="font-size:0.95em; margin-top:0.4em;">
+                        Estabilidad: $\quad k + \dfrac{dF_f}{dx} > 0$
+                    </div>
+                    <div class="highlight-box" style="font-size:0.78em; margin-top:0.3em; border-left-color:#c0392b; background:rgba(192,57,43,0.06);">
+                        <strong>Rigidez critica</strong> (cambio de signo del coeficiente):<br>
+                        $k_c = -\dfrac{dF_f}{dx}\bigg|_V = mg\!\left|\dfrac{d\mu}{d\dot{x}}\right|_V$
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size:0.82em; font-weight:700;">Consecuencias:</p>
+                    <div class="highlight-box" style="font-size:0.78em;">
+                        <strong>$k > k_c$</strong>: la perturbacion se amortigua → deslizamiento estable
+                    </div>
+                    <div class="highlight-box red" style="font-size:0.78em; margin-top:0.3em;">
+                        <strong>$k < k_c$</strong>: la perturbacion crece → stick-slip (inestable)
+                    </div>
+                    <svg viewBox="0 0 320 230" style="width:90%; margin-top:0.6em;">
+                        <defs><marker id="arrKc2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker></defs>
+                        <line x1="40" y1="200" x2="308" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrKc2)"/>
+                        <line x1="40" y1="200" x2="40" y2="15" stroke="#333" stroke-width="2" marker-end="url(#arrKc2)"/>
+                        <text x="175" y="222" text-anchor="middle" font-size="12" fill="#333">ẋ</text>
+                        <text x="18" y="110" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,18,110)">μ(ẋ)</text>
+                        <path d="M55,48 C90,60 128,88 168,118 C208,148 258,170 298,182" stroke="var(--color-teal)" stroke-width="3" fill="none"/>
+                        <circle cx="168" cy="118" r="5" fill="#c0392b"/>
+                        <line x1="88" y1="80" x2="248" y2="156" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="5,3"/>
+                        <line x1="88" y1="80" x2="168" y2="80" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+                        <line x1="168" y1="80" x2="168" y2="156" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2"/>
+                        <text x="248" y="148" font-size="11" fill="#c0392b">pend. = dμ/dẋ &lt; 0</text>
+                        <line x1="168" y1="200" x2="168" y2="123" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="173" y="214" font-size="12" fill="#888">V</text>
+                        <text x="92" y="68" font-size="11" fill="#c0392b" font-weight="bold">k_c = mg|dμ/dẋ|</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="credit">Rice &amp; Ruina, J. Appl. Mech. 50, 343 (1983).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Aplicacion — fallas geologicas -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% 100%"
+             data-background-position="left">
+        <div style="padding-left:10%;">
+            <h2>Aplicación: fallas geológicas y ciclo sísmico</h2>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.8em;">Las zonas de falla contienen una capa de <strong>gouge</strong> (material granular triturado). El ciclo sísmico es stick-slip a escala geológica:</p>
+                    <table style="font-size:0.65em; margin-top:0.4em;">
+                        <thead><tr><th>Modelo</th><th>Falla geologica</th></tr></thead>
+                        <tbody>
+                            <tr><td>Masa <em>m</em></td><td>Aspereza (zona bloqueada de la falla)</td></tr>
+                            <tr><td>Resorte <em>k</em></td><td>Rigidez elástica de la corteza</td></tr>
+                            <tr><td>Velocidad <em>V</em></td><td>Velocidad de la placa tectónica</td></tr>
+                            <tr><td>Friccion μ(<em>v</em>)</td><td>Fricción en la zona de cizallamiento</td></tr>
+                            <tr><td>Fase <em>stick</em></td><td>Periodo interSísmico (carga lenta)</td></tr>
+                            <tr><td>Fase <em>slip</em></td><td>Ruptura cosísmica (terremoto)</td></tr>
+                        </tbody>
+                    </table>
+                 
+                </div>
+                <div style="text-align:center;">
+
+                    <img src="media/INTRO_stickslip.png" style="max-height:310px; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.2);"/>
+                         <div class="highlight-box red" style="font-size:0.78em; margin-top:0.4em;">
+                        <strong>Condición clave:</strong> la falla produce terremotos si $k &lt; k_c$. Si $k$ es grande → creep asísmico.<br>
+                        
+                    </div>
+                    
+                
+
+
+                </div>
+            </div>
+            <p class="credit">Scholz, <em>The Mechanics of Earthquakes and Faulting</em> (2019).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Rate-and-State -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Modelo Rate-and-State</h2>
+            <p style="font-size:0.8em;">Ley empírica de fricción que captura la dependencia en velocidad <strong>y</strong> el envejecimiento del contacto:</p>
+            <div class="eq-box" style="font-size:1.0em; margin:0.3em 0;">
+                \( \mu = \mu_0 + a\ln\!\left(\dfrac{v}{v_0}\right) + b\ln\!\left(\dfrac{v_0\,\theta}{D_c}\right) \)
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.78em; font-weight:700;">Stick-Slip vs Rate-and-State:</p>
+                    <table style="font-size:0.58em; margin-top:0.2em;">
+                        <thead>
+                            <tr><th></th><th>Stick-Slip</th><th>Rate-and-State</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Tipo</strong></td><td>Fenómeno dinámico</td><td>Ley constitutiva</td></tr>
+                            <tr><td><strong>Describe</strong></td><td>Oscilaciones</td><td>Como cambia μ</td></tr>
+                            <tr><td><strong>Base</strong></td><td>Puede existir con Coulomb simple</td><td>Introduce memoria explicita</td></tr>
+                            <tr><td><strong>Envejecimiento</strong></td><td>No incluye</td><td>Incluye evolucion del contacto</td></tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 340 280" style="width:95%; max-width:340px;">
+                        <defs><marker id="arrRS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker></defs>
+                        <line x1="40" y1="240" x2="320" y2="240" stroke="#333" stroke-width="2" marker-end="url(#arrRS)"/>
+                        <line x1="40" y1="240" x2="40" y2="15" stroke="#333" stroke-width="2" marker-end="url(#arrRS)"/>
+                        <text x="180" y="268" text-anchor="middle" font-size="12" fill="#333">desplazamiento</text>
+                        <text x="15" y="130" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,15,130)">μ</text>
+                        <line x1="40" y1="140" x2="320" y2="140" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="325" y="143" font-size="10" fill="#888">μ₀</text>
+                        <line x1="45" y1="140" x2="90" y2="140" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="90" y1="140" x2="90" y2="100" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <path d="M90,100 C140,100 160,170 280,170" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <line x1="280" y1="170" x2="310" y2="170" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="80" y1="140" x2="80" y2="100" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="77" y1="140" x2="83" y2="140" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="77" y1="100" x2="83" y2="100" stroke="#c0392b" stroke-width="1.5"/>
+                        <text x="68" y="125" text-anchor="end" font-size="12" fill="#c0392b" font-weight="bold">+a</text>
+                        <line x1="150" y1="100" x2="150" y2="170" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <line x1="147" y1="100" x2="153" y2="100" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <line x1="147" y1="170" x2="153" y2="170" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <text x="163" y="140" font-size="12" fill="var(--color-mauve)" font-weight="bold">−b</text>
+                        <line x1="90" y1="225" x2="200" y2="225" stroke="#555" stroke-width="1.5"/>
+                        <line x1="90" y1="220" x2="90" y2="230" stroke="#555" stroke-width="1.5"/>
+                        <line x1="200" y1="220" x2="200" y2="230" stroke="#555" stroke-width="1.5"/>
+                        <text x="145" y="220" text-anchor="middle" font-size="12" fill="#555" font-weight="bold">D_c</text>
+                        <text x="65" y="50" font-size="11" fill="#555">v₀</text>
+                        <text x="90" y="50" font-size="11" fill="#555">→</text>
+                        <text x="105" y="50" font-size="11" fill="#555">v₁ &gt; v₀</text>
+                        <text x="285" y="195" font-size="11" fill="var(--color-teal)">μ₀+(a−b)ln(v₁/v₀)</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="credit">Dieterich (1979); Ruina (1983); Marone (1998).</p>
+        </div>
+    </section>
+
+
+    <!-- SLIDE: Rate-and-State -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Modelo Rate-and-State</h2>
+            <p style="font-size:0.8em;">Ley empírica de fricción que captura la dependencia en velocidad <strong>y</strong> el envejecimiento del contacto:</p>
+            <div class="eq-box" style="font-size:1.0em; margin:0.3em 0;">
+                \( \mu = \mu_0 + a\ln\!\left(\dfrac{v}{v_0}\right) + b\ln\!\left(\dfrac{v_0\,\theta}{D_c}\right) \)
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <p style="font-size:0.78em; font-weight:700;">Stick-Slip vs Rate-and-State:</p>
+                   <div class="highlight-box" style="font-size:0.7em; margin-top:0.3em;">
+                        <strong>Evolucion del estado θ:</strong><br>
+                        Aging: \(\dot{\theta} = 1 - \dfrac{v\,\theta}{D_c}\)<br>
+                        Slip: \(\dot{\theta} = -\dfrac{v\,\theta}{D_c}\ln\!\left(\dfrac{v\,\theta}{D_c}\right)\)
+                    </div>
+                    <div class="highlight-box" style="font-size:0.7em; margin-top:0.3em; border-left-color:#e67e22; background:rgba(230,126,34,0.07);">
+                        <strong>\(a - b < 0\):</strong> velocity weakening → <strong>sismogénico</strong><br>
+                        <strong>\(a - b > 0\):</strong> velocity strengthening → <strong>creep asísmico</strong>
+                    </div>
+                    
+                </div>
+                <div style="text-align:center;">
+                    <svg viewBox="0 0 340 280" style="width:95%; max-width:340px;">
+                        <defs><marker id="arrRS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker></defs>
+                        <line x1="40" y1="240" x2="320" y2="240" stroke="#333" stroke-width="2" marker-end="url(#arrRS)"/>
+                        <line x1="40" y1="240" x2="40" y2="15" stroke="#333" stroke-width="2" marker-end="url(#arrRS)"/>
+                        <text x="180" y="268" text-anchor="middle" font-size="12" fill="#333">desplazamiento</text>
+                        <text x="15" y="130" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90,15,130)">μ</text>
+                        <line x1="40" y1="140" x2="320" y2="140" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+                        <text x="325" y="143" font-size="10" fill="#888">μ₀</text>
+                        <line x1="45" y1="140" x2="90" y2="140" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="90" y1="140" x2="90" y2="100" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <path d="M90,100 C140,100 160,170 280,170" stroke="var(--color-teal)" stroke-width="2.5" fill="none"/>
+                        <line x1="280" y1="170" x2="310" y2="170" stroke="var(--color-teal)" stroke-width="2.5"/>
+                        <line x1="80" y1="140" x2="80" y2="100" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="77" y1="140" x2="83" y2="140" stroke="#c0392b" stroke-width="1.5"/>
+                        <line x1="77" y1="100" x2="83" y2="100" stroke="#c0392b" stroke-width="1.5"/>
+                        <text x="68" y="125" text-anchor="end" font-size="12" fill="#c0392b" font-weight="bold">+a</text>
+                        <line x1="150" y1="100" x2="150" y2="170" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <line x1="147" y1="100" x2="153" y2="100" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <line x1="147" y1="170" x2="153" y2="170" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                        <text x="163" y="140" font-size="12" fill="var(--color-mauve)" font-weight="bold">−b</text>
+                        <line x1="90" y1="225" x2="200" y2="225" stroke="#555" stroke-width="1.5"/>
+                        <line x1="90" y1="220" x2="90" y2="230" stroke="#555" stroke-width="1.5"/>
+                        <line x1="200" y1="220" x2="200" y2="230" stroke="#555" stroke-width="1.5"/>
+                        <text x="145" y="220" text-anchor="middle" font-size="12" fill="#555" font-weight="bold">D_c</text>
+                        <text x="65" y="50" font-size="11" fill="#555">v₀</text>
+                        <text x="90" y="50" font-size="11" fill="#555">→</text>
+                        <text x="105" y="50" font-size="11" fill="#555">v₁ &gt; v₀</text>
+                        <text x="285" y="195" font-size="11" fill="var(--color-teal)">μ₀+(a−b)ln(v₁/v₀)</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="credit">Dieterich (1979); Ruina (1983); Marone (1998).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Burridge-Knopoff -->
+    <section data-background-image="media/bg_dark.png"
+             data-background-size="13% auto"
+             data-background-position="left center">
+        <div style="padding-left:10%;">
+            <h2>Modelo de Burridge-Knopoff (1967)</h2>
+            <p style="font-size:0.85em;">Extensión del bloque único a una <strong>cadena de \(N\) bloques</strong> acoplados elásticamente:</p>
+            <div class="eq-box" style="font-size:1.05em; margin:0.5em 0;">
+                \( m\,\ddot{X}_j = K(X_{j+1} - 2X_j + X_{j-1}) - k_p(X_j - vt) - F\!\left(\dot{X}_j\right) \)
+            </div>
+            <div style="text-align:center; margin:0.3em 0;">
+                <svg viewBox="0 0 700 200" style="width:100%; max-width:700px;">
+                    <defs>
+                        <marker id="arrBK" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#333"/></marker>
+                        <pattern id="hatch3" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="#999" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect x="40" y="15" width="620" height="18" rx="3" fill="var(--color-mauve)" opacity="0.3" stroke="var(--color-mauve)" stroke-width="1.5"/>
+                    <text x="350" y="28" text-anchor="middle" font-size="12" fill="var(--color-mauve)" font-weight="bold">Placa tectonica (velocidad v →)</text>
+                    <line x1="660" y1="24" x2="690" y2="24" stroke="var(--color-mauve)" stroke-width="2" marker-end="url(#arrBK)"/>
+                    <rect x="40" y="130" width="620" height="12" fill="url(#hatch3)"/>
+                    <line x1="40" y1="130" x2="660" y2="130" stroke="#555" stroke-width="2"/>
+                    <rect x="80" y="90" width="55" height="40" rx="3" fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="107" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                    <polyline points="107,33 107,42 97,48 117,54 97,60 117,66 97,72 117,78 107,84 107,90" stroke="var(--color-mauve)" stroke-width="1.8" fill="none"/>
+                    <polyline points="135,110 148,110 154,97 164,123 174,97 184,123 194,97 204,123 210,110 220,110" stroke="var(--color-teal)" stroke-width="2" fill="none"/>
+                    <rect x="220" y="90" width="55" height="40" rx="3" fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="247" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                    <polyline points="247,33 247,42 237,48 257,54 237,60 257,66 237,72 257,78 247,84 247,90" stroke="var(--color-mauve)" stroke-width="1.8" fill="none"/>
+                    <polyline points="275,110 288,110 294,97 304,123 314,97 324,123 334,97 344,123 350,110 360,110" stroke="var(--color-teal)" stroke-width="2" fill="none"/>
+                    <rect x="360" y="90" width="55" height="40" rx="3" fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="387" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                    <polyline points="387,33 387,42 377,48 397,54 377,60 397,66 377,72 397,78 387,84 387,90" stroke="var(--color-mauve)" stroke-width="1.8" fill="none"/>
+                    <text x="440" y="115" font-size="22" fill="#555">···</text>
+                    <rect x="480" y="90" width="55" height="40" rx="3" fill="var(--color-dark)" stroke="#222" stroke-width="1.5"/>
+                    <text x="507" y="115" text-anchor="middle" font-size="14" fill="white" font-weight="bold">m</text>
+                    <polyline points="507,33 507,42 497,48 517,54 497,60 517,66 497,72 517,78 507,84 507,90" stroke="var(--color-mauve)" stroke-width="1.8" fill="none"/>
+                    <polyline points="415,110 424,110 430,97 440,123 450,97 460,123 466,110 480,110" stroke="var(--color-teal)" stroke-width="2" fill="none"/>
+                    <text x="170" y="160" text-anchor="middle" font-size="11" fill="var(--color-teal)" font-weight="bold">K (inter-bloques)</text>
+                    <text x="60" y="65" text-anchor="middle" font-size="11" fill="var(--color-mauve)" font-weight="bold">k_p</text>
+                    <text x="545" y="160" text-anchor="middle" font-size="11" fill="#888">F(v) friccion</text>
+                </svg>
+            </div>
+            <div class="two-col" style="margin-top:0.3em;">
+                <div>
+                    <ul style="font-size:0.75em; line-height:1.7;">
+                        <li>\(K\) = acoplamiento entre asperidades (rigidez de la corteza)</li>
+                        <li>\(k_p\) = acoplamiento con la placa tectonica</li>
+                        <li>\(v\) = velocidad de la placa</li>
+                        <li>\(F(v)\) = fricción velocity-dependent</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="highlight-box" style="font-size:0.75em;">
+                        <strong>Resultado clave:</strong> produce stick-slip caótico y distribuciones en ley de potencia → explica naturalmente la ley de Gutenberg-Richter.
+                    </div>
+                    <div class="highlight-box" style="font-size:0.75em; margin-top:0.3em;">
+                        El modelo BK es el paradigma fundamental para modelar terremotos: sismicidad compleja.
+                    </div>
+                </div>
+            </div>
+            <p class="credit">Burridge &amp; Knopoff, Bull. Seismol. Soc. Am. 57, 341 (1967).</p>
+        </div>
+    </section>
+
+    <!-- SLIDE: Cierre — Mecanismo universal -->
+    <section data-background-color="#5a3344">
+        <p style="font-size:0.5em; font-weight:700; color:rgba(255,255,255,0.55); letter-spacing:0.05em; margin-bottom:0.4em;">IDEAS CLAVE — CLASE 7</p>
+        <h2 style="color:white; font-size:1.7em; line-height:1.2; margin-bottom:0.05em;">Stick-slip: un mecanismo universal</h2>
+        <div style="display:flex; gap:1.2em; margin-bottom:0.7em;">
+            <div style="flex:1; background:rgba(255,255,255,0.1); border-radius:8px; padding:0.7em 1em;">
+                <p style="color:rgba(255,255,255,0.7); font-size:0.72em; margin:0 0 0.3em; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">El fenómeno</p>
+                <p style="color:white; font-size:0.8em; margin:0;">Señal en diente de sierra. Un ciclo periodico de carga lenta y liberación abrupta de energía elástica.</p>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.1); border-radius:8px; padding:0.7em 1em;">
+                <p style="color:rgba(255,255,255,0.7); font-size:0.72em; margin:0 0 0.3em; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">El mecanismo</p>
+                <p style="color:white; font-size:0.8em; margin:0;">Velocity weakening → retroalimentación positiva → el sistema no puede encontrar un estado estacionario estable.</p>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.1); border-radius:8px; padding:0.7em 1em;">
+                <p style="color:rgba(255,255,255,0.7); font-size:0.72em; margin:0 0 0.3em; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">La condición</p>
+                <p style="color:white; font-size:0.8em; margin:0;">k &lt; k_c: el weakening gana a la rigidez. No todo sistema con weakening produce stick-slip.</p>
+            </div>
+        </div>
+        <div style="background:rgba(196,160,160,0.15); border-radius:8px; padding:0.7em 1.2em; margin-bottom:0.7em;">
+            <p style="color:#c4a0a0; font-size:0.8em; font-weight:700; margin:0 0 0.3em;">El mismo mecanismo a todas las escalas:</p>
+            <div style="display:flex; gap:0.5em; align-items:center; justify-content:center; flex-wrap:wrap;">
+                <span style="color:white; font-size:0.75em; background:rgba(255,255,255,0.1); padding:0.2em 0.7em; border-radius:4px;">tiza (mm)</span>
+                <span style="color:#c4a0a0;">→</span>
+                <span style="color:white; font-size:0.75em; background:rgba(255,255,255,0.1); padding:0.2em 0.7em; border-radius:4px;">violin (cm)</span>
+                <span style="color:#c4a0a0;">→</span>
+                <span style="color:white; font-size:0.75em; background:rgba(255,255,255,0.1); padding:0.2em 0.7em; border-radius:4px;">falla de laboratorio (dm)</span>
+                <span style="color:#c4a0a0;">→</span>
+                <span style="color:white; font-size:0.75em; background:rgba(255,255,255,0.1); padding:0.2em 0.7em; border-radius:4px;">terremotos (km)</span>
+            </div>
+        </div>
+        
+    </section>
+
+
+    </section>
+
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+    Reveal.initialize({
+        hash: true, slideNumber: true, transition: 'slide', width: 1600, height: 900,
+        math: { mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js', config: 'TeX-AMS_HTML-full' },
+        plugins: [ RevealMath.MathJax3, RevealHighlight, RevealNotes ],
+        keyboard: {
+            39: function() { var i = Reveal.getIndices(); Reveal.slide(i.h + 1, 0); },
+            37: function() { var i = Reveal.getIndices(); Reveal.slide(Math.max(i.h - 1, 0), 0); }
+        }
+    });
+</script>
+</body>
+</html>
